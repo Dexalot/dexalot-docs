@@ -1,4 +1,4 @@
-# Dexalot Docs Repo
+# Dexalot Technical Documents
 
 ## Project setup
 ```

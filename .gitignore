@@ -1,0 +1,12 @@
+# dependencies
+/node_modules
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# vuepress
+.cache
+.temp
+dist

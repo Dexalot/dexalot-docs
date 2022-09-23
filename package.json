@@ -1,0 +1,42 @@
+{
+  "name": "dexalot-docs",
+  "version": "2022.09.23",
+  "license": "SEE LICENSE IN LICENSE.txt",
+  "private": true,
+  "engines": {
+    "node": "16.15.1"
+  },
+  "scripts": {
+    "lint-ts-check": "./node_modules/.bin/eslint . --ext .ts",
+    "lint-ts-fix": "./node_modules/.bin/eslint . --ext .ts --fix",
+    "lint-js-check": "./node_modules/.bin/eslint . --ext .js",
+    "lint-js-fix": "./node_modules/.bin/eslint . --ext .js --fix",
+    "pretty-md-check": "./node_modules/.bin/prettier --check **/*.md",
+    "pretty-md-fix": "./node_modules/.bin/prettier --write **/*.md",
+    "pretty-ts-check": "./node_modules/.bin/prettier --check **/*.ts",
+    "pretty-ts-fix": "./node_modules/.bin/prettier --write **/*.ts",
+    "pretty-js-check": "./node_modules/.bin/prettier --check **/*.js",
+    "pretty-js-fix": "./node_modules/.bin/prettier --write **/*.js",
+    "pretty-check": "./node_modules/.bin/prettier --check **/*.{ts,js,md}",
+    "pretty-fix": "./node_modules/.bin/prettier --write **/*.{ts,js,md}",
+    "clean": "rimraf docs/.vuepress/.cache docs/.vuepress/.temp docs/.vuepress/dist  ",
+    "serve": "vuepress dev docs",
+    "build": "vuepress build docs"
+  },
+  "dependencies": {
+    "@vuepress/plugin-search": "^2.0.0-beta.51",
+    "vuepress": "^2.0.0-beta.51",
+    "vuepress-theme-hope": "^2.0.0-beta.103"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "5.37.0",
+    "@typescript-eslint/parser": "5.37.0",
+    "eslint": "8.23.1",
+    "prettier": "^2.7.1",
+    "prettier-plugin-solidity": "^1.0.0-beta.24",
+    "rimraf": "3.0.2",
+    "ts-node": "8.10.2",
+    "typechain": "^8.1.0",
+    "typescript": "4.8.3"
+  }
+}

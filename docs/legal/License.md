@@ -1,9 +1,9 @@
-Business Source License 1.1
+# License
+
+## Business Source License 1.1
 
 License text copyright (c) 2017 MariaDB Corporation Ab, All Rights Reserved.
 "Business Source License" is a trademark of MariaDB Corporation Ab.
-
------------------------------------------------------------------------------
 
 Parameters
 
@@ -12,38 +12,36 @@ Licensor:  	Dexalot (BVI) Inc.
 Licensed Work:	Dexalot
                The Licensed Work is (c) 2022 Dexalot (BVI) Inc.
 
-Additional Use Grant: You may make use of the Licensed Work, provided
-                      you DO NOT use it in any of the following ways:
+Additional Use Grant: You may make use of the Licensed Work, provided you DO NOT use it in any of the following ways:
 
-                      * Operate for-profit commercial products or services
+   * Operate for-profit commercial products or services
 
-                      (1) Engage in commercial activities that sell directly
-                      products and services derived from the licensed work.
+   1. Engage in commercial activities that sell directly
+   products and services derived from the licensed work.
 
-                      (2) Engage in commercial activities that indirectly get
-                      commercial benefit such as fees or commissions operating
-                      products and services derived from the licensed work.
+   2. Engage in commercial activities that indirectly get
+   commercial benefit such as fees or commissions operating
+   products and services derived from the licensed work.
 
-                      * Create Non-Open-Source Commercial Derviative Works
+   * Create Non-Open-Source Commercial Derviative Works
 
-                      (3) Link or directly include the Licensed Work in a
-                      commercial or for-profit application or other product
-                      not distributed under an Open Source Initiative (OSI)
-                      compliant license. See: https://opensource.org/licenses
+   3. Link or directly include the Licensed Work in a
+   commercial or for-profit application or other product
+   not distributed under an Open Source Initiative (OSI)
+   compliant license.<br>
+   See: [opensource.org/licenses](https://opensource.org/licenses)
 
-                      (4) Remove the name, logo, copyright, or other branding
-                      material from the Licensed Work to create a "rebranded"
-                      or "white labeled" version to distribute as part of
-                      any commercial or for-profit product or service.
+   4. Remove the name, logo, copyright, or other branding
+   material from the Licensed Work to create a "rebranded"
+   or "white labeled" version to distribute as part of
+   any commercial or for-profit product or service.
 
-Change Date:          2025-12-31
+Change Date: 2025-12-31
 
-Change License:       BSD-3-Clause as published at
-                      https://opensource.org/licenses/BSD-3-Clause
+Change License: BSD-3-Clause as published at
+[opensource.org/licenses/BSD-3-Clause](https://opensource.org/licenses/BSD-3-Clause)
 
------------------------------------------------------------------------------
-
-Terms
+## Terms
 
 The Licensor hereby grants you the right to copy, modify, create derivative
 works, redistribute, and make non-production use of the Licensed Work. The
@@ -89,17 +87,13 @@ MariaDB hereby grants you permission to use this License’s text to license
 your works, and to refer to it using the trademark "Business Source License",
 as long as you comply with the Covenants of Licensor below.
 
------------------------------------------------------------------------------
-
-Alternative Licensing
+## Alternative Licensing
 
 If you would like to use the Licensed Work in any way that conflicts with
 the stipulations of the Additional Use Grant, contact support@dexalot.com to
 obtain an alternative commercial license.
 
------------------------------------------------------------------------------
-
-Covenants of Licensor
+## Covenants of Licensor
 
 In consideration of the right to use this License’s text and the "Business
 Source License" name and trademark, Licensor covenants to MariaDB, and to all
@@ -120,24 +114,20 @@ other recipients of the licensed work to be provided by Licensor:
 
 4. Not to modify this License in any other way.
 
------------------------------------------------------------------------------
-
-Notice
+## Notice
 
 The Business Source License (this document, or the "License") is not an Open
 Source license. However, the Licensed Work will eventually be made available
 under an Open Source License, as stated in this License.
 
------------------------------------------------------------------------------
-
-Standard License Header
+## Standard License Header
 
 Copyright (C) 2022 Dexalot (BVI) Inc.
 
 Use of this software is governed by the Business Source License included in
 the LICENSE.txt file and at www.mariadb.com/bsl11.
 
-Change Date:
+## Change Date
 
 On the Change Date above, in accordance with the Business Source License,
 use of this software will be governed by the open source license specified

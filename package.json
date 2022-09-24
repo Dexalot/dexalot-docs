@@ -19,7 +19,7 @@
     "pretty-js-fix": "./node_modules/.bin/prettier --write **/*.js",
     "pretty-check": "./node_modules/.bin/prettier --check **/*.{ts,js,md}",
     "pretty-fix": "./node_modules/.bin/prettier --write **/*.{ts,js,md}",
-    "clean": "rimraf docs/.vuepress/.cache docs/.vuepress/.temp docs/.vuepress/dist  ",
+    "clean": "rimraf docs/.vuepress/.cache docs/.vuepress/.temp docs/.vuepress/dist",
     "serve": "vuepress dev docs",
     "build": "vuepress build docs"
   },

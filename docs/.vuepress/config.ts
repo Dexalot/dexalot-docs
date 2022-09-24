@@ -152,6 +152,11 @@ export default defineUserConfig({
         collapsable: true,
         children: [
           {
+            text: "License",
+            icon: "file",
+            link: "License"
+          },
+          {
             text: "Privacy Policy",
             icon: "file",
             link: "PrivacyPolicy"

@@ -31,6 +31,7 @@ export default defineUserConfig({
     fullscreen: true,
     backToTop: true,
     contributors: false,
+    lastUpdated: true,
 
     themeColor: {
       blue: "#2196f3",

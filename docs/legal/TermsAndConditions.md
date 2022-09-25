@@ -1,3 +1,7 @@
+---
+editLink: true
+---
+
 # Terms and Conditions
 
 The Terms and Conditions were last modified on December 5, 2021. Welcome to Chanbloq Labs Inc.

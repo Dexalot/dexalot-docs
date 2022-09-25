@@ -1,3 +1,7 @@
+---
+editLink: true
+---
+
 # Privacy Policy
 
 This Privacy Policy was last modified on December 5, 2021 Chainbloq Labs Inc. ("Company," “our,” or "we") respects your privacy and is committed to protecting it through our compliance with this policy. This policy describes the types of information we may collect from you or that you may provide when you visit the website(s) served through different subdomains of the root domain dexalot.com or services (all website(s), products, mobile applications, and services collectively deemed “Website”) under our management.

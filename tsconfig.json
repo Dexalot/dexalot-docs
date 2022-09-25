@@ -5,6 +5,14 @@
     "strict": true,
     "esModuleInterop": true,
     "outDir": "dist",
-    "resolveJsonModule": true
-  }
+    "resolveJsonModule": true,
+  },
+  "files": ["docs/.vuepress/config.ts"],
+  "include": [
+    "docs/.vuepress"
+  ],
+  "exclude": [
+    "dist"
+
+  ]
 }

@@ -26,9 +26,11 @@ export default defineUserConfig({
     docsRepo: "https://github.com/Dexalot/dexalot-docs",
     docsBranch: "main",
     docsDir: "docs",
+    editLink: false,
     iconAssets: "iconfont",
     fullscreen: true,
     backToTop: true,
+    contributors: false,
 
     themeColor: {
       blue: "#2196f3",

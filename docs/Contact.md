@@ -1,3 +1,7 @@
+---
+editLink: true
+---
+
 # Contact
 
 ## Support

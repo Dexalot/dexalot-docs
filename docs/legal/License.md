@@ -1,3 +1,7 @@
+---
+editLink: true
+---
+
 # License
 
 ## Business Source License 1.1

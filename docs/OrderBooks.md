@@ -1,12 +1,12 @@
 # OrderBooks
 
-*&quot;DEXALOT TEAM&quot;*
-
-> &quot;OrderBooks: a contract implementing price, time priority Central Limit Order Books          interacting with the underlying Red-Black-Tree.&quot;
 
 
+> Central Limit Order Books
 
-*For each trade pair two order books are added to orderBookMap: buyBook and sellBook.&quot;          The naming convention for the order books is as follows: TRADEPAIRNAME-BUYBOOK and TRADEPAIRNAME-SELLBOOK.&quot;          For trade pair AVAX/USDT the order books are AVAX/USDT-BUYBOOK amd AVAX/USDT-SELLBOOK.          TradePairs should have given EXECUTOR_ROLE*
+This contract implements Central Limit Order Books with price and time priority           interacting with the underlying Red-Black-Tree.
+
+*For each trade pair two order books are added to orderBookMap: buyBook and sellBook.           The naming convention for the order books is as follows: TRADEPAIRNAME-BUYBOOK and TRADEPAIRNAME-SELLBOOK.           For trade pair AVAX/USDT the order books are AVAX/USDT-BUYBOOK amd AVAX/USDT-SELLBOOK.           TradePairs should have EXECUTOR_ROLE in OrderBooks.*
 
 ## Methods
 

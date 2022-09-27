@@ -1,8 +1,8 @@
 # MockToken
 
-*&quot;DEXALOT TEAM&quot;*
 
-> &quot;MockToken: a Mock ERC20 Token contract used for DEXALOT testing.&quot;
+
+> Mock ERC20 Token contract used for testing
 
 
 

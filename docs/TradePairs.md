@@ -1,12 +1,12 @@
 # TradePairs
 
-*&quot;DEXALOT TEAM&quot;*
-
-> &quot;TradePairs: a contract implementing the data structures and functions for trade pairs&quot;
 
 
+> Implements the data structures and functions for trade pairs
 
-*For each trade pair an entry is added tradePairMap.           The naming convention for the trade pairs is as follows: BASEASSET/QUOTEASSET.           For base asset AVAX and quote asset USDT the trade pair name is AVAX/USDT. ExchangeSub needs to have DEFAULT_ADMIN_ROLE on TradePairs It should have EXECUTOR_ROLE on OrderBooks*
+
+
+*For each trade pair an entry is added tradePairMap.          The naming convention for the trade pairs is as follows: BASEASSET/QUOTEASSET.          For base asset AVAX and quote asset USDT the trade pair name is AVAX/USDT.          ExchangeSub needs to have DEFAULT_ADMIN_ROLE on TradePairs.          TradePairs should have EXECUTOR_ROLE on OrderBooks.*
 
 ## Methods
 
@@ -86,7 +86,7 @@ function addOrder(address _trader, bytes32 _clientOrderId, bytes32 _tradePairId,
 
 Frontend Entry function to call to add an order
 
-*Adds an order with the given fields. As a general rule of thumb msg.sender should be the _trader otherwise the tx will revert. Only certain privileged Dexalot smart contracts that has ON_BEHALFOF_ROLE can send orders on behalf of somebody else. &#39;OrderStatusChanged&#39; event will be emitted when an order is received and committed to the blockchain. You can get the contract generated orderid along with your clientorderid from this event. When the blockchain is extremely busy, the transactions are queued up in the mempool and prioritized based on their gas price. We have seen orders waiting for hours in the mempool in Avalanche C-Chain, before they are committed in extreme cases. This is a function of the blockchain and will typically happen when the current gas price is around 100 gwei (2 times the usual gas price) and your transaction maximum gas is set to be 50 gwei(normal level). Your transaction will wait in the mempool until the blockchain gas price goes back to normal levels.*
+*Adds an order with the given fields. As a general rule of thumb msg.sender should be the _trader otherwise the tx will revert. Only certain privileged Dexalot smart contracts that has ON_BEHALFOF_ROLE can send orders on behalf of somebody else. &#39;OrderStatusChanged&#39; event will be emitted when an order is received and committed to the blockchain. You can get the contract generated orderid along with your clientorderid from this event. When the blockchain is extremely busy, the transactions are queued up in the mempool and prioritized based on their gas price. We have seen orders waiting for hours in the mempool in Avalanche C-Chain, before they are committed in extreme cases. This is a function of the blockchain and will typically happen when the current gas price is around 100 gwei (3-4 times of the minimum gas price) and your transaction maximum gas is set to be 50 gwei(normal level). Your transaction will wait in the mempool until the blockchain gas price goes back to normal levels.*
 
 #### Parameters
 
@@ -95,7 +95,7 @@ Frontend Entry function to call to add an order
 | _trader | address | address of the trader. As a general rule of thumb msg.sender should be the _trader otherwise the tx will revert |
 | _clientOrderId | bytes32 | clientorderid is provided by the owner of the order and it is returned in responses for reference. Note: must be unique per traderaddress |
 | _tradePairId | bytes32 | id of the trading pair |
-| _price | uint256 | price of the limit order. 0 for market Orders (type1=0). Note: price increment (baseDisplayDecimals) &amp; evm decimals can be obtained by calling getDisplayDecimals &amp; getDecimals respectively |
+| _price | uint256 | price of the limit order. 0 for market Orders (type1=0). Price increment (baseDisplayDecimals) &amp; evm decimals can be obtained by calling getDisplayDecimals &amp; getDecimals respectively |
 | _quantity | uint256 | quantity increment(quoteDisplayDecimals) &amp; evm decimals can be obtained by calling getDisplayDecimals &amp; getDecimals respectively |
 | _side | enum ITradePairs.Side | enum ITradePairs.Side  Side of the order 0 BUY, 1 SELL |
 | _type1 | enum ITradePairs.Type1 | enum ITradePairs.Type1 Type of the order. 0 MARKET , 1 LIMIT (STOP &amp; STOPLIMIT NOT Supported) |
@@ -109,7 +109,7 @@ function addOrderType(bytes32 _tradePairId, enum ITradePairs.Type1 _type) extern
 
 Adds a new order type to a tradePair
 
-*Can only be called by ExchangeSub. LIMIT order is added by default.*
+*Can only be called by DEFAULT_ADMIN. LIMIT order is added by default.*
 
 #### Parameters
 
@@ -126,7 +126,7 @@ function addTradePair(bytes32 _tradePairId, bytes32 _baseSymbol, uint8 _baseDeci
 
 Adds a new TradePair
 
-*Only ExchangeSub can call this function. ExhangeSub makes sure that the symbols are added to the portfolio with the correct addresses first.*
+*Only DEFAULT_ADMIN or ExchangeSub can call this function which has this role. ExhangeSub makes sure that the symbols are added to the portfolio with the correct addresses first.*
 
 #### Parameters
 
@@ -141,7 +141,7 @@ Adds a new TradePair
 | _quoteDisplayDecimals | uint8 | display decimals of the quote Asset. Price increment |
 | _minTradeAmount | uint256 | minimum trade amount |
 | _maxTradeAmount | uint256 | maximum trade amount |
-| _mode | enum ITradePairs.AuctionMode | . |
+| _mode | enum ITradePairs.AuctionMode | Auction Mode of the auction token. Auction token is always the BASE asset. |
 
 ### cancelAllOrders
 
@@ -267,7 +267,7 @@ Returns the auction mode &amp; the auction price of a specific Trade Pair
 function getBookId(bytes32 _tradePairId, enum ITradePairs.Side _side) external view returns (bytes32)
 ```
 
-
+Returns the bookid given the tradePairId and side
 
 
 
@@ -282,7 +282,7 @@ function getBookId(bytes32 _tradePairId, enum ITradePairs.Side _side) external v
 
 | Name | Type | Description |
 |---|---|---|
-| _0 | bytes32 | undefined |
+| _0 | bytes32 | bytes32  BookId |
 
 ### getDecimals
 
@@ -328,7 +328,7 @@ Returns the display decimals of the base or the quote asset in a tradePair
 
 | Name | Type | Description |
 |---|---|---|
-| _0 | uint8 | uint8  display decimal. Also referred as Quantity Increment if _isBase==true, PriceIncrement if _isBase==false |
+| _0 | uint8 | uint8  display decimal. Also referred as &quot;Quantity Increment if _isBase==true&quot;, &quot;PriceIncrement if _isBase==false&quot; |
 
 ### getMakerRate
 
@@ -413,7 +413,7 @@ Returns Buy or Sell orderbook for the given tradepair &amp; side
 | _tradePairId | bytes32 | id of the trading pair |
 | _side | enum ITradePairs.Side | 0- BUY for BuyBook, 1- SELL for SellBook |
 | _nPrice | uint256 | depth requested. If 1, top of the book, if 2 best 2 prices etc |
-| _nOrder | uint256 | number of orders to be retrieved at the price point |
+| _nOrder | uint256 | number of orders to be retrieved at a time at the price point |
 | _lastPrice | uint256 | the price point to start at in case a loop is used to get the entire order book. Use 0 for small requests. If looping use the Last Price returned from this function call |
 | _lastOrder | bytes32 | the orderid used in case a loop is used to get the entire order book. Use empty string in bytes32 for small request If looping use the Last Orderid returned from this function call |
 
@@ -712,7 +712,7 @@ function pause() external nonpayable
 
 Pauses the contract
 
-*Only callable by ExchangeSub*
+*Only callable by DEFAULT_ADMIN*
 
 
 ### pauseAddOrder
@@ -723,7 +723,7 @@ function pauseAddOrder(bytes32 _tradePairId, bool _pause) external nonpayable
 
 Pauses adding new orders to a specific Trade Pair
 
-*Can only be called by ExchangeSub.*
+*Can only be called by DEFAULT_ADMIN.*
 
 #### Parameters
 
@@ -740,7 +740,7 @@ function pauseTradePair(bytes32 _tradePairId, bool _pause) external nonpayable
 
 Pauses a specific Trade Pair
 
-*Can only be called by ExchangeSub. Public instead of external because it saves 0.184(KiB) in contract size*
+*Can only be called by DEFAULT_ADMIN. Public instead of external because it saves 0.184(KiB) in contract size*
 
 #### Parameters
 
@@ -774,7 +774,7 @@ function removeOrderType(bytes32 _tradePairId, enum ITradePairs.Type1 _type) ext
 
 Removes an order type that is previously allowed
 
-*Can only be called by ExchangeSub. LIMIT order type can&#39;t be removed*
+*Can only be called by DEFAULT_ADMIN. LIMIT order type can&#39;t be removed*
 
 #### Parameters
 
@@ -823,9 +823,9 @@ function revokeRole(bytes32 role, address account) external nonpayable
 function setAllowedSlippagePercent(bytes32 _tradePairId, uint8 _allowedSlippagePercent) external nonpayable
 ```
 
-sets the slippage percent for market orders, before a market order gets an unsolicited cancel
+sets the slippage percent for market orders, before it gets unsolicited cancel
 
-
+*Can only be called by DEFAULT_ADMIN. Market Orders will be filled up to allowedSlippagePercent from the marketPrice(bestbid or bestask) to protect the trader. The remaining quantity gets unsolicited cancel*
 
 #### Parameters
 
@@ -842,7 +842,7 @@ function setAuctionMode(bytes32 _tradePairId, enum ITradePairs.AuctionMode _mode
 
 Sets the auction mode of a specific Trade Pair
 
-*Can only be called by ExchangeSub. Public instead of external because it saves 0.126(KiB) in contract size*
+*Can only be called by DEFAULT_ADMIN.*
 
 #### Parameters
 
@@ -859,7 +859,7 @@ function setAuctionPrice(bytes32 _tradePairId, uint256 _price) external nonpayab
 
 Sets the auction price
 
-*Price is calculated by the backend (off chain) after the auction has closed*
+*Price is calculated by the backend (off chain) after the auction has closed. Auction price can be changed anytime. It is imperative that is not changed after the first order is matched untile the last order to be matched.*
 
 #### Parameters
 
@@ -876,14 +876,14 @@ function setDisplayDecimals(bytes32 _tradePairId, uint8 _displayDecimals, bool _
 
 Sets the display decimals of the base or the quote asset in a tradePair
 
-*Can only be called by ExchangeSub*
+*Can only be called by DEFAULT_ADMIN*
 
 #### Parameters
 
 | Name | Type | Description |
 |---|---|---|
 | _tradePairId | bytes32 | id of the trading pair |
-| _displayDecimals | uint8 | display decimal. Also referred as Quantity Increment if _isBase==true, PriceIncrement if _isBase==false |
+| _displayDecimals | uint8 | display decimal. Also referred as &quot;Quantity Increment if _isBase==true&quot;, &quot;PriceIncrement if _isBase==false&quot; |
 | _isBase | bool | true/false |
 
 ### setMaxTradeAmount
@@ -894,7 +894,7 @@ function setMaxTradeAmount(bytes32 _tradePairId, uint256 _maxTradeAmount) extern
 
 Sets the maximum trade amount allowed for a specific Trade Pair
 
-*Can only be called by ExchangeSub. getQuoteAmount(_price, _quantity, _tradePairId) &lt;= _maxTradeAmount*
+*Can only be called by DEFAULT_ADMIN. getQuoteAmount(_price, _quantity, _tradePairId) &lt;= _maxTradeAmount*
 
 #### Parameters
 
@@ -911,7 +911,7 @@ function setMinTradeAmount(bytes32 _tradePairId, uint256 _minTradeAmount) extern
 
 Sets the minimum trade amount allowed for a specific Trade Pair
 
-*Can only be called by ExchangeSub. getQuoteAmount(_price, _quantity, _tradePairId) &gt;= _minTradeAmount*
+*Can only be called by DEFAULT_ADMIN. getQuoteAmount(_price, _quantity, _tradePairId) &gt;= _minTradeAmount*
 
 #### Parameters
 
@@ -972,7 +972,7 @@ function unpause() external nonpayable
 
 Unpauses the contract
 
-*Only callable by ExchangeSub*
+*Only callable by DEFAULT_ADMIN*
 
 
 ### unsolicitedCancel
@@ -1001,7 +1001,7 @@ function updateRate(bytes32 _tradePairId, uint8 _rate, enum ITradePairs.RateType
 
 Sets the Maker or the Taker Rate
 
-*Can only be called by ExchangeSub*
+*Can only be called by DEFAULT_ADMIN*
 
 #### Parameters
 

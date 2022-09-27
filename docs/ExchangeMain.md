@@ -1,12 +1,12 @@
 # ExchangeMain
 
-*&quot;DEXALOT TEAM&quot;*
 
-> &quot;DEXALOT Mainnet Exchange&quot;
 
-This contract is the mainnet version of the DEXALOT exchange.
+> Mainnet Exchange
 
-*ExchangeMain is DEFAULT_ADMIN to both PortfolioMain contract.*
+This contract is the mainnet version of the Dexalot Exchange.
+
+*ExchangeMain is DEFAULT_ADMIN to PortfolioMain contract.*
 
 ## Methods
 
@@ -96,7 +96,7 @@ Adds Auction Admin role to the address
 ### addToken
 
 ```solidity
-function addToken(bytes32 _symbol, address _tokenaddress, uint8 _decimals, enum ITradePairs.AuctionMode _mode) external nonpayable
+function addToken(bytes32 _symbol, address _tokenaddress, uint32 _srcChainId, uint8 _decimals, enum ITradePairs.AuctionMode _mode) external nonpayable
 ```
 
 Add new token to portfolio
@@ -109,6 +109,7 @@ Add new token to portfolio
 |---|---|---|
 | _symbol | bytes32 | symbol of the token |
 | _tokenaddress | address | address of the token |
+| _srcChainId | uint32 | Source Chain id |
 | _decimals | uint8 | decimals of the token |
 | _mode | enum ITradePairs.AuctionMode | starting auction mode |
 
@@ -405,7 +406,7 @@ function isTrustedContract(address _contract) external view returns (bool)
 function pauseForUpgrade(bool _pause) external nonpayable
 ```
 
-(Un)pauses portfolio for upgrade
+(Un)pauses portoflioMain &amp; portfolioBridgeMain for upgrade
 
 
 

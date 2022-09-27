@@ -1,10 +1,10 @@
 # ExchangeSub
 
-*&quot;DEXALOT TEAM&quot;*
 
-> &quot;DEXALOT Subnet Exchange&quot;
 
-This contract is the subnet version of the DEXALOT exchange.
+> Subnet Exchange
+
+This contract is the subnet version of the Dexalot Exchange.           It has all the AUCTION_ADMIN functions that can be called.
 
 *ExchangeSub is DEFAULT_ADMIN on both PortfolioSub &amp; TradePairs contracts.*
 
@@ -96,7 +96,7 @@ Adds Auction Admin role to the address
 ### addToken
 
 ```solidity
-function addToken(bytes32 _symbol, address _tokenaddress, uint8 _decimals, enum ITradePairs.AuctionMode _mode) external nonpayable
+function addToken(bytes32 _symbol, address _tokenaddress, uint32 _srcChainId, uint8 _decimals, enum ITradePairs.AuctionMode _mode) external nonpayable
 ```
 
 Add new token to portfolio
@@ -109,6 +109,7 @@ Add new token to portfolio
 |---|---|---|
 | _symbol | bytes32 | symbol of the token |
 | _tokenaddress | address | address of the token |
+| _srcChainId | uint32 | Source Chain id |
 | _decimals | uint8 | decimals of the token |
 | _mode | enum ITradePairs.AuctionMode | starting auction mode |
 
@@ -173,6 +174,50 @@ function bytes32ToString(bytes32 _bytes32) external pure returns (string)
 | Name | Type | Description |
 |---|---|---|
 | _0 | string | string  string representation of the bytes32 |
+
+### getMaxTradeAmount
+
+```solidity
+function getMaxTradeAmount(bytes32 _tradePairId) external view returns (uint256)
+```
+
+
+
+
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| _tradePairId | bytes32 | id of the trading pair |
+
+#### Returns
+
+| Name | Type | Description |
+|---|---|---|
+| _0 | uint256 | uint256  maximum trade amount |
+
+### getMinTradeAmount
+
+```solidity
+function getMinTradeAmount(bytes32 _tradePairId) external view returns (uint256)
+```
+
+
+
+
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| _tradePairId | bytes32 | id of the trading pair |
+
+#### Returns
+
+| Name | Type | Description |
+|---|---|---|
+| _0 | uint256 | uint256  minimum trade amount |
 
 ### getPortfolio
 
@@ -421,7 +466,7 @@ Matches auction orders once the auction is closed and auction price is set
 function pauseForUpgrade(bool _pause) external nonpayable
 ```
 
-(Un)pauses the contract and trading for upgrade
+(Un)pauses portoflioSub &amp; portfolioBridgeSub &amp; TradePairs contracts for upgrade
 
 
 
@@ -568,7 +613,7 @@ function revokeRole(bytes32 role, address account) external nonpayable
 function setAuctionMode(bytes32 _tradePairId, bytes32 _baseSymbol, enum ITradePairs.AuctionMode _mode) external nonpayable
 ```
 
-Sets auction mode for a trading pair.
+Sets auction mode for a trading pair  &amp; its basetoken in the PortfolioSUb.
 
 
 
@@ -597,6 +642,40 @@ Sets auction price
 | _tradePairId | bytes32 | id of the trading pair |
 | _price | uint256 | price |
 
+### setMaxTradeAmount
+
+```solidity
+function setMaxTradeAmount(bytes32 _tradePairId, uint256 _maxTradeAmount) external nonpayable
+```
+
+Sets maximum trade amount for a trade pair
+
+
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| _tradePairId | bytes32 | id of the trading pair |
+| _maxTradeAmount | uint256 | maximum trade amount |
+
+### setMinTradeAmount
+
+```solidity
+function setMinTradeAmount(bytes32 _tradePairId, uint256 _minTradeAmount) external nonpayable
+```
+
+Sets minimum trade amount for a trade pair
+
+
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| _tradePairId | bytes32 | id of the trading pair |
+| _minTradeAmount | uint256 | minimum trade amount |
+
 ### setOrderBooks
 
 ```solidity
@@ -605,7 +684,7 @@ function setOrderBooks(address _orderbooks) external nonpayable
 
 Set the address of the OrderBooks contract
 
-
+*Needed to initiate match auction orders*
 
 #### Parameters
 
@@ -695,7 +774,7 @@ function supportsInterface(bytes4 interfaceId) external view returns (bool)
 function updateAllRates(uint8 _makerRate, uint8 _takerRate) external nonpayable
 ```
 
-Update all commissions rates to all trading pairs all at once
+Update all commissions rates of all trading pairs all at once
 
 
 
@@ -705,6 +784,24 @@ Update all commissions rates to all trading pairs all at once
 |---|---|---|
 | _makerRate | uint8 | maker fee rate |
 | _takerRate | uint8 | taker fee rate |
+
+### updateRate
+
+```solidity
+function updateRate(bytes32 _tradePair, uint8 _rate, enum ITradePairs.RateType _rateType) external nonpayable
+```
+
+Update maker and taker fee rates for execution
+
+
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| _tradePair | bytes32 | id of the trading pair |
+| _rate | uint8 | fee rate |
+| _rateType | enum ITradePairs.RateType | rate type, maker or taker |
 
 ### updateRates
 

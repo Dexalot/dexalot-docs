@@ -1,12 +1,12 @@
 # Exchange
 
-*&quot;DEXALOT TEAM&quot;*
 
-> &quot;Exchange: an abstract contract to inherit in ExchangeMain and ExchangeSub.&quot;
 
-Exchange is an administrative wrapper contract that provides different access levels using AccessControl ROLES. Currently it has  DEFAULT_ADMIN_ROLE &amp; AUCTION_ADMIN_ROLE
+> Abstract contract to be inherited in ExchangeMain and ExchangeSub
 
-*Exchange is the AuctionManager and AUCTION_ADMIN_ROLE is controlled by it. Exchange is DEFAULT_ADMIN to both Portfolio** &amp; TradePairs contracts. Auction Admin Functions can only be invoked from the Exchange contracts. All the functions pertaining to Auction can also be called directly in TradePairs &amp; Portfolio using DEFAULT_ADMIN_ROLE but not recommended certain actions require a synchronized update to both Portfolio &amp; TradePairs contracts*
+Exchange is an administrative wrapper contract that provides different access levels           using [OpenZeppelin](https://www.openzeppelin.com) AccessControl roles. Currently it has           DEFAULT_ADMIN_ROLE and AUCTION_ADMIN_ROLE.
+
+*Exchange is DEFAULT_ADMIN to all Portfolio implementation contracts and TradePairs contract.           Exchange is also the AuctionManager using AUCTION_ADMIN_ROLE.           Auction Admin Functions can only be invoked from the Exchange contracts.           All the functions pertaining to Auction can also be called directly in           TradePairs and Portfolio using DEFAULT_ADMIN_ROLE but not recommended because certain           actions require a synchronized update to both Portfolio &amp; TradePairs contracts*
 
 ## Methods
 
@@ -79,7 +79,7 @@ Adds Auction Admin role to the address
 ### addToken
 
 ```solidity
-function addToken(bytes32 _symbol, address _tokenaddress, uint8 _decimals, enum ITradePairs.AuctionMode _mode) external nonpayable
+function addToken(bytes32 _symbol, address _tokenaddress, uint32 _srcChainId, uint8 _decimals, enum ITradePairs.AuctionMode _mode) external nonpayable
 ```
 
 Add new token to portfolio
@@ -92,6 +92,7 @@ Add new token to portfolio
 |---|---|---|
 | _symbol | bytes32 | symbol of the token |
 | _tokenaddress | address | address of the token |
+| _srcChainId | uint32 | Source Chain id |
 | _decimals | uint8 | decimals of the token |
 | _mode | enum ITradePairs.AuctionMode | starting auction mode |
 

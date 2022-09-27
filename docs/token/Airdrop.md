@@ -1,8 +1,8 @@
 # Airdrop
 
-*&quot;DEXALOT TEAM&quot;*
 
-> &quot;AirDrop: a flexible airdrop contract&quot;
+
+> Flexible airdrop contract
 
 
 

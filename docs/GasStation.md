@@ -1,12 +1,12 @@
 # GasStation
 
-*&quot;DEXALOT TEAM&quot;*
-
-> &quot;GasStation: Our native token treasury to swap with other tokens while giving the users&#39; gas airdrop&quot;
 
 
+> Native token treasury
 
-*&quot;This contract receives native alot and only gives to the low balanced users via portfoliosub&quot;*
+This contract swaps other tokens with subnet native coin to send users native coin for gas.         It receives native coin and only sends out to the low balanced users via PortfolioSub.
+
+
 
 ## Methods
 

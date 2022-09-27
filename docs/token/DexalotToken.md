@@ -1,8 +1,8 @@
 # DexalotToken
 
-*&quot;DEXALOT TEAM&quot;*
 
-> &quot;DexalotToken: ALOT token contract
+
+> Dexalot Token (ALOT) contract
 
 
 

@@ -1,12 +1,12 @@
 # Portfolio
 
-*&quot;DEXALOT TEAM&quot;*
 
-> &quot;Portfolio: an abstract contract to inherit in PortfolioMain and PortfolioSub&quot;
 
-Dexalot lives in a dual chain environment. Avalanche Mainnet C-Chain(mainnet) and Avalanche supported Dexalot Subnet(subnet). Dexalot’s contracts don’t bridge any coins or tokens between these 2 chains, but rather lock them in the Dexalot’s PortfolioMain contract in the mainnet and then communicate the users’ holdings to its smart contracts in the subnet for trading purposes. Dexalot is bridge agnostic. You will be able to deposit with one bridge and withdraw with another. Having said that, we are planning to have LayerZero as the sole bridge provider when we go live and add on more bridges in the future. Because of this novel architecture, your subnet wallet can only house ALOT token and nothing else. That&#39;s why the subnet wallet is referred to as the “Gas Tank”. All of your holdings will be handled inside the PortfolioSub smart contract in the subnet. PortfolioBridge &amp; PortfolioBridgeSub are bridge aggregators in charge of sending/receiving messages via generic messaging using different bridge transports
+> Abstract contract to be inherited in PortfolioMain and PortfolioSub
 
-*Contains shared logic for PortfolioMain and PortfolioSub. It is perfectly sufficient for your trading application to interface with only the Dexalot Subnet and use Dexalot frontend to perform deposit/withdraw operations manually for cross chain bridging. If your trading application has a business need to deposit/withdraw more often, then your app will need to integrate with the PortfolioMain contract in the mainnet as well to fully automate your flow. ExchangeSub needs to have DEFAULT_ADMIN_ROLE on this contract*
+Dexalot lives in a dual chain environment. Avalanche Mainnet C-Chain (mainnet) and Avalanche           supported Dexalot Subnet (subnet). Dexalot’s contracts don’t bridge any coins or tokens           between these two chains, but rather lock them in the PortfolioMain contract in the           mainnet and then communicate the users’ holdings to its smart contracts in the subnet for           trading purposes. Dexalot is bridge agnostic. You will be able to deposit with one bridge and           withdraw with another. Having said that, LayerZero is the sole bridge provider at the start.           More bridges can be added in the future as needed.           Because of this novel architecture, a subnet wallet can only house ALOT token and nothing           else. That&#39;s why the subnet wallet is referred to as the “Gas Tank”. All assets will be           handled inside the PortfolioSub smart contract in the subnet.           PortfolioBridge and PortfolioBridgeSub are bridge aggregators in charge of sending/receiving messages           via generic messaging using ative bridge transports.
+
+*This contract contains shared logic for PortfolioMain and PortfolioSub.           It is perfectly sufficient for your trading application to interface with only the Dexalot Subnet           and use Dexalot frontend to perform deposit/withdraw operations manually for cross chain bridging.           If your trading application has a business need to deposit/withdraw more often, then your app           will need to integrate with the PortfolioMain contract in the mainnet as well to fully automate           your flow.           ExchangeSub needs to have DEFAULT_ADMIN_ROLE on this contract.*
 
 ## Methods
 
@@ -14,6 +14,23 @@ Dexalot lives in a dual chain environment. Avalanche Mainnet C-Chain(mainnet) an
 
 ```solidity
 function DEFAULT_ADMIN_ROLE() external view returns (bytes32)
+```
+
+
+
+
+
+
+#### Returns
+
+| Name | Type | Description |
+|---|---|---|
+| _0 | bytes32 | undefined |
+
+### PBRIDGE_ROLE
+
+```solidity
+function PBRIDGE_ROLE() external view returns (bytes32)
 ```
 
 
@@ -88,19 +105,20 @@ function addExecution(enum ITradePairs.Side _makerSide, address _makerAddr, addr
 ### addToken
 
 ```solidity
-function addToken(bytes32 _symbol, address _tokenaddress, uint8 _decimals, enum ITradePairs.AuctionMode _mode) external nonpayable
+function addToken(bytes32 _symbol, address _tokenAddress, uint32 _srcChainId, uint8 _decimals, enum ITradePairs.AuctionMode _mode) external nonpayable
 ```
 
 Adds the given token to the portfolio
 
-*Only callable by adminWe don&#39;t allow tokens with the same symbols but different addressesWe don&#39;t allow any tokens with the same symbol of native*
+*Only callable by adminWe don&#39;t allow tokens with the same symbols but different addressesNative symbol is also added by default with 0 address*
 
 #### Parameters
 
 | Name | Type | Description |
 |---|---|---|
 | _symbol | bytes32 | Symbol of the token |
-| _tokenaddress | address | Address of the token |
+| _tokenAddress | address | Address of the token |
+| _srcChainId | uint32 | Source Chain id |
 | _decimals | uint8 | Decimals of the token |
 | _mode | enum ITradePairs.AuctionMode | Starting auction mode of the token |
 
@@ -272,6 +290,23 @@ Returns the bridge swap amount for the given token
 |---|---|---|
 | _0 | uint256 | uint256  Bridge swap amount |
 
+### getChainId
+
+```solidity
+function getChainId() external view returns (uint32)
+```
+
+Returns the native token of the chain
+
+
+
+
+#### Returns
+
+| Name | Type | Description |
+|---|---|---|
+| _0 | uint32 | bytes32  Symbol of the native token |
+
 ### getNative
 
 ```solidity
@@ -381,26 +416,24 @@ Frontend function to get the IERC20 token
 ### getTokenDetails
 
 ```solidity
-function getTokenDetails(bytes32 _symbol) external view returns (address tokenAddress, uint8 decimals, enum ITradePairs.AuctionMode auctionMode)
+function getTokenDetails(bytes32 _symbol) external view returns (struct IPortfolio.TokenDetails)
 ```
 
+Returns the token details.
 
-
-
+*Will always return actionMode.OFF as auctionMode in controlled in PortfolioSub*
 
 #### Parameters
 
 | Name | Type | Description |
 |---|---|---|
-| _symbol | bytes32 | Symbol of the token |
+| _symbol | bytes32 | Symbol of the token. Identical to mainnet |
 
 #### Returns
 
 | Name | Type | Description |
 |---|---|---|
-| tokenAddress | address |  Address of the token |
-| decimals | uint8 |  Decimals of the token |
-| auctionMode | enum ITradePairs.AuctionMode |  Auction mode of the token |
+| _0 | IPortfolio.TokenDetails | TokenDetails decimals (Identical to mainnet), tokenAddress (Token address at the mainnet) Subnet does not have any ERC20s hence this tokenAddress is address(0) Auction mode of the token , Source Chain id, symbol and symbolId |
 
 ### getTokenList
 
@@ -462,7 +495,7 @@ function hasRole(bytes32 role, address account) external view returns (bool)
 ### initialize
 
 ```solidity
-function initialize(bytes32 _native) external nonpayable
+function initialize(bytes32 _native, uint32 _chainId) external nonpayable
 ```
 
 initializer function for Upgradeable Portfolio
@@ -474,6 +507,7 @@ initializer function for Upgradeable Portfolio
 | Name | Type | Description |
 |---|---|---|
 | _native | bytes32 | Native token of the network. AVAX in mainnet, ALOT in subnet. |
+| _chainId | uint32 | undefined |
 
 ### isTrustedContract
 
@@ -571,7 +605,7 @@ function native() external view returns (bytes32)
 function pause() external nonpayable
 ```
 
-Pauses the contract
+Pauses the portfolioBridge AND the contract
 
 *Only callable by admin*
 
@@ -800,6 +834,33 @@ function supportsInterface(bytes4 interfaceId) external view returns (bool)
 |---|---|---|
 | _0 | bool | undefined |
 
+### tokenDetailsMap
+
+```solidity
+function tokenDetailsMap(bytes32) external view returns (uint8 decimals, address tokenAddress, enum ITradePairs.AuctionMode auctionMode, uint32 srcChainId, bytes32 symbol, bytes32 symbolId)
+```
+
+
+
+
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| _0 | bytes32 | undefined |
+
+#### Returns
+
+| Name | Type | Description |
+|---|---|---|
+| decimals | uint8 | undefined |
+| tokenAddress | address | undefined |
+| auctionMode | enum ITradePairs.AuctionMode | undefined |
+| srcChainId | uint32 | undefined |
+| symbol | bytes32 | undefined |
+| symbolId | bytes32 | undefined |
+
 ### trustedContractToIntegrator
 
 ```solidity
@@ -850,7 +911,7 @@ function trustedContracts(address) external view returns (bool)
 function unpause() external nonpayable
 ```
 
-Unpauses the contract
+Unpauses portfolioBridge AND the contract
 
 *Only callable by admin*
 

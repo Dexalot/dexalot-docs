@@ -1,8 +1,8 @@
 # TokenVestingCloneFactory
 
-*&quot;DEXALOT TEAM&quot;*
 
-> &quot;TokenVestingCloneFactory: clone factory for TokenVestingCloneable&quot;
+
+> Clone factory for TokenVestingCloneable
 
 
 

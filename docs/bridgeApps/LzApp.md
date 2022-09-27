@@ -1,8 +1,8 @@
 # LzApp
 
-*&quot;DEXALOT TEAM&quot;*
 
-> &quot;LZApp: Generic Layer Zero Application Implementation&quot;
+
+> Generic Layer Zero Application Implementation
 
 
 

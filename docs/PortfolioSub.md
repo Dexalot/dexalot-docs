@@ -1,12 +1,12 @@
 # PortfolioSub
 
-*&quot;DEXALOT TEAM&quot;*
-
-> &quot;DEXALOT Subnet Portfolio&quot;
 
 
+> Subnet Portfolio
 
-*Receives messages from mainnet and executes the trader balances and send withdraw requests to mainnet&quot;          Allows to withdraw native token to the subnet wallet and deposit from subnet wallet&quot;          TradePairs needs EXECUTOR_ROLE on PortfolioSub contract.*
+Receives messages from mainnet for deposits and sends withdraw requests to mainnet.  It also transfers tokens between traders as their orders gets matched.
+
+*Allows one to withdraw and deposit native token from/to the subnet wallet. Any other token has be be           deposited via PortfolioBridge using processXFerPayload function. It can only be invoked by a bridge           provider&#39;s message receive event.           Any other token token including ALOT (native) can be withdrawn to mainnet using withdrawToken that will           send the holdings back to the user&#39;s wallet in the mainnet.           TradePairs needs to have EXECUTOR_ROLE on PortfolioSub contract.           If a trader deposits a token and has 0 ALOT in his subnet wallet, this contract will make a call           to GasStation to deposit a small amount of ALOT to the user&#39;s wallet to be used for gas.           In return, It will deduct a tiny amount of the token transferred.*
 
 ## Methods
 
@@ -31,6 +31,23 @@ function DEFAULT_ADMIN_ROLE() external view returns (bytes32)
 
 ```solidity
 function EXECUTOR_ROLE() external view returns (bytes32)
+```
+
+
+
+
+
+
+#### Returns
+
+| Name | Type | Description |
+|---|---|---|
+| _0 | bytes32 | undefined |
+
+### PBRIDGE_ROLE
+
+```solidity
+function PBRIDGE_ROLE() external view returns (bytes32)
 ```
 
 
@@ -122,19 +139,20 @@ Function for TradePairs to transfer tokens between addresses as a result of an e
 ### addToken
 
 ```solidity
-function addToken(bytes32 _symbol, address _tokenaddress, uint8 _decimals, enum ITradePairs.AuctionMode _mode) external nonpayable
+function addToken(bytes32 _symbol, address _tokenAddress, uint32 _srcChainId, uint8 _decimals, enum ITradePairs.AuctionMode _mode) external nonpayable
 ```
 
-Adds the given token to the portfolio
+Adds the given token to the portfolioSub with 0 address in the subnet.
 
-*Only callable by adminWe don&#39;t allow tokens with the same symbols but different addressesWe don&#39;t allow any tokens with the same symbol of native*
+*Only callable by adminWe don&#39;t allow tokens with the same symbols.Native symbol is also added as a token with 0 addressPortfolioSub keeps track of total deposited tokens in tokenTotals for sanity checks against mainnet          It has no ERC20 Contracts hence, it overwtires the addresses with address(0).          But PortfolioBridgeSub keeps all the symbols added from all different mainnet chains separately with          their original details including the addresses          except AVAX which passed with address(0).*
 
 #### Parameters
 
 | Name | Type | Description |
 |---|---|---|
 | _symbol | bytes32 | Symbol of the token |
-| _tokenaddress | address | Address of the token |
+| _tokenAddress | address | Address of the token |
+| _srcChainId | uint32 | Source Chain id, overwritten by srcChain of Portolio.           it will only be used by PortfolioBridgeSub |
 | _decimals | uint8 | Decimals of the token |
 | _mode | enum ITradePairs.AuctionMode | Starting auction mode of the token |
 
@@ -389,6 +407,23 @@ Returns the bridge swap amount for the given token
 |---|---|---|
 | _0 | uint256 | uint256  Bridge swap amount |
 
+### getChainId
+
+```solidity
+function getChainId() external view returns (uint32)
+```
+
+Returns the native token of the chain
+
+
+
+
+#### Returns
+
+| Name | Type | Description |
+|---|---|---|
+| _0 | uint32 | bytes32  Symbol of the native token |
+
 ### getGasStation
 
 ```solidity
@@ -532,7 +567,7 @@ function getToken(bytes32 _symbol) external view returns (contract IERC20Upgrade
 ### getTokenDetails
 
 ```solidity
-function getTokenDetails(bytes32 _symbol) external view returns (address tokenAddress, uint8 decimals, enum ITradePairs.AuctionMode auctionMode)
+function getTokenDetails(bytes32 _symbol) external view returns (struct IPortfolio.TokenDetails)
 ```
 
 Returns the token details.
@@ -549,9 +584,7 @@ Returns the token details.
 
 | Name | Type | Description |
 |---|---|---|
-| tokenAddress | address |  Token address at the mainnet. Subnet does not have any ERC20s hence this address in the mainnet does not correspond to anything |
-| decimals | uint8 |  Decimals of the token. Identical to mainnet |
-| auctionMode | enum ITradePairs.AuctionMode |  Auction mode of the token |
+| _0 | IPortfolio.TokenDetails | TokenDetails decimals (Identical to mainnet), tokenAddress (Token address at the mainnet) Subnet does not have any ERC20s hence this tokenAddress is address(0) Auction mode of the token , Source Chain id, symbol and symbolId |
 
 ### getTokenList
 
@@ -630,7 +663,7 @@ function hasRole(bytes32 role, address account) external view returns (bool)
 ### initialize
 
 ```solidity
-function initialize(bytes32 _native) external nonpayable
+function initialize(bytes32 _native, uint32 _chainId) external nonpayable
 ```
 
 Initializer for upgradeable Portfolio Sub
@@ -642,6 +675,7 @@ Initializer for upgradeable Portfolio Sub
 | Name | Type | Description |
 |---|---|---|
 | _native | bytes32 | Native token of the chain |
+| _chainId | uint32 | undefined |
 
 ### isTrustedContract
 
@@ -690,7 +724,7 @@ function lzRecoverPayload(bytes _payload) external nonpayable
 
 Recovers the stucked message from the LZ bridge, returns the funds to the depositor/withdrawer
 
-*Only call this just before calling force resume receive function for the LZ bridgeOnly the owner can call this function*
+*Only call this just before calling force resume receive function for the LZ bridge          Only the DEFAULT_ADMIN can call this function*
 
 #### Parameters
 
@@ -739,7 +773,7 @@ function native() external view returns (bytes32)
 function pause() external nonpayable
 ```
 
-Pauses the contract
+Pauses the portfolioBridge AND the contract
 
 *Only callable by admin*
 
@@ -802,7 +836,7 @@ function processXFerPayload(address _trader, bytes32 _symbol, uint256 _quantity,
 
 Processes the message coming from the bridge
 
-*Only process DEPOSIT messages as it is the only message that can be sent to the portfolio sub Even when the contract is paused, this method is allowed for the messages that are in flight to complete properly. Pause for upgrade, then wait to make sure no messages are in fligh then upgrade*
+*DEPOSIT messages are the only message that can be sent to the portfolio sub for the moment Even when the contract is paused, this method is allowed for the messages that are in flight to complete properly. CAUTION: if Paused for upgrade, wait to make sure no messages are in fligh then upgrade.*
 
 #### Parameters
 
@@ -819,15 +853,15 @@ Processes the message coming from the bridge
 function removeToken(bytes32 _symbol) external nonpayable
 ```
 
-Removes the given token from the portfolio
+Remove IERC20 token from the tokenMap
 
-*Only callable by admin and portfolio should be paused. Makes sure there are no in-flight deposit/withdraw messages*
+*tokenTotals for the symbol should be 0 before it can be removed Make sure that there are no in-flight deposit messages*
 
 #### Parameters
 
 | Name | Type | Description |
 |---|---|---|
-| _symbol | bytes32 | Symbol of the token |
+| _symbol | bytes32 | symbol of the token |
 
 ### removeTrustedContract
 
@@ -1051,7 +1085,7 @@ function supportsInterface(bytes4 interfaceId) external view returns (bool)
 ### tokenDetailsMap
 
 ```solidity
-function tokenDetailsMap(bytes32) external view returns (uint8 decimals, address tokenAddress, enum ITradePairs.AuctionMode auctionMode)
+function tokenDetailsMap(bytes32) external view returns (uint8 decimals, address tokenAddress, enum ITradePairs.AuctionMode auctionMode, uint32 srcChainId, bytes32 symbol, bytes32 symbolId)
 ```
 
 
@@ -1071,6 +1105,9 @@ function tokenDetailsMap(bytes32) external view returns (uint8 decimals, address
 | decimals | uint8 | undefined |
 | tokenAddress | address | undefined |
 | auctionMode | enum ITradePairs.AuctionMode | undefined |
+| srcChainId | uint32 | undefined |
+| symbol | bytes32 | undefined |
+| symbolId | bytes32 | undefined |
 
 ### tokenTotals
 
@@ -1179,7 +1216,7 @@ function trustedContracts(address) external view returns (bool)
 function unpause() external nonpayable
 ```
 
-Unpauses the contract
+Unpauses portfolioBridge AND the contract
 
 *Only callable by admin*
 
@@ -1252,9 +1289,9 @@ Withdraws collected fees to the mainnet
 function withdrawNative(address payable _to, uint256 _quantity) external nonpayable
 ```
 
-This function is only used to withdraw native ALOT to the subnet wallet
+This function is used to withdraw only native ALOT to the subnet wallet
 
-*This function decreases ALON balance of the user and calls the PortfolioMinter to mint the native ALOT*
+*This function decreases ALOT balance of the user and calls the PortfolioMinter to mint the native ALOT*
 
 #### Parameters
 

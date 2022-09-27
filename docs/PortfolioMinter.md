@@ -1,12 +1,12 @@
 # PortfolioMinter
 
-*&quot;DEXALOT TEAM&quot;*
-
-> &quot;PortfolioMinter: Intermediate contract to mint native tokens via NativeTokenMinter precompile.&quot;
 
 
+> Intermediate contract to mint native tokens via NativeTokenMinter precompile.
 
-*&quot;Only this contract is used to mint native tokens via NativeTokenMinter precompile.&quot;*
+
+
+*Only this contract is used to mint native tokens via NativeTokenMinter precompile.*
 
 ## Methods
 

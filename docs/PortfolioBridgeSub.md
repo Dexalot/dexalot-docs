@@ -1,12 +1,12 @@
 # PortfolioBridgeSub
 
-*&quot;DEXALOT TEAM&quot;*
 
-> &quot;PortfolioBridgeSub: bridging aggregator specifically for subnet&quot;
 
-It implements delayedTransfers as well as max volume per epoch per token
+> Bridge aggregator and message relayer for subnet
 
-*This is a wrapper to check volume and threshold while withdrawing*
+This contracts checks volume and threshold limits for withdrawals.
+
+*It implements delayedTransfers as well as volume caps per epoch per token*
 
 ## Methods
 
@@ -14,23 +14,6 @@ It implements delayedTransfers as well as max volume per epoch per token
 
 ```solidity
 function DEFAULT_ADMIN_ROLE() external view returns (bytes32)
-```
-
-
-
-
-
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | bytes32 | undefined |
-
-### PAUSER_ROLE
-
-```solidity
-function PAUSER_ROLE() external view returns (bytes32)
 ```
 
 
@@ -78,6 +61,26 @@ function VERSION() external pure returns (bytes32)
 |---|---|---|
 | _0 | bytes32 | undefined |
 
+### addToken
+
+```solidity
+function addToken(bytes32 _symbol, address _tokenAddress, uint32 _srcChainId, uint8 _decimals, enum ITradePairs.AuctionMode) external nonpayable
+```
+
+Adds the given token to the portfoBrige. PortfoBrigeSub the list will be bigger as they could be from different mainnet chains
+
+*Only callable by admin or from Portfolio when a new common symbol is added for the first time.The same common symbol but different symbolId are required when adding a token to PortfoBrigeSub.Native symbol is also added as a token with 0 address*
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| _symbol | bytes32 | Symbol of the token |
+| _tokenAddress | address | Mainnet token address the symbol or zero address for AVAX |
+| _srcChainId | uint32 | Source Chain id |
+| _decimals | uint8 | Decimals of the token |
+| _4 | enum ITradePairs.AuctionMode | undefined |
+
 ### bridgeEnabled
 
 ```solidity
@@ -99,6 +102,23 @@ function bridgeEnabled(enum IPortfolioBridge.BridgeProvider) external view retur
 | Name | Type | Description |
 |---|---|---|
 | _0 | bool | undefined |
+
+### defaultTargetChainId
+
+```solidity
+function defaultTargetChainId() external view returns (uint32)
+```
+
+
+
+
+
+
+#### Returns
+
+| Name | Type | Description |
+|---|---|---|
+| _0 | uint32 | undefined |
 
 ### delayPeriod
 
@@ -247,7 +267,7 @@ function epochVolumes(bytes32) external view returns (uint256)
 ### executeDelayedTransfer
 
 ```solidity
-function executeDelayedTransfer(bytes32 id) external nonpayable
+function executeDelayedTransfer(bytes32 _id) external nonpayable
 ```
 
 Executes delayed transfer if the delay period has passed
@@ -258,7 +278,7 @@ Executes delayed transfer if the delay period has passed
 
 | Name | Type | Description |
 |---|---|---|
-| id | bytes32 | Transfer ID |
+| _id | bytes32 | Transfer ID |
 
 ### forceResumeReceive
 
@@ -482,6 +502,45 @@ function getRoleMemberCount(bytes32 role) external view returns (uint256)
 | Name | Type | Description |
 |---|---|---|
 | _0 | uint256 | undefined |
+
+### getTokenDetails
+
+```solidity
+function getTokenDetails(bytes32 _symbolId) external view returns (struct IPortfolio.TokenDetails)
+```
+
+Returns the token details.
+
+*Will always return actionMode.OFF as auctionMode in controlled in PortfolioSub*
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| _symbolId | bytes32 | SymbolId of the token. |
+
+#### Returns
+
+| Name | Type | Description |
+|---|---|---|
+| _0 | IPortfolio.TokenDetails | TokenDetails decimals (Identical to mainnet), tokenAddress (Token address at the mainnet) Subnet does not have any ERC20s hence this tokenAddress is address(0) Auction mode of the token , Source Chain id, symbol and symbolId |
+
+### getTokenList
+
+```solidity
+function getTokenList() external view returns (bytes32[])
+```
+
+Frontend function to get all the tokens in the portfolio
+
+
+
+
+#### Returns
+
+| Name | Type | Description |
+|---|---|---|
+| _0 | bytes32[] | bytes32[]  Array of symbols of the tokens |
 
 ### grantRole
 
@@ -712,7 +771,7 @@ Refunds the native balance inside contract
 ### refundTokens
 
 ```solidity
-function refundTokens(address[] tokens) external nonpayable
+function refundTokens(address[] _tokens) external nonpayable
 ```
 
 Refunds the ERC20 balance inside contract
@@ -723,7 +782,24 @@ Refunds the ERC20 balance inside contract
 
 | Name | Type | Description |
 |---|---|---|
-| tokens | address[] | Array of ERC20 tokens to refund |
+| _tokens | address[] | Array of ERC20 tokens to refund |
+
+### removeToken
+
+```solidity
+function removeToken(bytes32 _symbol, uint32 _srcChainId) external nonpayable
+```
+
+Remove the token from the tokenDetailsMapById &amp; tokenDetailsMapBySymbol
+
+*Make sure that there are no in-flight messages*
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| _symbol | bytes32 | symbol of the token |
+| _srcChainId | uint32 | Source Chain id |
 
 ### renounceRole
 
@@ -812,6 +888,22 @@ Sets generic config for LayerZero user Application
 | _chainId | uint16 | Chain id |
 | _configType | uint256 | Config type |
 | _config | bytes | Config to set |
+
+### setDefaultTargetChain
+
+```solidity
+function setDefaultTargetChain(uint32 _chainId) external nonpayable
+```
+
+Sets the default chain id. To be extended with multichain implementation
+
+*Only admin can call this function*
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| _chainId | uint32 | Default Chainid to use |
 
 ### setDelayPeriod
 
@@ -998,6 +1090,56 @@ function supportsInterface(bytes4 interfaceId) external view returns (bool)
 |---|---|---|
 | _0 | bool | undefined |
 
+### tokenDetailsMapById
+
+```solidity
+function tokenDetailsMapById(bytes32) external view returns (uint8 decimals, address tokenAddress, enum ITradePairs.AuctionMode auctionMode, uint32 srcChainId, bytes32 symbol, bytes32 symbolId)
+```
+
+
+
+
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| _0 | bytes32 | undefined |
+
+#### Returns
+
+| Name | Type | Description |
+|---|---|---|
+| decimals | uint8 | undefined |
+| tokenAddress | address | undefined |
+| auctionMode | enum ITradePairs.AuctionMode | undefined |
+| srcChainId | uint32 | undefined |
+| symbol | bytes32 | undefined |
+| symbolId | bytes32 | undefined |
+
+### tokenDetailsMapBySymbol
+
+```solidity
+function tokenDetailsMapBySymbol(bytes32, uint32) external view returns (bytes32)
+```
+
+
+
+
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| _0 | bytes32 | undefined |
+| _1 | uint32 | undefined |
+
+#### Returns
+
+| Name | Type | Description |
+|---|---|---|
+| _0 | bytes32 | undefined |
+
 ### unpackMessage
 
 ```solidity
@@ -1024,7 +1166,7 @@ Decodes XFER message
 ### unpackXFerMessage
 
 ```solidity
-function unpackXFerMessage(bytes data) external pure returns (struct IPortfolio.XFER _xfer)
+function unpackXFerMessage(bytes _data) external view returns (struct IPortfolio.XFER xfer)
 ```
 
 Unpacks XFER message
@@ -1035,13 +1177,13 @@ Unpacks XFER message
 
 | Name | Type | Description |
 |---|---|---|
-| data | bytes | XFER message |
+| _data | bytes | XFER message |
 
 #### Returns
 
 | Name | Type | Description |
 |---|---|---|
-| _xfer | IPortfolio.XFER |  Unpacked XFER message |
+| xfer | IPortfolio.XFER |  Unpacked XFER message |
 
 ### unpause
 
@@ -1057,6 +1199,22 @@ Unpauses bridge operations
 
 
 ## Events
+
+### DefaultChainIdUpdated
+
+```solidity
+event DefaultChainIdUpdated(uint32 chainId)
+```
+
+
+
+
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| chainId  | uint32 | undefined |
 
 ### DelayPeriodUpdated
 

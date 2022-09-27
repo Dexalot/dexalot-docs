@@ -1,8 +1,8 @@
 # TokenVestingCloneable
 
-*&quot;DEXALOT TEAM&quot;*
 
-> &quot;TokenVestingCloneable: a flexible, cloneable token vesting contract&quot;
+
+> Flexible, cloneable token vesting contract
 
 
 

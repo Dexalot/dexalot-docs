@@ -1,8 +1,8 @@
 # Staking
 
-*&quot;DEXALOT TEAM&quot;*
 
-> &quot;Staking: a flexible staking contract&quot;
+
+> Flexible staking contract
 
 
 

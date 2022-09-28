@@ -61,92 +61,100 @@ export default defineUserConfig({
       "/" /* / */,
 
       {
-        text: "Introduction",
-        icon: "interact",
-        link: "Introduction"
-      },
-
-      {
-        text: "Main Contracts",
-        icon: "proposal",
+        text: "Smart Contracts",
+        icon: "note",
         collapsable: true,
         children: [
-          "Exchange",
-          "ExchangeMain",
-          "ExchangeSub",
-          "Portfolio",
-          "PortfolioMain",
-          "PortfolioSub",
-          "OrderBooks",
-          "TradePairs",
-          "PortfolioBridge",
-          "PortfolioBridgeSub",
-          "PortfolioMinter",
-          "GasStation",
-        ],
-      },
-
-      {
-        text: "Libraries",
-        icon: "api",
-        prefix: "/library/",
-        collapsable: true,
-        children: [
-          "Bytes32LinkedListLibrary",
-          "RBTLibrary",
-          "UtilsLibrary"
-        ],
-      },
-
-      {
-        text: "Interfaces",
-        icon: "api",
-        prefix: "/interfaces/",
-        collapsable: true,
-        children: [
-          "IGasStation",
-          "IPortfolio",
-          "IPortfolioBridge",
-          "IPortfolioMinter",
-          "ITradePairs",
-          "NativeMinterInterface",
           {
-            text: "LayerZero",
-            prefix: "/interfaces/layerZero/",
+            text: "Introduction",
+            icon: "interact",
+            link: "Introduction"
+          },
+
+          {
+            text: "Main Contracts",
+            icon: "proposal",
             collapsable: true,
             children: [
-              "ILayerZeroEndpoint",
-              "ILayerZeroReceiver",
-              "ILayerZeroUserApplicationConfig"
-            ]
+              "Exchange",
+              "ExchangeMain",
+              "ExchangeSub",
+              "Portfolio",
+              "PortfolioMain",
+              "PortfolioSub",
+              "OrderBooks",
+              "TradePairs",
+              "PortfolioBridge",
+              "PortfolioBridgeSub",
+              "PortfolioMinter",
+              "GasStation",
+            ],
           },
-        ],
-      },
 
-      {
-        text: "Bridge Apps",
-        icon: "link",
-        prefix: "/bridgeApps/",
-        collapsable: true,
-        children: [
-          "LzApp"
-        ],
-      },
+          {
+            text: "Libraries",
+            icon: "api",
+            prefix: "/library/",
+            collapsable: true,
+            children: [
+              "Bytes32LinkedListLibrary",
+              "RBTLibrary",
+              "UtilsLibrary"
+            ],
+          },
 
-      {
-        text: "Auxiliary Contracts",
-        icon: "proposal",
-        prefix: "/token/",
-        collapsable: true,
-        children: [
-          "Airdrop",
-          "DexalotToken",
-          "MockToken",
-          "Staking",
-          "TokenVestingCloneable",
-          "TokenVestingCloneFactory"
-        ],
-      },
+          {
+            text: "Interfaces",
+            icon: "api",
+            prefix: "/interfaces/",
+            collapsable: true,
+            children: [
+              "IGasStation",
+              "IPortfolio",
+              "IPortfolioBridge",
+              "IPortfolioMinter",
+              "ITradePairs",
+              "NativeMinterInterface",
+              {
+                text: "LayerZero",
+                prefix: "/interfaces/layerZero/",
+                collapsable: true,
+                children: [
+                  "ILayerZeroEndpoint",
+                  "ILayerZeroReceiver",
+                  "ILayerZeroUserApplicationConfig"
+                ]
+              },
+            ],
+          },
+
+          {
+            text: "Bridge Apps",
+            icon: "link",
+            prefix: "/bridgeApps/",
+            collapsable: true,
+            children: [
+              "LzApp"
+            ],
+          },
+
+          {
+            text: "Auxiliary Contracts",
+            icon: "proposal",
+            prefix: "/token/",
+            collapsable: true,
+            children: [
+              "Airdrop",
+              "DexalotToken",
+              "IncentiveDistributor",
+              "MockToken",
+              "Staking",
+              "TokenVestingCloneable",
+              "TokenVestingCloneFactory"
+            ],
+          }
+        ]  // children under Smart Contracts end
+      },  // Smart Contracts end
 
       {
         text: "Legal",
@@ -169,8 +177,8 @@ export default defineUserConfig({
             icon: "file",
             link: "TermsAndConditions"
           }
-        ],
-      },
+        ],  // children under Legal end
+      },  // Legal end
 
       {
         text: "Contact",
@@ -183,7 +191,6 @@ export default defineUserConfig({
         icon: "info",
         link: "About"
       }
-
-    ],
+    ],  // sidebar end
   }),
 })

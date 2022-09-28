@@ -2,6 +2,9 @@
 
 **Flexible airdrop contract**
 
+
+
+
 ## Variables
 
 ### VERSION
@@ -32,57 +35,77 @@ event Claimed(address claimer, uint256 amount, uint256 timestamp)
 
 ### constructor
 
+
+
 ```solidity
 constructor(contract IERC20 _token, bytes32 _root, uint256 __start, uint256 __cliffDuration, uint256 __duration, uint256 __firstReleasePercentage) public
 ```
 
+
 ### cliff
+
+
 
 ```solidity
 function cliff() external view returns (uint256)
 ```
+
 
 #### returns
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | uint256 | the cliff time of the airdrop vesting |
+
 ### start
+
+
 
 ```solidity
 function start() external view returns (uint256)
 ```
+
 
 #### returns
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | uint256 | the start time of the airdrop vesting |
+
 ### duration
+
+
 
 ```solidity
 function duration() external view returns (uint256)
 ```
+
 
 #### returns
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | uint256 | the duration of the airdrop vesting |
+
 ### getPercentage
+
+
 
 ```solidity
 function getPercentage() external view returns (uint256)
 ```
+
 
 #### returns
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | uint256 | the initial release percentage. |
+
 ### claim
 
-_Claims tokens to user's wallet_
+
+**Dev notes:** _Claims tokens to user's wallet_
 
 ```solidity
 function claim(uint256 index, uint256 amount, bytes32[] merkleProof) external
@@ -96,7 +119,10 @@ function claim(uint256 index, uint256 amount, bytes32[] merkleProof) external
 | amount | uint256 | total value to airdrop, Percentage and Vesting calculated by it |
 | merkleProof | bytes32[] | the proof of merkle |
 
+
 ### released
+
+
 
 ```solidity
 function released(uint256 index) external view returns (uint256)
@@ -108,12 +134,16 @@ function released(uint256 index) external view returns (uint256)
 | ---- | ---- | ----------- |
 | index | uint256 | value of the position in the list |
 
+
 #### returns
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | uint256 | released amount for the index |
+
 ### releasableAmount
+
+
 
 ```solidity
 function releasableAmount(uint256 index, uint256 amount, bytes32[] merkleProof) external view returns (uint256)
@@ -127,40 +157,51 @@ function releasableAmount(uint256 index, uint256 amount, bytes32[] merkleProof) 
 | amount | uint256 | total value to airdrop, Percentage and Vesting calculated by it |
 | merkleProof | bytes32[] | the proof of merkle |
 
+
 #### returns
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | uint256 | releasableAmount for the index |
+
 ### retrieveProjectToken
 
-_retrieves project tokens from the contract sending to the owner_
+
+**Dev notes:** _retrieves project tokens from the contract sending to the owner_
 
 ```solidity
 function retrieveProjectToken() external
 ```
 
+
 ### retrieveOtherToken
 
-_retrieves other tokens from the contract sending to the owner_
+
+**Dev notes:** _retrieves other tokens from the contract sending to the owner_
 
 ```solidity
 function retrieveOtherToken(address tok) external
 ```
 
+
 ### pause
 
-_pauses the contract_
+
+**Dev notes:** _pauses the contract_
 
 ```solidity
 function pause() external
 ```
 
+
 ### unpause
 
-_unpauses the contract_
+
+**Dev notes:** _unpauses the contract_
 
 ```solidity
 function unpause() external
 ```
+
+
 

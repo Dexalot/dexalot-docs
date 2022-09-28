@@ -2,6 +2,9 @@
 
 **Flexible staking contract**
 
+
+
+
 ## Variables
 
 ### VERSION
@@ -102,117 +105,175 @@ event FundsRecovered(uint256 amount, address token)
 
 ### initialize
 
+
+
 ```solidity
 function initialize(address _stakingToken, address _rewardsToken, uint256 _rewardRate, uint256 _rewardsDuration) public
 ```
 
+
 ### totalStake
+
+
 
 ```solidity
 function totalStake() external view returns (uint256)
 ```
 
+
 ### stakeOf
+
+
 
 ```solidity
 function stakeOf(address account) external view returns (uint256)
 ```
 
+
 ### lastTimeRewardApplicable
+
+
 
 ```solidity
 function lastTimeRewardApplicable() public view returns (uint256)
 ```
 
+
 ### rewardPerToken
+
+
 
 ```solidity
 function rewardPerToken() public view returns (uint256)
 ```
 
+
 ### earned
+
+
 
 ```solidity
 function earned(address account) public view returns (uint256)
 ```
 
+
 ### stake
+
+
 
 ```solidity
 function stake(uint256 amount) external
 ```
 
+
 ### unstake
+
+
 
 ```solidity
 function unstake(uint256 amount) public
 ```
 
+
 ### restake
+
+
 
 ```solidity
 function restake() public
 ```
 
+
 ### claim
+
+
 
 ```solidity
 function claim() public
 ```
 
+
 ### exit
+
+
 
 ```solidity
 function exit(uint256 amount) external
 ```
 
+
 ### pause
+
+
 
 ```solidity
 function pause() external
 ```
 
+
 ### unpause
+
+
 
 ```solidity
 function unpause() external
 ```
 
+
 ### pauseStaking
+
+
 
 ```solidity
 function pauseStaking() external
 ```
 
+
 ### unpauseStaking
+
+
 
 ```solidity
 function unpauseStaking() external
 ```
 
+
 ### setRewardRate
+
+
 
 ```solidity
 function setRewardRate(uint256 _rewardRate) external
 ```
 
+
 ### setRewardsDuration
+
+
 
 ```solidity
 function setRewardsDuration(uint256 _rewardsDuration) external
 ```
 
+
 ### recoverFunds
+
+
 
 ```solidity
 function recoverFunds() external
 ```
 
+
+
 ## Modifiers
 
 ### updateReward
 
+
+
 ```solidity
 modifier updateReward(address account)
 ```
+
 

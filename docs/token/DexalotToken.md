@@ -2,29 +2,44 @@
 
 **Dexalot Token (ALOT) contract**
 
+
+
+
+
+
 ## Methods
 
 ### constructor
+
+
 
 ```solidity
 constructor() public
 ```
 
+
 ### pause
+
+
 
 ```solidity
 function pause() public
 ```
 
+
 ### unpause
+
+
 
 ```solidity
 function unpause() public
 ```
 
+
 ### _beforeTokenTransfer
 
-_Hook that is called before any transfer of tokens. This includes
+
+**Dev notes:** _Hook that is called before any transfer of tokens. This includes
 minting and burning.
 
 Calling conditions:
@@ -41,21 +56,32 @@ To learn more about hooks, head to xref:ROOT:extending-contracts.adoc#using-hook
 function _beforeTokenTransfer(address from, address to, uint256 amount) internal
 ```
 
+
 ### _afterTokenTransfer
+
+
 
 ```solidity
 function _afterTokenTransfer(address from, address to, uint256 amount) internal
 ```
 
+
 ### _mint
+
+
 
 ```solidity
 function _mint(address to, uint256 amount) internal
 ```
 
+
 ### _burn
+
+
 
 ```solidity
 function _burn(address account, uint256 amount) internal
 ```
+
+
 

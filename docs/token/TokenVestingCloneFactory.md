@@ -2,6 +2,9 @@
 
 **Clone factory for TokenVestingCloneable**
 
+
+
+
 ## Variables
 
 ### VERSION
@@ -42,13 +45,17 @@ event NewClone(address _clone)
 
 ### constructor
 
+
+
 ```solidity
 constructor() public
 ```
 
+
 ### createTokenVesting
 
-_Create function for a new TokenVesting clone_
+
+**Dev notes:** _Create function for a new TokenVesting clone_
 
 ```solidity
 function createTokenVesting(address __beneficiary, uint256 __start, uint256 __cliffDuration, uint256 __duration, uint256 __startPortfolioDeposits, bool __revocable, uint256 __firstReleasePercentage, uint256 __period, address __portfolio, address __owner) external
@@ -69,9 +76,11 @@ function createTokenVesting(address __beneficiary, uint256 __start, uint256 __cl
 | __portfolio | address | address of portfolio |
 | __owner | address |  |
 
+
 ### getClone
 
-_Accessor method to get i-th clone_
+
+**Dev notes:** _Accessor method to get i-th clone_
 
 ```solidity
 function getClone(uint256 index) external view returns (address)
@@ -82,4 +91,6 @@ function getClone(uint256 index) external view returns (address)
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | index | uint256 | clone index |
+
+
 

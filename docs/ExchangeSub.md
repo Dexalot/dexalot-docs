@@ -7,6 +7,7 @@ It has all the AUCTION_ADMIN functions that can be called.
 
 **Dev notes:** _ExchangeSub is DEFAULT_ADMIN on both PortfolioSub and TradePairs contracts._
 
+
 ## Variables
 
 ### VERSION
@@ -34,6 +35,7 @@ event AuctionMatchFinished(bytes32 pair)
 
 (Un)pauses portoflioSub and portfolioBridgeSub and TradePairs contracts for upgrade
 
+
 ```solidity
 function pauseForUpgrade(bool _pause) external
 ```
@@ -44,11 +46,12 @@ function pauseForUpgrade(bool _pause) external
 | ---- | ---- | ----------- |
 | _pause | bool | true to pause, false to unpause |
 
+
 ### setOrderBooks
 
 Set the address of the OrderBooks contract
 
-_Needed to initiate match auction orders_
+**Dev notes:** _Needed to initiate match auction orders_
 
 ```solidity
 function setOrderBooks(address _orderbooks) external
@@ -60,9 +63,11 @@ function setOrderBooks(address _orderbooks) external
 | ---- | ---- | ----------- |
 | _orderbooks | address | Address of the OrderBooks contract |
 
+
 ### setTradePairs
 
 Sets trade pairs contract
+
 
 ```solidity
 function setTradePairs(contract ITradePairs _tradePairs) external
@@ -74,20 +79,26 @@ function setTradePairs(contract ITradePairs _tradePairs) external
 | ---- | ---- | ----------- |
 | _tradePairs | contract ITradePairs | address of the trade pairs contract |
 
+
 ### getTradePairsAddr
+
+
 
 ```solidity
 function getTradePairsAddr() external view returns (contract ITradePairs)
 ```
+
 
 #### returns
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | contract ITradePairs | ITradePairs  trade pairs contract |
+
 ### pauseTrading
 
 Un(pause) trading functionality. Affects both addorder and cancelorder funcs.
+
 
 ```solidity
 function pauseTrading(bool _tradingPause) public
@@ -99,9 +110,11 @@ function pauseTrading(bool _tradingPause) public
 | ---- | ---- | ----------- |
 | _tradingPause | bool | true to pause trading, false to unpause |
 
+
 ### pauseTradePair
 
 Un(pause) trading functionality for a trade pair. Affects both addorder and cancelorder funcs.
+
 
 ```solidity
 function pauseTradePair(bytes32 _tradePairId, bool _tradePairPause) external
@@ -114,9 +127,11 @@ function pauseTradePair(bytes32 _tradePairId, bool _tradePairPause) external
 | _tradePairId | bytes32 | id of the trading pair |
 | _tradePairPause | bool | true to pause trading, false to unpause |
 
+
 ### updateAllRates
 
 Update all commissions rates of all trading pairs all at once
+
 
 ```solidity
 function updateAllRates(uint8 _makerRate, uint8 _takerRate) external
@@ -129,11 +144,13 @@ function updateAllRates(uint8 _makerRate, uint8 _takerRate) external
 | _makerRate | uint8 | maker fee rate |
 | _takerRate | uint8 | taker fee rate |
 
+
 ### addTradePair
 
 Adds a new trading pair to the exchange.
 
-_Both the base and quote symbol must exist in the PortfolioSub otherwise it will revert_
+**Dev notes:** _Both the base and quote symbol must exist in the PortfolioSub otherwise it will revert.
+Both `DEFAULT_ADMIN_ROLE` and `AUCTION_ADMIN_ROLE` can add a new trading pair._
 
 ```solidity
 function addTradePair(bytes32 _tradePairId, bytes32 _baseSymbol, uint8 _baseDisplayDecimals, bytes32 _quoteSymbol, uint8 _quoteDisplayDecimals, uint256 _minTradeAmount, uint256 _maxTradeAmount, enum ITradePairs.AuctionMode _mode) external
@@ -152,9 +169,11 @@ function addTradePair(bytes32 _tradePairId, bytes32 _baseSymbol, uint8 _baseDisp
 | _maxTradeAmount | uint256 | maximum trade amount |
 | _mode | enum ITradePairs.AuctionMode | auction mode |
 
+
 ### setAuctionMode
 
 Sets auction mode for a trading pair and its basetoken in the PortfolioSUb.
+
 
 ```solidity
 function setAuctionMode(bytes32 _tradePairId, bytes32 _baseSymbol, enum ITradePairs.AuctionMode _mode) external
@@ -168,9 +187,11 @@ function setAuctionMode(bytes32 _tradePairId, bytes32 _baseSymbol, enum ITradePa
 | _baseSymbol | bytes32 | symbol of the base token |
 | _mode | enum ITradePairs.AuctionMode | auction mode |
 
+
 ### updateRate
 
 Update maker and taker fee rates for execution
+
 
 ```solidity
 function updateRate(bytes32 _tradePair, uint8 _rate, enum ITradePairs.RateType _rateType) external
@@ -184,25 +205,29 @@ function updateRate(bytes32 _tradePair, uint8 _rate, enum ITradePairs.RateType _
 | _rate | uint8 | fee rate |
 | _rateType | enum ITradePairs.RateType | rate type, maker or taker |
 
+
 ### updateRates
 
 Update maker and taker fee rates for execution
 
+
 ```solidity
-function updateRates(bytes32 _tradePair, uint8 _makerRate, uint8 _takerRate) external
+function updateRates(bytes32 _tradePairId, uint8 _makerRate, uint8 _takerRate) external
 ```
 
 #### parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _tradePair | bytes32 | id of the trading pair |
+| _tradePairId | bytes32 | id of the trading pair |
 | _makerRate | uint8 | maker fee rate |
 | _takerRate | uint8 | taker fee rate |
+
 
 ### setAuctionPrice
 
 Sets auction price
+
 
 ```solidity
 function setAuctionPrice(bytes32 _tradePairId, uint256 _price) external
@@ -215,9 +240,11 @@ function setAuctionPrice(bytes32 _tradePairId, uint256 _price) external
 | _tradePairId | bytes32 | id of the trading pair |
 | _price | uint256 | price |
 
+
 ### setMinTradeAmount
 
 Sets minimum trade amount for a trade pair
+
 
 ```solidity
 function setMinTradeAmount(bytes32 _tradePairId, uint256 _minTradeAmount) external
@@ -230,7 +257,10 @@ function setMinTradeAmount(bytes32 _tradePairId, uint256 _minTradeAmount) extern
 | _tradePairId | bytes32 | id of the trading pair |
 | _minTradeAmount | uint256 | minimum trade amount |
 
+
 ### getMinTradeAmount
+
+
 
 ```solidity
 function getMinTradeAmount(bytes32 _tradePairId) external view returns (uint256)
@@ -242,14 +272,17 @@ function getMinTradeAmount(bytes32 _tradePairId) external view returns (uint256)
 | ---- | ---- | ----------- |
 | _tradePairId | bytes32 | id of the trading pair |
 
+
 #### returns
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | uint256 | uint256  minimum trade amount |
+
 ### setMaxTradeAmount
 
 Sets maximum trade amount for a trade pair
+
 
 ```solidity
 function setMaxTradeAmount(bytes32 _tradePairId, uint256 _maxTradeAmount) external
@@ -262,7 +295,10 @@ function setMaxTradeAmount(bytes32 _tradePairId, uint256 _maxTradeAmount) extern
 | _tradePairId | bytes32 | id of the trading pair |
 | _maxTradeAmount | uint256 | maximum trade amount |
 
+
 ### getMaxTradeAmount
+
+
 
 ```solidity
 function getMaxTradeAmount(bytes32 _tradePairId) external view returns (uint256)
@@ -274,16 +310,19 @@ function getMaxTradeAmount(bytes32 _tradePairId) external view returns (uint256)
 | ---- | ---- | ----------- |
 | _tradePairId | bytes32 | id of the trading pair |
 
+
 #### returns
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | uint256 | uint256  maximum trade amount |
+
 ### matchAuctionOrders
 
 Matches auction orders once the auction is closed and auction price is set
 
-_Takes the top of the book sell order, (bestAsk) and matches it with the buy orders sequantially_
+**Dev notes:** _Takes the top of the book sell order, (bestAsk), and matches it with the buy orders sequantially.
+An auction mode can safely be changed to AUCTIONMODE.OFF only when this function returns false._
 
 ```solidity
 function matchAuctionOrders(bytes32 _tradePairId, uint8 _maxCount) external returns (bool)
@@ -296,9 +335,11 @@ function matchAuctionOrders(bytes32 _tradePairId, uint8 _maxCount) external retu
 | _tradePairId | bytes32 | id of the trading pair |
 | _maxCount | uint8 | controls max number of fills an order can get at a time to avoid running out of gas |
 
+
 #### returns
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| [0] | bool | bool  true if more matches are possible. false if no more possible matches left in the orderbook.                 That also means auction mode can safely be changed to AUCTIONMODE.OFF |
+| [0] | bool | bool  true if more matches are possible. false if no more possible matches left in the orderbook. |
+
 

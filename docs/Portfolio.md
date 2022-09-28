@@ -23,6 +23,7 @@ will need to integrate with the PortfolioMain contract in the mainnet as well to
 your flow.
 ExchangeSub needs to have DEFAULT_ADMIN_ROLE on this contract._
 
+
 ## Variables
 
 ### TENK
@@ -115,7 +116,7 @@ event RoleUpdated(string name, string actionName, bytes32 updatedRole, address u
 
 initializer function for Upgradeable Portfolio
 
-_Grants admin role to msg.sender_
+**Dev notes:** _Grants admin role to msg.sender_
 
 ```solidity
 function initialize(bytes32 _native, uint32 _chainId) public virtual
@@ -128,11 +129,12 @@ function initialize(bytes32 _native, uint32 _chainId) public virtual
 | _native | bytes32 | Native token of the network. AVAX in mainnet, ALOT in subnet. |
 | _chainId | uint32 |  |
 
+
 ### setPortfolioBridge
 
 Sets the portfolio bridge contract address
 
-_Only callable by admin_
+**Dev notes:** _Only callable by admin_
 
 ```solidity
 function setPortfolioBridge(address _portfolioBridge) external
@@ -144,11 +146,12 @@ function setPortfolioBridge(address _portfolioBridge) external
 | ---- | ---- | ----------- |
 | _portfolioBridge | address | New portfolio bridge contract address |
 
+
 ### enableBridgeProvider
 
 Enables or disables a bridge provider
 
-_Only callable by admin_
+**Dev notes:** _Only callable by admin_
 
 ```solidity
 function enableBridgeProvider(enum IPortfolioBridge.BridgeProvider _bridge, bool enable) external
@@ -161,11 +164,12 @@ function enableBridgeProvider(enum IPortfolioBridge.BridgeProvider _bridge, bool
 | _bridge | enum IPortfolioBridge.BridgeProvider | Enum value of the bridge provider |
 | enable | bool | True to enable, false to disable |
 
+
 ### lzForceResumeReceive
 
 Clears the blocking message in the LZ bridge, if any
 
-_Force resume receive action is destructive
+**Dev notes:** _Force resume receive action is destructive
 should be used only when the bridge is stuck and message is already recovered
    Only callable by admin_
 
@@ -180,11 +184,12 @@ function lzForceResumeReceive(uint16 _srcChainId, bytes _srcAddress) external
 | _srcChainId | uint16 | LZ Chain ID of the source chain |
 | _srcAddress | bytes | Address of the source contract |
 
+
 ### lzRetryPayload
 
 Retries the stuck message in the LZ bridge, if any
 
-_Only callable by admin_
+**Dev notes:** _Only callable by admin_
 
 ```solidity
 function lzRetryPayload(uint16 _srcChainId, bytes _srcAddress, bytes _payload) external
@@ -198,9 +203,11 @@ function lzRetryPayload(uint16 _srcChainId, bytes _srcAddress, bytes _payload) e
 | _srcAddress | bytes | Address of the source contract |
 | _payload | bytes | Payload of the stucked message |
 
+
 ### getXFer
 
 Parses XFER message coming from the bridge
+
 
 ```solidity
 function getXFer(bytes _payload) internal view returns (address, bytes32, uint256)
@@ -212,6 +219,7 @@ function getXFer(bytes _payload) internal view returns (address, bytes32, uint25
 | ---- | ---- | ----------- |
 | _payload | bytes | Payload passed from the bridge |
 
+
 #### returns
 
 | Name | Type | Description |
@@ -219,11 +227,12 @@ function getXFer(bytes _payload) internal view returns (address, bytes32, uint25
 | [0] | address | address  Address of the trader |
 | [1] | bytes32 | bytes32  Symbol of the token |
 | [2] | uint256 | uint256  Amount of the token |
+
 ### lzRecoverPayload
 
 Recovers the stuck message in the LZ bridge, if any
 
-_Implemented in the child contract, as the logic differs._
+**Dev notes:** _Implemented in the child contract, as the logic differs._
 
 ```solidity
 function lzRecoverPayload(bytes _payload) external virtual
@@ -235,11 +244,12 @@ function lzRecoverPayload(bytes _payload) external virtual
 | ---- | ---- | ----------- |
 | _payload | bytes | Payload of the stucked message |
 
+
 ### processXFerPayload
 
 Processes the XFER message coming from the bridge
 
-_Implemented in the child contract, as the logic differs._
+**Dev notes:** _Implemented in the child contract, as the logic differs._
 
 ```solidity
 function processXFerPayload(address _trader, bytes32 _symbol, uint256 _quantity, enum IPortfolio.Tx _transaction) external virtual
@@ -254,11 +264,12 @@ function processXFerPayload(address _trader, bytes32 _symbol, uint256 _quantity,
 | _quantity | uint256 | Amount of the token |
 | _transaction | enum IPortfolio.Tx | Transaction type Enum |
 
+
 ### revokeRole
 
 Revoke access control role wrapper
 
-_Only callable by admin. Can't revoke itself's role, can't remove the only admin._
+**Dev notes:** _Only callable by admin. Can't revoke itself's role, can't remove the only admin._
 
 ```solidity
 function revokeRole(bytes32 _role, address _address) public
@@ -271,57 +282,66 @@ function revokeRole(bytes32 _role, address _address) public
 | _role | bytes32 | Role to be revoked |
 | _address | address | Address to be revoked |
 
+
 ### getNative
 
 Returns the native token of the chain
 
+
 ```solidity
 function getNative() external view returns (bytes32)
 ```
+
 
 #### returns
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | bytes32 | bytes32  Symbol of the native token |
+
 ### getChainId
 
 Returns the native token of the chain
 
+
 ```solidity
 function getChainId() external view returns (uint32)
 ```
+
 
 #### returns
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | uint32 | bytes32  Symbol of the native token |
+
 ### pause
 
 Pauses the portfolioBridge AND the contract
 
-_Only callable by admin_
+**Dev notes:** _Only callable by admin_
 
 ```solidity
 function pause() external
 ```
 
+
 ### unpause
 
 Unpauses portfolioBridge AND the contract
 
-_Only callable by admin_
+**Dev notes:** _Only callable by admin_
 
 ```solidity
 function unpause() external
 ```
 
+
 ### pauseDeposit
 
 (Dis)allows the deposit functionality only
 
-_Only callable by admin_
+**Dev notes:** _Only callable by admin_
 
 ```solidity
 function pauseDeposit(bool _pause) external
@@ -333,9 +353,11 @@ function pauseDeposit(bool _pause) external
 | ---- | ---- | ----------- |
 | _pause | bool | True to allow, false to disallow |
 
+
 ### setBridgeFee
 
 Sets the bridge provider fee for the given token
+
 
 ```solidity
 function setBridgeFee(bytes32 _symbol, uint256 _fee) external
@@ -348,11 +370,12 @@ function setBridgeFee(bytes32 _symbol, uint256 _fee) external
 | _symbol | bytes32 | Symbol of the token |
 | _fee | uint256 | Fee to be set |
 
+
 ### addTrustedContract
 
 Adds the given contract to trusted contracts in order to provide excluded functionality
 
-_Only callable by admin_
+**Dev notes:** _Only callable by admin_
 
 ```solidity
 function addTrustedContract(address _contract, string _organization) external
@@ -365,7 +388,10 @@ function addTrustedContract(address _contract, string _organization) external
 | _contract | address | Address of the contract to be added |
 | _organization | string | Organization of the contract to be added |
 
+
 ### isTrustedContract
+
+
 
 ```solidity
 function isTrustedContract(address _contract) external view returns (bool)
@@ -377,16 +403,18 @@ function isTrustedContract(address _contract) external view returns (bool)
 | ---- | ---- | ----------- |
 | _contract | address | Address of the contract |
 
+
 #### returns
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | bool | bool  True if the contract is trusted |
+
 ### removeTrustedContract
 
 Removes the given contract from trusted contracts
 
-_Only callable by admin_
+**Dev notes:** _Only callable by admin_
 
 ```solidity
 function removeTrustedContract(address _contract) external
@@ -398,9 +426,11 @@ function removeTrustedContract(address _contract) external
 | ---- | ---- | ----------- |
 | _contract | address | Address of the contract to be removed |
 
+
 ### getBridgeSwapAmount
 
 Returns the bridge swap amount for the given token
+
 
 ```solidity
 function getBridgeSwapAmount(bytes32 _symbol) external view returns (uint256)
@@ -412,16 +442,18 @@ function getBridgeSwapAmount(bytes32 _symbol) external view returns (uint256)
 | ---- | ---- | ----------- |
 | _symbol | bytes32 | Symbol of the token |
 
+
 #### returns
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | uint256 | uint256  Bridge swap amount |
+
 ### setBridgeSwapAmount
 
 Sets the bridge swap amount for the given token
 
-_Always set it to equivalent of 1 ALOT. Only callable by admin._
+**Dev notes:** _Always set it to equivalent of 1 ALOT. Only callable by admin._
 
 ```solidity
 function setBridgeSwapAmount(bytes32 _symbol, uint256 _amount) external
@@ -434,11 +466,12 @@ function setBridgeSwapAmount(bytes32 _symbol, uint256 _amount) external
 | _symbol | bytes32 | Symbol of the token |
 | _amount | uint256 | Amount of token to be set |
 
+
 ### addIERC20
 
 Function to add IERC20 token to the portfolio
 
-_Implemented in the child contract, as the logic differs._
+**Dev notes:** _Implemented in the child contract, as the logic differs._
 
 ```solidity
 function addIERC20(bytes32 _symbol, address _tokenaddress, uint32 _srcChainId, uint8 _decimals, enum ITradePairs.AuctionMode _mode) internal virtual
@@ -454,11 +487,12 @@ function addIERC20(bytes32 _symbol, address _tokenaddress, uint32 _srcChainId, u
 | _decimals | uint8 | Decimals of the token |
 | _mode | enum ITradePairs.AuctionMode | Starting auction mode of the token |
 
+
 ### removeIERC20
 
 Function to remove IERC20 token from the portfolio
 
-_Implemented in the child contract, as the logic differs._
+**Dev notes:** _Implemented in the child contract, as the logic differs._
 
 ```solidity
 function removeIERC20(bytes32 _symbol) internal virtual
@@ -470,9 +504,11 @@ function removeIERC20(bytes32 _symbol) internal virtual
 | ---- | ---- | ----------- |
 | _symbol | bytes32 | Symbol of the token |
 
+
 ### getToken
 
 Frontend function to get the IERC20 token
+
 
 ```solidity
 function getToken(bytes32 _symbol) external view virtual returns (contract IERC20Upgradeable)
@@ -484,18 +520,20 @@ function getToken(bytes32 _symbol) external view virtual returns (contract IERC2
 | ---- | ---- | ----------- |
 | _symbol | bytes32 | Symbol of the token |
 
+
 #### returns
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | contract IERC20Upgradeable | IERC20Upgradeable  IERC20 token |
+
 ### addToken
 
 Adds the given token to the portfolio
 
-_Only callable by admin
-    We don't allow tokens with the same symbols but different addresses
-    Native symbol is also added by default with 0 address_
+**Dev notes:** _Only callable by admin.
+We don't allow tokens with the same symbols but different addresses.
+Native symbol is also added by default with 0 address._
 
 ```solidity
 function addToken(bytes32 _symbol, address _tokenAddress, uint32 _srcChainId, uint8 _decimals, enum ITradePairs.AuctionMode _mode) public virtual
@@ -511,12 +549,13 @@ function addToken(bytes32 _symbol, address _tokenAddress, uint32 _srcChainId, ui
 | _decimals | uint8 | Decimals of the token |
 | _mode | enum ITradePairs.AuctionMode | Starting auction mode of the token |
 
+
 ### removeToken
 
 Removes the given token from the portfolio
 
-_Only callable by admin and portfolio should be paused. Makes sure there are no
-                in-flight deposit/withdraw messages_
+**Dev notes:** _Only callable by admin and portfolio should be paused. Makes sure there are no
+in-flight deposit/withdraw messages_
 
 ```solidity
 function removeToken(bytes32 _symbol) public virtual
@@ -528,24 +567,29 @@ function removeToken(bytes32 _symbol) public virtual
 | ---- | ---- | ----------- |
 | _symbol | bytes32 | Symbol of the token |
 
+
 ### getTokenList
 
 Frontend function to get all the tokens in the portfolio
 
+
 ```solidity
 function getTokenList() external view returns (bytes32[])
 ```
+
 
 #### returns
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | bytes32[] | bytes32[]  Array of symbols of the tokens |
+
 ### getTokenDetails
 
 Returns the token details.
 
-_Will always return actionMode.OFF as auctionMode in controlled in PortfolioSub_
+**Dev notes:** _Subnet does not have any ERC20s, hence the tokenAddress is token's mainnet address.
+See the TokenDetails struct in IPortfolio for the full type information of the return variable._
 
 ```solidity
 function getTokenDetails(bytes32 _symbol) external view returns (struct IPortfolio.TokenDetails)
@@ -557,37 +601,47 @@ function getTokenDetails(bytes32 _symbol) external view returns (struct IPortfol
 | ---- | ---- | ----------- |
 | _symbol | bytes32 | Symbol of the token. Identical to mainnet |
 
+
 #### returns
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| [0] | struct IPortfolio.TokenDetails | TokenDetails decimals (Identical to mainnet), tokenAddress (Token address at the mainnet)                 Subnet does not have any ERC20s hence this tokenAddress is address(0)                 Auction mode of the token , Source Chain id, symbol and symbolId |
+| [0] | struct IPortfolio.TokenDetails | TokenDetails decimals (Identical to mainnet), tokenAddress (Token address at the mainnet) |
+
 ### getIdForToken
+
+
 
 ```solidity
 function getIdForToken(bytes32 _symbol) internal view returns (bytes32 symbolId)
 ```
 
+
 ### fallback
 
-_we revert transaction if a non-existing function is called_
+
+**Dev notes:** _we revert transaction if a non-existing function is called_
 
 ```solidity
 fallback() external payable
 ```
+
 
 ### receive
 
 Receive function for direct send of native tokens
  @dev we process it as a deposit with the default bridge
 
+
 ```solidity
 receive() external payable
 ```
 
+
 ### depositTokenChecks
 
 Checks if the deposit is valid
+
 
 ```solidity
 function depositTokenChecks(uint256 _quantity) internal virtual
@@ -599,9 +653,11 @@ function depositTokenChecks(uint256 _quantity) internal virtual
 | ---- | ---- | ----------- |
 | _quantity | uint256 | Amount to be deposited |
 
+
 ### updateTransferFeeRate
 
 Updates the transfer fee rate
+
 
 ```solidity
 function updateTransferFeeRate(uint256 _rate, enum IPortfolio.Tx _rateType) external virtual
@@ -614,11 +670,12 @@ function updateTransferFeeRate(uint256 _rate, enum IPortfolio.Tx _rateType) exte
 | _rate | uint256 | New transfer fee rate |
 | _rateType | enum IPortfolio.Tx | Enum for transfer type |
 
+
 ### setAuctionMode
 
 Sets the auction mode for the token
 
-_Implemented in the child contract, as the logic differs._
+**Dev notes:** _Implemented in the child contract, as the logic differs._
 
 ```solidity
 function setAuctionMode(bytes32 _symbol, enum ITradePairs.AuctionMode _mode) external virtual
@@ -631,9 +688,11 @@ function setAuctionMode(bytes32 _symbol, enum ITradePairs.AuctionMode _mode) ext
 | _symbol | bytes32 | Symbol of the token |
 | _mode | enum ITradePairs.AuctionMode | New auction mode to be set |
 
+
 ### depositNative
 
-_Implemented in the child contract, as the logic differs._
+
+**Dev notes:** _Implemented in the child contract, as the logic differs._
 
 ```solidity
 function depositNative(address payable _from, enum IPortfolioBridge.BridgeProvider _bridge) external payable virtual
@@ -646,9 +705,11 @@ function depositNative(address payable _from, enum IPortfolioBridge.BridgeProvid
 | _from | address payable | Address of the depositor |
 | _bridge | enum IPortfolioBridge.BridgeProvider | Enum for bridge type |
 
+
 ### withdrawNative
 
-_Implemented in the child contract, as the logic differs._
+
+**Dev notes:** _Implemented in the child contract, as the logic differs._
 
 ```solidity
 function withdrawNative(address payable _to, uint256 _quantity) external virtual
@@ -661,9 +722,11 @@ function withdrawNative(address payable _to, uint256 _quantity) external virtual
 | _to | address payable | Address of the withdrawer |
 | _quantity | uint256 | Amount to be withdrawn |
 
+
 ### depositToken
 
-_Implemented in the child contract, as the logic differs._
+
+**Dev notes:** _Implemented in the child contract, as the logic differs._
 
 ```solidity
 function depositToken(address _from, bytes32 _symbol, uint256 _quantity, enum IPortfolioBridge.BridgeProvider _bridge) external virtual
@@ -678,9 +741,11 @@ function depositToken(address _from, bytes32 _symbol, uint256 _quantity, enum IP
 | _quantity | uint256 | Amount to be deposited |
 | _bridge | enum IPortfolioBridge.BridgeProvider | Enum for bridge type |
 
+
 ### depositTokenFromContract
 
-_Implemented in the child contract, as the logic differs._
+
+**Dev notes:** _Implemented in the child contract, as the logic differs._
 
 ```solidity
 function depositTokenFromContract(address _from, bytes32 _symbol, uint256 _quantity) external virtual
@@ -694,9 +759,11 @@ function depositTokenFromContract(address _from, bytes32 _symbol, uint256 _quant
 | _symbol | bytes32 | Symbol of the token |
 | _quantity | uint256 | Amount to be deposited |
 
+
 ### withdrawToken
 
-_Implemented in the child contract, as the logic differs._
+
+**Dev notes:** _Implemented in the child contract, as the logic differs._
 
 ```solidity
 function withdrawToken(address _to, bytes32 _symbol, uint256 _quantity, enum IPortfolioBridge.BridgeProvider _bridge) external virtual
@@ -711,9 +778,11 @@ function withdrawToken(address _to, bytes32 _symbol, uint256 _quantity, enum IPo
 | _quantity | uint256 | Amount to be withdrawn |
 | _bridge | enum IPortfolioBridge.BridgeProvider | Enum for bridge type |
 
+
 ### adjustAvailable
 
-_Implemented in the child contract, as the logic differs._
+
+**Dev notes:** _Implemented in the child contract, as the logic differs._
 
 ```solidity
 function adjustAvailable(enum IPortfolio.Tx _transaction, address _trader, bytes32 _symbol, uint256 _amount) external virtual
@@ -728,9 +797,11 @@ function adjustAvailable(enum IPortfolio.Tx _transaction, address _trader, bytes
 | _symbol | bytes32 | Symbol of the token |
 | _amount | uint256 | Amount to be adjusted |
 
+
 ### addExecution
 
-_Implemented in the child contract, as the logic differs._
+
+**Dev notes:** _Implemented in the child contract, as the logic differs._
 
 ```solidity
 function addExecution(enum ITradePairs.Side _makerSide, address _makerAddr, address _takerAddr, bytes32 _baseSymbol, bytes32 _quoteSymbol, uint256 _baseAmount, uint256 _quoteAmount, uint256 _makerfeeCharged, uint256 _takerfeeCharged) external virtual
@@ -749,4 +820,6 @@ function addExecution(enum ITradePairs.Side _makerSide, address _makerAddr, addr
 | _quoteAmount | uint256 | Amount of quote token |
 | _makerfeeCharged | uint256 | Fee charged to the maker |
 | _takerfeeCharged | uint256 | Fee charged to the taker |
+
+
 

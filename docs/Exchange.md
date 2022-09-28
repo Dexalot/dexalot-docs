@@ -13,6 +13,7 @@ All the functions pertaining to Auction can also be called directly in
 TradePairs and Portfolio using DEFAULT_ADMIN_ROLE but not recommended because certain
 actions require a synchronized update to both Portfolio and TradePairs contracts._
 
+
 ## Variables
 
 ### portfolio
@@ -45,15 +46,17 @@ event RoleUpdated(string name, string actionName, bytes32 updatedRole, address u
 
 Initializer for upgradeable contract.
 
-_Grants admin role to the deployer._
+**Dev notes:** _Grants admin role to the deployer._
 
 ```solidity
 function initialize() public virtual
 ```
 
+
 ### addAdmin
 
 Adds Default Admin role to the address
+
 
 ```solidity
 function addAdmin(address _address) public virtual
@@ -65,9 +68,11 @@ function addAdmin(address _address) public virtual
 | ---- | ---- | ----------- |
 | _address | address | address to add role to |
 
+
 ### removeAdmin
 
 Removes Default Admin role from the address
+
 
 ```solidity
 function removeAdmin(address _address) public virtual
@@ -79,7 +84,10 @@ function removeAdmin(address _address) public virtual
 | ---- | ---- | ----------- |
 | _address | address | address to remove role from |
 
+
 ### isAdmin
+
+
 
 ```solidity
 function isAdmin(address _address) public view returns (bool)
@@ -91,14 +99,17 @@ function isAdmin(address _address) public view returns (bool)
 | ---- | ---- | ----------- |
 | _address | address | address to check |
 
+
 #### returns
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | bool | bool    true if address has Default Admin role |
+
 ### addAuctionAdmin
 
 Adds Auction Admin role to the address
+
 
 ```solidity
 function addAuctionAdmin(address _address) external
@@ -110,9 +121,11 @@ function addAuctionAdmin(address _address) external
 | ---- | ---- | ----------- |
 | _address | address | address to add role to |
 
+
 ### removeAuctionAdmin
 
 Removes Auction Admin role from the address
+
 
 ```solidity
 function removeAuctionAdmin(address _address) external
@@ -124,7 +137,10 @@ function removeAuctionAdmin(address _address) external
 | ---- | ---- | ----------- |
 | _address | address | address to remove role from |
 
+
 ### isAuctionAdmin
+
+
 
 ```solidity
 function isAuctionAdmin(address _address) external view returns (bool)
@@ -136,14 +152,17 @@ function isAuctionAdmin(address _address) external view returns (bool)
 | ---- | ---- | ----------- |
 | _address | address | address to check |
 
+
 #### returns
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | bool | bool  true if address has Auction Admin role |
+
 ### setPortfolio
 
 Set portfolio address
+
 
 ```solidity
 function setPortfolio(contract IPortfolio _portfolio) external
@@ -155,22 +174,27 @@ function setPortfolio(contract IPortfolio _portfolio) external
 | ---- | ---- | ----------- |
 | _portfolio | contract IPortfolio | address of portfolio contract |
 
+
 ### getPortfolio
+
+
 
 ```solidity
 function getPortfolio() external view returns (contract IPortfolio)
 ```
+
 
 #### returns
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | contract IPortfolio | IPortfolio  portfolio contract |
+
 ### pausePortfolio
 
 (Un)pause portfolio operations
 
-_This also includes deposit/withdraw processes_
+**Dev notes:** _This also includes deposit/withdraw processes_
 
 ```solidity
 function pausePortfolio(bool _pause) public
@@ -182,9 +206,11 @@ function pausePortfolio(bool _pause) public
 | ---- | ---- | ----------- |
 | _pause | bool | true to pause, false to unpause |
 
+
 ### pauseForUpgrade
 
 Implemented in the child contract, as the logic differs.
+
 
 ```solidity
 function pauseForUpgrade(bool _pause) external virtual
@@ -196,15 +222,20 @@ function pauseForUpgrade(bool _pause) external virtual
 | ---- | ---- | ----------- |
 | _pause | bool | true to pause, false to unpause |
 
+
 ### fallback
+
+
 
 ```solidity
 fallback() external
 ```
 
+
 ### stringToBytes32
 
-_utility function to convert string to bytes32_
+
+**Dev notes:** _utility function to convert string to bytes32_
 
 ```solidity
 function stringToBytes32(string _string) public pure returns (bytes32 result)
@@ -216,14 +247,17 @@ function stringToBytes32(string _string) public pure returns (bytes32 result)
 | ---- | ---- | ----------- |
 | _string | string | string to convert |
 
+
 #### returns
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | result | bytes32 | bytes32 representation of the string |
+
 ### bytes32ToString
 
-_utility function to convert bytes32 to string_
+
+**Dev notes:** _utility function to convert bytes32 to string_
 
 ```solidity
 function bytes32ToString(bytes32 _bytes32) public pure returns (string)
@@ -235,14 +269,17 @@ function bytes32ToString(bytes32 _bytes32) public pure returns (string)
 | ---- | ---- | ----------- |
 | _bytes32 | bytes32 | bytes32 to convert |
 
+
 #### returns
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | string | string  string representation of the bytes32 |
+
 ### addTrustedContract
 
 Adds trusted contract to portfolio
+
 
 ```solidity
 function addTrustedContract(address _contract, string _name) external
@@ -255,7 +292,10 @@ function addTrustedContract(address _contract, string _name) external
 | _contract | address | address of trusted contract |
 | _name | string | name of trusted contract |
 
+
 ### isTrustedContract
+
+
 
 ```solidity
 function isTrustedContract(address _contract) external view returns (bool)
@@ -267,14 +307,17 @@ function isTrustedContract(address _contract) external view returns (bool)
 | ---- | ---- | ----------- |
 | _contract | address | address to check |
 
+
 #### returns
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | bool | bool  true if contract is trusted |
+
 ### removeTrustedContract
 
 Removes trusted contract from portfolio
+
 
 ```solidity
 function removeTrustedContract(address _contract) external
@@ -286,11 +329,12 @@ function removeTrustedContract(address _contract) external
 | ---- | ---- | ----------- |
 | _contract | address | address of trusted contract |
 
+
 ### addToken
 
 Add new token to portfolio
 
-_Needs to be called after the portfolio's ownership has passed to exchange_
+**Dev notes:** _Needs to be called after the portfolio's ownership has passed to exchange_
 
 ```solidity
 function addToken(bytes32 _symbol, address _tokenaddress, uint32 _srcChainId, uint8 _decimals, enum ITradePairs.AuctionMode _mode) external
@@ -305,4 +349,6 @@ function addToken(bytes32 _symbol, address _tokenaddress, uint32 _srcChainId, ui
 | _srcChainId | uint32 | Source Chain id |
 | _decimals | uint8 | decimals of the token |
 | _mode | enum ITradePairs.AuctionMode | starting auction mode |
+
+
 

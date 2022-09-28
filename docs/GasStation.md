@@ -5,6 +5,8 @@
 This contract swaps other tokens with subnet native coin to send users native coin for gas.
 It receives native coin and only sends out to the low balanced users via PortfolioSub.
 
+
+
 ## Variables
 
 ### VERSION
@@ -47,7 +49,7 @@ event GasRequested(address to, uint256 amount)
 
 Initializer for upgradeable contract.
 
-_Grant admin and pauser role to the sender. Grant swapper role to swapper (portfolio) contract_
+**Dev notes:** _Grant admin and pauser role to the sender. Grant swapper role to swapper (portfolio) contract_
 
 ```solidity
 function initialize(address _swapper, uint256 _gasAmount) public
@@ -60,31 +62,34 @@ function initialize(address _swapper, uint256 _gasAmount) public
 | _swapper | address | Address of the swapper contract (PortfolioSub in our case) |
 | _gasAmount | uint256 | Amount of gas to be distrubuted to the users |
 
+
 ### pause
 
 Pauses gas distribution
 
-_Only pauser can pause_
+**Dev notes:** _Only pauser can pause_
 
 ```solidity
 function pause() external
 ```
 
+
 ### unpause
 
 Unpauses gas distribution
 
-_Only pauser can unpause_
+**Dev notes:** _Only pauser can unpause_
 
 ```solidity
 function unpause() external
 ```
 
+
 ### setGasAmount
 
 Set gas amount to be distributed to the users
 
-_Only admin can set gas amount_
+**Dev notes:** _Only admin can set gas amount_
 
 ```solidity
 function setGasAmount(uint256 _gasAmount) external
@@ -96,11 +101,12 @@ function setGasAmount(uint256 _gasAmount) external
 | ---- | ---- | ----------- |
 | _gasAmount | uint256 | New gas amount |
 
+
 ### requestGas
 
 Swapper contract will request gas after depositing bridge fee to our EOA
 
-_Only swapper (Portfolio Sub) can request gas_
+**Dev notes:** _Only swapper (Portfolio Sub) can request gas_
 
 ```solidity
 function requestGas(address _to) external
@@ -112,11 +118,12 @@ function requestGas(address _to) external
 | ---- | ---- | ----------- |
 | _to | address | Address of the user to receive gas |
 
+
 ### withdrawNative
 
 Withdraws native alot from the contract
 
-_Only admin can withdraw_
+**Dev notes:** _Only admin can withdraw_
 
 ```solidity
 function withdrawNative(uint256 amount) external
@@ -128,15 +135,23 @@ function withdrawNative(uint256 amount) external
 | ---- | ---- | ----------- |
 | amount | uint256 | Amount of alot to withdraw |
 
+
 ### receive
+
+
 
 ```solidity
 receive() external payable
 ```
 
+
 ### fallback
+
+
 
 ```solidity
 fallback() external payable
 ```
+
+
 

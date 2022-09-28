@@ -1,54 +1,36 @@
 # IPortfolioMinter
 
-
-
-
-
-
-
-
+**Interface of PortfolioMinter**
 
 ## Methods
-
-### mint
-
-```solidity
-function mint(address to, uint256 amount) external nonpayable
-```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| to | address | undefined |
-| amount | uint256 | undefined |
 
 ### pause
 
 ```solidity
-function pause() external nonpayable
+function pause() external
 ```
-
-
-
-
-
 
 ### unpause
 
 ```solidity
-function unpause() external nonpayable
+function unpause() external
 ```
 
+### mint
 
+```solidity
+function mint(address to, uint256 amount) external
+```
 
+### receive
 
+```solidity
+receive() external payable
+```
 
+### fallback
 
-
-
+```solidity
+fallback() external payable
+```
 

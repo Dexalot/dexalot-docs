@@ -1,1494 +1,233 @@
 # PortfolioBridgeSub
 
-
-
-> Bridge aggregator and message relayer for subnet
+**Bridge aggregator and message relayer for subnet**
 
 This contracts checks volume and threshold limits for withdrawals.
 
-*It implements delayedTransfers as well as volume caps per epoch per token*
+**Dev notes:** _It implements delayedTransfers as well as volume caps per epoch per token_
 
-## Methods
-
-### DEFAULT_ADMIN_ROLE
-
-```solidity
-function DEFAULT_ADMIN_ROLE() external view returns (bytes32)
-```
-
-
-
-
-
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | bytes32 | undefined |
-
-### PORTFOLIO_ROLE
-
-```solidity
-function PORTFOLIO_ROLE() external view returns (bytes32)
-```
-
-
-
-
-
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | bytes32 | undefined |
-
-### VERSION
-
-```solidity
-function VERSION() external pure returns (bytes32)
-```
-
-
-
-
-
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | bytes32 | undefined |
-
-### addToken
-
-```solidity
-function addToken(bytes32 _symbol, address _tokenAddress, uint32 _srcChainId, uint8 _decimals, enum ITradePairs.AuctionMode) external nonpayable
-```
-
-Adds the given token to the portfoBrige. PortfoBrigeSub the list will be bigger as they could be from different mainnet chains
-
-*Only callable by admin or from Portfolio when a new common symbol is added for the first time.The same common symbol but different symbolId are required when adding a token to PortfoBrigeSub.Native symbol is also added as a token with 0 address*
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _symbol | bytes32 | Symbol of the token |
-| _tokenAddress | address | Mainnet token address the symbol or zero address for AVAX |
-| _srcChainId | uint32 | Source Chain id |
-| _decimals | uint8 | Decimals of the token |
-| _4 | enum ITradePairs.AuctionMode | undefined |
-
-### bridgeEnabled
-
-```solidity
-function bridgeEnabled(enum IPortfolioBridge.BridgeProvider) external view returns (bool)
-```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | enum IPortfolioBridge.BridgeProvider | undefined |
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | bool | undefined |
-
-### defaultTargetChainId
-
-```solidity
-function defaultTargetChainId() external view returns (uint32)
-```
-
-
-
-
-
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | uint32 | undefined |
+## Variables
 
 ### delayPeriod
 
 ```solidity
-function delayPeriod() external view returns (uint256)
+uint256 delayPeriod
 ```
-
-
-
-
-
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | uint256 | undefined |
-
-### delayThresholds
-
-```solidity
-function delayThresholds(bytes32) external view returns (uint256)
-```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | bytes32 | undefined |
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | uint256 | undefined |
-
-### delayedTransfers
-
-```solidity
-function delayedTransfers(bytes32) external view returns (uint64 nonce, enum IPortfolio.Tx transaction, address trader, bytes32 symbol, uint256 quantity, uint256 timestamp)
-```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | bytes32 | undefined |
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| nonce | uint64 | undefined |
-| transaction | enum IPortfolio.Tx | undefined |
-| trader | address | undefined |
-| symbol | bytes32 | undefined |
-| quantity | uint256 | undefined |
-| timestamp | uint256 | undefined |
-
-### enableBridgeProvider
-
-```solidity
-function enableBridgeProvider(enum IPortfolioBridge.BridgeProvider _bridge, bool enable) external nonpayable
-```
-
-Enables/disables given bridge
-
-*Only admin can enable/disable bridge*
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _bridge | enum IPortfolioBridge.BridgeProvider | Bridge to enable/disable |
-| enable | bool | True to enable, false to disable |
-
 ### epochLength
 
 ```solidity
-function epochLength() external view returns (uint256)
+uint256 epochLength
 ```
-
-
-
-
-
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | uint256 | undefined |
-
-### epochVolumeCaps
+### delayedTransfers
 
 ```solidity
-function epochVolumeCaps(bytes32) external view returns (uint256)
+mapping(bytes32 => struct IPortfolio.XFER) delayedTransfers
 ```
+### delayThresholds
 
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | bytes32 | undefined |
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | uint256 | undefined |
-
+```solidity
+mapping(bytes32 => uint256) delayThresholds
+```
 ### epochVolumes
 
 ```solidity
-function epochVolumes(bytes32) external view returns (uint256)
+mapping(bytes32 => uint256) epochVolumes
 ```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | bytes32 | undefined |
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | uint256 | undefined |
-
-### executeDelayedTransfer
+### epochVolumeCaps
 
 ```solidity
-function executeDelayedTransfer(bytes32 _id) external nonpayable
+mapping(bytes32 => uint256) epochVolumeCaps
 ```
-
-Executes delayed transfer if the delay period has passed
-
-*Only admin can call this function*
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _id | bytes32 | Transfer ID |
-
-### forceResumeReceive
-
-```solidity
-function forceResumeReceive(uint16 _srcChainId, bytes _srcAddress) external nonpayable
-```
-
-Force resumes the stucked bridge
-
-*This action is destructive! Please use it only if you know what you are doing.Only admin can call this*
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _srcChainId | uint16 | Source chain id |
-| _srcAddress | bytes | Source contract address |
-
-### gasForDestinationLzReceive
-
-```solidity
-function gasForDestinationLzReceive() external view returns (uint256)
-```
-
-
-
-
-
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | uint256 | undefined |
-
-### getConfig
-
-```solidity
-function getConfig(uint16 _version, uint16 _chainId, address, uint256 _configType) external view returns (bytes)
-```
-
-
-
-*parameter for address is ignored as it is defaulted to the address of this contract*
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _version | uint16 | Version of the config |
-| _chainId | uint16 | Chain id |
-| _2 | address | undefined |
-| _configType | uint256 | Config type |
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | bytes | bytes  Config details |
-
-### getDefaultBridgeProvider
-
-```solidity
-function getDefaultBridgeProvider() external view returns (enum IPortfolioBridge.BridgeProvider)
-```
-
-Returns default bridge Provider
-
-
-
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | enum IPortfolioBridge.BridgeProvider | BridgeProvider |
-
-### getInboundNonce
-
-```solidity
-function getInboundNonce(uint16 _srcChainId, bytes _srcAddress) external view returns (uint64)
-```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _srcChainId | uint16 | Source chain id |
-| _srcAddress | bytes | Source contract address |
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | uint64 | uint64  Inbound nonce |
-
-### getLzEndPoint
-
-```solidity
-function getLzEndPoint() external view returns (contract ILayerZeroEndpoint)
-```
-
-
-
-
-
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | contract ILayerZeroEndpoint | ILayerZeroEndpoint  Layer Zero Endpoint |
-
-### getOutboundNonce
-
-```solidity
-function getOutboundNonce(uint16 _dstChainId, address _srcAddress) external view returns (uint64)
-```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _dstChainId | uint16 | Destination chain id |
-| _srcAddress | address | Source contract address |
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | uint64 | uint64  Outbound nonce |
-
-### getPortfolio
-
-```solidity
-function getPortfolio() external view returns (contract IPortfolio)
-```
-
-
-
-
-
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | contract IPortfolio | IPortfolio  Portfolio contract |
-
-### getRoleAdmin
-
-```solidity
-function getRoleAdmin(bytes32 role) external view returns (bytes32)
-```
-
-
-
-*Returns the admin role that controls `role`. See {grantRole} and {revokeRole}. To change a role&#39;s admin, use {_setRoleAdmin}.*
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| role | bytes32 | undefined |
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | bytes32 | undefined |
-
-### getRoleMember
-
-```solidity
-function getRoleMember(bytes32 role, uint256 index) external view returns (address)
-```
-
-
-
-*Returns one of the accounts that have `role`. `index` must be a value between 0 and {getRoleMemberCount}, non-inclusive. Role bearers are not sorted in any particular way, and their ordering may change at any point. WARNING: When using {getRoleMember} and {getRoleMemberCount}, make sure you perform all queries on the same block. See the following https://forum.openzeppelin.com/t/iterating-over-elements-on-enumerableset-in-openzeppelin-contracts/2296[forum post] for more information.*
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| role | bytes32 | undefined |
-| index | uint256 | undefined |
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | address | undefined |
-
-### getRoleMemberCount
-
-```solidity
-function getRoleMemberCount(bytes32 role) external view returns (uint256)
-```
-
-
-
-*Returns the number of accounts that have `role`. Can be used together with {getRoleMember} to enumerate all bearers of a role.*
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| role | bytes32 | undefined |
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | uint256 | undefined |
-
-### getTokenDetails
-
-```solidity
-function getTokenDetails(bytes32 _symbolId) external view returns (struct IPortfolio.TokenDetails)
-```
-
-Returns the token details.
-
-*Will always return actionMode.OFF as auctionMode in controlled in PortfolioSub*
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _symbolId | bytes32 | SymbolId of the token. |
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | IPortfolio.TokenDetails | TokenDetails decimals (Identical to mainnet), tokenAddress (Token address at the mainnet) Subnet does not have any ERC20s hence this tokenAddress is address(0) Auction mode of the token , Source Chain id, symbol and symbolId |
-
-### getTokenList
-
-```solidity
-function getTokenList() external view returns (bytes32[])
-```
-
-Frontend function to get all the tokens in the portfolio
-
-
-
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | bytes32[] | bytes32[]  Array of symbols of the tokens |
-
-### grantRole
-
-```solidity
-function grantRole(bytes32 role, address account) external nonpayable
-```
-
-
-
-*Grants `role` to `account`. If `account` had not been already granted `role`, emits a {RoleGranted} event. Requirements: - the caller must have ``role``&#39;s admin role. May emit a {RoleGranted} event.*
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| role | bytes32 | undefined |
-| account | address | undefined |
-
-### hasRole
-
-```solidity
-function hasRole(bytes32 role, address account) external view returns (bool)
-```
-
-
-
-*Returns `true` if `account` has been granted `role`.*
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| role | bytes32 | undefined |
-| account | address | undefined |
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | bool | undefined |
-
-### hasStoredPayload
-
-```solidity
-function hasStoredPayload(uint16 _srcChainId, bytes _srcAddress) external view returns (bool)
-```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _srcChainId | uint16 | Source chain id |
-| _srcAddress | bytes | Source contract address |
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | bool | bool  True if the bridge has stored payload, means it is stuck |
-
-### initialize
-
-```solidity
-function initialize(address _endpoint) external nonpayable
-```
-
-Initializer for upgradeable contract.
-
-*Grant admin, pauser and msg_sender role to the sender. Set gas for lz. Set endpoint and enable bridge*
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _endpoint | address | Endpoint of the LZ bridge |
-
-### isBridgeProviderEnabled
-
-```solidity
-function isBridgeProviderEnabled(enum IPortfolioBridge.BridgeProvider _bridge) external view returns (bool)
-```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _bridge | enum IPortfolioBridge.BridgeProvider | Bridge to check |
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | bool | bool  True if bridge is enabled, false otherwise |
-
-### isLZTrustedRemote
-
-```solidity
-function isLZTrustedRemote(uint16 _srcChainId, bytes _srcAddress) external view returns (bool)
-```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _srcChainId | uint16 | Source chain id |
-| _srcAddress | bytes | Source contract address |
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | bool | bool  True if the source address is trusted |
-
 ### lastOpTimestamps
 
 ```solidity
-function lastOpTimestamps(bytes32) external view returns (uint256)
+mapping(bytes32 => uint256) lastOpTimestamps
 ```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | bytes32 | undefined |
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | uint256 | undefined |
-
-### lzReceive
-
-```solidity
-function lzReceive(uint16 _srcChainId, bytes _srcAddress, uint64, bytes _payload) external nonpayable
-```
-
-Receive message from source chain via LayerZero
-
-*Only trusted LZ endpoint can call*
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _srcChainId | uint16 | Source chain ID |
-| _srcAddress | bytes | Source address |
-| _2 | uint64 | undefined |
-| _payload | bytes | Payload received |
-
-### lzTrustedRemoteLookup
-
-```solidity
-function lzTrustedRemoteLookup(uint16) external view returns (bytes)
-```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | uint16 | undefined |
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | bytes | undefined |
-
-### pause
-
-```solidity
-function pause() external nonpayable
-```
-
-Pauses bridge operations
-
-*Only pauser can pause*
-
-
-### paused
-
-```solidity
-function paused() external view returns (bool)
-```
-
-
-
-*Returns true if the contract is paused, and false otherwise.*
-
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | bool | undefined |
-
-### refundNative
-
-```solidity
-function refundNative() external nonpayable
-```
-
-Refunds the native balance inside contract
-
-*Only admin can call*
-
-
-### refundTokens
-
-```solidity
-function refundTokens(address[] _tokens) external nonpayable
-```
-
-Refunds the ERC20 balance inside contract
-
-*Only admin can call*
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _tokens | address[] | Array of ERC20 tokens to refund |
-
-### removeToken
-
-```solidity
-function removeToken(bytes32 _symbol, uint32 _srcChainId) external nonpayable
-```
-
-Remove the token from the tokenDetailsMapById &amp; tokenDetailsMapBySymbol
-
-*Make sure that there are no in-flight messages*
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _symbol | bytes32 | symbol of the token |
-| _srcChainId | uint32 | Source Chain id |
-
-### renounceRole
-
-```solidity
-function renounceRole(bytes32 role, address account) external nonpayable
-```
-
-
-
-*Revokes `role` from the calling account. Roles are often managed via {grantRole} and {revokeRole}: this function&#39;s purpose is to provide a mechanism for accounts to lose their privileges if they are compromised (such as when a trusted device is misplaced). If the calling account had been revoked `role`, emits a {RoleRevoked} event. Requirements: - the caller must be `account`. May emit a {RoleRevoked} event.*
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| role | bytes32 | undefined |
-| account | address | undefined |
-
-### retryPayload
-
-```solidity
-function retryPayload(uint16 _srcChainId, bytes _srcAddress, bytes _payload) external nonpayable
-```
-
-Retries the stucked message in the bridge, if any
-
-*Only admin can call this*
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _srcChainId | uint16 | Source chain id |
-| _srcAddress | bytes | Source contract address |
-| _payload | bytes | Payload to retry |
-
-### revokeRole
-
-```solidity
-function revokeRole(bytes32 _role, address _address) external nonpayable
-```
-
-Wrapper for revoking roles
-
-*Only admin can revoke role*
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _role | bytes32 | Role to revoke |
-| _address | address | Address to revoke role from |
-
-### sendXChainMessage
-
-```solidity
-function sendXChainMessage(enum IPortfolioBridge.BridgeProvider _bridge, IPortfolio.XFER _xfer) external nonpayable
-```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _bridge | enum IPortfolioBridge.BridgeProvider | undefined |
-| _xfer | IPortfolio.XFER | undefined |
-
-### setConfig
-
-```solidity
-function setConfig(uint16 _version, uint16 _chainId, uint256 _configType, bytes _config) external nonpayable
-```
-
-Sets generic config for LayerZero user Application
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _version | uint16 | Version of the config |
-| _chainId | uint16 | Chain id |
-| _configType | uint256 | Config type |
-| _config | bytes | Config to set |
-
-### setDefaultTargetChain
-
-```solidity
-function setDefaultTargetChain(uint32 _chainId) external nonpayable
-```
-
-Sets the default chain id. To be extended with multichain implementation
-
-*Only admin can call this function*
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _chainId | uint32 | Default Chainid to use |
-
-### setDelayPeriod
-
-```solidity
-function setDelayPeriod(uint256 _period) external nonpayable
-```
-
-Sets delay period for delayed transfers
-
-*Only admin can call this function*
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _period | uint256 | Delay period in seconds |
-
-### setDelayThresholds
-
-```solidity
-function setDelayThresholds(bytes32[] _tokens, uint256[] _thresholds) external nonpayable
-```
-
-Sets delay thresholds for tokens
-
-*Only admin can call this function*
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _tokens | bytes32[] | Array of tokens |
-| _thresholds | uint256[] | Array of thresholds |
-
-### setEpochLength
-
-```solidity
-function setEpochLength(uint256 _length) external nonpayable
-```
-
-Sets epoch length for volume control
-
-*Only admin can call this function*
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _length | uint256 | Epoch length in seconds |
-
-### setEpochVolumeCaps
-
-```solidity
-function setEpochVolumeCaps(bytes32[] _tokens, uint256[] _caps) external nonpayable
-```
-
-Sets volume cap for tokens
-
-*Only admin can call this function*
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _tokens | bytes32[] | Array of tokens |
-| _caps | uint256[] | Array of caps |
-
-### setGasForDestinationLzReceive
-
-```solidity
-function setGasForDestinationLzReceive(uint256 _gas) external nonpayable
-```
-
-Set gas for destination chain
-
-*Only admin can set gas for destination chain*
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _gas | uint256 | Gas for destination chain |
-
-### setLZTrustedRemote
-
-```solidity
-function setLZTrustedRemote(uint16 _srcChainId, bytes _srcAddress) external nonpayable
-```
-
-Sets trusted remote address
-
-*Allow owner to set it multiple times.*
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _srcChainId | uint16 | Source chain id |
-| _srcAddress | bytes | Source contract address |
-
-### setLzEndPoint
-
-```solidity
-function setLzEndPoint(address _endpoint) external nonpayable
-```
-
-Sets the Layer Zero Endpoint address
-
-*Only admin can set the Layer Zero Endpoint address*
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _endpoint | address | Address of the Layer Zero Endpoint |
-
-### setPortfolio
-
-```solidity
-function setPortfolio(address _portfolio) external nonpayable
-```
-
-Set portfolio address to grant role
-
-*Only admin can set portfolio address. Only one portfolio address can be set*
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _portfolio | address | Portfolio address |
-
-### setReceiveVersion
-
-```solidity
-function setReceiveVersion(uint16 _version) external nonpayable
-```
-
-Sets receive message version
-
-*Only admin can set the receive message version*
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _version | uint16 | Version to set |
-
-### setSendVersion
-
-```solidity
-function setSendVersion(uint16 _version) external nonpayable
-```
-
-Sets send message version
-
-*Only admin can set the send message version*
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _version | uint16 | Version to set |
-
-### supportsInterface
-
-```solidity
-function supportsInterface(bytes4 interfaceId) external view returns (bool)
-```
-
-
-
-*See {IERC165-supportsInterface}.*
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| interfaceId | bytes4 | undefined |
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | bool | undefined |
-
-### tokenDetailsMapById
-
-```solidity
-function tokenDetailsMapById(bytes32) external view returns (uint8 decimals, address tokenAddress, enum ITradePairs.AuctionMode auctionMode, uint32 srcChainId, bytes32 symbol, bytes32 symbolId)
-```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | bytes32 | undefined |
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| decimals | uint8 | undefined |
-| tokenAddress | address | undefined |
-| auctionMode | enum ITradePairs.AuctionMode | undefined |
-| srcChainId | uint32 | undefined |
-| symbol | bytes32 | undefined |
-| symbolId | bytes32 | undefined |
-
-### tokenDetailsMapBySymbol
-
-```solidity
-function tokenDetailsMapBySymbol(bytes32, uint32) external view returns (bytes32)
-```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | bytes32 | undefined |
-| _1 | uint32 | undefined |
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | bytes32 | undefined |
-
-### unpackMessage
-
-```solidity
-function unpackMessage(bytes data) external pure returns (enum IPortfolioBridge.XChainMsgType _xchainMsgType, bytes msgdata)
-```
-
-Decodes XFER message
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| data | bytes | Encoded XFER message |
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _xchainMsgType | enum IPortfolioBridge.XChainMsgType |  XChainMsgType |
-| msgdata | bytes |  Decoded XFER message |
-
-### unpackXFerMessage
-
-```solidity
-function unpackXFerMessage(bytes _data) external view returns (struct IPortfolio.XFER xfer)
-```
-
-Unpacks XFER message
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _data | bytes | XFER message |
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| xfer | IPortfolio.XFER |  Unpacked XFER message |
-
-### unpause
-
-```solidity
-function unpause() external nonpayable
-```
-
-Unpauses bridge operations
-
-*Only pauser can unpause*
-
-
-
 
 ## Events
-
-### DefaultChainIdUpdated
-
-```solidity
-event DefaultChainIdUpdated(uint32 chainId)
-```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| chainId  | uint32 | undefined |
-
-### DelayPeriodUpdated
-
-```solidity
-event DelayPeriodUpdated(uint256 period)
-```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| period  | uint256 | undefined |
-
-### DelayThresholdUpdated
-
-```solidity
-event DelayThresholdUpdated(bytes32 symbol, uint256 threshold)
-```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| symbol  | bytes32 | undefined |
-| threshold  | uint256 | undefined |
 
 ### DelayedTransferAdded
 
 ```solidity
 event DelayedTransferAdded(bytes32 id)
 ```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| id  | bytes32 | undefined |
-
 ### DelayedTransferExecuted
 
 ```solidity
-event DelayedTransferExecuted(bytes32 id, IPortfolio.XFER xfer)
+event DelayedTransferExecuted(bytes32 id, struct IPortfolio.XFER xfer)
 ```
+### DelayPeriodUpdated
 
+```solidity
+event DelayPeriodUpdated(uint256 period)
+```
+### DelayThresholdUpdated
 
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| id  | bytes32 | undefined |
-| xfer  | IPortfolio.XFER | undefined |
-
+```solidity
+event DelayThresholdUpdated(bytes32 symbol, uint256 threshold)
+```
 ### EpochLengthUpdated
 
 ```solidity
 event EpochLengthUpdated(uint256 length)
 ```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| length  | uint256 | undefined |
-
 ### EpochVolumeUpdated
 
 ```solidity
 event EpochVolumeUpdated(bytes32 token, uint256 cap)
 ```
 
+## Methods
 
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| token  | bytes32 | undefined |
-| cap  | uint256 | undefined |
-
-### GasForDestinationLzReceiveUpdated
+### VERSION
 
 ```solidity
-event GasForDestinationLzReceiveUpdated(uint256 gasForDestinationLzReceive)
+function VERSION() public pure returns (bytes32)
 ```
 
+### sendXChainMessage
 
+Sends XFER message to the destination chain
 
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| gasForDestinationLzReceive  | uint256 | undefined |
-
-### Initialized
+_This is a wrapper to check volume and threshold while withdrawing_
 
 ```solidity
-event Initialized(uint8 version)
+function sendXChainMessage(enum IPortfolioBridge.BridgeProvider _bridge, struct IPortfolio.XFER _xfer) external
 ```
 
-
-
-
-
-#### Parameters
+#### parameters
 
 | Name | Type | Description |
-|---|---|---|
-| version  | uint8 | undefined |
+| ---- | ---- | ----------- |
+| _bridge | enum IPortfolioBridge.BridgeProvider | Bridge type to send over |
+| _xfer | struct IPortfolio.XFER | XFER message to send |
 
-### LZTrustedRemoteSet
+### checkTreshholds
+
+Checks the volume and thresholds to delay or execute immediately
+
+_This function is called both in processPayload (deposits coming from mainnet)
+         as well as sendXChainMessage (withdrawals from the subnet)
+         Not bridge specific! Delayed messages will be processed by the defaultBridge_
 
 ```solidity
-event LZTrustedRemoteSet(uint16 remoteChainId, bytes remoteAddress)
+function checkTreshholds(struct IPortfolio.XFER _xfer) internal returns (bool)
 ```
 
-
-
-
-
-#### Parameters
+#### parameters
 
 | Name | Type | Description |
-|---|---|---|
-| remoteChainId  | uint16 | undefined |
-| remoteAddress  | bytes | undefined |
+| ---- | ---- | ----------- |
+| _xfer | struct IPortfolio.XFER | XFER message |
 
-### Paused
+#### returns
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | bool | bool  True if the transfer can be executed immediately, false if it is delayed |
+### getTokenId
+
+Retruns the symbolId used the subnet given the targetChainId
+
+_it uses the defaultTargetChain instead of srcChainId
+                When sending from Mainnet to Subnet we send out the symbolId of the sourceChain. USDC => USDC1337
+                Because the subnet needs to know about different ids from different mainnets.
+                When sending messages Subnet to Mainnet, it resolves it back to the symbolId the mainnet expects_
 
 ```solidity
-event Paused(address account)
+function getTokenId(bytes32 _symbol) internal view returns (bytes32)
 ```
 
-
-
-
-
-#### Parameters
+#### parameters
 
 | Name | Type | Description |
-|---|---|---|
-| account  | address | undefined |
+| ---- | ---- | ----------- |
+| _symbol | bytes32 | symbol of the token |
 
-### RoleAdminChanged
+#### returns
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | bytes32 | bytes32  symbolId |
+### setDelayThresholds
+
+Sets delay thresholds for tokens
+
+_Only admin can call this function_
 
 ```solidity
-event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)
+function setDelayThresholds(bytes32[] _tokens, uint256[] _thresholds) external
 ```
 
-
-
-
-
-#### Parameters
+#### parameters
 
 | Name | Type | Description |
-|---|---|---|
-| role `indexed` | bytes32 | undefined |
-| previousAdminRole `indexed` | bytes32 | undefined |
-| newAdminRole `indexed` | bytes32 | undefined |
+| ---- | ---- | ----------- |
+| _tokens | bytes32[] | Array of tokens |
+| _thresholds | uint256[] | Array of thresholds |
 
-### RoleGranted
+### setDelayPeriod
+
+Sets delay period for delayed transfers
+
+_Only admin can call this function_
 
 ```solidity
-event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)
+function setDelayPeriod(uint256 _period) external
 ```
 
-
-
-
-
-#### Parameters
+#### parameters
 
 | Name | Type | Description |
-|---|---|---|
-| role `indexed` | bytes32 | undefined |
-| account `indexed` | address | undefined |
-| sender `indexed` | address | undefined |
+| ---- | ---- | ----------- |
+| _period | uint256 | Delay period in seconds |
 
-### RoleRevoked
+### executeDelayedTransfer
+
+Executes delayed transfer if the delay period has passed
+
+_Only admin can call this function_
 
 ```solidity
-event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)
+function executeDelayedTransfer(bytes32 _id) external
 ```
 
-
-
-
-
-#### Parameters
+#### parameters
 
 | Name | Type | Description |
-|---|---|---|
-| role `indexed` | bytes32 | undefined |
-| account `indexed` | address | undefined |
-| sender `indexed` | address | undefined |
+| ---- | ---- | ----------- |
+| _id | bytes32 | Transfer ID |
 
-### RoleUpdated
+### setEpochLength
+
+Sets epoch length for volume control
+
+_Only admin can call this function_
 
 ```solidity
-event RoleUpdated(string indexed name, string actionName, bytes32 updatedRole, address updatedAddress)
+function setEpochLength(uint256 _length) external
 ```
 
-
-
-
-
-#### Parameters
+#### parameters
 
 | Name | Type | Description |
-|---|---|---|
-| name `indexed` | string | undefined |
-| actionName  | string | undefined |
-| updatedRole  | bytes32 | undefined |
-| updatedAddress  | address | undefined |
+| ---- | ---- | ----------- |
+| _length | uint256 | Epoch length in seconds |
 
-### Unpaused
+### setEpochVolumeCaps
+
+Sets volume cap for tokens
+
+_Only admin can call this function_
 
 ```solidity
-event Unpaused(address account)
+function setEpochVolumeCaps(bytes32[] _tokens, uint256[] _caps) external
 ```
 
-
-
-
-
-#### Parameters
+#### parameters
 
 | Name | Type | Description |
-|---|---|---|
-| account  | address | undefined |
-
-### XChainXFerMessage
-
-```solidity
-event XChainXFerMessage(uint8 version, enum IPortfolioBridge.BridgeProvider indexed bridge, enum IPortfolioBridge.Direction indexed msgDirection, uint32 indexed remoteChainId, uint256 messageFee, IPortfolio.XFER xfer)
-```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| version  | uint8 | undefined |
-| bridge `indexed` | enum IPortfolioBridge.BridgeProvider | undefined |
-| msgDirection `indexed` | enum IPortfolioBridge.Direction | undefined |
-| remoteChainId `indexed` | uint32 | undefined |
-| messageFee  | uint256 | undefined |
-| xfer  | IPortfolio.XFER | undefined |
-
-
+| ---- | ---- | ----------- |
+| _tokens | bytes32[] | Array of tokens |
+| _caps | uint256[] | Array of caps |
 

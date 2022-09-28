@@ -1,309 +1,24 @@
 # Airdrop
 
+**Flexible airdrop contract**
 
-
-> Flexible airdrop contract
-
-
-
-
-
-## Methods
+## Variables
 
 ### VERSION
 
 ```solidity
-function VERSION() external view returns (bytes32)
+bytes32 VERSION
 ```
-
-
-
-
-
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | bytes32 | undefined |
-
-### claim
-
-```solidity
-function claim(uint256 index, uint256 amount, bytes32[] merkleProof) external nonpayable
-```
-
-
-
-*Claims tokens to user&#39;s wallet*
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| index | uint256 | value of the position in the list |
-| amount | uint256 | total value to airdrop, Percentage and Vesting calculated by it |
-| merkleProof | bytes32[] | the proof of merkle |
-
-### cliff
-
-```solidity
-function cliff() external view returns (uint256)
-```
-
-
-
-
-
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | uint256 | the cliff time of the airdrop vesting |
-
-### duration
-
-```solidity
-function duration() external view returns (uint256)
-```
-
-
-
-
-
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | uint256 | the duration of the airdrop vesting |
-
-### getPercentage
-
-```solidity
-function getPercentage() external view returns (uint256)
-```
-
-
-
-
-
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | uint256 | the initial release percentage. |
-
-### owner
-
-```solidity
-function owner() external view returns (address)
-```
-
-
-
-*Returns the address of the current owner.*
-
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | address | undefined |
-
-### pause
-
-```solidity
-function pause() external nonpayable
-```
-
-
-
-*pauses the contract*
-
-
-### paused
-
-```solidity
-function paused() external view returns (bool)
-```
-
-
-
-*Returns true if the contract is paused, and false otherwise.*
-
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | bool | undefined |
-
-### releasableAmount
-
-```solidity
-function releasableAmount(uint256 index, uint256 amount, bytes32[] merkleProof) external view returns (uint256)
-```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| index | uint256 | value of the position in the list |
-| amount | uint256 | total value to airdrop, Percentage and Vesting calculated by it |
-| merkleProof | bytes32[] | the proof of merkle |
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | uint256 | releasableAmount for the index |
-
-### released
-
-```solidity
-function released(uint256 index) external view returns (uint256)
-```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| index | uint256 | value of the position in the list |
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | uint256 | released amount for the index |
-
-### renounceOwnership
-
-```solidity
-function renounceOwnership() external nonpayable
-```
-
-
-
-*Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner.*
-
-
-### retrieveOtherToken
-
-```solidity
-function retrieveOtherToken(address tok) external nonpayable
-```
-
-
-
-*retrieves other tokens from the contract sending to the owner*
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| tok | address | undefined |
-
-### retrieveProjectToken
-
-```solidity
-function retrieveProjectToken() external nonpayable
-```
-
-
-
-*retrieves project tokens from the contract sending to the owner*
-
-
-### root
-
-```solidity
-function root() external view returns (bytes32)
-```
-
-
-
-
-
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | bytes32 | undefined |
-
-### start
-
-```solidity
-function start() external view returns (uint256)
-```
-
-
-
-
-
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | uint256 | the start time of the airdrop vesting |
-
 ### token
 
 ```solidity
-function token() external view returns (contract IERC20)
+contract IERC20 token
 ```
-
-
-
-
-
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | contract IERC20 | undefined |
-
-### transferOwnership
+### root
 
 ```solidity
-function transferOwnership(address newOwner) external nonpayable
+bytes32 root
 ```
-
-
-
-*Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner.*
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| newOwner | address | undefined |
-
-### unpause
-
-```solidity
-function unpause() external nonpayable
-```
-
-
-
-*unpauses the contract*
-
-
-
 
 ## Events
 
@@ -313,66 +28,139 @@ function unpause() external nonpayable
 event Claimed(address claimer, uint256 amount, uint256 timestamp)
 ```
 
+## Methods
 
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| claimer  | address | undefined |
-| amount  | uint256 | undefined |
-| timestamp  | uint256 | undefined |
-
-### OwnershipTransferred
+### constructor
 
 ```solidity
-event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)
+constructor(contract IERC20 _token, bytes32 _root, uint256 __start, uint256 __cliffDuration, uint256 __duration, uint256 __firstReleasePercentage) public
 ```
 
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| previousOwner `indexed` | address | undefined |
-| newOwner `indexed` | address | undefined |
-
-### Paused
+### cliff
 
 ```solidity
-event Paused(address account)
+function cliff() external view returns (uint256)
 ```
 
-
-
-
-
-#### Parameters
+#### returns
 
 | Name | Type | Description |
-|---|---|---|
-| account  | address | undefined |
-
-### Unpaused
+| ---- | ---- | ----------- |
+| [0] | uint256 | the cliff time of the airdrop vesting |
+### start
 
 ```solidity
-event Unpaused(address account)
+function start() external view returns (uint256)
 ```
 
-
-
-
-
-#### Parameters
+#### returns
 
 | Name | Type | Description |
-|---|---|---|
-| account  | address | undefined |
+| ---- | ---- | ----------- |
+| [0] | uint256 | the start time of the airdrop vesting |
+### duration
 
+```solidity
+function duration() external view returns (uint256)
+```
 
+#### returns
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | uint256 | the duration of the airdrop vesting |
+### getPercentage
+
+```solidity
+function getPercentage() external view returns (uint256)
+```
+
+#### returns
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | uint256 | the initial release percentage. |
+### claim
+
+_Claims tokens to user's wallet_
+
+```solidity
+function claim(uint256 index, uint256 amount, bytes32[] merkleProof) external
+```
+
+#### parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| index | uint256 | value of the position in the list |
+| amount | uint256 | total value to airdrop, Percentage and Vesting calculated by it |
+| merkleProof | bytes32[] | the proof of merkle |
+
+### released
+
+```solidity
+function released(uint256 index) external view returns (uint256)
+```
+
+#### parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| index | uint256 | value of the position in the list |
+
+#### returns
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | uint256 | released amount for the index |
+### releasableAmount
+
+```solidity
+function releasableAmount(uint256 index, uint256 amount, bytes32[] merkleProof) external view returns (uint256)
+```
+
+#### parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| index | uint256 | value of the position in the list |
+| amount | uint256 | total value to airdrop, Percentage and Vesting calculated by it |
+| merkleProof | bytes32[] | the proof of merkle |
+
+#### returns
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | uint256 | releasableAmount for the index |
+### retrieveProjectToken
+
+_retrieves project tokens from the contract sending to the owner_
+
+```solidity
+function retrieveProjectToken() external
+```
+
+### retrieveOtherToken
+
+_retrieves other tokens from the contract sending to the owner_
+
+```solidity
+function retrieveOtherToken(address tok) external
+```
+
+### pause
+
+_pauses the contract_
+
+```solidity
+function pause() external
+```
+
+### unpause
+
+_unpauses the contract_
+
+```solidity
+function unpause() external
+```
 

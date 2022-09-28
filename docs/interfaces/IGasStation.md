@@ -1,12 +1,6 @@
 # IGasStation
 
-
-
-
-
-
-
-
+**Interface of GasStation**
 
 ## Methods
 
@@ -16,87 +10,45 @@
 function gasAmount() external view returns (uint256)
 ```
 
+### requestGas
 
-
-
-
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | uint256 | undefined |
+```solidity
+function requestGas(address _to) external
+```
 
 ### pause
 
 ```solidity
-function pause() external nonpayable
+function pause() external
 ```
-
-
-
-
-
-
-### requestGas
-
-```solidity
-function requestGas(address _to) external nonpayable
-```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _to | address | undefined |
-
-### setGasAmount
-
-```solidity
-function setGasAmount(uint256 _gasAmount) external nonpayable
-```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _gasAmount | uint256 | undefined |
 
 ### unpause
 
 ```solidity
-function unpause() external nonpayable
+function unpause() external
 ```
 
+### setGasAmount
 
-
-
-
+```solidity
+function setGasAmount(uint256 _gasAmount) external
+```
 
 ### withdrawNative
 
 ```solidity
-function withdrawNative(uint256 amount) external nonpayable
+function withdrawNative(uint256 amount) external
 ```
 
+### receive
 
+```solidity
+receive() external payable
+```
 
+### fallback
 
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| amount | uint256 | undefined |
-
-
-
+```solidity
+fallback() external payable
+```
 

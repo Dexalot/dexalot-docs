@@ -1,450 +1,110 @@
 # Staking
 
+**Flexible staking contract**
 
-
-> Flexible staking contract
-
-
-
-
-
-## Methods
+## Variables
 
 ### VERSION
 
 ```solidity
-function VERSION() external view returns (bytes32)
+bytes32 VERSION
 ```
-
-
-
-
-
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | bytes32 | undefined |
-
-### claim
+### rewardsToken
 
 ```solidity
-function claim() external nonpayable
+contract IERC20Upgradeable rewardsToken
 ```
-
-
-
-
-
-
-### earned
+### stakingToken
 
 ```solidity
-function earned(address account) external view returns (uint256)
+contract IERC20Upgradeable stakingToken
 ```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| account | address | undefined |
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | uint256 | undefined |
-
-### exit
+### periodFinish
 
 ```solidity
-function exit(uint256 amount) external nonpayable
+uint256 periodFinish
+```
+### rewardsDuration
+
+```solidity
+uint256 rewardsDuration
+```
+### rewardRate
+
+```solidity
+uint256 rewardRate
+```
+### lastUpdateTime
+
+```solidity
+uint256 lastUpdateTime
+```
+### rewardPerTokenStored
+
+```solidity
+uint256 rewardPerTokenStored
+```
+### isStakingPaused
+
+```solidity
+bool isStakingPaused
+```
+### userRewardPerTokenPaid
+
+```solidity
+mapping(address => uint256) userRewardPerTokenPaid
+```
+### rewards
+
+```solidity
+mapping(address => uint256) rewards
 ```
 
+## Events
 
+### Staked
 
+```solidity
+event Staked(address user, uint256 amount)
+```
+### Withdrawn
 
+```solidity
+event Withdrawn(address user, uint256 amount)
+```
+### Restaked
 
-#### Parameters
+```solidity
+event Restaked(address user, uint256 reward)
+```
+### RewardPaid
 
-| Name | Type | Description |
-|---|---|---|
-| amount | uint256 | undefined |
+```solidity
+event RewardPaid(address user, uint256 reward)
+```
+### RewardRateUpdated
+
+```solidity
+event RewardRateUpdated(uint256 rate)
+```
+### RewardsDurationUpdated
+
+```solidity
+event RewardsDurationUpdated(uint256 rewardsDuration)
+```
+### FundsRecovered
+
+```solidity
+event FundsRecovered(uint256 amount, address token)
+```
+
+## Methods
 
 ### initialize
 
 ```solidity
-function initialize(address _stakingToken, address _rewardsToken, uint256 _rewardRate, uint256 _rewardsDuration) external nonpayable
+function initialize(address _stakingToken, address _rewardsToken, uint256 _rewardRate, uint256 _rewardsDuration) public
 ```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _stakingToken | address | undefined |
-| _rewardsToken | address | undefined |
-| _rewardRate | uint256 | undefined |
-| _rewardsDuration | uint256 | undefined |
-
-### isStakingPaused
-
-```solidity
-function isStakingPaused() external view returns (bool)
-```
-
-
-
-
-
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | bool | undefined |
-
-### lastTimeRewardApplicable
-
-```solidity
-function lastTimeRewardApplicable() external view returns (uint256)
-```
-
-
-
-
-
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | uint256 | undefined |
-
-### lastUpdateTime
-
-```solidity
-function lastUpdateTime() external view returns (uint256)
-```
-
-
-
-
-
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | uint256 | undefined |
-
-### owner
-
-```solidity
-function owner() external view returns (address)
-```
-
-
-
-*Returns the address of the current owner.*
-
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | address | undefined |
-
-### pause
-
-```solidity
-function pause() external nonpayable
-```
-
-
-
-
-
-
-### pauseStaking
-
-```solidity
-function pauseStaking() external nonpayable
-```
-
-
-
-
-
-
-### paused
-
-```solidity
-function paused() external view returns (bool)
-```
-
-
-
-*Returns true if the contract is paused, and false otherwise.*
-
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | bool | undefined |
-
-### periodFinish
-
-```solidity
-function periodFinish() external view returns (uint256)
-```
-
-
-
-
-
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | uint256 | undefined |
-
-### recoverFunds
-
-```solidity
-function recoverFunds() external nonpayable
-```
-
-
-
-
-
-
-### renounceOwnership
-
-```solidity
-function renounceOwnership() external nonpayable
-```
-
-
-
-*Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner.*
-
-
-### restake
-
-```solidity
-function restake() external nonpayable
-```
-
-
-
-
-
-
-### rewardPerToken
-
-```solidity
-function rewardPerToken() external view returns (uint256)
-```
-
-
-
-
-
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | uint256 | undefined |
-
-### rewardPerTokenStored
-
-```solidity
-function rewardPerTokenStored() external view returns (uint256)
-```
-
-
-
-
-
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | uint256 | undefined |
-
-### rewardRate
-
-```solidity
-function rewardRate() external view returns (uint256)
-```
-
-
-
-
-
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | uint256 | undefined |
-
-### rewards
-
-```solidity
-function rewards(address) external view returns (uint256)
-```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | address | undefined |
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | uint256 | undefined |
-
-### rewardsDuration
-
-```solidity
-function rewardsDuration() external view returns (uint256)
-```
-
-
-
-
-
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | uint256 | undefined |
-
-### rewardsToken
-
-```solidity
-function rewardsToken() external view returns (contract IERC20Upgradeable)
-```
-
-
-
-
-
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | contract IERC20Upgradeable | undefined |
-
-### setRewardRate
-
-```solidity
-function setRewardRate(uint256 _rewardRate) external nonpayable
-```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _rewardRate | uint256 | undefined |
-
-### setRewardsDuration
-
-```solidity
-function setRewardsDuration(uint256 _rewardsDuration) external nonpayable
-```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _rewardsDuration | uint256 | undefined |
-
-### stake
-
-```solidity
-function stake(uint256 amount) external nonpayable
-```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| amount | uint256 | undefined |
-
-### stakeOf
-
-```solidity
-function stakeOf(address account) external view returns (uint256)
-```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| account | address | undefined |
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | uint256 | undefined |
-
-### stakingToken
-
-```solidity
-function stakingToken() external view returns (contract IERC20Upgradeable)
-```
-
-
-
-
-
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | contract IERC20Upgradeable | undefined |
 
 ### totalStake
 
@@ -452,278 +112,107 @@ function stakingToken() external view returns (contract IERC20Upgradeable)
 function totalStake() external view returns (uint256)
 ```
 
-
-
-
-
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | uint256 | undefined |
-
-### transferOwnership
+### stakeOf
 
 ```solidity
-function transferOwnership(address newOwner) external nonpayable
+function stakeOf(address account) external view returns (uint256)
 ```
 
-
-
-*Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner.*
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| newOwner | address | undefined |
-
-### unpause
+### lastTimeRewardApplicable
 
 ```solidity
-function unpause() external nonpayable
+function lastTimeRewardApplicable() public view returns (uint256)
 ```
 
-
-
-
-
-
-### unpauseStaking
+### rewardPerToken
 
 ```solidity
-function unpauseStaking() external nonpayable
+function rewardPerToken() public view returns (uint256)
 ```
 
+### earned
 
+```solidity
+function earned(address account) public view returns (uint256)
+```
 
+### stake
 
-
+```solidity
+function stake(uint256 amount) external
+```
 
 ### unstake
 
 ```solidity
-function unstake(uint256 amount) external nonpayable
+function unstake(uint256 amount) public
 ```
 
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| amount | uint256 | undefined |
-
-### userRewardPerTokenPaid
+### restake
 
 ```solidity
-function userRewardPerTokenPaid(address) external view returns (uint256)
+function restake() public
 ```
 
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | address | undefined |
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | uint256 | undefined |
-
-
-
-## Events
-
-### FundsRecovered
+### claim
 
 ```solidity
-event FundsRecovered(uint256 amount, address token)
+function claim() public
 ```
 
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| amount  | uint256 | undefined |
-| token  | address | undefined |
-
-### Initialized
+### exit
 
 ```solidity
-event Initialized(uint8 version)
+function exit(uint256 amount) external
 ```
 
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| version  | uint8 | undefined |
-
-### OwnershipTransferred
+### pause
 
 ```solidity
-event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)
+function pause() external
 ```
 
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| previousOwner `indexed` | address | undefined |
-| newOwner `indexed` | address | undefined |
-
-### Paused
+### unpause
 
 ```solidity
-event Paused(address account)
+function unpause() external
 ```
 
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| account  | address | undefined |
-
-### Restaked
+### pauseStaking
 
 ```solidity
-event Restaked(address indexed user, uint256 reward)
+function pauseStaking() external
 ```
 
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| user `indexed` | address | undefined |
-| reward  | uint256 | undefined |
-
-### RewardPaid
+### unpauseStaking
 
 ```solidity
-event RewardPaid(address indexed user, uint256 reward)
+function unpauseStaking() external
 ```
 
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| user `indexed` | address | undefined |
-| reward  | uint256 | undefined |
-
-### RewardRateUpdated
+### setRewardRate
 
 ```solidity
-event RewardRateUpdated(uint256 rate)
+function setRewardRate(uint256 _rewardRate) external
 ```
 
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| rate  | uint256 | undefined |
-
-### RewardsDurationUpdated
+### setRewardsDuration
 
 ```solidity
-event RewardsDurationUpdated(uint256 rewardsDuration)
+function setRewardsDuration(uint256 _rewardsDuration) external
 ```
 
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| rewardsDuration  | uint256 | undefined |
-
-### Staked
+### recoverFunds
 
 ```solidity
-event Staked(address indexed user, uint256 amount)
+function recoverFunds() external
 ```
 
+## Modifiers
 
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| user `indexed` | address | undefined |
-| amount  | uint256 | undefined |
-
-### Unpaused
+### updateReward
 
 ```solidity
-event Unpaused(address account)
+modifier updateReward(address account)
 ```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| account  | address | undefined |
-
-### Withdrawn
-
-```solidity
-event Withdrawn(address indexed user, uint256 amount)
-```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| user `indexed` | address | undefined |
-| amount  | uint256 | undefined |
-
-
 

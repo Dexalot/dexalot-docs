@@ -1,186 +1,90 @@
 # IPortfolioBridge
 
-*&quot;DEXALOT TEAM&quot;*
+**Interface of PortfolioBridge**
 
-> &quot;IPortfolioBridge: interface of PortfolioBridge&quot;
+## Types
 
+### XChainMsgType
 
+```solidity
+enum XChainMsgType {
+  XFER
+}
+```
+### Direction
 
+```solidity
+enum Direction {
+  SENT,
+  RECEIVED
+}
+```
+### BridgeProvider
 
+```solidity
+enum BridgeProvider {
+  LZ,
+  CELER
+}
+```
+
+## Events
+
+### XChainXFerMessage
+
+```solidity
+event XChainXFerMessage(uint8 version, enum IPortfolioBridge.BridgeProvider bridge, enum IPortfolioBridge.Direction msgDirection, uint32 remoteChainId, uint256 messageFee, struct IPortfolio.XFER xfer)
+```
 
 ## Methods
 
-### VERSION
+### pause
 
 ```solidity
-function VERSION() external nonpayable returns (bytes32)
+function pause() external
 ```
 
-
-
-
-
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | bytes32 | undefined |
-
-### enableBridgeProvider
+### unpause
 
 ```solidity
-function enableBridgeProvider(enum IPortfolioBridge.BridgeProvider _bridge, bool enable) external nonpayable
+function unpause() external
 ```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _bridge | enum IPortfolioBridge.BridgeProvider | undefined |
-| enable | bool | undefined |
-
-### executeDelayedTransfer
-
-```solidity
-function executeDelayedTransfer(bytes32 id) external nonpayable
-```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| id | bytes32 | undefined |
-
-### getDefaultBridgeProvider
-
-```solidity
-function getDefaultBridgeProvider() external view returns (enum IPortfolioBridge.BridgeProvider)
-```
-
-
-
-
-
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | enum IPortfolioBridge.BridgeProvider | undefined |
-
-### isBridgeProviderEnabled
-
-```solidity
-function isBridgeProviderEnabled(enum IPortfolioBridge.BridgeProvider _bridge) external view returns (bool)
-```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _bridge | enum IPortfolioBridge.BridgeProvider | undefined |
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | bool | undefined |
 
 ### sendXChainMessage
 
 ```solidity
-function sendXChainMessage(enum IPortfolioBridge.BridgeProvider _bridge, IPortfolio.XFER _xfer) external nonpayable
+function sendXChainMessage(enum IPortfolioBridge.BridgeProvider _bridge, struct IPortfolio.XFER _xfer) external
 ```
 
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _bridge | enum IPortfolioBridge.BridgeProvider | undefined |
-| _xfer | IPortfolio.XFER | undefined |
-
-### setDelayPeriod
+### executeDelayedTransfer
 
 ```solidity
-function setDelayPeriod(uint256 _period) external nonpayable
+function executeDelayedTransfer(bytes32 id) external
 ```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _period | uint256 | undefined |
 
 ### setDelayThresholds
 
 ```solidity
-function setDelayThresholds(bytes32[] _tokens, uint256[] _thresholds) external nonpayable
+function setDelayThresholds(bytes32[] _tokens, uint256[] _thresholds) external
 ```
 
+### setDelayPeriod
 
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _tokens | bytes32[] | undefined |
-| _thresholds | uint256[] | undefined |
+```solidity
+function setDelayPeriod(uint256 _period) external
+```
 
 ### setEpochLength
 
 ```solidity
-function setEpochLength(uint256 _length) external nonpayable
+function setEpochLength(uint256 _length) external
 ```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _length | uint256 | undefined |
 
 ### setEpochVolumeCaps
 
 ```solidity
-function setEpochVolumeCaps(bytes32[] _tokens, uint256[] _caps) external nonpayable
+function setEpochVolumeCaps(bytes32[] _tokens, uint256[] _caps) external
 ```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _tokens | bytes32[] | undefined |
-| _caps | uint256[] | undefined |
 
 ### unpackMessage
 
@@ -188,69 +92,45 @@ function setEpochVolumeCaps(bytes32[] _tokens, uint256[] _caps) external nonpaya
 function unpackMessage(bytes data) external pure returns (enum IPortfolioBridge.XChainMsgType _xchainMsgType, bytes msgdata)
 ```
 
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| data | bytes | undefined |
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _xchainMsgType | enum IPortfolioBridge.XChainMsgType | undefined |
-| msgdata | bytes | undefined |
-
-### unpackXFerMessage
+### getXFerMessage
 
 ```solidity
-function unpackXFerMessage(bytes data) external pure returns (struct IPortfolio.XFER _xfer)
+function getXFerMessage(bytes _data) external view returns (struct IPortfolio.XFER xfer)
 ```
 
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| data | bytes | undefined |
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _xfer | IPortfolio.XFER | undefined |
-
-
-
-## Events
-
-### XChainXFerMessage
+### enableBridgeProvider
 
 ```solidity
-event XChainXFerMessage(uint8 version, enum IPortfolioBridge.BridgeProvider indexed bridge, enum IPortfolioBridge.Direction indexed msgDirection, uint32 indexed remoteChainId, uint256 messageFee, IPortfolio.XFER xfer)
+function enableBridgeProvider(enum IPortfolioBridge.BridgeProvider _bridge, bool enable) external
 ```
 
+### isBridgeProviderEnabled
 
+```solidity
+function isBridgeProviderEnabled(enum IPortfolioBridge.BridgeProvider _bridge) external view returns (bool)
+```
 
+### getDefaultBridgeProvider
 
+```solidity
+function getDefaultBridgeProvider() external view returns (enum IPortfolioBridge.BridgeProvider)
+```
 
-#### Parameters
+### addToken
 
-| Name | Type | Description |
-|---|---|---|
-| version  | uint8 | undefined |
-| bridge `indexed` | enum IPortfolioBridge.BridgeProvider | undefined |
-| msgDirection `indexed` | enum IPortfolioBridge.Direction | undefined |
-| remoteChainId `indexed` | uint32 | undefined |
-| messageFee  | uint256 | undefined |
-| xfer  | IPortfolio.XFER | undefined |
+```solidity
+function addToken(bytes32 _symbol, address _tokenaddress, uint32 _srcChainId, uint8 _decimals, enum ITradePairs.AuctionMode _mode) external
+```
 
+### removeToken
 
+```solidity
+function removeToken(bytes32 _symbol, uint32 _srcChainId) external
+```
+
+### VERSION
+
+```solidity
+function VERSION() external returns (bytes32)
+```
 

@@ -3,39 +3,24 @@ home: true
 icon: home
 title: Home
 heroImage: /images/dexalot_heroImage.png
-heroText: Dexalot Documentation
+heroText: Dexalot Knowledge Hub
 tagline: The home for developers! ✨
 headerDepth: 4
 footer: true
 
 actions:
   - text: Get Started 💡
-    link: Introduction.md
+    link: contracts
     type: primary
 
 features:
-  - title: Exchange
+  - title: Lite Paper
     icon: markdown
-    details: "Wrapper for administrative functions of the exchange"
-    link: Exchange.md
+    details: "Learn about the background and vision of Dexalot"
+    link: articles/litepaper/Litepaper
 
-  - title: Portfolio
+  - title: Smart Contracts
     icon: markdown
-    details: "Non-custodial multi-token wallet contract for assets"
-    link: Portfolio.md
-
-  - title: "Portfolio Bridge"
-    icon: markdown
-    details: "Bidirectional LayerZero bridge implementation for messaging"
-    link: PortfolioBridge.md
-
-  - title: "Trade Pairs"
-    icon: markdown
-    details: "Data structures and functions for trade pairs"
-    link: TradePairs.md
-
-  - title: "Order Books"
-    icon: markdown
-    details: "Price, time priority Central Limit Order Books implementation"
-    link: OrderBooks.md
+    details: "Main and auxiliary contracts that make the dual-chain application"
+    link: contracts
 ---

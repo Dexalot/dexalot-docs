@@ -61,9 +61,24 @@ export default defineUserConfig({
       "/" /* / */,
 
       {
+        text: "Articles",
+        icon: "overflow",
+        collapsable: true,
+        prefix: "articles/",
+        children: [
+          {
+            text: "Litepaper",
+            icon: "read",
+            link: "litepaper/Litepaper"
+          }
+        ]
+      },
+
+      {
         text: "Smart Contracts",
         icon: "note",
         collapsable: true,
+        prefix: "contracts/",
         children: [
           {
             text: "Introduction",
@@ -94,7 +109,7 @@ export default defineUserConfig({
           {
             text: "Libraries",
             icon: "api",
-            prefix: "/library/",
+            prefix: "library/",
             collapsable: true,
             children: [
               "Bytes32LinkedListLibrary",
@@ -106,7 +121,7 @@ export default defineUserConfig({
           {
             text: "Interfaces",
             icon: "api",
-            prefix: "/interfaces/",
+            prefix: "interfaces/",
             collapsable: true,
             children: [
               "IGasStation",
@@ -117,7 +132,7 @@ export default defineUserConfig({
               "NativeMinterInterface",
               {
                 text: "LayerZero",
-                prefix: "/interfaces/layerZero/",
+                prefix: "layerZero/",
                 collapsable: true,
                 children: [
                   "ILayerZeroEndpoint",
@@ -131,7 +146,7 @@ export default defineUserConfig({
           {
             text: "Bridge Apps",
             icon: "link",
-            prefix: "/bridgeApps/",
+            prefix: "bridgeApps/",
             collapsable: true,
             children: [
               "LzApp"
@@ -141,7 +156,7 @@ export default defineUserConfig({
           {
             text: "Auxiliary Contracts",
             icon: "proposal",
-            prefix: "/token/",
+            prefix: "token/",
             collapsable: true,
             children: [
               "Airdrop",
@@ -159,7 +174,7 @@ export default defineUserConfig({
       {
         text: "Legal",
         icon: "note",
-        prefix: "/legal/",
+        prefix: "legal/",
         collapsable: true,
         children: [
           {

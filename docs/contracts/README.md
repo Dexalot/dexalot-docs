@@ -2,7 +2,7 @@
 title: Smart Contracts
 icon: note
 prev: /
-next: contracts/Exchange
+next: /contracts/Exchange
 editLink: true
 ---
 

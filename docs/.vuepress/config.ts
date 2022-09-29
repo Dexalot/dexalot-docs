@@ -19,7 +19,7 @@ export default defineUserConfig({
   theme: hopeTheme({
     logo: "/logos/dexalot_logo.png",
     footer: "Last updated 09/22/2022",
-    copyright: "BUSL Licensed | Copyright © 2022-present Dexalot",
+    copyright: "BUSL 1.1 Licensed | Copyright © 2022 Dexalot",
     displayFooter: true,
     headerDepth: 3,
     repo: "https://github.com/Dexalot",

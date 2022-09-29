@@ -1,3 +1,7 @@
+---
+editLink: true
+---
+
 # Litepaper
 
 ## Executive Summary

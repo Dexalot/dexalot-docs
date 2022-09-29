@@ -1,6 +1,6 @@
 ---
-home: false
 title: Libraries
+icon: note
 prev: /contracts
 next: /contracts/library/UtilsLibrary
 editLink: true

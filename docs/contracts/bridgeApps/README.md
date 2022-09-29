@@ -1,5 +1,4 @@
 ---
-home: false
 title: Bridge Apps
 prev: /contracts
 next: /contracts/bridgeApps/LzApp

@@ -1,5 +1,4 @@
 ---
-home: false
 title: Interfaces
 prev: /contracts
 next: /contracts/interfaces/ITradePairs

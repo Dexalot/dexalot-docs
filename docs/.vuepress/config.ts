@@ -78,14 +78,9 @@ export default defineUserConfig({
         text: "Smart Contracts",
         icon: "note",
         collapsable: true,
+        link: "contracts/",
         prefix: "contracts/",
         children: [
-          {
-            text: "Introduction",
-            icon: "interact",
-            link: "Introduction"
-          },
-
           {
             text: "Main Contracts",
             icon: "proposal",

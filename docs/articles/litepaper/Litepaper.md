@@ -55,7 +55,7 @@ The Dexalot platform is made up of components that provide various services:
 
 **Automated Market Makers**: These are the participants who are providing liquidity and two way pricing on Dexalot.
 
-![Dexalot Architecture](images/architecture.png)
+![Dexalot Architecture](/images/litepaper/architecture.png)
 
 ### Privacy
 
@@ -119,11 +119,11 @@ The Dexalot token will be distributed to the community through a variety of mech
 
 #### Token Allocations
 
-![Token Allocations](images/allocations.png)
+![Token Allocations](/images/litepaper/allocations.png)
 
 #### Token Emissions
 
-![Token Emissions](images/emissions.png)
+![Token Emissions](/images/litepaper/emissions.png)
 
 ### Governance
 

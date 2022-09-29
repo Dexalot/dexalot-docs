@@ -507,7 +507,7 @@ function updateRate(bytes32 _tradePairId, uint8 _rate, enum ITradePairs.RateType
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _tradePairId | bytes32 | id of the trading pair |
-| _rate | uint8 | Percent Rate (_rate/100)% = _rate/10000: _rate=10 => 0.10% |
+| _rate | uint8 | Percent Rate `(_rate/100)% = _rate/10000: _rate=10 => 0.10%` |
 | _rateType | enum ITradePairs.RateType | Rate Type, 0 maker or 1 taker |
 
 
@@ -708,7 +708,7 @@ function getQuoteAmount(bytes32 _tradePairId, uint256 _price, uint256 _quantity)
 
 Frontend Entry function to call to add an order
 
-**Dev notes:** _Adds an order with the given fields. As a general rule of thumb msg.sender should be the _trader
+**Dev notes:** _Adds an order with the given fields. As a general rule of thumb msg.sender should be the `_trader`
 otherwise the tx will revert. 'OrderStatusChanged' event will be emitted
 when an order is received and committed to the blockchain. You can get the contract
 generated orderid along with your clientorderid from this event. When the blockchain is extremely busy,
@@ -717,18 +717,18 @@ We have seen orders waiting for hours in the mempool in Avalanche C-Chain, befor
 in extreme cases. This is a function of the blockchain and will typically happen when the current gas
 price is around 100 gwei (3-4 times of the minimum gas price) and your transaction maximum gas is set
 to be 50 gwei(normal level). Your transaction will wait in the mempool until the blockchain gas price
-goes back to normal levels.<br>
+goes back to normal levels. \
     `_clientoOderId` is sent by the owner of an order and it is returned in responses for
-reference. It must be unique per traderaddress.<br>
+reference. It must be unique per traderaddress. \
     Price for market Orders are set to 0 internally (type1=0). Valid price decimals (baseDisplayDecimals)
-and evm decimals can be obtained by calling `getDisplayDecimals` and `getDecimals`, respectively.<br>
+and evm decimals can be obtained by calling `getDisplayDecimals` and `getDecimals`, respectively. \
     Valid quantity decimals (quoteDisplayDecimals) and evm decimals can be obtained by calling
-`getDisplayDecimals` and `getDecimals`, respectively.<br>
-    The default for type2 (Order SubType) is 0 equivalent to GTC.<br>
-Here are the other SubTypes:<br>
-0 = GTC : Good Till Cancel<br>
-1 = FOK : FIll or Kill (Will fill entirely or will revert with "T-FOKF-01")<br>
-2 = IOC : Immedidate or Cancel  (Will fill partially or fully, will get status=CANCELED if filled partially)<br>
+`getDisplayDecimals` and `getDecimals`, respectively. \
+    The default for type2 (Order SubType) is 0 equivalent to GTC. \
+Here are the other SubTypes: \
+0 = GTC : Good Till Cancel \
+1 = FOK : FIll or Kill (Will fill entirely or will revert with "T-FOKF-01") \
+2 = IOC : Immedidate or Cancel  (Will fill partially or fully, will get status=CANCELED if filled partially) \
 3 = PO : Post Only (Will either go in the orderbook or revert with "T-T2PO-01" if it has a potential match)_
 
 ```solidity
@@ -739,7 +739,7 @@ function addOrder(address _trader, bytes32 _clientOrderId, bytes32 _tradePairId,
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _trader | address | address of the trader. As a general rule of if msg.sender is not the _trader the tx will revert |
+| _trader | address | address of the trader. If msg.sender is not the `_trader` the tx will revert. |
 | _clientOrderId | bytes32 | unique id provided by the owner of an order |
 | _tradePairId | bytes32 | id of the trading pair |
 | _price | uint256 | price of the order |

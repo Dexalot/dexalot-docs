@@ -114,15 +114,6 @@ function initialize(address _endpoint) public
 | _endpoint | address | Endpoint of the LZ bridge |
 
 
-### receive
-
-
-
-```solidity
-receive() external payable
-```
-
-
 ### pause
 
 Pauses bridge operations
@@ -625,6 +616,15 @@ function setEpochLength(uint256 _length) external virtual
 
 ```solidity
 function setEpochVolumeCaps(bytes32[] _tokens, uint256[] _caps) external virtual
+```
+
+
+### receive
+
+
+
+```solidity
+receive() external payable
 ```
 
 

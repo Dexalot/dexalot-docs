@@ -26,7 +26,7 @@ uint32 allTokens
 ### tokens
 
 ```solidity
-mapping(uint32 => contract IERC20) tokens
+mapping(uint32 => contract IERC20Upgradeable) tokens
 ```
 ### claimedRewards
 
@@ -44,26 +44,26 @@ event Claimed(address claimer, uint32 tokenIds, uint128[] amounts, uint256 times
 ### AddRewardToken
 
 ```solidity
-event AddRewardToken(contract IERC20 token, uint32 tokenId, uint256 timestamp)
+event AddRewardToken(contract IERC20Upgradeable token, uint32 tokenId, uint256 timestamp)
 ```
 
 ## Methods
 
-### constructor
+### initialize
 
 Constructor of the IncentiveDistributor
 
 **Dev notes:** _Adds ALOT token as the first reward token and defines the signer of claim messages._
 
 ```solidity
-constructor(contract IERC20 _alotToken, address __signer) public
+function initialize(contract IERC20Upgradeable _alotToken, address __signer) public
 ```
 
 #### parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _alotToken | contract IERC20 | The address of the ALOT token |
+| _alotToken | contract IERC20Upgradeable | The address of the ALOT token |
 | __signer | address | The public address of the signer of claim messages |
 
 
@@ -110,14 +110,14 @@ Add new claimable reward token
 
 
 ```solidity
-function addRewardToken(contract IERC20 _rewardToken) external
+function addRewardToken(contract IERC20Upgradeable _rewardToken) external
 ```
 
 #### parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _rewardToken | contract IERC20 | The address of the new reward token |
+| _rewardToken | contract IERC20Upgradeable | The address of the new reward token |
 
 
 ### retrieveRewardToken

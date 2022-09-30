@@ -280,6 +280,7 @@ function bytes32ToString(bytes32 _bytes32) public pure returns (string)
 
 Adds trusted contract to portfolio
 
+**Dev notes:** _Exchange needs to be DEFAULT_ADMIN on the Portfolio_
 
 ```solidity
 function addTrustedContract(address _contract, string _name) external
@@ -296,6 +297,7 @@ function addTrustedContract(address _contract, string _name) external
 ### isTrustedContract
 
 
+**Dev notes:** _Exchange needs to be DEFAULT_ADMIN on the Portfolio_
 
 ```solidity
 function isTrustedContract(address _contract) external view returns (bool)
@@ -318,6 +320,7 @@ function isTrustedContract(address _contract) external view returns (bool)
 
 Removes trusted contract from portfolio
 
+**Dev notes:** _Exchange needs to be DEFAULT_ADMIN on the Portfolio_
 
 ```solidity
 function removeTrustedContract(address _contract) external
@@ -334,7 +337,7 @@ function removeTrustedContract(address _contract) external
 
 Add new token to portfolio
 
-**Dev notes:** _Needs to be called after the portfolio's ownership has passed to exchange_
+**Dev notes:** _Exchange needs to be DEFAULT_ADMIN on the Portfolio_
 
 ```solidity
 function addToken(bytes32 _symbol, address _tokenaddress, uint32 _srcChainId, uint8 _decimals, enum ITradePairs.AuctionMode _mode) external

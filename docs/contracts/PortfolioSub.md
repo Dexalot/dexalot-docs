@@ -309,7 +309,7 @@ function adjustAvailable(enum IPortfolio.Tx _transaction, address _trader, bytes
 
 ### transferToken
 
-Transfers token from the sender's portfolio to _to's portfolio
+Transfers token from the `msg.sender`'s portfolio to `_to`'s portfolio
 
 **Dev notes:** _This is not a ERC20 transfer, this is a balance transfer between portfolios_
 
@@ -561,7 +561,7 @@ function addIERC20(bytes32 _symbol, address _tokenaddress, uint32 _srcChainId, u
 ### getToken
 
 
-**Dev notes:** _Only valid for the mainnet_
+**Dev notes:** _Only valid for the mainnet. Implemented with an empty block here._
 
 ```solidity
 function getToken(bytes32 _symbol) external view returns (contract IERC20Upgradeable)
@@ -571,7 +571,7 @@ function getToken(bytes32 _symbol) external view returns (contract IERC20Upgrade
 ### depositToken
 
 
-**Dev notes:** _Only valid for the mainnet_
+**Dev notes:** _Only valid for the mainnet. Implemented with an empty block here._
 
 ```solidity
 function depositToken(address _from, bytes32 _symbol, uint256 _quantity, enum IPortfolioBridge.BridgeProvider) external
@@ -581,7 +581,7 @@ function depositToken(address _from, bytes32 _symbol, uint256 _quantity, enum IP
 ### depositTokenFromContract
 
 
-**Dev notes:** _Only valid for the mainnet_
+**Dev notes:** _Only valid for the mainnet. Implemented with an empty block here._
 
 ```solidity
 function depositTokenFromContract(address _from, bytes32 _symbol, uint256 _quantity) external
@@ -591,7 +591,7 @@ function depositTokenFromContract(address _from, bytes32 _symbol, uint256 _quant
 ### removeIERC20
 
 
-**Dev notes:** _Only valid for the mainnet_
+**Dev notes:** _Only valid for the mainnet. Implemented with an empty block here._
 
 ```solidity
 function removeIERC20(bytes32 _symbol) internal

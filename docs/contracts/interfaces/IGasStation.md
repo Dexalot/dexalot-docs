@@ -59,7 +59,7 @@ function setGasAmount(uint256 _gasAmount) external
 
 
 ```solidity
-function withdrawNative(uint256 amount) external
+function withdrawNative(uint256 _amount) external
 ```
 
 

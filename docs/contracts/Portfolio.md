@@ -154,7 +154,7 @@ Enables or disables a bridge provider
 **Dev notes:** _Only callable by admin_
 
 ```solidity
-function enableBridgeProvider(enum IPortfolioBridge.BridgeProvider _bridge, bool enable) external
+function enableBridgeProvider(enum IPortfolioBridge.BridgeProvider _bridge, bool _enable) external
 ```
 
 #### parameters
@@ -162,7 +162,7 @@ function enableBridgeProvider(enum IPortfolioBridge.BridgeProvider _bridge, bool
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _bridge | enum IPortfolioBridge.BridgeProvider | Enum value of the bridge provider |
-| enable | bool | True to enable, false to disable |
+| _enable | bool | True to enable, false to disable |
 
 
 ### lzForceResumeReceive

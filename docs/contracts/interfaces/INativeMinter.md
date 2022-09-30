@@ -14,7 +14,7 @@
 
 
 ```solidity
-function setAdmin(address addr) external
+function setAdmin(address _addr) external
 ```
 
 
@@ -23,7 +23,7 @@ function setAdmin(address addr) external
 
 
 ```solidity
-function setEnabled(address addr) external
+function setEnabled(address _addr) external
 ```
 
 
@@ -32,7 +32,7 @@ function setEnabled(address addr) external
 
 
 ```solidity
-function setNone(address addr) external
+function setNone(address _addr) external
 ```
 
 
@@ -41,7 +41,7 @@ function setNone(address addr) external
 
 
 ```solidity
-function readAllowList(address addr) external view returns (uint256)
+function readAllowList(address _addr) external view returns (uint256)
 ```
 
 
@@ -50,7 +50,7 @@ function readAllowList(address addr) external view returns (uint256)
 
 
 ```solidity
-function mintNativeCoin(address addr, uint256 amount) external
+function mintNativeCoin(address _addr, uint256 _amount) external
 ```
 
 

@@ -136,7 +136,7 @@ function checkTreshholds(struct IPortfolio.XFER _xfer) internal returns (bool)
 
 Retruns the symbolId used the subnet given the targetChainId
 
-**Dev notes:** _it uses the defaultTargetChain instead of srcChainId
+**Dev notes:** _it uses the defaultTargetChain instead of instead of portfolio.getChainId() that PortfolioBridge uses.
 When sending from Mainnet to Subnet we send out the symbolId of the sourceChain. USDC => USDC1337
 Because the subnet needs to know about different ids from different mainnets.
 When sending messages Subnet to Mainnet, it resolves it back to the symbolId the target chain expects_

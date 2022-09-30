@@ -32,7 +32,7 @@ function unpause() external
 
 
 ```solidity
-function mint(address to, uint256 amount) external
+function mint(address _to, uint256 _amount) external
 ```
 
 

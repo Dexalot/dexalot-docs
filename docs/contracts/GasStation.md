@@ -126,14 +126,14 @@ Withdraws native alot from the contract
 **Dev notes:** _Only admin can withdraw_
 
 ```solidity
-function withdrawNative(uint256 amount) external
+function withdrawNative(uint256 _amount) external
 ```
 
 #### parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| amount | uint256 | Amount of alot to withdraw |
+| _amount | uint256 | Amount of alot to withdraw |
 
 
 ### receive
@@ -148,6 +148,7 @@ receive() external payable
 ### fallback
 
 
+**Dev notes:** _we revert transaction if a non-existing function is called_
 
 ```solidity
 fallback() external payable

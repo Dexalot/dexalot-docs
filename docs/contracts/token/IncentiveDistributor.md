@@ -4,10 +4,10 @@
 
 IncentiveDistributor distributes 200,000 $ALOT tokens monthly for up to 2 years and
 potential other tokens to traders based on their trading activity. Token rewards per
-trader are calculated off-chain and finalised at month&#x27;s end. To validate, we sign a
+trader are calculated off-chain and finalized at month&#x27;s end. To validate, we sign a
 message containing the trader address, ids and amounts of reward tokens earned to date.
 This signature is input to the claim function to verify and allow traders to withdraw
-their earnt Dexalot Incentive Program (DIP) rewards.
+their earned Dexalot Incentive Program (DIP) rewards.
 
 
 
@@ -73,35 +73,35 @@ Claim DIP token rewards for a given trader
 
 
 ```solidity
-function claim(uint128[] amounts, uint32 tokenIds, bytes signature) external
+function claim(uint128[] _amounts, uint32 _tokenIds, bytes _signature) external
 ```
 
 #### parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| amounts | uint128[] | An array of total earned amount for each reward token |
-| tokenIds | uint32 | A bitmap representing which tokens to claim |
-| signature | bytes | A signed claim message to be verified |
+| _amounts | uint128[] | An array of total earned amount for each reward token |
+| _tokenIds | uint32 | A bitmap representing which tokens to claim |
+| _signature | bytes | A signed claim message to be verified |
 
 
 ### _checkClaim
 
-Verifies claim message (user, tokenIds, amount) has been signed by signer
+Verifies claim message (_user, _tokenIds, _amount) has been signed by signer
 
 
 ```solidity
-function _checkClaim(address user, uint32 tokenIds, uint128[] amounts, bytes signature) internal view returns (bool)
+function _checkClaim(address _user, uint32 _tokenIds, uint128[] _amounts, bytes _signature) internal view returns (bool)
 ```
 
 #### parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| user | address | The trader making a claim |
-| tokenIds | uint32 | A bitmap representing which tokens to claim |
-| amounts | uint128[] | An array of total earned amount for each reward token |
-| signature | bytes | A signed claim message to be verified |
+| _user | address | The trader making a claim |
+| _tokenIds | uint32 | A bitmap representing which tokens to claim |
+| _amounts | uint128[] | An array of total earned amount for each reward token |
+| _signature | bytes | A signed claim message to be verified |
 
 
 ### addRewardToken
@@ -110,14 +110,14 @@ Add new claimable reward token
 
 
 ```solidity
-function addRewardToken(contract IERC20 rewardToken) external
+function addRewardToken(contract IERC20 _rewardToken) external
 ```
 
 #### parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| rewardToken | contract IERC20 | The address of the new reward token |
+| _rewardToken | contract IERC20 | The address of the new reward token |
 
 
 ### retrieveRewardToken
@@ -126,14 +126,14 @@ Retrieve reward token when DIP ends
 
 
 ```solidity
-function retrieveRewardToken(uint32 tokenId) external
+function retrieveRewardToken(uint32 _tokenId) external
 ```
 
 #### parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| tokenId | uint32 | The id of the reward token to retrieve |
+| _tokenId | uint32 | The id of the reward token to retrieve |
 
 
 ### retrieveAllRewardTokens

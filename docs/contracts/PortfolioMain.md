@@ -234,7 +234,7 @@ function collectNativeBridgeFees() external
 ### updateTransferFeeRate
 
 
-**Dev notes:** _Only valid for the subnet_
+**Dev notes:** _Only valid for the subnet. Implemented with an empty block here._
 
 ```solidity
 function updateTransferFeeRate(uint256 _rate, enum IPortfolio.Tx _rateType) external
@@ -244,7 +244,7 @@ function updateTransferFeeRate(uint256 _rate, enum IPortfolio.Tx _rateType) exte
 ### setAuctionMode
 
 
-**Dev notes:** _Only valid for the subnet_
+**Dev notes:** _Only valid for the subnet. Implemented with an empty block here._
 
 ```solidity
 function setAuctionMode(bytes32 _symbol, enum ITradePairs.AuctionMode _mode) external
@@ -254,7 +254,7 @@ function setAuctionMode(bytes32 _symbol, enum ITradePairs.AuctionMode _mode) ext
 ### withdrawNative
 
 
-**Dev notes:** _Only valid for the subnet_
+**Dev notes:** _Only valid for the subnet. Implemented with an empty block here._
 
 ```solidity
 function withdrawNative(address payable _to, uint256 _quantity) external
@@ -264,7 +264,7 @@ function withdrawNative(address payable _to, uint256 _quantity) external
 ### withdrawToken
 
 
-**Dev notes:** _Only valid for the subnet_
+**Dev notes:** _Only valid for the subnet. Implemented with an empty block here._
 
 ```solidity
 function withdrawToken(address _to, bytes32 _symbol, uint256 _quantity, enum IPortfolioBridge.BridgeProvider) external
@@ -274,7 +274,7 @@ function withdrawToken(address _to, bytes32 _symbol, uint256 _quantity, enum IPo
 ### adjustAvailable
 
 
-**Dev notes:** _Only valid for the subnet_
+**Dev notes:** _Only valid for the subnet. Implemented with an empty block here._
 
 ```solidity
 function adjustAvailable(enum IPortfolio.Tx _transaction, address _trader, bytes32 _symbol, uint256 _amount) external
@@ -284,7 +284,7 @@ function adjustAvailable(enum IPortfolio.Tx _transaction, address _trader, bytes
 ### addExecution
 
 
-**Dev notes:** _Only valid for the subnet_
+**Dev notes:** _Only valid for the subnet. Implemented with an empty block here._
 
 ```solidity
 function addExecution(enum ITradePairs.Side _makerSide, address _makerAddr, address _takerAddr, bytes32 _baseSymbol, bytes32 _quoteSymbol, uint256 _baseAmount, uint256 _quoteAmount, uint256 _makerfeeCharged, uint256 _takerfeeCharged) external

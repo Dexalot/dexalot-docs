@@ -7,8 +7,8 @@ will be added as needed. This contract encapsulates all bridge provider implemen
 doesn&#x27;t need to know about.
 
 **Dev notes:** _The information flow for messages between PortfolioMain and PortfolopSub is as follows:
-PortfolioMain &#x3D;&gt; PortfolioBridgeMain &#x3D;&gt; BridgeProviderA &#x3D;&#x3D;&#x3D;&#x3D;&gt; PortfolioBridgeSub &#x3D;&#x3D;&gt; PortfolioSub
-PortfolioSub &#x3D;&gt; PortfolioBridgeSub &#x3D;&gt; BridgeProviderB &#x3D;&#x3D;&#x3D;&#x3D;&gt; PortfolioBridgeMain &#x3D;&#x3D;&gt; PortfolioMain
+PortfolioMain &#x3D;&gt; PortfolioBridgeMain &#x3D;&gt; BridgeProviderA/B/n &#x3D;&#x3D;&#x3D;&#x3D;&gt; PortfolioBridgeSub &#x3D;&#x3D;&gt; PortfolioSub
+PortfolioSub &#x3D;&gt; PortfolioBridgeSub &#x3D;&gt; BridgeProviderA/B/n &#x3D;&#x3D;&#x3D;&#x3D;&gt; PortfolioBridgeMain &#x3D;&#x3D;&gt; PortfolioMain
 PortfolioBirdge also serves as a symbol mapper to support multichain symbol handling.
 PortfolioBridgeMain always maps the symbol as SYMBOL+portolio.srcChainId and expects the same back,
 i.e USDC43114 if USDC is from Avalanche Mainnet. USDC1 if it is from Etherum.
@@ -147,7 +147,7 @@ function unpause() external
 
 ### enableBridgeProvider
 
-Enables/disables given bridge
+Enables/disables given bridge. Default bridge's state can't be modified
 
 **Dev notes:** _Only admin can enable/disable bridge_
 
@@ -222,7 +222,7 @@ function revokeRole(bytes32 _role, address _address) public
 
 Set portfolio address to grant role
 
-**Dev notes:** _Only admin can set portfolio address. Only one portfolio address can be set_
+**Dev notes:** _Only admin can set portfolio address. One to one relationship between Portflio and PortfolioBridge_
 
 ```solidity
 function setPortfolio(address _portfolio) external
@@ -252,7 +252,7 @@ function getPortfolio() external view returns (contract IPortfolio)
 
 ### setGasForDestinationLzReceive
 
-Set gas for destination chain
+Set max gas that can be used at the destination chain after message delivery
 
 **Dev notes:** _Only admin can set gas for destination chain_
 
@@ -311,9 +311,9 @@ function removeToken(bytes32 _symbol, uint32 _srcChainId) external
 
 ### getTokenId
 
-Retruns the symbolId used ithe mainnet given the srcChainId
+Retruns the symbolId used in the mainnet given the srcChainId
 
-**Dev notes:** _PortfolioBridgeSub uses the defaultTargetChain instead of srcChainId
+**Dev notes:** _PortfolioBridgeSub uses the defaultTargetChain instead of portfolio.getChainId()
 When sending from Mainnet to Subnet we send out the symbolId of the sourceChain. USDC => USDC1337
 When receiving messages back it expects the same symbolId if USDC1337 sent, USDC1337 to recieve
 Because the subnet needs to know about different ids from different mainnets._
@@ -337,10 +337,9 @@ function getTokenId(bytes32 _symbol) internal view virtual returns (bytes32)
 
 ### getSymbolForId
 
-Retruns the common symbol used in the subnet from the symbolId sent by one of the mainnets
+Retruns the locally used symbol given the symbolId
 
-**Dev notes:** _Mainnet receives the messages in the same format that it sent out. By symbolId
-But both are checked in the subnet._
+**Dev notes:** _Mainnet receives the messages in the same format that it sent out, by symbolId_
 
 ```solidity
 function getSymbolForId(bytes32 _id) internal view returns (bytes32)
@@ -380,7 +379,7 @@ function getTokenDetails(bytes32 _symbolId) external view returns (struct IPortf
 
 ### setDefaultTargetChain
 
-Sets the default chain id. To be extended with multichain implementation
+Sets the default target chain id. To be extended with multichain implementation
 
 **Dev notes:** _Only admin can call this function_
 
@@ -413,7 +412,7 @@ function getTokenList() external view returns (bytes32[])
 
 ### packXferMessage
 
-Encodes XFER message
+Maps symbol to symbolId and encodes XFER message
 
 
 ```solidity
@@ -435,18 +434,18 @@ function packXferMessage(struct IPortfolio.XFER _xfer) internal view returns (by
 
 ### unpackMessage
 
-Decodes XFER message
+Decodes XChainMsgType from the message
 
 
 ```solidity
-function unpackMessage(bytes data) public pure returns (enum IPortfolioBridge.XChainMsgType _xchainMsgType, bytes msgdata)
+function unpackMessage(bytes _data) public pure returns (enum IPortfolioBridge.XChainMsgType _xchainMsgType, bytes msgdata)
 ```
 
 #### parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| data | bytes | Encoded XFER message |
+| _data | bytes | Encoded message that has the msg type + msg |
 
 
 #### returns
@@ -454,11 +453,11 @@ function unpackMessage(bytes data) public pure returns (enum IPortfolioBridge.XC
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _xchainMsgType | enum IPortfolioBridge.XChainMsgType | XChainMsgType |
-| msgdata | bytes | Decoded XFER message |
+| msgdata | bytes | Still encoded message data. XFER in our case. Other message type not supported yet. |
 
 ### getXFerMessage
 
-Unpacks XFER message and replaces the symbol with proper symbol
+Unpacks XFER message and replaces the symbol with the local symbol
 
 
 ```solidity
@@ -482,7 +481,7 @@ function getXFerMessage(bytes _data) external view returns (struct IPortfolio.XF
 
 Wrapper function to send message to destination chain via bridge
 
-**Dev notes:** _Only portfolio can call_
+**Dev notes:** _Only PORTFOLIO_ROLE can call_
 
 ```solidity
 function sendXChainMessage(enum IPortfolioBridge.BridgeProvider _bridge, struct IPortfolio.XFER _xfer) external virtual

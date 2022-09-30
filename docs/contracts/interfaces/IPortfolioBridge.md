@@ -73,7 +73,7 @@ function sendXChainMessage(enum IPortfolioBridge.BridgeProvider _bridge, struct 
 
 
 ```solidity
-function executeDelayedTransfer(bytes32 id) external
+function executeDelayedTransfer(bytes32 _id) external
 ```
 
 
@@ -118,7 +118,7 @@ function setEpochVolumeCaps(bytes32[] _tokens, uint256[] _caps) external
 
 
 ```solidity
-function unpackMessage(bytes data) external pure returns (enum IPortfolioBridge.XChainMsgType _xchainMsgType, bytes msgdata)
+function unpackMessage(bytes _data) external pure returns (enum IPortfolioBridge.XChainMsgType _xchainMsgType, bytes msgdata)
 ```
 
 
@@ -136,7 +136,7 @@ function getXFerMessage(bytes _data) external view returns (struct IPortfolio.XF
 
 
 ```solidity
-function enableBridgeProvider(enum IPortfolioBridge.BridgeProvider _bridge, bool enable) external
+function enableBridgeProvider(enum IPortfolioBridge.BridgeProvider _bridge, bool _enable) external
 ```
 
 

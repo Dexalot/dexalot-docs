@@ -109,7 +109,7 @@ Returns the Best Bid or Best ASK depending on the OrderBook side
 
 
 ```solidity
-function bestPrice(bytes32 _orderBookID) external view returns (uint256 _price)
+function bestPrice(bytes32 _orderBookID) external view returns (uint256 price)
 ```
 
 #### parameters
@@ -123,7 +123,30 @@ function bestPrice(bytes32 _orderBookID) external view returns (uint256 _price)
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _price | uint256 | Best Bid or Best ASK |
+| price | uint256 | Best Bid or Best ASK |
+
+### getTopOfTheBook
+
+Returns the OrderId of the Best Bid or Best ASK depending on the OrderBook side
+
+
+```solidity
+function getTopOfTheBook(bytes32 _orderBookID) external view returns (uint256 price, bytes32 orderId)
+```
+
+#### parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _orderBookID | bytes32 | Order book ID |
+
+
+#### returns
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| price | uint256 | Best Bid or Best ASK |
+| orderId | bytes32 | Order Id of the Best Bid or Best ASK |
 
 ### isNotCrossedBook
 
@@ -154,7 +177,7 @@ function isNotCrossedBook(bytes32 _sellBookId, bytes32 _buyBookId) external view
 
 
 ```solidity
-function exists(bytes32 _orderBookID, uint256 price) external view returns (bool _exists)
+function exists(bytes32 _orderBookID, uint256 _price) external view returns (bool doesExist)
 ```
 
 #### parameters
@@ -162,14 +185,14 @@ function exists(bytes32 _orderBookID, uint256 price) external view returns (bool
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _orderBookID | bytes32 | Order book ID |
-| price | uint256 | Price |
+| _price | uint256 | Price |
 
 
 #### returns
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _exists | bool | True if price exists |
+| doesExist | bool | True if price exists |
 
 ### getNode
 
@@ -324,7 +347,7 @@ Get all orders at N price levels
 
 
 ```solidity
-function getNOrders(bytes32 _orderBookID, uint256 nPrice, uint256 nOrder, uint256 lastPrice, bytes32 lastOrder) external view returns (uint256[] prices, uint256[] quantities, uint256, bytes32)
+function getNOrders(bytes32 _orderBookID, uint256 _nPrice, uint256 _nOrder, uint256 _lastPrice, bytes32 _lastOrder) external view returns (uint256[] prices, uint256[] quantities, uint256, bytes32)
 ```
 
 #### parameters
@@ -332,10 +355,10 @@ function getNOrders(bytes32 _orderBookID, uint256 nPrice, uint256 nOrder, uint25
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _orderBookID | bytes32 | Order book ID |
-| nPrice | uint256 | Number of price levels |
-| nOrder | uint256 | Number of orders |
-| lastPrice | uint256 | Last price |
-| lastOrder | bytes32 | Last order |
+| _nPrice | uint256 | Number of price levels |
+| _nOrder | uint256 | Number of orders |
+| _lastPrice | uint256 | Last price |
+| _lastOrder | bytes32 | Last order |
 
 
 #### returns
@@ -354,7 +377,7 @@ function getNOrders(bytes32 _orderBookID, uint256 nPrice, uint256 nOrder, uint25
 This function will run out of gas when retreiving big orderbook data._
 
 ```solidity
-function getNOrdersOld(bytes32 _orderBookID, uint256 n, uint256 _type) external view returns (uint256[], uint256[])
+function getNOrdersOld(bytes32 _orderBookID, uint256 _n, uint256 _type) external view returns (uint256[], uint256[])
 ```
 
 #### parameters
@@ -362,7 +385,7 @@ function getNOrdersOld(bytes32 _orderBookID, uint256 n, uint256 _type) external 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _orderBookID | bytes32 | Order book ID |
-| n | uint256 | Number of order to return |
+| _n | uint256 | Number of order to return |
 | _type | uint256 | Type |
 
 
@@ -379,7 +402,7 @@ Match orders
 
 
 ```solidity
-function matchTrade(bytes32 _orderBookID, uint256 price, uint256 takerOrderRemainingQuantity, uint256 makerOrderRemainingQuantity) external returns (uint256)
+function matchTrade(bytes32 _orderBookID, uint256 _price, uint256 _takerOrderRemainingQuantity, uint256 _makerOrderRemainingQuantity) external returns (uint256)
 ```
 
 #### parameters
@@ -387,9 +410,9 @@ function matchTrade(bytes32 _orderBookID, uint256 price, uint256 takerOrderRemai
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _orderBookID | bytes32 | Order book ID |
-| price | uint256 | Price |
-| takerOrderRemainingQuantity | uint256 | Remaining quantity of the taker order |
-| makerOrderRemainingQuantity | uint256 | Remaining quantity of the maker order |
+| _price | uint256 | Price |
+| _takerOrderRemainingQuantity | uint256 | Remaining quantity of the taker order |
+| _makerOrderRemainingQuantity | uint256 | Remaining quantity of the maker order |
 
 
 #### returns

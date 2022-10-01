@@ -96,15 +96,21 @@ bytes32 PORTFOLIO_BRIDGE_ROLE
 
 ### ParameterUpdated
 
+
+
 ```solidity
 event ParameterUpdated(bytes32 pair, string _param, uint256 _oldValue, uint256 _newValue)
 ```
 ### AddressSet
 
+
+
 ```solidity
 event AddressSet(string name, string actionName, address oldAddress, address newAddress)
 ```
 ### RoleUpdated
+
+
 
 ```solidity
 event RoleUpdated(string name, string actionName, bytes32 updatedRole, address updatedAddress)

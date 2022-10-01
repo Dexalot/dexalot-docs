@@ -24,6 +24,8 @@ contract AggregatorV3Interface priceFeed
 
 ### CoinFlipped
 
+
+
 ```solidity
 event CoinFlipped(uint80 roundid, int256 price, bool outcome)
 ```

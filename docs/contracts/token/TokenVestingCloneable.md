@@ -17,15 +17,21 @@ bytes32 VERSION
 
 ### TokensReleased
 
+
+
 ```solidity
 event TokensReleased(address token, uint256 amount)
 ```
 ### TokenVestingRevoked
 
+
+
 ```solidity
 event TokenVestingRevoked(address token)
 ```
 ### PortfolioChanged
+
+
 
 ```solidity
 event PortfolioChanged(address portfolio)

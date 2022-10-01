@@ -32,10 +32,14 @@ uint256 count
 
 ### TokenVestingCloneFactoryInitialized
 
+
+
 ```solidity
 event TokenVestingCloneFactoryInitialized(address implementation)
 ```
 ### NewClone
+
+
 
 ```solidity
 event NewClone(address _clone)

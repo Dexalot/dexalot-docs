@@ -33,6 +33,8 @@ uint256 totalNativeMinted
 
 ### Mint
 
+
+
 ```solidity
 event Mint(address to, uint256 amount)
 ```

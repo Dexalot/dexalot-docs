@@ -19,6 +19,8 @@ In return, It will deduct a tiny amount of the token transferred._
 
 ### AssetEntry
 
+
+
 ```solidity
 struct AssetEntry {
   uint256 total;
@@ -26,6 +28,8 @@ struct AssetEntry {
 }
 ```
 ### AssetType
+
+
 
 ```solidity
 enum AssetType {

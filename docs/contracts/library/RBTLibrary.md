@@ -16,6 +16,8 @@ Documenention has been added._
 
 ### Node
 
+
+
 ```solidity
 struct Node {
   uint256 parent;
@@ -25,6 +27,8 @@ struct Node {
 }
 ```
 ### Tree
+
+
 
 ```solidity
 struct Tree {

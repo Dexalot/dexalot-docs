@@ -72,15 +72,21 @@ enum IPortfolioBridge.BridgeProvider defaultBridgeProvider
 
 ### RoleUpdated
 
+
+
 ```solidity
 event RoleUpdated(string name, string actionName, bytes32 updatedRole, address updatedAddress)
 ```
 ### GasForDestinationLzReceiveUpdated
 
+
+
 ```solidity
 event GasForDestinationLzReceiveUpdated(uint256 gasForDestinationLzReceive)
 ```
 ### DefaultChainIdUpdated
+
+
 
 ```solidity
 event DefaultChainIdUpdated(uint32 chainId)

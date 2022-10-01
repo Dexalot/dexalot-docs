@@ -8,6 +8,8 @@
 
 ### Tx
 
+
+
 ```solidity
 enum Tx {
   WITHDRAW,
@@ -22,6 +24,8 @@ enum Tx {
 ```
 ### XFER
 
+
+
 ```solidity
 struct XFER {
   uint64 nonce;
@@ -33,6 +37,8 @@ struct XFER {
 }
 ```
 ### TokenDetails
+
+
 
 ```solidity
 struct TokenDetails {
@@ -49,6 +55,8 @@ struct TokenDetails {
 ## Events
 
 ### PortfolioUpdated
+
+
 
 ```solidity
 event PortfolioUpdated(enum IPortfolio.Tx transaction, address wallet, bytes32 symbol, uint256 quantity, uint256 feeCharged, uint256 total, uint256 available)

@@ -67,35 +67,49 @@ mapping(address => uint256) rewards
 
 ### Staked
 
+
+
 ```solidity
 event Staked(address user, uint256 amount)
 ```
 ### Withdrawn
+
+
 
 ```solidity
 event Withdrawn(address user, uint256 amount)
 ```
 ### Restaked
 
+
+
 ```solidity
 event Restaked(address user, uint256 reward)
 ```
 ### RewardPaid
+
+
 
 ```solidity
 event RewardPaid(address user, uint256 reward)
 ```
 ### RewardRateUpdated
 
+
+
 ```solidity
 event RewardRateUpdated(uint256 rate)
 ```
 ### RewardsDurationUpdated
 
+
+
 ```solidity
 event RewardsDurationUpdated(uint256 rewardsDuration)
 ```
 ### FundsRecovered
+
+
 
 ```solidity
 event FundsRecovered(uint256 amount, address token)

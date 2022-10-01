@@ -42,6 +42,8 @@ uint256 gasForDestinationLzReceive
 
 ### LZTrustedRemoteSet
 
+
+
 ```solidity
 event LZTrustedRemoteSet(uint16 remoteChainId, bytes remoteAddress)
 ```

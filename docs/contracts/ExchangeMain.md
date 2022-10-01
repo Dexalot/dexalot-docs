@@ -4,21 +4,14 @@
 
 This contract is the mainnet version of the Dexalot Exchange.
 
-**Dev notes:** _ExchangeMain is DEFAULT_ADMIN to PortfolioMain contract._
+**Dev notes:** \
+ExchangeMain is DEFAULT_ADMIN to PortfolioMain contract.
 
 
 ## Variables
 
-### VERSION
-
-```solidity
-bytes32 VERSION
-```
-### priceFeed
-
-```solidity
-contract AggregatorV3Interface priceFeed
-```
+| Var | Type |
+| --- | --- |
 
 ## Events
 
@@ -36,7 +29,8 @@ event CoinFlipped(uint80 roundid, int256 price, bool outcome)
 
 Initializer for upgradeable contract.
 
-**Dev notes:** _Sets Chainlink price feed address._
+**Dev notes:** \
+Sets Chainlink price feed address.
 
 ```solidity
 function initialize() public
@@ -52,7 +46,7 @@ function initialize() public
 function pauseForUpgrade(bool _pause) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -68,7 +62,7 @@ Sets Chainlink price feed address.
 function setPriceFeed(address _address) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -84,7 +78,7 @@ function getPriceFeed() external view returns (contract AggregatorV3Interface)
 ```
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -100,7 +94,7 @@ function isHead() public view returns (uint80 r, int256 p, bool o)
 ```
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |

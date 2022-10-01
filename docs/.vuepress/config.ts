@@ -8,7 +8,7 @@ export default defineUserConfig({
   description: "The home for technical content.",
   plugins: [
     searchPlugin({
-      maxSuggestions: 8,
+      maxSuggestions: 10,
       locales: {
         '/': {  // English
           placeholder: 'Search',
@@ -21,7 +21,7 @@ export default defineUserConfig({
     footer: "Last updated 09/22/2022",
     copyright: "BUSL 1.1 Licensed | Copyright © 2022 Dexalot",
     displayFooter: true,
-    headerDepth: 3,
+    headerDepth: 6,
     repo: "https://github.com/Dexalot",
     docsRepo: "https://github.com/Dexalot/dexalot-docs",
     docsBranch: "main",
@@ -69,7 +69,7 @@ export default defineUserConfig({
           {
             text: "Litepaper",
             icon: "read",
-            link: "litepaper/Litepaper"
+            link: "litepaper"
           }
         ]
       },
@@ -189,6 +189,12 @@ export default defineUserConfig({
           }
         ],  // children under Legal end
       },  // Legal end
+
+      {
+        text: "Trading API",
+        icon: "api",
+        link: "apiv2"
+      },
 
       {
         text: "Contact",

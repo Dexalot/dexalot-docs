@@ -9,26 +9,8 @@ It receives native coin and only sends out to the low balanced users via Portfol
 
 ## Variables
 
-### VERSION
-
-```solidity
-bytes32 VERSION
-```
-### PAUSER_ROLE
-
-```solidity
-bytes32 PAUSER_ROLE
-```
-### SWAPPER_ROLE
-
-```solidity
-bytes32 SWAPPER_ROLE
-```
-### gasAmount
-
-```solidity
-uint256 gasAmount
-```
+| Var | Type |
+| --- | --- |
 
 ## Events
 
@@ -53,13 +35,14 @@ event GasRequested(address to, uint256 amount)
 
 Initializer for upgradeable contract.
 
-**Dev notes:** _Grant admin and pauser role to the sender. Grant swapper role to swapper (portfolio) contract_
+**Dev notes:** \
+Grant admin and pauser role to the sender. Grant swapper role to swapper (portfolio) contract
 
 ```solidity
 function initialize(address _swapper, uint256 _gasAmount) public
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -71,7 +54,8 @@ function initialize(address _swapper, uint256 _gasAmount) public
 
 Pauses gas distribution
 
-**Dev notes:** _Only pauser can pause_
+**Dev notes:** \
+Only pauser can pause
 
 ```solidity
 function pause() external
@@ -82,7 +66,8 @@ function pause() external
 
 Unpauses gas distribution
 
-**Dev notes:** _Only pauser can unpause_
+**Dev notes:** \
+Only pauser can unpause
 
 ```solidity
 function unpause() external
@@ -93,13 +78,14 @@ function unpause() external
 
 Set gas amount to be distributed to the users
 
-**Dev notes:** _Only admin can set gas amount_
+**Dev notes:** \
+Only admin can set gas amount
 
 ```solidity
 function setGasAmount(uint256 _gasAmount) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -110,13 +96,14 @@ function setGasAmount(uint256 _gasAmount) external
 
 Swapper contract will request gas after depositing bridge fee to our EOA
 
-**Dev notes:** _Only swapper (Portfolio Sub) can request gas_
+**Dev notes:** \
+Only swapper (Portfolio Sub) can request gas
 
 ```solidity
 function requestGas(address _to) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -127,13 +114,14 @@ function requestGas(address _to) external
 
 Withdraws native alot from the contract
 
-**Dev notes:** _Only admin can withdraw_
+**Dev notes:** \
+Only admin can withdraw
 
 ```solidity
 function withdrawNative(uint256 _amount) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -152,7 +140,8 @@ receive() external payable
 ### fallback
 
 
-**Dev notes:** _we revert transaction if a non-existing function is called_
+**Dev notes:** \
+we revert transaction if a non-existing function is called
 
 ```solidity
 fallback() external payable

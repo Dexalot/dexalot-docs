@@ -141,7 +141,8 @@ event NewTradePair(uint8 version, bytes32 pair, uint8 basedisplaydecimals, uint8
 
 Emits a given order's latest state
 
-**Dev notes:** _The details of the emitted event is as follows: \
+**Dev notes:** \
+The details of the emitted event is as follows: \
 `version`  event version \
 `traderaddress`  traders’s wallet (immutable) \
 `pair`  traded pair. ie. ALOT/AVAX in bytes32 (immutable) \
@@ -162,7 +163,7 @@ partial fills at different prices \
 `totalfee` cumulative fee paid for the order (total fee is always in terms of
 received(incoming) currency. ie. if Buy ALOT/AVAX, fee is paid in ALOT, if Sell
 ALOT/AVAX , fee is paid in AVAX \
-**Note**: The execution price will always be equal or better than the Order price._
+**Note**: The execution price will always be equal or better than the Order price.
 
 ```solidity
 event OrderStatusChanged(uint8 version, address traderaddress, bytes32 pair, bytes32 orderId, bytes32 clientOrderId, uint256 price, uint256 totalamount, uint256 quantity, enum ITradePairs.Side side, enum ITradePairs.Type1 type1, enum ITradePairs.Type2 type2, enum ITradePairs.Status status, uint256 quantityfilled, uint256 totalfee)
@@ -171,7 +172,8 @@ event OrderStatusChanged(uint8 version, address traderaddress, bytes32 pair, byt
 
 Emits the Executed/Trade Event showing
 
-**Dev notes:** _The details of the emitted event is as follows: \
+**Dev notes:** \
+The details of the emitted event is as follows: \
 `version`  event version \
 `pair`  traded pair. ie. ALOT/AVAX in bytes32 \
 `price`  executed price \
@@ -187,7 +189,7 @@ then the fee is paid by the Maker in Quote Currency and the fee is paid by
 the taker in Base currency \
 `execId`  Unique trade id (execution id) assigned by the contract \
 `addressMaker`  maker traderaddress \
-`addressTaker`  taker traderaddress \_
+`addressTaker`  taker traderaddress \
 
 ```solidity
 event Executed(uint8 version, bytes32 pair, uint256 price, uint256 quantity, bytes32 makerOrder, bytes32 takerOrder, uint256 feeMaker, uint256 feeTaker, enum ITradePairs.Side takerSide, uint256 execId, address addressMaker, address addressTaker)

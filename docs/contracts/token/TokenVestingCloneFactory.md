@@ -7,26 +7,8 @@
 
 ## Variables
 
-### VERSION
-
-```solidity
-bytes32 VERSION
-```
-### implementation
-
-```solidity
-address implementation
-```
-### clones
-
-```solidity
-mapping(uint256 => address) clones
-```
-### count
-
-```solidity
-uint256 count
-```
+| Var | Type |
+| --- | --- |
 
 ## Events
 
@@ -59,13 +41,14 @@ constructor() public
 ### createTokenVesting
 
 
-**Dev notes:** _Create function for a new TokenVesting clone_
+**Dev notes:** \
+Create function for a new TokenVesting clone
 
 ```solidity
 function createTokenVesting(address __beneficiary, uint256 __start, uint256 __cliffDuration, uint256 __duration, uint256 __startPortfolioDeposits, bool __revocable, uint256 __firstReleasePercentage, uint256 __period, address __portfolio, address __owner) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -84,13 +67,14 @@ function createTokenVesting(address __beneficiary, uint256 __start, uint256 __cl
 ### getClone
 
 
-**Dev notes:** _Accessor method to get i-th clone_
+**Dev notes:** \
+Accessor method to get i-th clone
 
 ```solidity
 function getClone(uint256 index) external view returns (address)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |

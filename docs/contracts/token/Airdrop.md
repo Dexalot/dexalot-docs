@@ -7,21 +7,8 @@
 
 ## Variables
 
-### VERSION
-
-```solidity
-bytes32 VERSION
-```
-### token
-
-```solidity
-contract IERC20 token
-```
-### root
-
-```solidity
-bytes32 root
-```
+| Var | Type |
+| --- | --- |
 
 ## Events
 
@@ -53,7 +40,7 @@ function cliff() external view returns (uint256)
 ```
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -68,7 +55,7 @@ function start() external view returns (uint256)
 ```
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -83,7 +70,7 @@ function duration() external view returns (uint256)
 ```
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -98,7 +85,7 @@ function getPercentage() external view returns (uint256)
 ```
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -107,13 +94,14 @@ function getPercentage() external view returns (uint256)
 ### claim
 
 
-**Dev notes:** _Claims tokens to user's wallet_
+**Dev notes:** \
+Claims tokens to user's wallet
 
 ```solidity
 function claim(uint256 index, uint256 amount, bytes32[] merkleProof) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -130,14 +118,14 @@ function claim(uint256 index, uint256 amount, bytes32[] merkleProof) external
 function released(uint256 index) external view returns (uint256)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | index | uint256 | value of the position in the list |
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -151,7 +139,7 @@ function released(uint256 index) external view returns (uint256)
 function releasableAmount(uint256 index, uint256 amount, bytes32[] merkleProof) external view returns (uint256)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -160,7 +148,7 @@ function releasableAmount(uint256 index, uint256 amount, bytes32[] merkleProof) 
 | merkleProof | bytes32[] | the proof of merkle |
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -169,7 +157,8 @@ function releasableAmount(uint256 index, uint256 amount, bytes32[] merkleProof) 
 ### retrieveProjectToken
 
 
-**Dev notes:** _retrieves project tokens from the contract sending to the owner_
+**Dev notes:** \
+retrieves project tokens from the contract sending to the owner
 
 ```solidity
 function retrieveProjectToken() external
@@ -179,7 +168,8 @@ function retrieveProjectToken() external
 ### retrieveOtherToken
 
 
-**Dev notes:** _retrieves other tokens from the contract sending to the owner_
+**Dev notes:** \
+retrieves other tokens from the contract sending to the owner
 
 ```solidity
 function retrieveOtherToken(address tok) external
@@ -189,7 +179,8 @@ function retrieveOtherToken(address tok) external
 ### pause
 
 
-**Dev notes:** _pauses the contract_
+**Dev notes:** \
+pauses the contract
 
 ```solidity
 function pause() external
@@ -199,7 +190,8 @@ function pause() external
 ### unpause
 
 
-**Dev notes:** _unpauses the contract_
+**Dev notes:** \
+unpauses the contract
 
 ```solidity
 function unpause() external

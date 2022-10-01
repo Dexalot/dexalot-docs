@@ -13,26 +13,8 @@ their earned Dexalot Incentive Program (DIP) rewards.
 
 ## Variables
 
-### VERSION
-
-```solidity
-bytes32 VERSION
-```
-### allTokens
-
-```solidity
-uint32 allTokens
-```
-### tokens
-
-```solidity
-mapping(uint32 => contract IERC20Upgradeable) tokens
-```
-### claimedRewards
-
-```solidity
-mapping(address => mapping(uint32 => uint128)) claimedRewards
-```
+| Var | Type |
+| --- | --- |
 
 ## Events
 
@@ -57,13 +39,14 @@ event AddRewardToken(contract IERC20Upgradeable token, uint32 tokenId, uint256 t
 
 Initializer of the IncentiveDistributor
 
-**Dev notes:** _Adds ALOT token as the first reward token and defines the signer of claim messages._
+**Dev notes:** \
+Adds ALOT token as the first reward token and defines the signer of claim messages.
 
 ```solidity
 function initialize(contract IERC20Upgradeable _alotToken, address __signer) public
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -80,7 +63,7 @@ Claim DIP token rewards for a given trader
 function claim(uint128[] _amounts, uint32 _tokenIds, bytes _signature) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -98,7 +81,7 @@ Verifies claim message (_user, _tokenIds, _amount) has been signed by signer
 function _checkClaim(address _user, uint32 _tokenIds, uint128[] _amounts, bytes _signature) internal view returns (bool)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -117,7 +100,7 @@ Add new claimable reward token
 function addRewardToken(contract IERC20Upgradeable _rewardToken) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -133,7 +116,7 @@ Retrieve reward token when DIP ends
 function retrieveRewardToken(uint32 _tokenId) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |

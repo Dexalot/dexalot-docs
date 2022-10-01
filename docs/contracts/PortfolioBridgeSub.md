@@ -4,46 +4,14 @@
 
 This contracts checks volume and threshold limits for withdrawals.
 
-**Dev notes:** _It implements delayedTransfers as well as volume caps per epoch per token_
+**Dev notes:** \
+It implements delayedTransfers as well as volume caps per epoch per token
 
 
 ## Variables
 
-### delayPeriod
-
-```solidity
-uint256 delayPeriod
-```
-### epochLength
-
-```solidity
-uint256 epochLength
-```
-### delayedTransfers
-
-```solidity
-mapping(bytes32 => struct IPortfolio.XFER) delayedTransfers
-```
-### delayThresholds
-
-```solidity
-mapping(bytes32 => uint256) delayThresholds
-```
-### epochVolumes
-
-```solidity
-mapping(bytes32 => uint256) epochVolumes
-```
-### epochVolumeCaps
-
-```solidity
-mapping(bytes32 => uint256) epochVolumeCaps
-```
-### lastOpTimestamps
-
-```solidity
-mapping(bytes32 => uint256) lastOpTimestamps
-```
+| Var | Type |
+| --- | --- |
 
 ## Events
 
@@ -105,13 +73,14 @@ function VERSION() public pure returns (bytes32)
 
 Sends XFER message to the destination chain
 
-**Dev notes:** _This is a wrapper to check volume and threshold while withdrawing_
+**Dev notes:** \
+This is a wrapper to check volume and threshold while withdrawing
 
 ```solidity
 function sendXChainMessage(enum IPortfolioBridge.BridgeProvider _bridge, struct IPortfolio.XFER _xfer) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -123,22 +92,23 @@ function sendXChainMessage(enum IPortfolioBridge.BridgeProvider _bridge, struct 
 
 Checks the volume and thresholds to delay or execute immediately
 
-**Dev notes:** _This function is called both in processPayload (deposits coming from mainnet)
+**Dev notes:** \
+This function is called both in processPayload (deposits coming from mainnet)
 as well as sendXChainMessage (withdrawals from the subnet)
-Not bridge specific! Delayed messages will be processed by the defaultBridge_
+Not bridge specific! Delayed messages will be processed by the defaultBridge
 
 ```solidity
 function checkTreshholds(struct IPortfolio.XFER _xfer) internal returns (bool)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _xfer | struct IPortfolio.XFER | XFER message |
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -148,23 +118,24 @@ function checkTreshholds(struct IPortfolio.XFER _xfer) internal returns (bool)
 
 Retruns the symbolId used the subnet given the targetChainId
 
-**Dev notes:** _it uses the defaultTargetChain instead of instead of portfolio.getChainId() that PortfolioBridge uses.
+**Dev notes:** \
+it uses the defaultTargetChain instead of instead of portfolio.getChainId() that PortfolioBridge uses.
 When sending from Mainnet to Subnet we send out the symbolId of the sourceChain. USDC => USDC1337
 Because the subnet needs to know about different ids from different mainnets.
-When sending messages Subnet to Mainnet, it resolves it back to the symbolId the target chain expects_
+When sending messages Subnet to Mainnet, it resolves it back to the symbolId the target chain expects
 
 ```solidity
 function getTokenId(bytes32 _symbol) internal view returns (bytes32)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _symbol | bytes32 | symbol of the token |
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -174,13 +145,14 @@ function getTokenId(bytes32 _symbol) internal view returns (bytes32)
 
 Sets delay thresholds for tokens
 
-**Dev notes:** _Only admin can call this function_
+**Dev notes:** \
+Only admin can call this function
 
 ```solidity
 function setDelayThresholds(bytes32[] _tokens, uint256[] _thresholds) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -192,13 +164,14 @@ function setDelayThresholds(bytes32[] _tokens, uint256[] _thresholds) external
 
 Sets delay period for delayed transfers
 
-**Dev notes:** _Only admin can call this function_
+**Dev notes:** \
+Only admin can call this function
 
 ```solidity
 function setDelayPeriod(uint256 _period) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -209,13 +182,14 @@ function setDelayPeriod(uint256 _period) external
 
 Executes delayed transfer if the delay period has passed
 
-**Dev notes:** _Only admin can call this function_
+**Dev notes:** \
+Only admin can call this function
 
 ```solidity
 function executeDelayedTransfer(bytes32 _id) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -226,13 +200,14 @@ function executeDelayedTransfer(bytes32 _id) external
 
 Sets epoch length for volume control
 
-**Dev notes:** _Only admin can call this function_
+**Dev notes:** \
+Only admin can call this function
 
 ```solidity
 function setEpochLength(uint256 _length) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -243,13 +218,14 @@ function setEpochLength(uint256 _length) external
 
 Sets volume cap for tokens
 
-**Dev notes:** _Only admin can call this function_
+**Dev notes:** \
+Only admin can call this function
 
 ```solidity
 function setEpochVolumeCaps(bytes32[] _tokens, uint256[] _caps) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |

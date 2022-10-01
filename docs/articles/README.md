@@ -2,7 +2,7 @@
 title: Articles
 icon: note
 prev: /
-next: /articles/litepaper/Litepaper
+next: /articles/litepaper
 editLink: true
 ---
 

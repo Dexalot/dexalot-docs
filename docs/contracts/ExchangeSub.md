@@ -5,16 +5,14 @@
 This contract is the subnet version of the Dexalot Exchange.
 It has all the AUCTION_ADMIN functions that can be called.
 
-**Dev notes:** _ExchangeSub is DEFAULT_ADMIN on both PortfolioSub and TradePairs contracts._
+**Dev notes:** \
+ExchangeSub is DEFAULT_ADMIN on both PortfolioSub and TradePairs contracts.
 
 
 ## Variables
 
-### VERSION
-
-```solidity
-bytes32 VERSION
-```
+| Var | Type |
+| --- | --- |
 
 ## Events
 
@@ -44,7 +42,7 @@ event AuctionMatchFinished(bytes32 pair)
 function pauseForUpgrade(bool _pause) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -55,13 +53,14 @@ function pauseForUpgrade(bool _pause) external
 
 Set the address of the OrderBooks contract
 
-**Dev notes:** _Needed to initiate match auction orders_
+**Dev notes:** \
+Needed to initiate match auction orders
 
 ```solidity
 function setOrderBooks(address _orderbooks) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -77,7 +76,7 @@ Sets trade pairs contract
 function setTradePairs(contract ITradePairs _tradePairs) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -93,7 +92,7 @@ function getTradePairsAddr() external view returns (contract ITradePairs)
 ```
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -108,7 +107,7 @@ Un(pause) trading functionality. Affects both addorder and cancelorder funcs.
 function pauseTrading(bool _tradingPause) public
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -124,7 +123,7 @@ Un(pause) trading functionality for a trade pair. Affects both addorder and canc
 function pauseTradePair(bytes32 _tradePairId, bool _tradePairPause) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -141,7 +140,7 @@ Update all commissions rates of all trading pairs all at once
 function updateAllRates(uint8 _makerRate, uint8 _takerRate) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -153,14 +152,15 @@ function updateAllRates(uint8 _makerRate, uint8 _takerRate) external
 
 Adds a new trading pair to the exchange.
 
-**Dev notes:** _Both the base and quote symbol must exist in the PortfolioSub otherwise it will revert.
-Both `DEFAULT_ADMIN_ROLE` and `AUCTION_ADMIN_ROLE` can add a new trading pair._
+**Dev notes:** \
+Both the base and quote symbol must exist in the PortfolioSub otherwise it will revert.
+Both `DEFAULT_ADMIN_ROLE` and `AUCTION_ADMIN_ROLE` can add a new trading pair.
 
 ```solidity
 function addTradePair(bytes32 _tradePairId, bytes32 _baseSymbol, uint8 _baseDisplayDecimals, bytes32 _quoteSymbol, uint8 _quoteDisplayDecimals, uint256 _minTradeAmount, uint256 _maxTradeAmount, enum ITradePairs.AuctionMode _mode) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -183,7 +183,7 @@ Sets auction mode for a trading pair and its basetoken in the PortfolioSUb.
 function setAuctionMode(bytes32 _tradePairId, bytes32 _baseSymbol, enum ITradePairs.AuctionMode _mode) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -201,7 +201,7 @@ Update maker and taker fee rates for execution
 function updateRate(bytes32 _tradePair, uint8 _rate, enum ITradePairs.RateType _rateType) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -219,7 +219,7 @@ Update maker and taker fee rates for execution
 function updateRates(bytes32 _tradePairId, uint8 _makerRate, uint8 _takerRate) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -237,7 +237,7 @@ Sets auction price
 function setAuctionPrice(bytes32 _tradePairId, uint256 _price) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -254,7 +254,7 @@ Sets minimum trade amount for a trade pair
 function setMinTradeAmount(bytes32 _tradePairId, uint256 _minTradeAmount) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -270,14 +270,14 @@ function setMinTradeAmount(bytes32 _tradePairId, uint256 _minTradeAmount) extern
 function getMinTradeAmount(bytes32 _tradePairId) external view returns (uint256)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _tradePairId | bytes32 | id of the trading pair |
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -292,7 +292,7 @@ Sets maximum trade amount for a trade pair
 function setMaxTradeAmount(bytes32 _tradePairId, uint256 _maxTradeAmount) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -308,14 +308,14 @@ function setMaxTradeAmount(bytes32 _tradePairId, uint256 _maxTradeAmount) extern
 function getMaxTradeAmount(bytes32 _tradePairId) external view returns (uint256)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _tradePairId | bytes32 | id of the trading pair |
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -325,14 +325,15 @@ function getMaxTradeAmount(bytes32 _tradePairId) external view returns (uint256)
 
 Matches auction orders once the auction is closed and auction price is set
 
-**Dev notes:** _Takes the top of the book sell order, (bestAsk), and matches it with the buy orders sequantially.
-An auction mode can safely be changed to AUCTIONMODE.OFF only when this function returns false._
+**Dev notes:** \
+Takes the top of the book sell order, (bestAsk), and matches it with the buy orders sequantially.
+An auction mode can safely be changed to AUCTIONMODE.OFF only when this function returns false.
 
 ```solidity
 function matchAuctionOrders(bytes32 _tradePairId, uint8 _maxCount) external returns (bool)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -340,7 +341,7 @@ function matchAuctionOrders(bytes32 _tradePairId, uint8 _maxCount) external retu
 | _maxCount | uint8 | controls max number of fills an order can get at a time to avoid running out of gas |
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |

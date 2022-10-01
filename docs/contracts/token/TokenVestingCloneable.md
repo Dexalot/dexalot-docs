@@ -7,11 +7,8 @@
 
 ## Variables
 
-### VERSION
-
-```solidity
-bytes32 VERSION
-```
+| Var | Type |
+| --- | --- |
 
 ## Events
 
@@ -46,15 +43,16 @@ Therefore, the contract would be susceptible to timestamp manipulation miners ma
 do in some EVMs for variables with less than a min time lengths for delta time. To mitigate
 potential exploits variables holding delta time are required to be more than 5 minutes.
 
-**Dev notes:** _Creates a vesting contract that vests its balance of any ERC20 token to the
+**Dev notes:** \
+Creates a vesting contract that vests its balance of any ERC20 token to the
 beneficiary, gradually in a linear fashion until start + duration. By then all
-of the balance will have vested._
+of the balance will have vested.
 
 ```solidity
 function initialize(address __beneficiary, uint256 __start, uint256 __cliffDuration, uint256 __duration, uint256 __startPortfolioDeposits, bool __revocable, uint256 __firstReleasePercentage, uint256 __period, address __portfolio, address __owner) public
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -79,7 +77,7 @@ function beneficiary() external view returns (address)
 ```
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -94,7 +92,7 @@ function cliff() external view returns (uint256)
 ```
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -109,7 +107,7 @@ function start() external view returns (uint256)
 ```
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -124,7 +122,7 @@ function duration() external view returns (uint256)
 ```
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -139,7 +137,7 @@ function startPortfolioDeposits() external view returns (uint256)
 ```
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -154,7 +152,7 @@ function revocable() external view returns (bool)
 ```
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -169,7 +167,7 @@ function period() external view returns (uint256)
 ```
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -183,14 +181,14 @@ function period() external view returns (uint256)
 function released(address token) external view returns (uint256)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | token | address | ERC20 token which is being vested. |
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -204,14 +202,14 @@ function released(address token) external view returns (uint256)
 function revoked(address token) external view returns (bool)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | token | address | ERC20 token which is being vested. |
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -226,7 +224,7 @@ function getPercentage() external view returns (uint256)
 ```
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -241,7 +239,7 @@ beneficiary check is not for access control, it is just for convenience in front
 function canFundWallet(contract IERC20MetadataUpgradeable token, address __beneficiary) external view returns (bool)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -249,7 +247,7 @@ function canFundWallet(contract IERC20MetadataUpgradeable token, address __benef
 | __beneficiary | address | address of beneficiary. |
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -264,14 +262,14 @@ beneficiary check is not for access control, it is just for convenience in front
 function canFundPortfolio(address __beneficiary) public view returns (bool)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | __beneficiary | address | address of beneficiary. |
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -286,7 +284,7 @@ function getPortfolio() external view returns (address)
 ```
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -295,13 +293,14 @@ function getPortfolio() external view returns (address)
 ### setPortfolio
 
 
-**Dev notes:** _sets the address for the portfolio._
+**Dev notes:** \
+sets the address for the portfolio.
 
 ```solidity
 function setPortfolio(address __portfolio) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -317,7 +316,7 @@ Transfers vested tokens to beneficiary.
 function release(contract IERC20MetadataUpgradeable token) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -328,13 +327,14 @@ function release(contract IERC20MetadataUpgradeable token) external
 
 User must give two approvals for the vesting and portfolio contracts before calling this function.
 
-**Dev notes:** _Transfers vested tokens to Portfolio._
+**Dev notes:** \
+Transfers vested tokens to Portfolio.
 
 ```solidity
 function releaseToPortfolio(contract IERC20MetadataUpgradeable token) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -345,13 +345,14 @@ function releaseToPortfolio(contract IERC20MetadataUpgradeable token) external
 
 Tokens already vested remain in the contract, the rest are returned to the owner.
 
-**Dev notes:** _Allows the owner to revoke the vesting._
+**Dev notes:** \
+Allows the owner to revoke the vesting.
 
 ```solidity
 function revoke(contract IERC20MetadataUpgradeable token) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -361,13 +362,14 @@ function revoke(contract IERC20MetadataUpgradeable token) external
 ### vestedAmount
 
 
-**Dev notes:** _Returns the amount for the amount remaining after the initial percentage vested at TGE._
+**Dev notes:** \
+Returns the amount for the amount remaining after the initial percentage vested at TGE.
 
 ```solidity
 function vestedAmount(contract IERC20MetadataUpgradeable token) external view returns (uint256)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -377,13 +379,14 @@ function vestedAmount(contract IERC20MetadataUpgradeable token) external view re
 ### releasedPercentageAmount
 
 
-**Dev notes:** _Returns the amount that has been released based on the initial percentage vested at TGE._
+**Dev notes:** \
+Returns the amount that has been released based on the initial percentage vested at TGE.
 
 ```solidity
 function releasedPercentageAmount(contract IERC20MetadataUpgradeable token) external view returns (uint256)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -393,13 +396,14 @@ function releasedPercentageAmount(contract IERC20MetadataUpgradeable token) exte
 ### vestedPercentageAmount
 
 
-**Dev notes:** _Returns the amount that is releaseable based on the initial percentage vested  at TGE._
+**Dev notes:** \
+Returns the amount that is releaseable based on the initial percentage vested  at TGE.
 
 ```solidity
 function vestedPercentageAmount(contract IERC20MetadataUpgradeable token) external view returns (uint256)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |

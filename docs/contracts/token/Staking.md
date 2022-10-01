@@ -7,61 +7,8 @@
 
 ## Variables
 
-### VERSION
-
-```solidity
-bytes32 VERSION
-```
-### rewardsToken
-
-```solidity
-contract IERC20Upgradeable rewardsToken
-```
-### stakingToken
-
-```solidity
-contract IERC20Upgradeable stakingToken
-```
-### periodFinish
-
-```solidity
-uint256 periodFinish
-```
-### rewardsDuration
-
-```solidity
-uint256 rewardsDuration
-```
-### rewardRate
-
-```solidity
-uint256 rewardRate
-```
-### lastUpdateTime
-
-```solidity
-uint256 lastUpdateTime
-```
-### rewardPerTokenStored
-
-```solidity
-uint256 rewardPerTokenStored
-```
-### isStakingPaused
-
-```solidity
-bool isStakingPaused
-```
-### userRewardPerTokenPaid
-
-```solidity
-mapping(address => uint256) userRewardPerTokenPaid
-```
-### rewards
-
-```solidity
-mapping(address => uint256) rewards
-```
+| Var | Type |
+| --- | --- |
 
 ## Events
 

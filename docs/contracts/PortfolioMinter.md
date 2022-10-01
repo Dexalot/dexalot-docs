@@ -3,31 +3,14 @@
 **Intermediate contract to mint native tokens via NativeTokenMinter precompile.**
 
 
-**Dev notes:** _Only this contract is used to mint native tokens via NativeTokenMinter precompile._
+**Dev notes:** \
+Only this contract is used to mint native tokens via NativeTokenMinter precompile.
 
 
 ## Variables
 
-### VERSION
-
-```solidity
-bytes32 VERSION
-```
-### PAUSER_ROLE
-
-```solidity
-bytes32 PAUSER_ROLE
-```
-### MINTER_ROLE
-
-```solidity
-bytes32 MINTER_ROLE
-```
-### totalNativeMinted
-
-```solidity
-uint256 totalNativeMinted
-```
+| Var | Type |
+| --- | --- |
 
 ## Events
 
@@ -45,13 +28,14 @@ event Mint(address to, uint256 amount)
 
 Initializer for upgradeable contract.
 
-**Dev notes:** _Grant admin and pauser role to the sender. Grant minter role to portfolio and set precompile address_
+**Dev notes:** \
+Grant admin and pauser role to the sender. Grant minter role to portfolio and set precompile address
 
 ```solidity
 function initialize(address _portfolio, address _nativeMinter) public
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -63,7 +47,8 @@ function initialize(address _portfolio, address _nativeMinter) public
 
 Pauses minting
 
-**Dev notes:** _Only pauser can pause_
+**Dev notes:** \
+Only pauser can pause
 
 ```solidity
 function pause() external
@@ -74,7 +59,8 @@ function pause() external
 
 Unpauses minting
 
-**Dev notes:** _Only pauser can unpause_
+**Dev notes:** \
+Only pauser can unpause
 
 ```solidity
 function unpause() external
@@ -90,7 +76,7 @@ function getNativeMinter() external view returns (address)
 ```
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -100,13 +86,14 @@ function getNativeMinter() external view returns (address)
 
 Mints native tokens by calling precompile
 
-**Dev notes:** _Only minter (portfolio) can mint_
+**Dev notes:** \
+Only minter (portfolio) can mint
 
 ```solidity
 function mint(address _to, uint256 _amount) external virtual
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |

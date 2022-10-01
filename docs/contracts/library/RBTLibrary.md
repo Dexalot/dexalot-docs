@@ -6,11 +6,12 @@ A Solidity Red-Black Tree binary search library to store and access a sorted
 list of unsigned integer data. The Red-Black algorithm rebalances the binary
 search tree, resulting in O(log n) insert, remove and search time (and ~gas).
 
-**Dev notes:** _For more details please refer to the Github repo
+**Dev notes:** \
+For more details please refer to the Github repo
 [BokkyPooBahsRedBlackTreeLibrary](https://github.com/bokkypoobah/BokkyPooBahsRedBlackTreeLibrary).
 The library was modified with code optimization as per a PR submitted by user nremond.
 The variable names for function arguments are updated to start with an underscore char.
-Documenention has been added._
+Documenention has been added.
 
 ## Types
 
@@ -50,14 +51,14 @@ Returns the first node in the tree
 function first(struct RBTLibrary.Tree self) internal view returns (uint256 _key)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | self | struct RBTLibrary.Tree | stored tree from contract |
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -72,14 +73,14 @@ Returns the last node in the tree
 function last(struct RBTLibrary.Tree self) internal view returns (uint256 _key)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | self | struct RBTLibrary.Tree | stored tree from contract |
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -94,7 +95,7 @@ Returns the next node in the tree
 function next(struct RBTLibrary.Tree self, uint256 _target) internal view returns (uint256 _cursor)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -102,7 +103,7 @@ function next(struct RBTLibrary.Tree self, uint256 _target) internal view return
 | _target | uint256 | the node for which the next node is returned |
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -117,7 +118,7 @@ Returns the previous node in the tree
 function prev(struct RBTLibrary.Tree self, uint256 _target) internal view returns (uint256 cursor)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -125,7 +126,7 @@ function prev(struct RBTLibrary.Tree self, uint256 _target) internal view return
 | _target | uint256 | the node for which the previous node is returned |
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -140,7 +141,7 @@ Checks if node with a key exists
 function exists(struct RBTLibrary.Tree self, uint256 _key) internal view returns (bool)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -148,7 +149,7 @@ function exists(struct RBTLibrary.Tree self, uint256 _key) internal view returns
 | _key | uint256 | key for a node |
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -163,14 +164,14 @@ Checks if key is empty
 function isEmpty(uint256 _key) internal pure returns (bool)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _key | uint256 | key for a node |
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -186,7 +187,7 @@ function getEmpty() internal pure returns (uint256)
 ```
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -201,7 +202,7 @@ Returns the node struct for a key
 function getNode(struct RBTLibrary.Tree self, uint256 _key) internal view returns (uint256 _returnKey, uint256 _parent, uint256 _left, uint256 _right, bool _red)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -209,7 +210,7 @@ function getNode(struct RBTLibrary.Tree self, uint256 _key) internal view return
 | _key | uint256 | key for a node |
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -228,7 +229,7 @@ Inserts a new node to the tree with a key
 function insert(struct RBTLibrary.Tree self, uint256 _key) internal
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -245,7 +246,7 @@ Removes a new node from the tree with a key
 function remove(struct RBTLibrary.Tree self, uint256 _key) internal
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |

@@ -3,27 +3,15 @@
 **Mainnet Portfolio**
 
 
-**Dev notes:** _This contract prevalidates the PortfolioSub checks and allows deposits to be sent to the subnet.
-ExchangeMain needs to have DEFAULT_ADMIN_ROLE on PortfolioMain._
+**Dev notes:** \
+This contract prevalidates the PortfolioSub checks and allows deposits to be sent to the subnet.
+ExchangeMain needs to have DEFAULT_ADMIN_ROLE on PortfolioMain.
 
 
 ## Variables
 
-### VERSION
-
-```solidity
-bytes32 VERSION
-```
-### tokenMap
-
-```solidity
-mapping(bytes32 => contract IERC20Upgradeable) tokenMap
-```
-### bridgeFeeCollected
-
-```solidity
-mapping(bytes32 => uint256) bridgeFeeCollected
-```
+| Var | Type |
+| --- | --- |
 
 
 ## Methods
@@ -32,13 +20,14 @@ mapping(bytes32 => uint256) bridgeFeeCollected
 
 initializer function for Upgradeable Portfolio
 
-**Dev notes:** _Grants admin role to msg.sender_
+**Dev notes:** \
+Grants admin role to msg.sender
 
 ```solidity
 function initialize(bytes32 _native, uint32 _chainId) public
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -55,7 +44,7 @@ Add IERC20 token to the tokenMap. Only in the mainnet
 function addIERC20(bytes32 _symbol, address _tokenaddress, uint32 _srcChainId, uint8 _decimals, enum ITradePairs.AuctionMode) internal
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -70,14 +59,15 @@ function addIERC20(bytes32 _symbol, address _tokenaddress, uint32 _srcChainId, u
 
 Remove IERC20 token from the tokenMap
 
-**Dev notes:** _tokenMap balance for the symbol should be 0 before it can be removed.
-                Make sure that there are no in-flight withdraw messages coming from the subnet_
+**Dev notes:** \
+tokenMap balance for the symbol should be 0 before it can be removed.
+                Make sure that there are no in-flight withdraw messages coming from the subnet
 
 ```solidity
 function removeIERC20(bytes32 _symbol) internal
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -93,14 +83,14 @@ Frontend function to get the ERC20 token
 function getToken(bytes32 _symbol) external view returns (contract IERC20Upgradeable)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _symbol | bytes32 | symbol of the token |
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -114,7 +104,7 @@ function getToken(bytes32 _symbol) external view returns (contract IERC20Upgrade
 function depositNative(address payable _from, enum IPortfolioBridge.BridgeProvider _bridge) external payable
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -130,7 +120,7 @@ function depositNative(address payable _from, enum IPortfolioBridge.BridgeProvid
 function depositToken(address _from, bytes32 _symbol, uint256 _quantity, enum IPortfolioBridge.BridgeProvider _bridge) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -144,14 +134,15 @@ function depositToken(address _from, bytes32 _symbol, uint256 _quantity, enum IP
 
 Allows deposits from trusted contracts
 
-**Dev notes:** _Used by Avalaunch for DD deposits and Vesting Contracts.
-                Keepig for backward compatibility instead of using ON_BEHALF_ROLE_
+**Dev notes:** \
+Used by Avalaunch for DD deposits and Vesting Contracts.
+                Keepig for backward compatibility instead of using ON_BEHALF_ROLE
 
 ```solidity
 function depositTokenFromContract(address _from, bytes32 _symbol, uint256 _quantity) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -164,16 +155,17 @@ function depositTokenFromContract(address _from, bytes32 _symbol, uint256 _quant
 
 Processes the message coming from the bridge
 
-**Dev notes:** _Only process WITHDRAW messages as it is the only message that can be sent to the portfolio main
+**Dev notes:** \
+Only process WITHDRAW messages as it is the only message that can be sent to the portfolio main
                 Even when the contract is paused, this method is allowed for the messages that
                 are in flight to complete properly. Pause for upgrade, then wait to make sure no messages are in
-                fligh then upgrade_
+                fligh then upgrade
 
 ```solidity
 function processXFerPayload(address _trader, bytes32 _symbol, uint256 _quantity, enum IPortfolio.Tx _transaction) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -187,14 +179,15 @@ function processXFerPayload(address _trader, bytes32 _symbol, uint256 _quantity,
 
 Recovers the stucked message from the LZ bridge, returns the funds to the depositor/withdrawer
 
-**Dev notes:** _Only call this just before calling force resume receive function for the LZ bridge
-    Only the owner can call this function_
+**Dev notes:** \
+Only call this just before calling force resume receive function for the LZ bridge
+    Only the owner can call this function
 
 ```solidity
 function lzRecoverPayload(bytes _payload) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -205,14 +198,15 @@ function lzRecoverPayload(bytes _payload) external
 
 Allows the owner to withdraw the fees collected from the bridge
 
-**Dev notes:** _Collect fees to pay for the bridge as native token
-    Only the owner can call this function_
+**Dev notes:** \
+Collect fees to pay for the bridge as native token
+    Only the owner can call this function
 
 ```solidity
 function collectBridgeFees(bytes32[] _symbols) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -223,8 +217,9 @@ function collectBridgeFees(bytes32[] _symbols) external
 
 Allows the owner to withdraw the fees collected in AVAX from the bridge
 
-**Dev notes:** _Collect fees to pay for the bridge as native token
-    Only the owner can call this function_
+**Dev notes:** \
+Collect fees to pay for the bridge as native token
+    Only the owner can call this function
 
 ```solidity
 function collectNativeBridgeFees() external
@@ -234,7 +229,8 @@ function collectNativeBridgeFees() external
 ### updateTransferFeeRate
 
 
-**Dev notes:** _Only valid for the subnet. Implemented with an empty block here._
+**Dev notes:** \
+Only valid for the subnet. Implemented with an empty block here.
 
 ```solidity
 function updateTransferFeeRate(uint256 _rate, enum IPortfolio.Tx _rateType) external
@@ -244,7 +240,8 @@ function updateTransferFeeRate(uint256 _rate, enum IPortfolio.Tx _rateType) exte
 ### setAuctionMode
 
 
-**Dev notes:** _Only valid for the subnet. Implemented with an empty block here._
+**Dev notes:** \
+Only valid for the subnet. Implemented with an empty block here.
 
 ```solidity
 function setAuctionMode(bytes32 _symbol, enum ITradePairs.AuctionMode _mode) external
@@ -254,7 +251,8 @@ function setAuctionMode(bytes32 _symbol, enum ITradePairs.AuctionMode _mode) ext
 ### withdrawNative
 
 
-**Dev notes:** _Only valid for the subnet. Implemented with an empty block here._
+**Dev notes:** \
+Only valid for the subnet. Implemented with an empty block here.
 
 ```solidity
 function withdrawNative(address payable _to, uint256 _quantity) external
@@ -264,7 +262,8 @@ function withdrawNative(address payable _to, uint256 _quantity) external
 ### withdrawToken
 
 
-**Dev notes:** _Only valid for the subnet. Implemented with an empty block here._
+**Dev notes:** \
+Only valid for the subnet. Implemented with an empty block here.
 
 ```solidity
 function withdrawToken(address _to, bytes32 _symbol, uint256 _quantity, enum IPortfolioBridge.BridgeProvider) external
@@ -274,7 +273,8 @@ function withdrawToken(address _to, bytes32 _symbol, uint256 _quantity, enum IPo
 ### adjustAvailable
 
 
-**Dev notes:** _Only valid for the subnet. Implemented with an empty block here._
+**Dev notes:** \
+Only valid for the subnet. Implemented with an empty block here.
 
 ```solidity
 function adjustAvailable(enum IPortfolio.Tx _transaction, address _trader, bytes32 _symbol, uint256 _amount) external
@@ -284,7 +284,8 @@ function adjustAvailable(enum IPortfolio.Tx _transaction, address _trader, bytes
 ### addExecution
 
 
-**Dev notes:** _Only valid for the subnet. Implemented with an empty block here._
+**Dev notes:** \
+Only valid for the subnet. Implemented with an empty block here.
 
 ```solidity
 function addExecution(enum ITradePairs.Side _makerSide, address _makerAddr, address _takerAddr, bytes32 _baseSymbol, bytes32 _quoteSymbol, uint256 _baseAmount, uint256 _quoteAmount, uint256 _makerfeeCharged, uint256 _takerfeeCharged) external

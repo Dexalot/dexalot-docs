@@ -3,30 +3,18 @@
 **Implements the data structures and functions for trade pairs**
 
 
-**Dev notes:** _For each trade pair an entry is added tradePairMap.
+**Dev notes:** \
+For each trade pair an entry is added tradePairMap.
 The naming convention for the trade pairs is as follows: BASEASSET/QUOTEASSET.
 For base asset AVAX and quote asset USDT the trade pair name is AVAX/USDT.
 ExchangeSub needs to have DEFAULT_ADMIN_ROLE on TradePairs.
-TradePairs should have EXECUTOR_ROLE on OrderBooks._
+TradePairs should have EXECUTOR_ROLE on OrderBooks.
 
 
 ## Variables
 
-### VERSION
-
-```solidity
-bytes32 VERSION
-```
-### TENK
-
-```solidity
-uint256 TENK
-```
-### ON_BEHALFOF_ROLE
-
-```solidity
-bytes32 ON_BEHALFOF_ROLE
-```
+| Var | Type |
+| --- | --- |
 
 
 ## Methods
@@ -35,14 +23,15 @@ bytes32 ON_BEHALFOF_ROLE
 
 initializer function for Upgradeable TradePairs
 
-**Dev notes:** _idCounter needs to be unique for each order and execution id.
-Both the orderbooks and the portolio should be deployed before tradepairs._
+**Dev notes:** \
+idCounter needs to be unique for each order and execution id.
+Both the orderbooks and the portolio should be deployed before tradepairs.
 
 ```solidity
 function initialize(address _orderbooks, address _portfolio) public
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -54,15 +43,16 @@ function initialize(address _orderbooks, address _portfolio) public
 
 Adds a new TradePair
 
-**Dev notes:** _Only DEFAULT_ADMIN or ExchangeSub can call this function which has this role.
+**Dev notes:** \
+Only DEFAULT_ADMIN or ExchangeSub can call this function which has this role.
 ExhangeSub makes sure that the symbols are added to the portfolio with the
-correct addresses first._
+correct addresses first.
 
 ```solidity
 function addTradePair(bytes32 _tradePairId, bytes32 _baseSymbol, uint8 _baseDecimals, uint8 _baseDisplayDecimals, bytes32 _quoteSymbol, uint8 _quoteDecimals, uint8 _quoteDisplayDecimals, uint256 _minTradeAmount, uint256 _maxTradeAmount, enum ITradePairs.AuctionMode _mode) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -82,14 +72,15 @@ function addTradePair(bytes32 _tradePairId, bytes32 _baseSymbol, uint8 _baseDeci
 
 Gets a list of the trade Pairs
 
-**Dev notes:** _All pairs are returned. Even the delisted ones._
+**Dev notes:** \
+All pairs are returned. Even the delisted ones.
 
 ```solidity
 function getTradePairs() external view returns (bytes32[])
 ```
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -105,7 +96,7 @@ function getBookId(bytes32 _tradePairId, enum ITradePairs.Side _side) external v
 ```
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -115,7 +106,8 @@ function getBookId(bytes32 _tradePairId, enum ITradePairs.Side _side) external v
 
 Pauses the contract
 
-**Dev notes:** _Can only be called by DEFAULT_ADMIN._
+**Dev notes:** \
+Can only be called by DEFAULT_ADMIN.
 
 ```solidity
 function pause() external
@@ -126,7 +118,8 @@ function pause() external
 
 Unpauses the contract
 
-**Dev notes:** _Can only be called by DEFAULT_ADMIN._
+**Dev notes:** \
+Can only be called by DEFAULT_ADMIN.
 
 ```solidity
 function unpause() external
@@ -137,14 +130,15 @@ function unpause() external
 
 Pauses a specific Trade Pair
 
-**Dev notes:** _Can only be called by DEFAULT_ADMIN.
-Public instead of external because it saves 0.184(KiB) in contract size_
+**Dev notes:** \
+Can only be called by DEFAULT_ADMIN.
+Public instead of external because it saves 0.184(KiB) in contract size
 
 ```solidity
 function pauseTradePair(bytes32 _tradePairId, bool _pause) public
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -156,13 +150,14 @@ function pauseTradePair(bytes32 _tradePairId, bool _pause) public
 
 Pauses adding new orders to a specific Trade Pair
 
-**Dev notes:** _Can only be called by DEFAULT_ADMIN._
+**Dev notes:** \
+Can only be called by DEFAULT_ADMIN.
 
 ```solidity
 function pauseAddOrder(bytes32 _tradePairId, bool _pause) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -174,13 +169,14 @@ function pauseAddOrder(bytes32 _tradePairId, bool _pause) external
 
 Sets the auction mode of a specific Trade Pair
 
-**Dev notes:** _Can only be called by DEFAULT_ADMIN._
+**Dev notes:** \
+Can only be called by DEFAULT_ADMIN.
 
 ```solidity
 function setAuctionMode(bytes32 _tradePairId, enum ITradePairs.AuctionMode _mode) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -192,15 +188,16 @@ function setAuctionMode(bytes32 _tradePairId, enum ITradePairs.AuctionMode _mode
 
 Sets the auction price
 
-**Dev notes:** _Price is calculated by the backend (off chain) after the auction has closed.
+**Dev notes:** \
+Price is calculated by the backend (off chain) after the auction has closed.
 Auction price can be changed anytime. It is imperative that is not changed after the
-first order is matched until the last order to be matched._
+first order is matched until the last order to be matched.
 
 ```solidity
 function setAuctionPrice(bytes32 _tradePairId, uint256 _price) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -217,14 +214,14 @@ Returns the auction mode and the auction price of a specific Trade Pair
 function getAuctionData(bytes32 _tradePairId) external view returns (uint8 mode, uint256 price)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _tradePairId | bytes32 | id of the trading pair |
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -240,14 +237,14 @@ Checks if TradePair already exists
 function tradePairExists(bytes32 _tradePairId) external view returns (bool)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _tradePairId | bytes32 | id of the trading pair |
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -257,14 +254,15 @@ function tradePairExists(bytes32 _tradePairId) external view returns (bool)
 
 Sets the minimum trade amount allowed for a specific Trade Pair
 
-**Dev notes:** _Can only be called by DEFAULT_ADMIN. The min trade amount needs to satisfy
-`getQuoteAmount(_price, _quantity, _tradePairId) >= _minTradeAmount`_
+**Dev notes:** \
+Can only be called by DEFAULT_ADMIN. The min trade amount needs to satisfy
+`getQuoteAmount(_price, _quantity, _tradePairId) >= _minTradeAmount`
 
 ```solidity
 function setMinTradeAmount(bytes32 _tradePairId, uint256 _minTradeAmount) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -276,21 +274,22 @@ function setMinTradeAmount(bytes32 _tradePairId, uint256 _minTradeAmount) extern
 
 Returns the minimum trade amount allowed for a specific Trade Pair
 
-**Dev notes:** _The min trade amount needs to satisfy
-`getQuoteAmount(_price, _quantity, _tradePairId) >= _minTradeAmount`_
+**Dev notes:** \
+The min trade amount needs to satisfy
+`getQuoteAmount(_price, _quantity, _tradePairId) >= _minTradeAmount`
 
 ```solidity
 function getMinTradeAmount(bytes32 _tradePairId) external view returns (uint256)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _tradePairId | bytes32 | id of the trading pair |
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -300,14 +299,15 @@ function getMinTradeAmount(bytes32 _tradePairId) external view returns (uint256)
 
 Sets the maximum trade amount allowed for a specific Trade Pair
 
-**Dev notes:** _Can only be called by DEFAULT_ADMIN. The max trade amount needs to satisfy
-`getQuoteAmount(_price, _quantity, _tradePairId) <= _maxTradeAmount`_
+**Dev notes:** \
+Can only be called by DEFAULT_ADMIN. The max trade amount needs to satisfy
+`getQuoteAmount(_price, _quantity, _tradePairId) <= _maxTradeAmount`
 
 ```solidity
 function setMaxTradeAmount(bytes32 _tradePairId, uint256 _maxTradeAmount) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -319,21 +319,22 @@ function setMaxTradeAmount(bytes32 _tradePairId, uint256 _maxTradeAmount) extern
 
 Returns the maximum trade amount allowed for a specific Trade Pair
 
-**Dev notes:** _The max trade amount needs to satisfy
-`getQuoteAmount(_price, _quantity, _tradePairId) <= _maxTradeAmount`_
+**Dev notes:** \
+The max trade amount needs to satisfy
+`getQuoteAmount(_price, _quantity, _tradePairId) <= _maxTradeAmount`
 
 ```solidity
 function getMaxTradeAmount(bytes32 _tradePairId) external view returns (uint256)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _tradePairId | bytes32 | id of the trading pair |
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -343,13 +344,14 @@ function getMaxTradeAmount(bytes32 _tradePairId) external view returns (uint256)
 
 Adds a new order type to a tradePair
 
-**Dev notes:** _Can only be called by DEFAULT_ADMIN. LIMIT order is added by default._
+**Dev notes:** \
+Can only be called by DEFAULT_ADMIN. LIMIT order is added by default.
 
 ```solidity
 function addOrderType(bytes32 _tradePairId, enum ITradePairs.Type1 _type) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -361,13 +363,14 @@ function addOrderType(bytes32 _tradePairId, enum ITradePairs.Type1 _type) extern
 
 Removes an order type that is previously allowed
 
-**Dev notes:** _Can only be called by DEFAULT_ADMIN. LIMIT order type can't be removed._
+**Dev notes:** \
+Can only be called by DEFAULT_ADMIN. LIMIT order type can't be removed.
 
 ```solidity
 function removeOrderType(bytes32 _tradePairId, enum ITradePairs.Type1 _type) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -379,21 +382,22 @@ function removeOrderType(bytes32 _tradePairId, enum ITradePairs.Type1 _type) ext
 
 Returns the allowed order types.
 
-**Dev notes:** _LIMIT is always available by default. Market order type may be allowed once there is
-enough liquidity on a pair._
+**Dev notes:** \
+LIMIT is always available by default. Market order type may be allowed once there is
+enough liquidity on a pair.
 
 ```solidity
 function getAllowedOrderTypes(bytes32 _tradePairId) external view returns (uint256[])
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _tradePairId | bytes32 | id of the trading pair |
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -403,14 +407,15 @@ function getAllowedOrderTypes(bytes32 _tradePairId) external view returns (uint2
 
 Sets the display decimals of the base or the quote asset in a tradePair
 
-**Dev notes:** _Can only be called by DEFAULT_ADMIN. Display decimals can also be referred as
-`Quantity Increment if _isBase==true` or `PriceIncrement if _isBase==false`_
+**Dev notes:** \
+Can only be called by DEFAULT_ADMIN. Display decimals can also be referred as
+`Quantity Increment if _isBase==true` or `PriceIncrement if _isBase==false`
 
 ```solidity
 function setDisplayDecimals(bytes32 _tradePairId, uint8 _displayDecimals, bool _isBase) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -423,14 +428,15 @@ function setDisplayDecimals(bytes32 _tradePairId, uint8 _displayDecimals, bool _
 
 Returns the display decimals of the base or the quote asset in a tradePair
 
-**Dev notes:** _Display decimals can also be referred as
-`Quantity Increment if _isBase==true` or `PriceIncrement if _isBase==false`_
+**Dev notes:** \
+Display decimals can also be referred as
+`Quantity Increment if _isBase==true` or `PriceIncrement if _isBase==false`
 
 ```solidity
 function getDisplayDecimals(bytes32 _tradePairId, bool _isBase) external view returns (uint8)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -438,7 +444,7 @@ function getDisplayDecimals(bytes32 _tradePairId, bool _isBase) external view re
 | _isBase | bool | true/false |
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -448,14 +454,15 @@ function getDisplayDecimals(bytes32 _tradePairId, bool _isBase) external view re
 
 Returns the evm decimals of the base or the quote symbol in a tradePair
 
-**Dev notes:** _The decimals is identical to decimals value from ERC20 contract of the symbol.
-It is 18 for ALOT and AVAX._
+**Dev notes:** \
+The decimals is identical to decimals value from ERC20 contract of the symbol.
+It is 18 for ALOT and AVAX.
 
 ```solidity
 function getDecimals(bytes32 _tradePairId, bool _isBase) external view returns (uint8)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -463,7 +470,7 @@ function getDecimals(bytes32 _tradePairId, bool _isBase) external view returns (
 | _isBase | bool | true/false |
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -478,7 +485,7 @@ Returns the base or quote symbol
 function getSymbol(bytes32 _tradePairId, bool _isBase) external view returns (bytes32)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -486,7 +493,7 @@ function getSymbol(bytes32 _tradePairId, bool _isBase) external view returns (by
 | _isBase | bool | true/false |
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -496,13 +503,14 @@ function getSymbol(bytes32 _tradePairId, bool _isBase) external view returns (by
 
 Sets the Maker or the Taker Rate
 
-**Dev notes:** _Can only be called by DEFAULT_ADMIN_
+**Dev notes:** \
+Can only be called by DEFAULT_ADMIN
 
 ```solidity
 function updateRate(bytes32 _tradePairId, uint8 _rate, enum ITradePairs.RateType _rateType) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -520,14 +528,14 @@ Returns Maker Rate (Commission)
 function getMakerRate(bytes32 _tradePairId) external view returns (uint8)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _tradePairId | bytes32 | id of the trading pair |
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -542,14 +550,14 @@ Returns Taker Rate (Commission)
 function getTakerRate(bytes32 _tradePairId) external view returns (uint8)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _tradePairId | bytes32 | id of the trading pair |
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -559,15 +567,16 @@ function getTakerRate(bytes32 _tradePairId) external view returns (uint8)
 
 sets the slippage percent for market orders, before it gets unsolicited cancel
 
-**Dev notes:** _Can only be called by DEFAULT_ADMIN. Market Orders will be filled up to allowedSlippagePercent
+**Dev notes:** \
+Can only be called by DEFAULT_ADMIN. Market Orders will be filled up to allowedSlippagePercent
 from the marketPrice(bestbid or bestask) to protect the trader. The remaining quantity gets
-unsolicited cancel_
+unsolicited cancel
 
 ```solidity
 function setAllowedSlippagePercent(bytes32 _tradePairId, uint8 _allowedSlippagePercent) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -584,14 +593,14 @@ Allowed slippage percent for market orders, before the market order gets an unso
 function getAllowedSlippagePercent(bytes32 _tradePairId) external view returns (uint8)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _tradePairId | bytes32 | id of the trading pair |
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -601,20 +610,21 @@ function getAllowedSlippagePercent(bytes32 _tradePairId) external view returns (
 
 Returns Buy or Sell orderbook for the given tradepair and side
 
-**Dev notes:** _Although this is a view function, it may run out of gas in case you try to get the entire order book
+**Dev notes:** \
+Although this is a view function, it may run out of gas in case you try to get the entire order book
 with a lot of orders. That's why it has nPrice and nOrder parameters.
 Example: `getNBook(tradePair, 0, 2, 50, 0, bytes32(''))` : This will get the best 2 buy
 price points (top of the buy book and the next best price and it will aggregate the quantities
 of up to 50 orders at a time when generating the orderbook).
     If the order book is large and has many orders at a price point one needs to paginate through the order
 book using `getNBook`.  Use 0 for `_lastPrice` and an empty string in bytes32 for `_lastOrder`.  If looping use
-the last `_lastPrice` and `_lastOrder` returned from this function call._
+the last `_lastPrice` and `_lastOrder` returned from this function call.
 
 ```solidity
 function getNBook(bytes32 _tradePairId, enum ITradePairs.Side _side, uint256 _nPrice, uint256 _nOrder, uint256 _lastPrice, bytes32 _lastOrder) external view returns (uint256[], uint256[], uint256, bytes32)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -626,7 +636,7 @@ function getNBook(bytes32 _tradePairId, enum ITradePairs.Side _side, uint256 _nP
 | _lastOrder | bytes32 | the orderid to start at |
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -644,14 +654,14 @@ Returns order details given the order id
 function getOrder(bytes32 _orderId) public view returns (struct ITradePairs.Order)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _orderId | bytes32 | order id assigned by the contract |
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -666,7 +676,7 @@ Returns order details given the trader and the clientOrderId
 function getOrderByClientOrderId(address _trader, bytes32 _clientOrderId) external view returns (struct ITradePairs.Order)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -674,7 +684,7 @@ function getOrderByClientOrderId(address _trader, bytes32 _clientOrderId) extern
 | _clientOrderId | bytes32 | client Order id assigned by the user |
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -689,7 +699,7 @@ Returns the quote amount for a given price and quantity
 function getQuoteAmount(bytes32 _tradePairId, uint256 _price, uint256 _quantity) public view returns (uint256)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -698,7 +708,7 @@ function getQuoteAmount(bytes32 _tradePairId, uint256 _price, uint256 _quantity)
 | _quantity | uint256 | quantity |
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -708,7 +718,8 @@ function getQuoteAmount(bytes32 _tradePairId, uint256 _price, uint256 _quantity)
 
 Frontend Entry function to call to add an order
 
-**Dev notes:** _Adds an order with the given fields. As a general rule of thumb msg.sender should be the `_trader`
+**Dev notes:** \
+Adds an order with the given fields. As a general rule of thumb msg.sender should be the `_trader`
 otherwise the tx will revert. 'OrderStatusChanged' event will be emitted
 when an order is received and committed to the blockchain. You can get the contract
 generated orderid along with your clientorderid from this event. When the blockchain is extremely busy,
@@ -729,13 +740,13 @@ Here are the other SubTypes: \
 0 = GTC : Good Till Cancel \
 1 = FOK : FIll or Kill (Will fill entirely or will revert with "T-FOKF-01") \
 2 = IOC : Immedidate or Cancel  (Will fill partially or fully, will get status=CANCELED if filled partially) \
-3 = PO : Post Only (Will either go in the orderbook or revert with "T-T2PO-01" if it has a potential match)_
+3 = PO : Post Only (Will either go in the orderbook or revert with "T-T2PO-01" if it has a potential match)
 
 ```solidity
 function addOrder(address _trader, bytes32 _clientOrderId, bytes32 _tradePairId, uint256 _price, uint256 _quantity, enum ITradePairs.Side _side, enum ITradePairs.Type1 _type1, enum ITradePairs.Type2 _type2) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -753,14 +764,15 @@ function addOrder(address _trader, bytes32 _clientOrderId, bytes32 _tradePairId,
 
 Function to match Auction orders
 
-**Dev notes:** _Requires `DEFAULT_ADMIN_ROLE`, also called by `ExchangeSub.matchAuctionOrders` that
-requires `AUCTION_ADMIN_ROLE`._
+**Dev notes:** \
+Requires `DEFAULT_ADMIN_ROLE`, also called by `ExchangeSub.matchAuctionOrders` that
+requires `AUCTION_ADMIN_ROLE`.
 
 ```solidity
 function matchAuctionOrder(bytes32 _takerOrderId, uint8 _maxCount) external returns (uint256)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -768,7 +780,7 @@ function matchAuctionOrder(bytes32 _takerOrderId, uint8 _maxCount) external retu
 | _maxCount | uint8 | controls max number of fills an order can get at a time to avoid running out of gas |
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -778,13 +790,14 @@ function matchAuctionOrder(bytes32 _takerOrderId, uint8 _maxCount) external retu
 
 Admin Function to cancel orders in the orderbook when delisting a trade pair
 
-**Dev notes:** _Will cancel orders even when TradePair is paused_
+**Dev notes:** \
+Will cancel orders even when TradePair is paused
 
 ```solidity
 function unsolicitedCancel(bytes32 _tradePairId, bool _isBuyBook, uint8 _maxCount) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -797,16 +810,17 @@ function unsolicitedCancel(bytes32 _tradePairId, bool _isBuyBook, uint8 _maxCoun
 
 Cancels an order and immediatly enters a similar order in the same direction.
 
-**Dev notes:** _Only the quantity and the price of the order can be changed. All the other order
+**Dev notes:** \
+Only the quantity and the price of the order can be changed. All the other order
 fields are copied from the canceled order to the new order.
 The time priority of the original order is lost.
-Canceled order's locked quantity is made available for the new order within this tx_
+Canceled order's locked quantity is made available for the new order within this tx
 
 ```solidity
 function cancelReplaceOrder(bytes32 _orderId, bytes32 _clientOrderId, uint256 _price, uint256 _quantity) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -820,13 +834,14 @@ function cancelReplaceOrder(bytes32 _orderId, bytes32 _clientOrderId, uint256 _p
 
 Cancels an order given the order id supplied
 
-**Dev notes:** _Will revert with "T-OAEX-01" if order is already filled or canceled_
+**Dev notes:** \
+Will revert with "T-OAEX-01" if order is already filled or canceled
 
 ```solidity
 function cancelOrder(bytes32 _orderId) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -837,15 +852,16 @@ function cancelOrder(bytes32 _orderId) external
 
 Cancels all the orders given the array of order ids supplied
 
-**Dev notes:** _This function may run out of gas if a trader is trying to cancel too many orders
+**Dev notes:** \
+This function may run out of gas if a trader is trying to cancel too many orders
 Call with Maximum 20 orders at a time
-Will skip orders that are already canceled/filled and continue canceling the remaining ones in the list_
+Will skip orders that are already canceled/filled and continue canceling the remaining ones in the list
 
 ```solidity
 function cancelAllOrders(bytes32[] _orderIds) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |

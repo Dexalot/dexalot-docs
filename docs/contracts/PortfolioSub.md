@@ -5,7 +5,8 @@
 Receives messages from mainnet for deposits and sends withdraw requests to mainnet.  It also
    transfers tokens between traders as their orders gets matched.
 
-**Dev notes:** _Allows one to withdraw and deposit native token from/to the subnet wallet. Any other token has be be
+**Dev notes:** \
+Allows one to withdraw and deposit native token from/to the subnet wallet. Any other token has be be
 deposited via PortfolioBridge using processXFerPayload function. It can only be invoked by a bridge
 provider&#x27;s message receive event.
 Any other token token including ALOT (native) can be withdrawn to mainnet using withdrawToken that will
@@ -13,7 +14,7 @@ send the holdings back to the user&#x27;s wallet in the mainnet.
 TradePairs needs to have EXECUTOR_ROLE on PortfolioSub contract.
 If a trader deposits a token and has 0 ALOT in his subnet wallet, this contract will make a call
 to GasStation to deposit a small amount of ALOT to the user&#x27;s wallet to be used for gas.
-In return, It will deduct a tiny amount of the token transferred._
+In return, It will deduct a tiny amount of the token transferred.
 
 ## Types
 
@@ -41,51 +42,8 @@ enum AssetType {
 
 ## Variables
 
-### assets
-
-```solidity
-mapping(address => mapping(bytes32 => struct PortfolioSub.AssetEntry)) assets
-```
-### tokenTotals
-
-```solidity
-mapping(bytes32 => uint256) tokenTotals
-```
-### walletBalanceDepositThreshold
-
-```solidity
-uint256 walletBalanceDepositThreshold
-```
-### depositFeeRate
-
-```solidity
-uint256 depositFeeRate
-```
-### withdrawFeeRate
-
-```solidity
-uint256 withdrawFeeRate
-```
-### feeAddress
-
-```solidity
-address feeAddress
-```
-### EXECUTOR_ROLE
-
-```solidity
-bytes32 EXECUTOR_ROLE
-```
-### totalNativeBurned
-
-```solidity
-uint256 totalNativeBurned
-```
-### VERSION
-
-```solidity
-bytes32 VERSION
-```
+| Var | Type |
+| --- | --- |
 
 
 ## Methods
@@ -94,13 +52,14 @@ bytes32 VERSION
 
 Initializer for upgradeable Portfolio Sub
 
-**Dev notes:** _Initializes with the native deposit threshold, users can deposit ALOT if they at least have 0.05 ALOT._
+**Dev notes:** \
+Initializes with the native deposit threshold, users can deposit ALOT if they at least have 0.05 ALOT.
 
 ```solidity
 function initialize(bytes32 _native, uint32 _chainId) public
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -111,13 +70,14 @@ function initialize(bytes32 _native, uint32 _chainId) public
 ### setFeeAddress
 
 
-**Dev notes:** _Only callable by the owner_
+**Dev notes:** \
+Only callable by the owner
 
 ```solidity
 function setFeeAddress(address _feeAddress) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -128,13 +88,14 @@ function setFeeAddress(address _feeAddress) external
 
 Set auction mode for a token
 
-**Dev notes:** _Only callable by the default admin_
+**Dev notes:** \
+Only callable by the default admin
 
 ```solidity
 function setAuctionMode(bytes32 _symbol, enum ITradePairs.AuctionMode _mode) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -151,7 +112,7 @@ Frontend function to show traders total and available balance for a token
 function getBalance(address _owner, bytes32 _symbol) external view returns (uint256 total, uint256 available, enum PortfolioSub.AssetType assetType)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -159,7 +120,7 @@ function getBalance(address _owner, bytes32 _symbol) external view returns (uint
 | _symbol | bytes32 | Symbol of the token |
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -171,18 +132,19 @@ function getBalance(address _owner, bytes32 _symbol) external view returns (uint
 
 Function for TradePairs to transfer tokens between addresses as a result of an execution
 
-**Dev notes:** _WHEN Increasing in addExectuion the amount is applied to both total and available
+**Dev notes:** \
+WHEN Increasing in addExectuion the amount is applied to both total and available
 (so SafeIncrease can be used) as opposed to
 WHEN Decreasing in addExectuion the amount is only applied to total. (SafeDecrease
 can NOT be used, so we have safeDecreaseTotal instead)
 i.e. (USDT 100 Total, 50 Available after we send a BUY order of 10 avax at 5$.
-Partial Exec 5 at $5. Total goes down to 75. Available stays at 50)_
+Partial Exec 5 at $5. Total goes down to 75. Available stays at 50)
 
 ```solidity
 function addExecution(enum ITradePairs.Side _makerSide, address _makerAddr, address _takerAddr, bytes32 _baseSymbol, bytes32 _quoteSymbol, uint256 _baseAmount, uint256 _quoteAmount, uint256 _makerfeeCharged, uint256 _takerfeeCharged) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -201,16 +163,17 @@ function addExecution(enum ITradePairs.Side _makerSide, address _makerAddr, addr
 
 Processes the message coming from the bridge
 
-**Dev notes:** _DEPOSIT messages are the only message that can be sent to the portfolio sub for the moment
+**Dev notes:** \
+DEPOSIT messages are the only message that can be sent to the portfolio sub for the moment
 Even when the contract is paused, this method is allowed for the messages that
 are in flight to complete properly.
-CAUTION: if Paused for upgrade, wait to make sure no messages are in flight, then upgrade._
+CAUTION: if Paused for upgrade, wait to make sure no messages are in flight, then upgrade.
 
 ```solidity
 function processXFerPayload(address _trader, bytes32 _symbol, uint256 _quantity, enum IPortfolio.Tx _transaction) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -224,14 +187,15 @@ function processXFerPayload(address _trader, bytes32 _symbol, uint256 _quantity,
 
 Recovers the stucked message from the LZ bridge, returns the funds to the depositor/withdrawer
 
-**Dev notes:** _Only call this just before calling force resume receive function for the LZ bridge
-Only the DEFAULT_ADMIN can call this function_
+**Dev notes:** \
+Only call this just before calling force resume receive function for the LZ bridge
+Only the DEFAULT_ADMIN can call this function
 
 ```solidity
 function lzRecoverPayload(bytes _payload) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -247,7 +211,7 @@ This function is only used to deposit native ALOT from the subnet wallet
 function depositNative(address payable _from, enum IPortfolioBridge.BridgeProvider) external payable
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -259,13 +223,14 @@ function depositNative(address payable _from, enum IPortfolioBridge.BridgeProvid
 
 This function is used to withdraw only native ALOT to the subnet wallet
 
-**Dev notes:** _This function decreases ALOT balance of the user and calls the PortfolioMinter to mint the native ALOT_
+**Dev notes:** \
+This function decreases ALOT balance of the user and calls the PortfolioMinter to mint the native ALOT
 
 ```solidity
 function withdrawNative(address payable _to, uint256 _quantity) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -282,7 +247,7 @@ Withdraws the token to the mainnet
 function withdrawToken(address _to, bytes32 _symbol, uint256 _quantity, enum IPortfolioBridge.BridgeProvider _bridge) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -301,7 +266,7 @@ Function for TradePairs to adjust total and available as a result of an order up
 function adjustAvailable(enum IPortfolio.Tx _transaction, address _trader, bytes32 _symbol, uint256 _amount) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -315,13 +280,14 @@ function adjustAvailable(enum IPortfolio.Tx _transaction, address _trader, bytes
 
 Transfers token from the `msg.sender`'s portfolio to `_to`'s portfolio
 
-**Dev notes:** _This is not a ERC20 transfer, this is a balance transfer between portfolios_
+**Dev notes:** \
+This is not a ERC20 transfer, this is a balance transfer between portfolios
 
 ```solidity
 function transferToken(address _to, bytes32 _symbol, uint256 _quantity) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -334,7 +300,8 @@ function transferToken(address _to, bytes32 _symbol, uint256 _quantity) external
 
 Withdraws collected fees to the mainnet
 
-**Dev notes:** _Only admin can call this function_
+**Dev notes:** \
+Only admin can call this function
 
 ```solidity
 function withdrawFees() external
@@ -345,13 +312,14 @@ function withdrawFees() external
 
 Returns the swap amount for the given gas amount
 
-**Dev notes:** _Calculates the swap amount for each token for the given gas amount_
+**Dev notes:** \
+Calculates the swap amount for each token for the given gas amount
 
 ```solidity
 function getSwapAmount(bytes32 _symbol, uint256 _gasAmount) internal view returns (uint256)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -359,7 +327,7 @@ function getSwapAmount(bytes32 _symbol, uint256 _gasAmount) internal view return
 | _gasAmount | uint256 | Amount of gas to be swapped |
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -374,7 +342,7 @@ function getGasStation() external view returns (contract IGasStation)
 ```
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -384,13 +352,14 @@ function getGasStation() external view returns (contract IGasStation)
 
 Sets the gas station contract
 
-**Dev notes:** _Only admin can call this function_
+**Dev notes:** \
+Only admin can call this function
 
 ```solidity
 function setGasStation(contract IGasStation _gasStation) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -406,7 +375,7 @@ function getTreasury() external view returns (address)
 ```
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -416,13 +385,14 @@ function getTreasury() external view returns (address)
 
 Sets the treasury wallet
 
-**Dev notes:** _Only admin can call this function_
+**Dev notes:** \
+Only admin can call this function
 
 ```solidity
 function setTreasury(address _treasury) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -438,7 +408,7 @@ function getPortfolioMinter() external view returns (contract IPortfolioMinter)
 ```
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -448,13 +418,14 @@ function getPortfolioMinter() external view returns (contract IPortfolioMinter)
 
 Sets the portfolio minter contract
 
-**Dev notes:** _Only admin can call this function_
+**Dev notes:** \
+Only admin can call this function
 
 ```solidity
 function setPortfolioMinter(contract IPortfolioMinter _portfolioMinter) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -465,13 +436,14 @@ function setPortfolioMinter(contract IPortfolioMinter _portfolioMinter) external
 
 Sets wallet balance deposit thresholds
 
-**Dev notes:** _This threshold checks the users remaining native balance while depositing native from subnet wallet._
+**Dev notes:** \
+This threshold checks the users remaining native balance while depositing native from subnet wallet.
 
 ```solidity
 function setWalletBalanceDepositThreshold(uint256 _amount) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -482,20 +454,21 @@ function setWalletBalanceDepositThreshold(uint256 _amount) external
 
 Adds the given token to the portfolioSub with 0 address in the subnet.
 
-**Dev notes:** _Only callable by admin
+**Dev notes:** \
+Only callable by admin
 We don't allow tokens with same symbols.
 Native symbol is also added as a token with 0 address.
 PortfolioSub keeps track of total deposited tokens in tokenTotals for sanity checks against mainnet
 It has no ERC20 Contracts hence, it overwtires the addresses with address(0).
 But PortfolioBridgeSub keeps all the symbols added from all different mainnet chains separately with
 their original details including the addresses
-except AVAX which passed with address(0)._
+except AVAX which passed with address(0).
 
 ```solidity
 function addToken(bytes32 _symbol, address _tokenAddress, uint32 _srcChainId, uint8 _decimals, enum ITradePairs.AuctionMode _mode) public
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -510,14 +483,15 @@ function addToken(bytes32 _symbol, address _tokenAddress, uint32 _srcChainId, ui
 
 Remove IERC20 token from the tokenMap
 
-**Dev notes:** _tokenTotals for the symbol should be 0 before it can be removed
-                Make sure that there are no in-flight deposit messages_
+**Dev notes:** \
+tokenTotals for the symbol should be 0 before it can be removed
+                Make sure that there are no in-flight deposit messages
 
 ```solidity
 function removeToken(bytes32 _symbol) public
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -528,13 +502,14 @@ function removeToken(bytes32 _symbol) public
 
 Updates the transfer fee rate for the given Tx type
 
-**Dev notes:** _Only admin can call this function_
+**Dev notes:** \
+Only admin can call this function
 
 ```solidity
 function updateTransferFeeRate(uint256 _rate, enum IPortfolio.Tx _rateType) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -551,7 +526,7 @@ Add IERC20 token to the tokenMap
 function addIERC20(bytes32 _symbol, address _tokenaddress, uint32 _srcChainId, uint8 _decimals, enum ITradePairs.AuctionMode) internal
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -565,7 +540,8 @@ function addIERC20(bytes32 _symbol, address _tokenaddress, uint32 _srcChainId, u
 ### getToken
 
 
-**Dev notes:** _Only valid for the mainnet. Implemented with an empty block here._
+**Dev notes:** \
+Only valid for the mainnet. Implemented with an empty block here.
 
 ```solidity
 function getToken(bytes32 _symbol) external view returns (contract IERC20Upgradeable)
@@ -575,7 +551,8 @@ function getToken(bytes32 _symbol) external view returns (contract IERC20Upgrade
 ### depositToken
 
 
-**Dev notes:** _Only valid for the mainnet. Implemented with an empty block here._
+**Dev notes:** \
+Only valid for the mainnet. Implemented with an empty block here.
 
 ```solidity
 function depositToken(address _from, bytes32 _symbol, uint256 _quantity, enum IPortfolioBridge.BridgeProvider) external
@@ -585,7 +562,8 @@ function depositToken(address _from, bytes32 _symbol, uint256 _quantity, enum IP
 ### depositTokenFromContract
 
 
-**Dev notes:** _Only valid for the mainnet. Implemented with an empty block here._
+**Dev notes:** \
+Only valid for the mainnet. Implemented with an empty block here.
 
 ```solidity
 function depositTokenFromContract(address _from, bytes32 _symbol, uint256 _quantity) external
@@ -595,7 +573,8 @@ function depositTokenFromContract(address _from, bytes32 _symbol, uint256 _quant
 ### removeIERC20
 
 
-**Dev notes:** _Only valid for the mainnet. Implemented with an empty block here._
+**Dev notes:** \
+Only valid for the mainnet. Implemented with an empty block here.
 
 ```solidity
 function removeIERC20(bytes32 _symbol) internal

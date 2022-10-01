@@ -6,26 +6,19 @@ Exchange is an administrative wrapper contract that provides different access le
 using [OpenZeppelin](https://www.openzeppelin.com) AccessControl roles.
 Currently it has DEFAULT_ADMIN_ROLE and AUCTION_ADMIN_ROLE.
 
-**Dev notes:** _Exchange is DEFAULT_ADMIN to all Portfolio implementation contracts and TradePairs contract.
+**Dev notes:** \
+Exchange is DEFAULT_ADMIN to all Portfolio implementation contracts and TradePairs contract.
 Exchange is also the AuctionManager using AUCTION_ADMIN_ROLE.
 Auction Admin Functions can only be invoked from the Exchange contracts.
 All the functions pertaining to Auction can also be called directly in
 TradePairs and Portfolio using DEFAULT_ADMIN_ROLE but not recommended because certain
-actions require a synchronized update to both Portfolio and TradePairs contracts._
+actions require a synchronized update to both Portfolio and TradePairs contracts.
 
 
 ## Variables
 
-### portfolio
-
-```solidity
-contract IPortfolio portfolio
-```
-### AUCTION_ADMIN_ROLE
-
-```solidity
-bytes32 AUCTION_ADMIN_ROLE
-```
+| Var | Type |
+| --- | --- |
 
 ## Events
 
@@ -50,7 +43,8 @@ event RoleUpdated(string name, string actionName, bytes32 updatedRole, address u
 
 Initializer for upgradeable contract.
 
-**Dev notes:** _Grants admin role to the deployer._
+**Dev notes:** \
+Grants admin role to the deployer.
 
 ```solidity
 function initialize() public virtual
@@ -66,7 +60,7 @@ Adds Default Admin role to the address
 function addAdmin(address _address) public virtual
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -82,7 +76,7 @@ Removes Default Admin role from the address
 function removeAdmin(address _address) public virtual
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -97,14 +91,14 @@ function removeAdmin(address _address) public virtual
 function isAdmin(address _address) public view returns (bool)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _address | address | address to check |
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -119,7 +113,7 @@ Adds Auction Admin role to the address
 function addAuctionAdmin(address _address) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -135,7 +129,7 @@ Removes Auction Admin role from the address
 function removeAuctionAdmin(address _address) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -150,14 +144,14 @@ function removeAuctionAdmin(address _address) external
 function isAuctionAdmin(address _address) external view returns (bool)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _address | address | address to check |
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -172,7 +166,7 @@ Set portfolio address
 function setPortfolio(contract IPortfolio _portfolio) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -188,7 +182,7 @@ function getPortfolio() external view returns (contract IPortfolio)
 ```
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -198,13 +192,14 @@ function getPortfolio() external view returns (contract IPortfolio)
 
 (Un)pause portfolio operations
 
-**Dev notes:** _This also includes deposit/withdraw processes_
+**Dev notes:** \
+This also includes deposit/withdraw processes
 
 ```solidity
 function pausePortfolio(bool _pause) public
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -220,7 +215,7 @@ Implemented in the child contract, as the logic differs.
 function pauseForUpgrade(bool _pause) external virtual
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -239,20 +234,21 @@ fallback() external
 ### stringToBytes32
 
 
-**Dev notes:** _utility function to convert string to bytes32_
+**Dev notes:** \
+utility function to convert string to bytes32
 
 ```solidity
 function stringToBytes32(string _string) public pure returns (bytes32 result)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _string | string | string to convert |
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -261,20 +257,21 @@ function stringToBytes32(string _string) public pure returns (bytes32 result)
 ### bytes32ToString
 
 
-**Dev notes:** _utility function to convert bytes32 to string_
+**Dev notes:** \
+utility function to convert bytes32 to string
 
 ```solidity
 function bytes32ToString(bytes32 _bytes32) public pure returns (string)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _bytes32 | bytes32 | bytes32 to convert |
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -284,13 +281,14 @@ function bytes32ToString(bytes32 _bytes32) public pure returns (string)
 
 Adds trusted contract to portfolio
 
-**Dev notes:** _Exchange needs to be DEFAULT_ADMIN on the Portfolio_
+**Dev notes:** \
+Exchange needs to be DEFAULT_ADMIN on the Portfolio
 
 ```solidity
 function addTrustedContract(address _contract, string _name) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -301,20 +299,21 @@ function addTrustedContract(address _contract, string _name) external
 ### isTrustedContract
 
 
-**Dev notes:** _Exchange needs to be DEFAULT_ADMIN on the Portfolio_
+**Dev notes:** \
+Exchange needs to be DEFAULT_ADMIN on the Portfolio
 
 ```solidity
 function isTrustedContract(address _contract) external view returns (bool)
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _contract | address | address to check |
 
 
-#### returns
+#### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -324,13 +323,14 @@ function isTrustedContract(address _contract) external view returns (bool)
 
 Removes trusted contract from portfolio
 
-**Dev notes:** _Exchange needs to be DEFAULT_ADMIN on the Portfolio_
+**Dev notes:** \
+Exchange needs to be DEFAULT_ADMIN on the Portfolio
 
 ```solidity
 function removeTrustedContract(address _contract) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -341,13 +341,14 @@ function removeTrustedContract(address _contract) external
 
 Add new token to portfolio
 
-**Dev notes:** _Exchange needs to be DEFAULT_ADMIN on the Portfolio_
+**Dev notes:** \
+Exchange needs to be DEFAULT_ADMIN on the Portfolio
 
 ```solidity
 function addToken(bytes32 _symbol, address _tokenaddress, uint32 _srcChainId, uint8 _decimals, enum ITradePairs.AuctionMode _mode) external
 ```
 
-#### parameters
+#### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |

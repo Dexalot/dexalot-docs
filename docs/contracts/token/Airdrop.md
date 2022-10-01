@@ -27,6 +27,8 @@ bytes32 root
 
 ### Claimed
 
+
+
 ```solidity
 event Claimed(address claimer, uint256 amount, uint256 timestamp)
 ```

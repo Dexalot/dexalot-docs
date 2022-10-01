@@ -20,10 +20,14 @@ bytes32 VERSION
 
 ### TradePairsSet
 
+
+
 ```solidity
 event TradePairsSet(contract ITradePairs _oldTradePairs, contract ITradePairs _newTradePairs)
 ```
 ### AuctionMatchFinished
+
+
 
 ```solidity
 event AuctionMatchFinished(bytes32 pair)

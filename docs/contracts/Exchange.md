@@ -31,10 +31,14 @@ bytes32 AUCTION_ADMIN_ROLE
 
 ### PortfolioSet
 
+
+
 ```solidity
 event PortfolioSet(contract IPortfolio _oldPortfolio, contract IPortfolio _newPortfolio)
 ```
 ### RoleUpdated
+
+
 
 ```solidity
 event RoleUpdated(string name, string actionName, bytes32 updatedRole, address updatedAddress)

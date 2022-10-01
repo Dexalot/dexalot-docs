@@ -38,10 +38,14 @@ mapping(address => mapping(uint32 => uint128)) claimedRewards
 
 ### Claimed
 
+
+
 ```solidity
 event Claimed(address claimer, uint32 tokenIds, uint128[] amounts, uint256 timestamp)
 ```
 ### AddRewardToken
+
+
 
 ```solidity
 event AddRewardToken(contract IERC20Upgradeable token, uint32 tokenId, uint256 timestamp)
@@ -51,7 +55,7 @@ event AddRewardToken(contract IERC20Upgradeable token, uint32 tokenId, uint256 t
 
 ### initialize
 
-Constructor of the IncentiveDistributor
+Initializer of the IncentiveDistributor
 
 **Dev notes:** _Adds ALOT token as the first reward token and defines the signer of claim messages._
 

@@ -14,6 +14,8 @@ TradePairs should have EXECUTOR_ROLE in OrderBooks._
 
 ### OrderBook
 
+
+
 ```solidity
 struct OrderBook {
   mapping(uint256 => struct Bytes32LinkedListLibrary.LinkedList) orderList;
@@ -38,6 +40,8 @@ bytes32 EXECUTOR_ROLE
 ## Events
 
 ### TradePairsSet
+
+
 
 ```solidity
 event TradePairsSet(address _oldTradePairs, address _newTradePairs)

@@ -8,12 +8,16 @@
 
 ### XChainMsgType
 
+
+
 ```solidity
 enum XChainMsgType {
   XFER
 }
 ```
 ### Direction
+
+
 
 ```solidity
 enum Direction {
@@ -22,6 +26,8 @@ enum Direction {
 }
 ```
 ### BridgeProvider
+
+
 
 ```solidity
 enum BridgeProvider {
@@ -34,6 +40,8 @@ enum BridgeProvider {
 ## Events
 
 ### XChainXFerMessage
+
+
 
 ```solidity
 event XChainXFerMessage(uint8 version, enum IPortfolioBridge.BridgeProvider bridge, enum IPortfolioBridge.Direction msgDirection, uint32 remoteChainId, uint256 messageFee, struct IPortfolio.XFER xfer)

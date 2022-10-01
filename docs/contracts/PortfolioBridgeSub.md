@@ -49,30 +49,42 @@ mapping(bytes32 => uint256) lastOpTimestamps
 
 ### DelayedTransferAdded
 
+
+
 ```solidity
 event DelayedTransferAdded(bytes32 id)
 ```
 ### DelayedTransferExecuted
+
+
 
 ```solidity
 event DelayedTransferExecuted(bytes32 id, struct IPortfolio.XFER xfer)
 ```
 ### DelayPeriodUpdated
 
+
+
 ```solidity
 event DelayPeriodUpdated(uint256 period)
 ```
 ### DelayThresholdUpdated
+
+
 
 ```solidity
 event DelayThresholdUpdated(bytes32 symbol, uint256 threshold)
 ```
 ### EpochLengthUpdated
 
+
+
 ```solidity
 event EpochLengthUpdated(uint256 length)
 ```
 ### EpochVolumeUpdated
+
+
 
 ```solidity
 event EpochVolumeUpdated(bytes32 token, uint256 cap)

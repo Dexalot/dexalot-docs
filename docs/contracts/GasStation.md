@@ -34,10 +34,14 @@ uint256 gasAmount
 
 ### GasAmountChanged
 
+
+
 ```solidity
 event GasAmountChanged(uint256 amount)
 ```
 ### GasRequested
+
+
 
 ```solidity
 event GasRequested(address to, uint256 amount)

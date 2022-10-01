@@ -17,6 +17,8 @@ compatible with solidity 0.8.x. Documenention has also been modified to align wi
 
 ### LinkedList
 
+
+
 ```solidity
 struct LinkedList {
   mapping(bytes32 => mapping(bool => bytes32)) list;

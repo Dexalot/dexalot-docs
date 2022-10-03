@@ -1,6 +1,7 @@
-import { searchPlugin } from "@vuepress/plugin-search";
 import { defineUserConfig } from "vuepress"
 import { hopeTheme } from "vuepress-theme-hope";
+import { searchPlugin } from "@vuepress/plugin-search";
+import { commentPlugin } from "vuepress-plugin-comment2";
 
 export default defineUserConfig({
   lang: "en-US",
@@ -14,6 +15,18 @@ export default defineUserConfig({
           placeholder: 'Search',
         }
       }
+    }),
+    commentPlugin({
+      provider: "Giscus",
+      comment: true,
+      repo: "Dexalot/dexalot-docs",
+      repoId: "R_kgDOIDg0jA",
+      category: "General",
+      categoryId: "DIC_kwDOIDg0jM4CRxR9",
+      mapping: "url",
+      strict: true,
+      reactionsEnabled: true,
+      inputPosition: "bottom"
     }),
   ],
   markdown: {

@@ -26,7 +26,7 @@ export default defineUserConfig({
     footer: "Last updated 09/22/2022",
     copyright: "BUSL 1.1 Licensed | Copyright © 2022 Dexalot",
     displayFooter: true,
-    headerDepth: 6,
+    headerDepth: 4,
     repo: "https://github.com/Dexalot",
     docsRepo: "https://github.com/Dexalot/dexalot-docs",
     docsBranch: "main",

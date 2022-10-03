@@ -1,3 +1,7 @@
+---
+editLink: true
+---
+
 # Dexalot Trading API (v2)
 
 ## Version History
@@ -33,7 +37,7 @@ other bridges will be added as needed.<br />
 </td>
 </tr>
 <tr>
-<td></td>
+<td>v2.2</td>
 <td>2022-08-21</td>
 <td>Sample getClientOrderId</td>
 </tr>
@@ -489,7 +493,7 @@ post data: {
 
 ### Server Urls
 
-Testnet: [wss://api.dexalot-test.com>](https://api.dexalot-test.com/api/)
+Testnet: [wss://api.dexalot-test.com](https://api.dexalot-test.com/api/)
 
 Mainnet: [wss://api.dexalot.com](https://api.dexalot-test.com/api/) (Behind CORS)
 
@@ -498,9 +502,9 @@ A token authorization will be required around Sep 2nd, 2022.
 In order to create a web socket connection:
 
 1.  A web socket connection token will be requested via auth/getws
-endpoint (see Rest Api section for details). This endpoint
-requires an API key and provides you a temporary token (valid for
-60 seconds) . You can request the API key from Dexalot team.
+    endpoint (see Rest Api section for details). This endpoint
+    requires an API key and provides you a temporary token (valid for
+    60 seconds) . You can request the API key from Dexalot team.
 2.  Next step would be to initiate a web socket connection against
     Dexalot backend using this token. \
     wss://api.dexalot-dev.com?wstoken=ff0d8450-3e86-49ff-91fb-37156615c6ee

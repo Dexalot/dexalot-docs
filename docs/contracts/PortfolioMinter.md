@@ -1,3 +1,7 @@
+---
+headerDepth: 4
+---
+
 # PortfolioMinter
 
 **Intermediate contract to mint native tokens via NativeTokenMinter precompile.**
@@ -7,10 +11,25 @@
 Only this contract is used to mint native tokens via NativeTokenMinter precompile.
 
 
+
 ## Variables
 
-| Var | Type |
+### Public
+
+| Name | Type |
 | --- | --- |
+| MINTER_ROLE | bytes32 |
+| PAUSER_ROLE | bytes32 |
+| VERSION | bytes32 |
+| totalNativeMinted | uint256 |
+
+
+
+### Private
+
+| Name | Type |
+| --- | --- |
+| nativeMinter | NativeMinterInterface |
 
 ## Events
 
@@ -18,24 +37,28 @@ Only this contract is used to mint native tokens via NativeTokenMinter precompil
 
 
 
-```solidity
+```solidity:no-line-numbers
 event Mint(address to, uint256 amount)
 ```
 
+
+
 ## Methods
 
-### initialize
+### Public
+
+#### initialize
 
 Initializer for upgradeable contract.
 
 **Dev notes:** \
 Grant admin and pauser role to the sender. Grant minter role to portfolio and set precompile address
 
-```solidity
+```solidity:no-line-numbers
 function initialize(address _portfolio, address _nativeMinter) public
 ```
 
-#### Arguments
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -43,57 +66,60 @@ function initialize(address _portfolio, address _nativeMinter) public
 | _nativeMinter | address | Address of the NativeMinter precompile |
 
 
-### pause
+
+### External
+
+#### pause
 
 Pauses minting
 
 **Dev notes:** \
 Only pauser can pause
 
-```solidity
+```solidity:no-line-numbers
 function pause() external
 ```
 
 
-### unpause
+#### unpause
 
 Unpauses minting
 
 **Dev notes:** \
 Only pauser can unpause
 
-```solidity
+```solidity:no-line-numbers
 function unpause() external
 ```
 
 
-### getNativeMinter
+#### getNativeMinter
 
 
 
-```solidity
+```solidity:no-line-numbers
 function getNativeMinter() external view returns (address)
 ```
 
 
-#### Return values
+##### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | address | address  Address of the NativeMinter precompile |
 
-### mint
+#### mint
 
 Mints native tokens by calling precompile
 
 **Dev notes:** \
 Only minter (portfolio) can mint
 
-```solidity
+```solidity:no-line-numbers
 function mint(address _to, uint256 _amount) external virtual
 ```
 
-#### Arguments
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -101,13 +127,14 @@ function mint(address _to, uint256 _amount) external virtual
 | _amount | uint256 | Amount to mint |
 
 
-### fallback
+#### fallback
 
 
 
-```solidity
+```solidity:no-line-numbers
 fallback() external
 ```
+
 
 
 

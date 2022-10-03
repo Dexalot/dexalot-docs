@@ -1,3 +1,7 @@
+---
+headerDepth: 4
+---
+
 # PortfolioBridgeSub
 
 **Bridge aggregator and message relayer for subnet**
@@ -8,10 +12,23 @@ This contracts checks volume and threshold limits for withdrawals.
 It implements delayedTransfers as well as volume caps per epoch per token
 
 
+
 ## Variables
 
-| Var | Type |
+### Public
+
+| Name | Type |
 | --- | --- |
+| delayPeriod | uint256 |
+| delayedTransfers | mapping(bytes32 &#x3D;&gt; struct IPortfolio.XFER) |
+| delayThresholds | mapping(bytes32 &#x3D;&gt; uint256) |
+| epochLength | uint256 |
+| epochVolumes | mapping(bytes32 &#x3D;&gt; uint256) |
+| epochVolumeCaps | mapping(bytes32 &#x3D;&gt; uint256) |
+| lastOpTimestamps | mapping(bytes32 &#x3D;&gt; uint256) |
+
+
+
 
 ## Events
 
@@ -19,68 +36,75 @@ It implements delayedTransfers as well as volume caps per epoch per token
 
 
 
-```solidity
+```solidity:no-line-numbers
 event DelayedTransferAdded(bytes32 id)
 ```
 ### DelayedTransferExecuted
 
 
 
-```solidity
+```solidity:no-line-numbers
 event DelayedTransferExecuted(bytes32 id, struct IPortfolio.XFER xfer)
 ```
 ### DelayPeriodUpdated
 
 
 
-```solidity
+```solidity:no-line-numbers
 event DelayPeriodUpdated(uint256 period)
 ```
 ### DelayThresholdUpdated
 
 
 
-```solidity
+```solidity:no-line-numbers
 event DelayThresholdUpdated(bytes32 symbol, uint256 threshold)
 ```
 ### EpochLengthUpdated
 
 
 
-```solidity
+```solidity:no-line-numbers
 event EpochLengthUpdated(uint256 length)
 ```
 ### EpochVolumeUpdated
 
 
 
-```solidity
+```solidity:no-line-numbers
 event EpochVolumeUpdated(bytes32 token, uint256 cap)
 ```
 
+
+
 ## Methods
 
-### VERSION
+### Public
+
+#### VERSION
 
 
 
-```solidity
+```solidity:no-line-numbers
 function VERSION() public pure returns (bytes32)
 ```
 
 
-### sendXChainMessage
+
+### External
+
+#### sendXChainMessage
 
 Sends XFER message to the destination chain
 
 **Dev notes:** \
 This is a wrapper to check volume and threshold while withdrawing
 
-```solidity
+```solidity:no-line-numbers
 function sendXChainMessage(enum IPortfolioBridge.BridgeProvider _bridge, struct IPortfolio.XFER _xfer) external
 ```
 
-#### Arguments
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -88,7 +112,102 @@ function sendXChainMessage(enum IPortfolioBridge.BridgeProvider _bridge, struct 
 | _xfer | struct IPortfolio.XFER | XFER message to send |
 
 
-### checkTreshholds
+#### setDelayThresholds
+
+Sets delay thresholds for tokens
+
+**Dev notes:** \
+Only admin can call this function
+
+```solidity:no-line-numbers
+function setDelayThresholds(bytes32[] _tokens, uint256[] _thresholds) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _tokens | bytes32[] | Array of tokens |
+| _thresholds | uint256[] | Array of thresholds |
+
+
+#### setDelayPeriod
+
+Sets delay period for delayed transfers
+
+**Dev notes:** \
+Only admin can call this function
+
+```solidity:no-line-numbers
+function setDelayPeriod(uint256 _period) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _period | uint256 | Delay period in seconds |
+
+
+#### executeDelayedTransfer
+
+Executes delayed transfer if the delay period has passed
+
+**Dev notes:** \
+Only admin can call this function
+
+```solidity:no-line-numbers
+function executeDelayedTransfer(bytes32 _id) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _id | bytes32 | Transfer ID |
+
+
+#### setEpochLength
+
+Sets epoch length for volume control
+
+**Dev notes:** \
+Only admin can call this function
+
+```solidity:no-line-numbers
+function setEpochLength(uint256 _length) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _length | uint256 | Epoch length in seconds |
+
+
+#### setEpochVolumeCaps
+
+Sets volume cap for tokens
+
+**Dev notes:** \
+Only admin can call this function
+
+```solidity:no-line-numbers
+function setEpochVolumeCaps(bytes32[] _tokens, uint256[] _caps) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _tokens | bytes32[] | Array of tokens |
+| _caps | uint256[] | Array of caps |
+
+
+
+### Internal
+
+#### checkTreshholds
 
 Checks the volume and thresholds to delay or execute immediately
 
@@ -97,24 +216,24 @@ This function is called both in processPayload (deposits coming from mainnet)
 as well as sendXChainMessage (withdrawals from the subnet)
 Not bridge specific! Delayed messages will be processed by the defaultBridge
 
-```solidity
+```solidity:no-line-numbers
 function checkTreshholds(struct IPortfolio.XFER _xfer) internal returns (bool)
 ```
 
-#### Arguments
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _xfer | struct IPortfolio.XFER | XFER message |
 
 
-#### Return values
+##### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | bool | bool  True if the transfer can be executed immediately, false if it is delayed |
 
-### getTokenId
+#### getTokenId
 
 Retruns the symbolId used the subnet given the targetChainId
 
@@ -124,113 +243,60 @@ When sending from Mainnet to Subnet we send out the symbolId of the sourceChain.
 Because the subnet needs to know about different ids from different mainnets.
 When sending messages Subnet to Mainnet, it resolves it back to the symbolId the target chain expects
 
-```solidity
+```solidity:no-line-numbers
 function getTokenId(bytes32 _symbol) internal view returns (bytes32)
 ```
 
-#### Arguments
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _symbol | bytes32 | symbol of the token |
 
 
-#### Return values
+##### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | bytes32 | bytes32  symbolId |
 
-### setDelayThresholds
 
-Sets delay thresholds for tokens
+### Private
 
-**Dev notes:** \
-Only admin can call this function
+#### addDelayedTransfer
 
-```solidity
-function setDelayThresholds(bytes32[] _tokens, uint256[] _thresholds) external
+Adds transfer to delayed queue
+
+
+```solidity:no-line-numbers
+function addDelayedTransfer(bytes32 _id, struct IPortfolio.XFER _xfer) private
 ```
 
-#### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _tokens | bytes32[] | Array of tokens |
-| _thresholds | uint256[] | Array of thresholds |
-
-
-### setDelayPeriod
-
-Sets delay period for delayed transfers
-
-**Dev notes:** \
-Only admin can call this function
-
-```solidity
-function setDelayPeriod(uint256 _period) external
-```
-
-#### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _period | uint256 | Delay period in seconds |
-
-
-### executeDelayedTransfer
-
-Executes delayed transfer if the delay period has passed
-
-**Dev notes:** \
-Only admin can call this function
-
-```solidity
-function executeDelayedTransfer(bytes32 _id) external
-```
-
-#### Arguments
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _id | bytes32 | Transfer ID |
+| _xfer | struct IPortfolio.XFER | XFER message |
 
 
-### setEpochLength
+#### updateVolume
 
-Sets epoch length for volume control
+Updates volume for token. Used only for withdrawals from the subnet.
 
 **Dev notes:** \
-Only admin can call this function
+Does nothing if there is no cap/limit for the token
+Volume treshold check for multiple small transfers within a epoch.
 
-```solidity
-function setEpochLength(uint256 _length) external
+```solidity:no-line-numbers
+function updateVolume(bytes32 _token, uint256 _amount) private
 ```
 
-#### Arguments
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _length | uint256 | Epoch length in seconds |
-
-
-### setEpochVolumeCaps
-
-Sets volume cap for tokens
-
-**Dev notes:** \
-Only admin can call this function
-
-```solidity
-function setEpochVolumeCaps(bytes32[] _tokens, uint256[] _caps) external
-```
-
-#### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _tokens | bytes32[] | Array of tokens |
-| _caps | uint256[] | Array of caps |
-
+| _token | bytes32 | Token symbol |
+| _amount | uint256 | Amount to add to volume |
 
 

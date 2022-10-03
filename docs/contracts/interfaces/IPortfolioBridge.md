@@ -1,40 +1,14 @@
+---
+headerDepth: 4
+---
+
 # IPortfolioBridge
 
 **Interface of PortfolioBridge**
 
 
 
-## Types
 
-### XChainMsgType
-
-
-
-```solidity
-enum XChainMsgType {
-  XFER
-}
-```
-### Direction
-
-
-
-```solidity
-enum Direction {
-  SENT,
-  RECEIVED
-}
-```
-### BridgeProvider
-
-
-
-```solidity
-enum BridgeProvider {
-  LZ,
-  CELER
-}
-```
 
 
 ## Events
@@ -43,154 +17,160 @@ enum BridgeProvider {
 
 
 
-```solidity
+```solidity:no-line-numbers
 event XChainXFerMessage(uint8 version, enum IPortfolioBridge.BridgeProvider bridge, enum IPortfolioBridge.Direction msgDirection, uint32 remoteChainId, uint256 messageFee, struct IPortfolio.XFER xfer)
 ```
 
+
+
 ## Methods
 
-### pause
+
+### External
+
+#### pause
 
 
 
-```solidity
+```solidity:no-line-numbers
 function pause() external
 ```
 
 
-### unpause
+#### unpause
 
 
 
-```solidity
+```solidity:no-line-numbers
 function unpause() external
 ```
 
 
-### sendXChainMessage
+#### sendXChainMessage
 
 
 
-```solidity
+```solidity:no-line-numbers
 function sendXChainMessage(enum IPortfolioBridge.BridgeProvider _bridge, struct IPortfolio.XFER _xfer) external
 ```
 
 
-### executeDelayedTransfer
+#### executeDelayedTransfer
 
 
 
-```solidity
+```solidity:no-line-numbers
 function executeDelayedTransfer(bytes32 _id) external
 ```
 
 
-### setDelayThresholds
+#### setDelayThresholds
 
 
 
-```solidity
+```solidity:no-line-numbers
 function setDelayThresholds(bytes32[] _tokens, uint256[] _thresholds) external
 ```
 
 
-### setDelayPeriod
+#### setDelayPeriod
 
 
 
-```solidity
+```solidity:no-line-numbers
 function setDelayPeriod(uint256 _period) external
 ```
 
 
-### setEpochLength
+#### setEpochLength
 
 
 
-```solidity
+```solidity:no-line-numbers
 function setEpochLength(uint256 _length) external
 ```
 
 
-### setEpochVolumeCaps
+#### setEpochVolumeCaps
 
 
 
-```solidity
+```solidity:no-line-numbers
 function setEpochVolumeCaps(bytes32[] _tokens, uint256[] _caps) external
 ```
 
 
-### unpackMessage
+#### unpackMessage
 
 
 
-```solidity
+```solidity:no-line-numbers
 function unpackMessage(bytes _data) external pure returns (enum IPortfolioBridge.XChainMsgType _xchainMsgType, bytes msgdata)
 ```
 
 
-### getXFerMessage
+#### getXFerMessage
 
 
 
-```solidity
+```solidity:no-line-numbers
 function getXFerMessage(bytes _data) external view returns (struct IPortfolio.XFER xfer)
 ```
 
 
-### enableBridgeProvider
+#### enableBridgeProvider
 
 
 
-```solidity
+```solidity:no-line-numbers
 function enableBridgeProvider(enum IPortfolioBridge.BridgeProvider _bridge, bool _enable) external
 ```
 
 
-### isBridgeProviderEnabled
+#### isBridgeProviderEnabled
 
 
 
-```solidity
+```solidity:no-line-numbers
 function isBridgeProviderEnabled(enum IPortfolioBridge.BridgeProvider _bridge) external view returns (bool)
 ```
 
 
-### getDefaultBridgeProvider
+#### getDefaultBridgeProvider
 
 
 
-```solidity
+```solidity:no-line-numbers
 function getDefaultBridgeProvider() external view returns (enum IPortfolioBridge.BridgeProvider)
 ```
 
 
-### addToken
+#### addToken
 
 
 
-```solidity
+```solidity:no-line-numbers
 function addToken(bytes32 _symbol, address _tokenaddress, uint32 _srcChainId, uint8 _decimals, enum ITradePairs.AuctionMode _mode) external
 ```
 
 
-### removeToken
+#### removeToken
 
 
 
-```solidity
+```solidity:no-line-numbers
 function removeToken(bytes32 _symbol, uint32 _srcChainId) external
 ```
 
 
-### VERSION
+#### VERSION
 
 
 
-```solidity
+```solidity:no-line-numbers
 function VERSION() external returns (bytes32)
 ```
+
 
 
 

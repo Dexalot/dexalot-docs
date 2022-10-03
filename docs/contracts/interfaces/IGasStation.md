@@ -1,3 +1,7 @@
+---
+headerDepth: 4
+---
+
 # IGasStation
 
 **Interface of GasStation**
@@ -7,78 +11,85 @@
 
 
 
+
+
+
 ## Methods
 
-### gasAmount
+
+### External
+
+#### gasAmount
 
 
 
-```solidity
+```solidity:no-line-numbers
 function gasAmount() external view returns (uint256)
 ```
 
 
-### requestGas
+#### requestGas
 
 
 
-```solidity
+```solidity:no-line-numbers
 function requestGas(address _to) external
 ```
 
 
-### pause
+#### pause
 
 
 
-```solidity
+```solidity:no-line-numbers
 function pause() external
 ```
 
 
-### unpause
+#### unpause
 
 
 
-```solidity
+```solidity:no-line-numbers
 function unpause() external
 ```
 
 
-### setGasAmount
+#### setGasAmount
 
 
 
-```solidity
+```solidity:no-line-numbers
 function setGasAmount(uint256 _gasAmount) external
 ```
 
 
-### withdrawNative
+#### withdrawNative
 
 
 
-```solidity
+```solidity:no-line-numbers
 function withdrawNative(uint256 _amount) external
 ```
 
 
-### receive
+#### receive
 
 
 
-```solidity
+```solidity:no-line-numbers
 receive() external payable
 ```
 
 
-### fallback
+#### fallback
 
 
 
-```solidity
+```solidity:no-line-numbers
 fallback() external payable
 ```
+
 
 
 

@@ -16,6 +16,11 @@ export default defineUserConfig({
       }
     }),
   ],
+  markdown: {
+    headers: {
+      level: [1, 2, 3, 4],
+    },
+  },
   theme: hopeTheme({
     logo: "/logos/dexalot_logo.png",
     footer: "Last updated 09/22/2022",

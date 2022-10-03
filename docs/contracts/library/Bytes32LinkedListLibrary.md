@@ -1,19 +1,24 @@
+---
+headerDepth: 4
+---
+
 # Bytes32LinkedListLibrary
 
 **Circular FIFO LinkedList library for bytes32 values.**
 
 Provides functionality for implementing data indexing using a circlular linked list of bytes32 values.
 
-**Dev notes:** _The original library was forked by Modular.network from
+**Dev notes:** \
+The original library was forked by Modular.network from
 [github.com/o0ragman0o/LibCLL](https://github.com/o0ragman0o/LibCLL)
 into the Modular-Network ethereum-libraries repo at
 [github.com/Modular-Network/ethereum-libraries](https://github.com/Modular-Network/ethereum-libraries).
 It has been updated to add additional functionality and be more compatible with solidity 0.4.18
 coding patterns.
 It has been further updated by Dexalot team to handle a FIFO LinkedList of bytes32 values and be more
-compatible with solidity 0.8.x. Documenention has also been modified to align with project&#x27;s style guide._
+compatible with solidity 0.8.x. Documenention has also been modified to align with project&#x27;s style guide.
 
-## Types
+## Struct Types
 
 ### LinkedList
 
@@ -25,36 +30,60 @@ struct LinkedList {
 }
 ```
 
+## Enum Types
+
+
+## Variables
+
+
+
+
+### Private
+
+| Name | Type |
+| --- | --- |
+| HEAD | bytes32 |
+| NULL | bytes32 |
+| NEXT | bool |
+| PREV | bool |
+
+
 
 
 ## Methods
 
-### listExists
 
 
-**Dev notes:** _Returns true if the list exists_
+### Internal
 
-```solidity
+#### listExists
+
+
+**Dev notes:** \
+Returns true if the list exists
+
+```solidity:no-line-numbers
 function listExists(struct Bytes32LinkedListLibrary.LinkedList self) internal view returns (bool)
 ```
 
-#### parameters
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | self | struct Bytes32LinkedListLibrary.LinkedList | stored linked list from contract |
 
 
-### nodeExists
+#### nodeExists
 
 
-**Dev notes:** _Returns true if the node exists_
+**Dev notes:** \
+Returns true if the node exists
 
-```solidity
+```solidity:no-line-numbers
 function nodeExists(struct Bytes32LinkedListLibrary.LinkedList self, bytes32 _node) internal view returns (bool)
 ```
 
-#### parameters
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -62,32 +91,34 @@ function nodeExists(struct Bytes32LinkedListLibrary.LinkedList self, bytes32 _no
 | _node | bytes32 | a node to search for |
 
 
-### sizeOf
+#### sizeOf
 
 
-**Dev notes:** _Returns the number of elements in the list_
+**Dev notes:** \
+Returns the number of elements in the list
 
-```solidity
+```solidity:no-line-numbers
 function sizeOf(struct Bytes32LinkedListLibrary.LinkedList self) internal view returns (uint256 numElements)
 ```
 
-#### parameters
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | self | struct Bytes32LinkedListLibrary.LinkedList | stored linked list from contract |
 
 
-### getNode
+#### getNode
 
 
-**Dev notes:** _Returns the links of a node as a tuple_
+**Dev notes:** \
+Returns the links of a node as a tuple
 
-```solidity
+```solidity:no-line-numbers
 function getNode(struct Bytes32LinkedListLibrary.LinkedList self, bytes32 _node) internal view returns (bool, bytes32, bytes32)
 ```
 
-#### parameters
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -95,16 +126,17 @@ function getNode(struct Bytes32LinkedListLibrary.LinkedList self, bytes32 _node)
 | _node | bytes32 | id of the node to get |
 
 
-### getAdjacent
+#### getAdjacent
 
 
-**Dev notes:** _Returns the link of a node `_node` in direction `_direction`._
+**Dev notes:** \
+Returns the link of a node `_node` in direction `_direction`.
 
-```solidity
+```solidity:no-line-numbers
 function getAdjacent(struct Bytes32LinkedListLibrary.LinkedList self, bytes32 _node, bool _direction) internal view returns (bool, bytes32)
 ```
 
-#### parameters
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -113,16 +145,17 @@ function getAdjacent(struct Bytes32LinkedListLibrary.LinkedList self, bytes32 _n
 | _direction | bool | direction to step in |
 
 
-### createLink
+#### createLink
 
 
-**Dev notes:** _Creates a bidirectional link between two nodes on direction `_direction`_
+**Dev notes:** \
+Creates a bidirectional link between two nodes on direction `_direction`
 
-```solidity
+```solidity:no-line-numbers
 function createLink(struct Bytes32LinkedListLibrary.LinkedList self, bytes32 _node, bytes32 _link, bool _direction) internal
 ```
 
-#### parameters
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -132,16 +165,17 @@ function createLink(struct Bytes32LinkedListLibrary.LinkedList self, bytes32 _no
 | _direction | bool |  |
 
 
-### insert
+#### insert
 
 
-**Dev notes:** _Inserts node `_new` beside existing node `_node` in direction `_direction`._
+**Dev notes:** \
+Inserts node `_new` beside existing node `_node` in direction `_direction`.
 
-```solidity
+```solidity:no-line-numbers
 function insert(struct Bytes32LinkedListLibrary.LinkedList self, bytes32 _node, bytes32 _new, bool _direction) internal returns (bool)
 ```
 
-#### parameters
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -151,16 +185,17 @@ function insert(struct Bytes32LinkedListLibrary.LinkedList self, bytes32 _node, 
 | _direction | bool | direction to insert node in |
 
 
-### remove
+#### remove
 
 
-**Dev notes:** _Removes an entry from the linked list_
+**Dev notes:** \
+Removes an entry from the linked list
 
-```solidity
+```solidity:no-line-numbers
 function remove(struct Bytes32LinkedListLibrary.LinkedList self, bytes32 _node) internal returns (bytes32)
 ```
 
-#### parameters
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -168,16 +203,17 @@ function remove(struct Bytes32LinkedListLibrary.LinkedList self, bytes32 _node) 
 | _node | bytes32 | node to remove from the list |
 
 
-### push
+#### push
 
 
-**Dev notes:** _Pushes an enrty to the head of the linked list_
+**Dev notes:** \
+Pushes an enrty to the head of the linked list
 
-```solidity
+```solidity:no-line-numbers
 function push(struct Bytes32LinkedListLibrary.LinkedList self, bytes32 _node, bool _direction) internal
 ```
 
-#### parameters
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -186,16 +222,17 @@ function push(struct Bytes32LinkedListLibrary.LinkedList self, bytes32 _node, bo
 | _direction | bool | push to the head (NEXT) or tail (PREV) |
 
 
-### pop
+#### pop
 
 
-**Dev notes:** _Pops the first entry from the linked list_
+**Dev notes:** \
+Pops the first entry from the linked list
 
-```solidity
+```solidity:no-line-numbers
 function pop(struct Bytes32LinkedListLibrary.LinkedList self, bool _direction) internal returns (bytes32)
 ```
 
-#### parameters
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |

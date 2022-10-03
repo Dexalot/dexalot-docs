@@ -1,3 +1,7 @@
+---
+headerDepth: 4
+---
+
 # IncentiveDistributor
 
 **Distributor for Dexalot Incentive Program (DIP) rewards**
@@ -11,28 +15,25 @@ their earned Dexalot Incentive Program (DIP) rewards.
 
 
 
+
 ## Variables
 
-### VERSION
+### Public
 
-```solidity
-bytes32 VERSION
-```
-### allTokens
+| Name | Type |
+| --- | --- |
+| VERSION | bytes32 |
+| allTokens | uint32 |
+| claimedRewards | mapping(address &#x3D;&gt; mapping(uint32 &#x3D;&gt; uint128)) |
+| tokens | mapping(uint32 &#x3D;&gt; contract IERC20Upgradeable) |
 
-```solidity
-uint32 allTokens
-```
-### tokens
 
-```solidity
-mapping(uint32 => contract IERC20Upgradeable) tokens
-```
-### claimedRewards
 
-```solidity
-mapping(address => mapping(uint32 => uint128)) claimedRewards
-```
+### Private
+
+| Name | Type |
+| --- | --- |
+| _signer | address |
 
 ## Events
 
@@ -40,30 +41,35 @@ mapping(address => mapping(uint32 => uint128)) claimedRewards
 
 
 
-```solidity
+```solidity:no-line-numbers
 event Claimed(address claimer, uint32 tokenIds, uint128[] amounts, uint256 timestamp)
 ```
 ### AddRewardToken
 
 
 
-```solidity
+```solidity:no-line-numbers
 event AddRewardToken(contract IERC20Upgradeable token, uint32 tokenId, uint256 timestamp)
 ```
 
+
+
 ## Methods
 
-### initialize
+### Public
+
+#### initialize
 
 Initializer of the IncentiveDistributor
 
-**Dev notes:** _Adds ALOT token as the first reward token and defines the signer of claim messages._
+**Dev notes:** \
+Adds ALOT token as the first reward token and defines the signer of claim messages.
 
-```solidity
+```solidity:no-line-numbers
 function initialize(contract IERC20Upgradeable _alotToken, address __signer) public
 ```
 
-#### parameters
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -71,16 +77,19 @@ function initialize(contract IERC20Upgradeable _alotToken, address __signer) pub
 | __signer | address | The public address of the signer of claim messages |
 
 
-### claim
+
+### External
+
+#### claim
 
 Claim DIP token rewards for a given trader
 
 
-```solidity
+```solidity:no-line-numbers
 function claim(uint128[] _amounts, uint32 _tokenIds, bytes _signature) external
 ```
 
-#### parameters
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -89,16 +98,81 @@ function claim(uint128[] _amounts, uint32 _tokenIds, bytes _signature) external
 | _signature | bytes | A signed claim message to be verified |
 
 
-### _checkClaim
+#### addRewardToken
+
+Add new claimable reward token
+
+
+```solidity:no-line-numbers
+function addRewardToken(contract IERC20Upgradeable _rewardToken) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _rewardToken | contract IERC20Upgradeable | The address of the new reward token |
+
+
+#### retrieveRewardToken
+
+Retrieve reward token when DIP ends
+
+
+```solidity:no-line-numbers
+function retrieveRewardToken(uint32 _tokenId) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _tokenId | uint32 | The id of the reward token to retrieve |
+
+
+#### retrieveAllRewardTokens
+
+Retrieve all reward tokens when DIP ends
+
+
+```solidity:no-line-numbers
+function retrieveAllRewardTokens() external
+```
+
+
+#### pause
+
+Pause to perform admin functions
+
+
+```solidity:no-line-numbers
+function pause() external
+```
+
+
+#### unpause
+
+Unpause to allow claiming to resume
+
+
+```solidity:no-line-numbers
+function unpause() external
+```
+
+
+
+### Internal
+
+#### _checkClaim
 
 Verifies claim message (_user, _tokenIds, _amount) has been signed by signer
 
 
-```solidity
+```solidity:no-line-numbers
 function _checkClaim(address _user, uint32 _tokenIds, uint128[] _amounts, bytes _signature) internal view returns (bool)
 ```
 
-#### parameters
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -106,68 +180,6 @@ function _checkClaim(address _user, uint32 _tokenIds, uint128[] _amounts, bytes 
 | _tokenIds | uint32 | A bitmap representing which tokens to claim |
 | _amounts | uint128[] | An array of total earned amount for each reward token |
 | _signature | bytes | A signed claim message to be verified |
-
-
-### addRewardToken
-
-Add new claimable reward token
-
-
-```solidity
-function addRewardToken(contract IERC20Upgradeable _rewardToken) external
-```
-
-#### parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _rewardToken | contract IERC20Upgradeable | The address of the new reward token |
-
-
-### retrieveRewardToken
-
-Retrieve reward token when DIP ends
-
-
-```solidity
-function retrieveRewardToken(uint32 _tokenId) external
-```
-
-#### parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _tokenId | uint32 | The id of the reward token to retrieve |
-
-
-### retrieveAllRewardTokens
-
-Retrieve all reward tokens when DIP ends
-
-
-```solidity
-function retrieveAllRewardTokens() external
-```
-
-
-### pause
-
-Pause to perform admin functions
-
-
-```solidity
-function pause() external
-```
-
-
-### unpause
-
-Unpause to allow claiming to resume
-
-
-```solidity
-function unpause() external
-```
 
 
 

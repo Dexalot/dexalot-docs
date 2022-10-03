@@ -1,3 +1,7 @@
+---
+headerDepth: 4
+---
+
 # IPortfolioMinter
 
 **Interface of PortfolioMinter**
@@ -7,51 +11,58 @@
 
 
 
+
+
+
 ## Methods
 
-### pause
+
+### External
+
+#### pause
 
 
 
-```solidity
+```solidity:no-line-numbers
 function pause() external
 ```
 
 
-### unpause
+#### unpause
 
 
 
-```solidity
+```solidity:no-line-numbers
 function unpause() external
 ```
 
 
-### mint
+#### mint
 
 
 
-```solidity
+```solidity:no-line-numbers
 function mint(address _to, uint256 _amount) external
 ```
 
 
-### receive
+#### receive
 
 
 
-```solidity
+```solidity:no-line-numbers
 receive() external payable
 ```
 
 
-### fallback
+#### fallback
 
 
 
-```solidity
+```solidity:no-line-numbers
 fallback() external payable
 ```
+
 
 
 

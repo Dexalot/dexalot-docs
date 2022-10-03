@@ -1,3 +1,7 @@
+---
+headerDepth: 4
+---
+
 # PortfolioBridge
 
 **Bridge aggregator and message relayer for multiple different bridges**
@@ -6,7 +10,8 @@ The default bridge provider is LayerZero and it can&#x27;t be disabled. Addition
 will be added as needed. This contract encapsulates all bridge provider implementations that Portfolio
 doesn&#x27;t need to know about.
 
-**Dev notes:** _The information flow for messages between PortfolioMain and PortfolopSub is as follows:
+**Dev notes:** \
+The information flow for messages between PortfolioMain and PortfolopSub is as follows:
 PortfolioMain &#x3D;&gt; PortfolioBridgeMain &#x3D;&gt; BridgeProviderA/B/n &#x3D;&#x3D;&#x3D;&#x3D;&gt; PortfolioBridgeSub &#x3D;&#x3D;&gt; PortfolioSub
 PortfolioSub &#x3D;&gt; PortfolioBridgeSub &#x3D;&gt; BridgeProviderA/B/n &#x3D;&#x3D;&#x3D;&#x3D;&gt; PortfolioBridgeMain &#x3D;&#x3D;&gt; PortfolioMain
 PortfolioBirdge also serves as a symbol mapper to support multichain symbol handling.
@@ -22,51 +27,29 @@ will happen in different functions, either in processPayload or in getXFerMessag
 We need to raise the XChainXFerMessage before xfer.symbol is mapped in processPayload function so the
 incoming and the outgoing xfer messages always contain the symbolId rather than symbol.
 getXFerMessage is called by the portfolio to recover a stucked message from the LZ bridge, and to return
-the funds to the depositor/withdrawer. Hence, getXFerMessage maps the symbolId to symbol._
+the funds to the depositor/withdrawer. Hence, getXFerMessage maps the symbolId to symbol.
+
 
 
 ## Variables
 
-### portfolio
+### Public
 
-```solidity
-contract IPortfolio portfolio
-```
-### PORTFOLIO_ROLE
+| Name | Type |
+| --- | --- |
+| PORTFOLIO_ROLE | bytes32 |
+| bridgeEnabled | mapping(enum IPortfolioBridge.BridgeProvider &#x3D;&gt; bool) |
+| defaultTargetChainId | uint32 |
+| tokenDetailsMapById | mapping(bytes32 &#x3D;&gt; struct IPortfolio.TokenDetails) |
+| tokenDetailsMapBySymbol | mapping(bytes32 &#x3D;&gt; mapping(uint32 &#x3D;&gt; bytes32)) |
 
-```solidity
-bytes32 PORTFOLIO_ROLE
-```
-### bridgeEnabled
 
-```solidity
-mapping(enum IPortfolioBridge.BridgeProvider => bool) bridgeEnabled
-```
-### tokenDetailsMapById
 
-```solidity
-mapping(bytes32 => struct IPortfolio.TokenDetails) tokenDetailsMapById
-```
-### tokenDetailsMapBySymbol
+### Private
 
-```solidity
-mapping(bytes32 => mapping(uint32 => bytes32)) tokenDetailsMapBySymbol
-```
-### tokenList
-
-```solidity
-struct EnumerableSetUpgradeable.Bytes32Set tokenList
-```
-### defaultTargetChainId
-
-```solidity
-uint32 defaultTargetChainId
-```
-### defaultBridgeProvider
-
-```solidity
-enum IPortfolioBridge.BridgeProvider defaultBridgeProvider
-```
+| Name | Type |
+| --- | --- |
+| XCHAIN_XFER_MESSAGE_VERSION | uint8 |
 
 ## Events
 
@@ -74,140 +57,69 @@ enum IPortfolioBridge.BridgeProvider defaultBridgeProvider
 
 
 
-```solidity
+```solidity:no-line-numbers
 event RoleUpdated(string name, string actionName, bytes32 updatedRole, address updatedAddress)
 ```
 ### GasForDestinationLzReceiveUpdated
 
 
 
-```solidity
+```solidity:no-line-numbers
 event GasForDestinationLzReceiveUpdated(uint256 gasForDestinationLzReceive)
 ```
 ### DefaultChainIdUpdated
 
 
 
-```solidity
+```solidity:no-line-numbers
 event DefaultChainIdUpdated(uint32 chainId)
 ```
 
+
+
 ## Methods
 
-### VERSION
+### Public
+
+#### VERSION
 
 
 
-```solidity
+```solidity:no-line-numbers
 function VERSION() public pure virtual returns (bytes32)
 ```
 
 
-### initialize
+#### initialize
 
 Initializer for upgradeable contract.
 
-**Dev notes:** _Grant admin, pauser and msg_sender role to the sender. Set gas for lz. Set endpoint and enable bridge_
+**Dev notes:** \
+Grant admin, pauser and msg_sender role to the sender. Set gas for lz. Set endpoint and enable bridge
 
-```solidity
+```solidity:no-line-numbers
 function initialize(address _endpoint) public
 ```
 
-#### parameters
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _endpoint | address | Endpoint of the LZ bridge |
 
 
-### pause
-
-Pauses bridge operations
-
-**Dev notes:** _Only pauser can pause_
-
-```solidity
-function pause() external
-```
-
-
-### unpause
-
-Unpauses bridge operations
-
-**Dev notes:** _Only pauser can unpause_
-
-```solidity
-function unpause() external
-```
-
-
-### enableBridgeProvider
-
-Enables/disables given bridge. Default bridge's state can't be modified
-
-**Dev notes:** _Only admin can enable/disable bridge_
-
-```solidity
-function enableBridgeProvider(enum IPortfolioBridge.BridgeProvider _bridge, bool _enable) external
-```
-
-#### parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _bridge | enum IPortfolioBridge.BridgeProvider | Bridge to enable/disable |
-| _enable | bool | True to enable, false to disable |
-
-
-### isBridgeProviderEnabled
-
-
-
-```solidity
-function isBridgeProviderEnabled(enum IPortfolioBridge.BridgeProvider _bridge) external view returns (bool)
-```
-
-#### parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _bridge | enum IPortfolioBridge.BridgeProvider | Bridge to check |
-
-
-#### returns
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bool | bool  True if bridge is enabled, false otherwise |
-
-### getDefaultBridgeProvider
-
-Returns default bridge Provider
-
-
-```solidity
-function getDefaultBridgeProvider() external view returns (enum IPortfolioBridge.BridgeProvider)
-```
-
-
-#### returns
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | enum IPortfolioBridge.BridgeProvider | BridgeProvider |
-
-### revokeRole
+#### revokeRole
 
 Wrapper for revoking roles
 
-**Dev notes:** _Only admin can revoke role_
+**Dev notes:** \
+Only admin can revoke role
 
-```solidity
+```solidity:no-line-numbers
 function revokeRole(bytes32 _role, address _address) public
 ```
 
-#### parameters
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -215,69 +127,178 @@ function revokeRole(bytes32 _role, address _address) public
 | _address | address | Address to revoke role from |
 
 
-### setPortfolio
+#### unpackMessage
+
+Decodes XChainMsgType from the message
+
+
+```solidity:no-line-numbers
+function unpackMessage(bytes _data) public pure returns (enum IPortfolioBridge.XChainMsgType _xchainMsgType, bytes msgdata)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _data | bytes | Encoded message that has the msg type + msg |
+
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _xchainMsgType | enum IPortfolioBridge.XChainMsgType | XChainMsgType |
+| msgdata | bytes | Still encoded message data. XFER in our case. Other message type not supported yet. |
+
+
+### External
+
+#### pause
+
+Pauses bridge operations
+
+**Dev notes:** \
+Only pauser can pause
+
+```solidity:no-line-numbers
+function pause() external
+```
+
+
+#### unpause
+
+Unpauses bridge operations
+
+**Dev notes:** \
+Only pauser can unpause
+
+```solidity:no-line-numbers
+function unpause() external
+```
+
+
+#### enableBridgeProvider
+
+Enables/disables given bridge. Default bridge's state can't be modified
+
+**Dev notes:** \
+Only admin can enable/disable bridge
+
+```solidity:no-line-numbers
+function enableBridgeProvider(enum IPortfolioBridge.BridgeProvider _bridge, bool _enable) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _bridge | enum IPortfolioBridge.BridgeProvider | Bridge to enable/disable |
+| _enable | bool | True to enable, false to disable |
+
+
+#### isBridgeProviderEnabled
+
+
+
+```solidity:no-line-numbers
+function isBridgeProviderEnabled(enum IPortfolioBridge.BridgeProvider _bridge) external view returns (bool)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _bridge | enum IPortfolioBridge.BridgeProvider | Bridge to check |
+
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | bool | bool  True if bridge is enabled, false otherwise |
+
+#### getDefaultBridgeProvider
+
+Returns default bridge Provider
+
+
+```solidity:no-line-numbers
+function getDefaultBridgeProvider() external view returns (enum IPortfolioBridge.BridgeProvider)
+```
+
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | enum IPortfolioBridge.BridgeProvider | BridgeProvider |
+
+#### setPortfolio
 
 Set portfolio address to grant role
 
-**Dev notes:** _Only admin can set portfolio address. One to one relationship between Portflio and PortfolioBridge_
+**Dev notes:** \
+Only admin can set portfolio address. One to one relationship between Portflio and PortfolioBridge
 
-```solidity
+```solidity:no-line-numbers
 function setPortfolio(address _portfolio) external
 ```
 
-#### parameters
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _portfolio | address | Portfolio address |
 
 
-### getPortfolio
+#### getPortfolio
 
 
 
-```solidity
+```solidity:no-line-numbers
 function getPortfolio() external view returns (contract IPortfolio)
 ```
 
 
-#### returns
+##### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | contract IPortfolio | IPortfolio  Portfolio contract |
 
-### setGasForDestinationLzReceive
+#### setGasForDestinationLzReceive
 
 Set max gas that can be used at the destination chain after message delivery
 
-**Dev notes:** _Only admin can set gas for destination chain_
+**Dev notes:** \
+Only admin can set gas for destination chain
 
-```solidity
+```solidity:no-line-numbers
 function setGasForDestinationLzReceive(uint256 _gas) external
 ```
 
-#### parameters
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _gas | uint256 | Gas for destination chain |
 
 
-### addToken
+#### addToken
 
 Adds the given token to the portfoBrige. PortfoBrigeSub the list will be bigger as they could be from
 different mainnet chains
 
-**Dev notes:** _Only callable by admin or from Portfolio when a new common symbol is added for the first time.
+**Dev notes:** \
+Only callable by admin or from Portfolio when a new common symbol is added for the first time.
     The same common symbol but different symbolId are required when adding a token to PortfoBrigeSub.
-    Native symbol is also added as a token with 0 address_
+    Native symbol is also added as a token with 0 address
 
-```solidity
+```solidity:no-line-numbers
 function addToken(bytes32 _symbol, address _tokenAddress, uint32 _srcChainId, uint8 _decimals, enum ITradePairs.AuctionMode) external
 ```
 
-#### parameters
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -288,17 +309,18 @@ function addToken(bytes32 _symbol, address _tokenAddress, uint32 _srcChainId, ui
 |  | enum ITradePairs.AuctionMode |  |
 
 
-### removeToken
+#### removeToken
 
 Remove the token from the tokenDetailsMapById and tokenDetailsMapBySymbol
 
-**Dev notes:** _Make sure that there are no in-flight messages_
+**Dev notes:** \
+Make sure that there are no in-flight messages
 
-```solidity
+```solidity:no-line-numbers
 function removeToken(bytes32 _symbol, uint32 _srcChainId) external
 ```
 
-#### parameters
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -306,185 +328,100 @@ function removeToken(bytes32 _symbol, uint32 _srcChainId) external
 | _srcChainId | uint32 | Source Chain id |
 
 
-### getTokenId
-
-Retruns the symbolId used in the mainnet given the srcChainId
-
-**Dev notes:** _PortfolioBridgeSub uses the defaultTargetChain instead of portfolio.getChainId()
-When sending from Mainnet to Subnet we send out the symbolId of the sourceChain. USDC => USDC1337
-When receiving messages back it expects the same symbolId if USDC1337 sent, USDC1337 to recieve
-Because the subnet needs to know about different ids from different mainnets._
-
-```solidity
-function getTokenId(bytes32 _symbol) internal view virtual returns (bytes32)
-```
-
-#### parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _symbol | bytes32 | symbol of the token |
-
-
-#### returns
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bytes32 | bytes32  symbolId |
-
-### getSymbolForId
-
-Retruns the locally used symbol given the symbolId
-
-**Dev notes:** _Mainnet receives the messages in the same format that it sent out, by symbolId_
-
-```solidity
-function getSymbolForId(bytes32 _id) internal view returns (bytes32)
-```
-
-
-#### returns
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bytes32 | bytes32  symbolId |
-
-### getTokenDetails
+#### getTokenDetails
 
 Returns the token details.
 
-**Dev notes:** _Will always return here as actionMode.OFF as auctionMode is controlled in PortfolioSub.
+**Dev notes:** \
+Will always return here as actionMode.OFF as auctionMode is controlled in PortfolioSub.
 Subnet does not have any ERC20s, hence the tokenAddress is token's mainnet address.
-See the TokenDetails struct in IPortfolio for the full type information of the return variable._
+See the TokenDetails struct in IPortfolio for the full type information of the return variable.
 
-```solidity
+```solidity:no-line-numbers
 function getTokenDetails(bytes32 _symbolId) external view returns (struct IPortfolio.TokenDetails)
 ```
 
-#### parameters
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _symbolId | bytes32 | SymbolId of the token. |
 
 
-#### returns
+##### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | struct IPortfolio.TokenDetails | TokenDetails decimals (Identical to mainnet), tokenAddress (Token address at the mainnet) |
 
-### setDefaultTargetChain
+#### setDefaultTargetChain
 
 Sets the default target chain id. To be extended with multichain implementation
 
-**Dev notes:** _Only admin can call this function_
+**Dev notes:** \
+Only admin can call this function
 
-```solidity
+```solidity:no-line-numbers
 function setDefaultTargetChain(uint32 _chainId) external
 ```
 
-#### parameters
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _chainId | uint32 | Default Chainid to use |
 
 
-### getTokenList
+#### getTokenList
 
 Frontend function to get all the tokens in the portfolio
 
 
-```solidity
+```solidity:no-line-numbers
 function getTokenList() external view returns (bytes32[])
 ```
 
 
-#### returns
+##### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | bytes32[] | bytes32[]  Array of symbols of the tokens |
 
-### packXferMessage
-
-Maps symbol to symbolId and encodes XFER message
-
-
-```solidity
-function packXferMessage(struct IPortfolio.XFER _xfer) internal view returns (bytes message)
-```
-
-#### parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _xfer | struct IPortfolio.XFER | XFER message to encode |
-
-
-#### returns
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| message | bytes | Encoded XFER message |
-
-### unpackMessage
-
-Decodes XChainMsgType from the message
-
-
-```solidity
-function unpackMessage(bytes _data) public pure returns (enum IPortfolioBridge.XChainMsgType _xchainMsgType, bytes msgdata)
-```
-
-#### parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _data | bytes | Encoded message that has the msg type + msg |
-
-
-#### returns
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _xchainMsgType | enum IPortfolioBridge.XChainMsgType | XChainMsgType |
-| msgdata | bytes | Still encoded message data. XFER in our case. Other message type not supported yet. |
-
-### getXFerMessage
+#### getXFerMessage
 
 Unpacks XFER message and replaces the symbol with the local symbol
 
 
-```solidity
+```solidity:no-line-numbers
 function getXFerMessage(bytes _data) external view returns (struct IPortfolio.XFER xfer)
 ```
 
-#### parameters
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _data | bytes | XFER message |
 
 
-#### returns
+##### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | xfer | struct IPortfolio.XFER | Unpacked XFER message |
 
-### sendXChainMessage
+#### sendXChainMessage
 
 Wrapper function to send message to destination chain via bridge
 
-**Dev notes:** _Only PORTFOLIO_ROLE can call_
+**Dev notes:** \
+Only PORTFOLIO_ROLE can call
 
-```solidity
+```solidity:no-line-numbers
 function sendXChainMessage(enum IPortfolioBridge.BridgeProvider _bridge, struct IPortfolio.XFER _xfer) external virtual
 ```
 
-#### parameters
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -492,52 +429,18 @@ function sendXChainMessage(enum IPortfolioBridge.BridgeProvider _bridge, struct 
 | _xfer | struct IPortfolio.XFER | XFER message to send |
 
 
-### sendXChainMessageInternal
-
-Actual internal function that implements the message sending.
-
-
-```solidity
-function sendXChainMessageInternal(enum IPortfolioBridge.BridgeProvider _bridge, struct IPortfolio.XFER _xfer) internal
-```
-
-#### parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _bridge | enum IPortfolioBridge.BridgeProvider | Bridge to send message to |
-| _xfer | struct IPortfolio.XFER | XFER message to send |
-
-
-### checkTreshholds
-
-Overriden by PortfolioBridgeSub
-
-**Dev notes:** _Tresholds not checked in the Mainnet. Neither for Incoming nor outgoing.
-But both are checked in the subnet._
-
-```solidity
-function checkTreshholds(struct IPortfolio.XFER) internal virtual returns (bool)
-```
-
-
-#### returns
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bool | bool  True |
-
-### lzReceive
+#### lzReceive
 
 Receive message from source chain via LayerZero
 
-**Dev notes:** _Only trusted LZ endpoint can call_
+**Dev notes:** \
+Only trusted LZ endpoint can call
 
-```solidity
+```solidity:no-line-numbers
 function lzReceive(uint16 _srcChainId, bytes _srcAddress, uint64, bytes _payload) external
 ```
 
-#### parameters
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -547,100 +450,318 @@ function lzReceive(uint16 _srcChainId, bytes _srcAddress, uint64, bytes _payload
 | _payload | bytes | Payload received |
 
 
-### refundNative
+#### refundNative
 
 Refunds the native balance inside contract
 
-**Dev notes:** _Only admin can call_
+**Dev notes:** \
+Only admin can call
 
-```solidity
+```solidity:no-line-numbers
 function refundNative() external
 ```
 
 
-### refundTokens
+#### refundTokens
 
 Refunds the ERC20 balance inside contract
 
-**Dev notes:** _Only admin can call_
+**Dev notes:** \
+Only admin can call
 
-```solidity
+```solidity:no-line-numbers
 function refundTokens(address[] _tokens) external
 ```
 
-#### parameters
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _tokens | address[] | Array of ERC20 tokens to refund |
 
 
-### executeDelayedTransfer
+#### executeDelayedTransfer
 
 
-**Dev notes:** _Only valid for the subnet. Implemented with an empty block here._
+**Dev notes:** \
+Only valid for the subnet. Implemented with an empty block here.
 
-```solidity
+```solidity:no-line-numbers
 function executeDelayedTransfer(bytes32 _id) external virtual
 ```
 
 
-### setDelayThresholds
+#### setDelayThresholds
 
 
-**Dev notes:** _Only valid for the subnet. Implemented with an empty block here._
+**Dev notes:** \
+Only valid for the subnet. Implemented with an empty block here.
 
-```solidity
+```solidity:no-line-numbers
 function setDelayThresholds(bytes32[] _tokens, uint256[] _thresholds) external virtual
 ```
 
 
-### setDelayPeriod
+#### setDelayPeriod
 
 
-**Dev notes:** _Only valid for the subnet. Implemented with an empty block here._
+**Dev notes:** \
+Only valid for the subnet. Implemented with an empty block here.
 
-```solidity
+```solidity:no-line-numbers
 function setDelayPeriod(uint256 _period) external virtual
 ```
 
 
-### setEpochLength
+#### setEpochLength
 
 
-**Dev notes:** _Only valid for the subnet. Implemented with an empty block here._
+**Dev notes:** \
+Only valid for the subnet. Implemented with an empty block here.
 
-```solidity
+```solidity:no-line-numbers
 function setEpochLength(uint256 _length) external virtual
 ```
 
 
-### setEpochVolumeCaps
+#### setEpochVolumeCaps
 
 
-**Dev notes:** _Only valid for the subnet. Implemented with an empty block here._
+**Dev notes:** \
+Only valid for the subnet. Implemented with an empty block here.
 
-```solidity
+```solidity:no-line-numbers
 function setEpochVolumeCaps(bytes32[] _tokens, uint256[] _caps) external virtual
 ```
 
 
-### receive
+#### receive
 
 
 
-```solidity
+```solidity:no-line-numbers
 receive() external payable
 ```
 
 
-### fallback
+#### fallback
 
 
 
-```solidity
+```solidity:no-line-numbers
 fallback() external payable
 ```
 
+
+
+### Internal
+
+#### getTokenId
+
+Retruns the symbolId used in the mainnet given the srcChainId
+
+**Dev notes:** \
+PortfolioBridgeSub uses the defaultTargetChain instead of portfolio.getChainId()
+When sending from Mainnet to Subnet we send out the symbolId of the sourceChain. USDC => USDC1337
+When receiving messages back it expects the same symbolId if USDC1337 sent, USDC1337 to recieve
+Because the subnet needs to know about different ids from different mainnets.
+
+```solidity:no-line-numbers
+function getTokenId(bytes32 _symbol) internal view virtual returns (bytes32)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _symbol | bytes32 | symbol of the token |
+
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | bytes32 | bytes32  symbolId |
+
+#### getSymbolForId
+
+Retruns the locally used symbol given the symbolId
+
+**Dev notes:** \
+Mainnet receives the messages in the same format that it sent out, by symbolId
+
+```solidity:no-line-numbers
+function getSymbolForId(bytes32 _id) internal view returns (bytes32)
+```
+
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | bytes32 | bytes32  symbolId |
+
+#### packXferMessage
+
+Maps symbol to symbolId and encodes XFER message
+
+
+```solidity:no-line-numbers
+function packXferMessage(struct IPortfolio.XFER _xfer) internal view returns (bytes message)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _xfer | struct IPortfolio.XFER | XFER message to encode |
+
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| message | bytes | Encoded XFER message |
+
+#### sendXChainMessageInternal
+
+Actual internal function that implements the message sending.
+
+
+```solidity:no-line-numbers
+function sendXChainMessageInternal(enum IPortfolioBridge.BridgeProvider _bridge, struct IPortfolio.XFER _xfer) internal
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _bridge | enum IPortfolioBridge.BridgeProvider | Bridge to send message to |
+| _xfer | struct IPortfolio.XFER | XFER message to send |
+
+
+#### checkTreshholds
+
+Overriden by PortfolioBridgeSub
+
+**Dev notes:** \
+Tresholds not checked in the Mainnet. Neither for Incoming nor outgoing.
+But both are checked in the subnet.
+
+```solidity:no-line-numbers
+function checkTreshholds(struct IPortfolio.XFER) internal virtual returns (bool)
+```
+
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | bool | bool  True |
+
+
+### Private
+
+#### incrementOutNonce
+
+Increments bridge nonce
+
+**Dev notes:** \
+Only portfolio can call
+
+```solidity:no-line-numbers
+function incrementOutNonce(enum IPortfolioBridge.BridgeProvider _bridge) private returns (uint64 nonce)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _bridge | enum IPortfolioBridge.BridgeProvider | Bridge to increment nonce for. For future use for multiple bridge use |
+
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| nonce | uint64 | New nonce |
+
+#### addNativeToken
+
+private function that handles the addition of native token
+
+**Dev notes:** \
+gets the native token details from portfolio
+
+```solidity:no-line-numbers
+function addNativeToken() private
+```
+
+
+#### lzSend
+
+Send message to destination chain via LayerZero
+
+**Dev notes:** \
+Only called by sendXChainMessageInternal that can be called by Portfolio
+
+```solidity:no-line-numbers
+function lzSend(bytes _payload) private returns (uint256)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _payload | bytes | Payload to send |
+
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | uint256 | uint256  Message Fee |
+
+#### unpackXFerMessage
+
+Decodes XFER message & updates the receival timestamp
+
+
+```solidity:no-line-numbers
+function unpackXFerMessage(bytes _data) private view returns (struct IPortfolio.XFER xfer)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _data | bytes | XFER message |
+
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| xfer | struct IPortfolio.XFER | Unpacked XFER message |
+
+#### processPayload
+
+Processes message received from source chain via bridge
+
+**Dev notes:** \
+if bridge is disabled or PAUSED and there are messages in flight, we still need to
+                process them when received at the destination
+
+```solidity:no-line-numbers
+function processPayload(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _srcChainId, bytes _payload) private
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _bridge | enum IPortfolioBridge.BridgeProvider | Bridge to receive message from |
+| _srcChainId | uint32 | Source chain ID |
+| _payload | bytes | Payload received |
 
 

@@ -1,33 +1,35 @@
+---
+headerDepth: 4
+---
+
 # PortfolioMinter
 
 **Intermediate contract to mint native tokens via NativeTokenMinter precompile.**
 
 
-**Dev notes:** _Only this contract is used to mint native tokens via NativeTokenMinter precompile._
+**Dev notes:** \
+Only this contract is used to mint native tokens via NativeTokenMinter precompile.
+
 
 
 ## Variables
 
-### VERSION
+### Public
 
-```solidity
-bytes32 VERSION
-```
-### PAUSER_ROLE
+| Name | Type |
+| --- | --- |
+| MINTER_ROLE | bytes32 |
+| PAUSER_ROLE | bytes32 |
+| VERSION | bytes32 |
+| totalNativeMinted | uint256 |
 
-```solidity
-bytes32 PAUSER_ROLE
-```
-### MINTER_ROLE
 
-```solidity
-bytes32 MINTER_ROLE
-```
-### totalNativeMinted
 
-```solidity
-uint256 totalNativeMinted
-```
+### Private
+
+| Name | Type |
+| --- | --- |
+| nativeMinter | NativeMinterInterface |
 
 ## Events
 
@@ -35,23 +37,28 @@ uint256 totalNativeMinted
 
 
 
-```solidity
+```solidity:no-line-numbers
 event Mint(address to, uint256 amount)
 ```
 
+
+
 ## Methods
 
-### initialize
+### Public
+
+#### initialize
 
 Initializer for upgradeable contract.
 
-**Dev notes:** _Grant admin and pauser role to the sender. Grant minter role to portfolio and set precompile address_
+**Dev notes:** \
+Grant admin and pauser role to the sender. Grant minter role to portfolio and set precompile address
 
-```solidity
+```solidity:no-line-numbers
 function initialize(address _portfolio, address _nativeMinter) public
 ```
 
-#### parameters
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -59,54 +66,60 @@ function initialize(address _portfolio, address _nativeMinter) public
 | _nativeMinter | address | Address of the NativeMinter precompile |
 
 
-### pause
+
+### External
+
+#### pause
 
 Pauses minting
 
-**Dev notes:** _Only pauser can pause_
+**Dev notes:** \
+Only pauser can pause
 
-```solidity
+```solidity:no-line-numbers
 function pause() external
 ```
 
 
-### unpause
+#### unpause
 
 Unpauses minting
 
-**Dev notes:** _Only pauser can unpause_
+**Dev notes:** \
+Only pauser can unpause
 
-```solidity
+```solidity:no-line-numbers
 function unpause() external
 ```
 
 
-### getNativeMinter
+#### getNativeMinter
 
 
 
-```solidity
+```solidity:no-line-numbers
 function getNativeMinter() external view returns (address)
 ```
 
 
-#### returns
+##### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | address | address  Address of the NativeMinter precompile |
 
-### mint
+#### mint
 
 Mints native tokens by calling precompile
 
-**Dev notes:** _Only minter (portfolio) can mint_
+**Dev notes:** \
+Only minter (portfolio) can mint
 
-```solidity
+```solidity:no-line-numbers
 function mint(address _to, uint256 _amount) external virtual
 ```
 
-#### parameters
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -114,13 +127,14 @@ function mint(address _to, uint256 _amount) external virtual
 | _amount | uint256 | Amount to mint |
 
 
-### fallback
+#### fallback
 
 
 
-```solidity
+```solidity:no-line-numbers
 fallback() external
 ```
+
 
 
 

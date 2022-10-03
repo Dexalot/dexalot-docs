@@ -1,24 +1,28 @@
+---
+headerDepth: 4
+---
+
 # ExchangeMain
 
 **Mainnet Exchange**
 
 This contract is the mainnet version of the Dexalot Exchange.
 
-**Dev notes:** _ExchangeMain is DEFAULT_ADMIN to PortfolioMain contract._
+**Dev notes:** \
+ExchangeMain is DEFAULT_ADMIN to PortfolioMain contract.
+
 
 
 ## Variables
 
-### VERSION
+### Public
 
-```solidity
-bytes32 VERSION
-```
-### priceFeed
+| Name | Type |
+| --- | --- |
+| VERSION | bytes32 |
 
-```solidity
-contract AggregatorV3Interface priceFeed
-```
+
+
 
 ## Events
 
@@ -26,81 +30,39 @@ contract AggregatorV3Interface priceFeed
 
 
 
-```solidity
+```solidity:no-line-numbers
 event CoinFlipped(uint80 roundid, int256 price, bool outcome)
 ```
 
+
+
 ## Methods
 
-### initialize
+### Public
+
+#### initialize
 
 Initializer for upgradeable contract.
 
-**Dev notes:** _Sets Chainlink price feed address._
+**Dev notes:** \
+Sets Chainlink price feed address.
 
-```solidity
+```solidity:no-line-numbers
 function initialize() public
 ```
 
 
-### pauseForUpgrade
-
-(Un)pauses portoflioMain and portfolioBridgeMain for upgrade
-
-
-```solidity
-function pauseForUpgrade(bool _pause) external
-```
-
-#### parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _pause | bool | true to pause, false to unpause |
-
-
-### setPriceFeed
-
-Sets Chainlink price feed address.
-
-
-```solidity
-function setPriceFeed(address _address) external
-```
-
-#### parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _address | address | address of the price feed contract |
-
-
-### getPriceFeed
-
-
-
-```solidity
-function getPriceFeed() external view returns (contract AggregatorV3Interface)
-```
-
-
-#### returns
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | contract AggregatorV3Interface | AggregatorV3Interface  price feed contract |
-
-### isHead
+#### isHead
 
 returns true/false = head/tail based on the latest AVAX/USD price
 
 
-```solidity
+```solidity:no-line-numbers
 function isHead() public view returns (uint80 r, int256 p, bool o)
 ```
 
 
-#### returns
+##### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -108,14 +70,65 @@ function isHead() public view returns (uint80 r, int256 p, bool o)
 | p | int256 | price of AVAX for this round id |
 | o | bool | outcome of the coin flip |
 
-### flipCoin
+
+### External
+
+#### pauseForUpgrade
+
+(Un)pauses portoflioMain and portfolioBridgeMain for upgrade
+
+
+```solidity:no-line-numbers
+function pauseForUpgrade(bool _pause) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _pause | bool | true to pause, false to unpause |
+
+
+#### setPriceFeed
+
+Sets Chainlink price feed address.
+
+
+```solidity:no-line-numbers
+function setPriceFeed(address _address) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _address | address | address of the price feed contract |
+
+
+#### getPriceFeed
+
+
+
+```solidity:no-line-numbers
+function getPriceFeed() external view returns (contract AggregatorV3Interface)
+```
+
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | contract AggregatorV3Interface | AggregatorV3Interface  price feed contract |
+
+#### flipCoin
 
 emits coin flip results based on the latest AVAX/USD price
 
 
-```solidity
+```solidity:no-line-numbers
 function flipCoin() external
 ```
+
 
 
 

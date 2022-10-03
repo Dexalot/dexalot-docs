@@ -1,3 +1,7 @@
+---
+headerDepth: 4
+---
+
 # GasStation
 
 **Native token treasury**
@@ -7,28 +11,20 @@ It receives native coin and only sends out to the low balanced users via Portfol
 
 
 
+
 ## Variables
 
-### VERSION
+### Public
 
-```solidity
-bytes32 VERSION
-```
-### PAUSER_ROLE
+| Name | Type |
+| --- | --- |
+| PAUSER_ROLE | bytes32 |
+| SWAPPER_ROLE | bytes32 |
+| VERSION | bytes32 |
+| gasAmount | uint256 |
 
-```solidity
-bytes32 PAUSER_ROLE
-```
-### SWAPPER_ROLE
 
-```solidity
-bytes32 SWAPPER_ROLE
-```
-### gasAmount
 
-```solidity
-uint256 gasAmount
-```
 
 ## Events
 
@@ -36,30 +32,35 @@ uint256 gasAmount
 
 
 
-```solidity
+```solidity:no-line-numbers
 event GasAmountChanged(uint256 amount)
 ```
 ### GasRequested
 
 
 
-```solidity
+```solidity:no-line-numbers
 event GasRequested(address to, uint256 amount)
 ```
 
+
+
 ## Methods
 
-### initialize
+### Public
+
+#### initialize
 
 Initializer for upgradeable contract.
 
-**Dev notes:** _Grant admin and pauser role to the sender. Grant swapper role to swapper (portfolio) contract_
+**Dev notes:** \
+Grant admin and pauser role to the sender. Grant swapper role to swapper (portfolio) contract
 
-```solidity
+```solidity:no-line-numbers
 function initialize(address _swapper, uint256 _gasAmount) public
 ```
 
-#### parameters
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -67,96 +68,106 @@ function initialize(address _swapper, uint256 _gasAmount) public
 | _gasAmount | uint256 | Amount of gas to be distrubuted to the users |
 
 
-### pause
+
+### External
+
+#### pause
 
 Pauses gas distribution
 
-**Dev notes:** _Only pauser can pause_
+**Dev notes:** \
+Only pauser can pause
 
-```solidity
+```solidity:no-line-numbers
 function pause() external
 ```
 
 
-### unpause
+#### unpause
 
 Unpauses gas distribution
 
-**Dev notes:** _Only pauser can unpause_
+**Dev notes:** \
+Only pauser can unpause
 
-```solidity
+```solidity:no-line-numbers
 function unpause() external
 ```
 
 
-### setGasAmount
+#### setGasAmount
 
 Set gas amount to be distributed to the users
 
-**Dev notes:** _Only admin can set gas amount_
+**Dev notes:** \
+Only admin can set gas amount
 
-```solidity
+```solidity:no-line-numbers
 function setGasAmount(uint256 _gasAmount) external
 ```
 
-#### parameters
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _gasAmount | uint256 | New gas amount |
 
 
-### requestGas
+#### requestGas
 
 Swapper contract will request gas after depositing bridge fee to our EOA
 
-**Dev notes:** _Only swapper (Portfolio Sub) can request gas_
+**Dev notes:** \
+Only swapper (Portfolio Sub) can request gas
 
-```solidity
+```solidity:no-line-numbers
 function requestGas(address _to) external
 ```
 
-#### parameters
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _to | address | Address of the user to receive gas |
 
 
-### withdrawNative
+#### withdrawNative
 
 Withdraws native alot from the contract
 
-**Dev notes:** _Only admin can withdraw_
+**Dev notes:** \
+Only admin can withdraw
 
-```solidity
+```solidity:no-line-numbers
 function withdrawNative(uint256 _amount) external
 ```
 
-#### parameters
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _amount | uint256 | Amount of alot to withdraw |
 
 
-### receive
+#### receive
 
 
 
-```solidity
+```solidity:no-line-numbers
 receive() external payable
 ```
 
 
-### fallback
+#### fallback
 
 
-**Dev notes:** _we revert transaction if a non-existing function is called_
+**Dev notes:** \
+we revert transaction if a non-existing function is called
 
-```solidity
+```solidity:no-line-numbers
 fallback() external payable
 ```
+
 
 
 

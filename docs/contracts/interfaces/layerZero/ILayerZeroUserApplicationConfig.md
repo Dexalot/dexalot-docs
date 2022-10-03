@@ -1,4 +1,11 @@
+---
+headerDepth: 4
+---
+
 # ILayerZeroUserApplicationConfig
+
+
+
 
 
 
@@ -8,40 +15,44 @@
 
 ## Methods
 
-### setConfig
+
+### External
+
+#### setConfig
 
 
 
-```solidity
+```solidity:no-line-numbers
 function setConfig(uint16 _version, uint16 _chainId, uint256 _configType, bytes _config) external
 ```
 
 
-### setSendVersion
+#### setSendVersion
 
 
 
-```solidity
+```solidity:no-line-numbers
 function setSendVersion(uint16 _version) external
 ```
 
 
-### setReceiveVersion
+#### setReceiveVersion
 
 
 
-```solidity
+```solidity:no-line-numbers
 function setReceiveVersion(uint16 _version) external
 ```
 
 
-### forceResumeReceive
+#### forceResumeReceive
 
 
 
-```solidity
+```solidity:no-line-numbers
 function forceResumeReceive(uint16 _srcChainId, bytes _srcAddress) external
 ```
+
 
 
 

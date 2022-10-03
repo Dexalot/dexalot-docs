@@ -1,3 +1,7 @@
+---
+headerDepth: 4
+---
+
 # MockToken
 
 **Mock ERC20 Token contract used for testing**
@@ -5,35 +9,45 @@
 
 
 
+
 ## Variables
 
-### VERSION
+### Public
 
-```solidity
-bytes32 VERSION
-```
-### MINTER_ROLE
+| Name | Type |
+| --- | --- |
+| MINTER_ROLE | bytes32 |
+| VERSION | bytes32 |
 
-```solidity
-bytes32 MINTER_ROLE
-```
+
+
+### Private
+
+| Name | Type |
+| --- | --- |
+| __decimals | uint8 |
+
+
 
 
 ## Methods
 
-### constructor
+### Public
+
+#### constructor
 
 
 
-```solidity
+```solidity:no-line-numbers
 constructor(string _name, string _symbol, uint8 _decimals) public
 ```
 
 
-### decimals
+#### decimals
 
 
-**Dev notes:** _Returns the number of decimals used to get its user representation.
+**Dev notes:** \
+Returns the number of decimals used to get its user representation.
 For example, if `decimals` equals `2`, a balance of `505` tokens should
 be displayed to a user as `5.05` (`505 / 10 ** 2`).
 
@@ -43,65 +57,67 @@ overridden;
 
 NOTE: This information is only used for _display_ purposes: it in
 no way affects any of the arithmetic of the contract, including
-{IERC20-balanceOf} and {IERC20-transfer}._
+{IERC20-balanceOf} and {IERC20-transfer}.
 
-```solidity
+```solidity:no-line-numbers
 function decimals() public view returns (uint8)
 ```
 
 
-### addAdmin
+#### addAdmin
 
 
 
-```solidity
+```solidity:no-line-numbers
 function addAdmin(address _address) public
 ```
 
 
-### removeAdmin
+#### removeAdmin
 
 
 
-```solidity
+```solidity:no-line-numbers
 function removeAdmin(address _address) public
 ```
 
 
-### isAdmin
+#### isAdmin
 
 
 
-```solidity
+```solidity:no-line-numbers
 function isAdmin(address _address) public view returns (bool)
 ```
 
 
-### addMinter
+#### addMinter
 
 
 
-```solidity
+```solidity:no-line-numbers
 function addMinter(address _address) public
 ```
 
 
-### removeMinter
+#### removeMinter
 
 
 
-```solidity
+```solidity:no-line-numbers
 function removeMinter(address _address) public
 ```
 
 
-### mint
+#### mint
 
 
 
-```solidity
+```solidity:no-line-numbers
 function mint(address _owner, uint256 _quantity) public
 ```
+
+
 
 
 

@@ -1,3 +1,7 @@
+---
+headerDepth: 4
+---
+
 # TokenVestingCloneFactory
 
 **Clone factory for TokenVestingCloneable**
@@ -5,28 +9,20 @@
 
 
 
+
 ## Variables
 
-### VERSION
+### Public
 
-```solidity
-bytes32 VERSION
-```
-### implementation
+| Name | Type |
+| --- | --- |
+| VERSION | bytes32 |
+| clones | mapping(uint256 &#x3D;&gt; address) |
+| count | uint256 |
+| implementation | address |
 
-```solidity
-address implementation
-```
-### clones
 
-```solidity
-mapping(uint256 => address) clones
-```
-### count
 
-```solidity
-uint256 count
-```
 
 ## Events
 
@@ -34,38 +30,46 @@ uint256 count
 
 
 
-```solidity
+```solidity:no-line-numbers
 event TokenVestingCloneFactoryInitialized(address implementation)
 ```
 ### NewClone
 
 
 
-```solidity
+```solidity:no-line-numbers
 event NewClone(address _clone)
 ```
 
+
+
 ## Methods
 
-### constructor
+### Public
+
+#### constructor
 
 
 
-```solidity
+```solidity:no-line-numbers
 constructor() public
 ```
 
 
-### createTokenVesting
+
+### External
+
+#### createTokenVesting
 
 
-**Dev notes:** _Create function for a new TokenVesting clone_
+**Dev notes:** \
+Create function for a new TokenVesting clone
 
-```solidity
+```solidity:no-line-numbers
 function createTokenVesting(address __beneficiary, uint256 __start, uint256 __cliffDuration, uint256 __duration, uint256 __startPortfolioDeposits, bool __revocable, uint256 __firstReleasePercentage, uint256 __period, address __portfolio, address __owner) external
 ```
 
-#### parameters
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -81,20 +85,22 @@ function createTokenVesting(address __beneficiary, uint256 __start, uint256 __cl
 | __owner | address |  |
 
 
-### getClone
+#### getClone
 
 
-**Dev notes:** _Accessor method to get i-th clone_
+**Dev notes:** \
+Accessor method to get i-th clone
 
-```solidity
+```solidity:no-line-numbers
 function getClone(uint256 index) external view returns (address)
 ```
 
-#### parameters
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | index | uint256 | clone index |
+
 
 
 

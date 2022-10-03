@@ -1,3 +1,7 @@
+---
+headerDepth: 4
+---
+
 # Exchange
 
 **Abstract contract to be inherited in ExchangeMain and ExchangeSub**
@@ -15,10 +19,17 @@ TradePairs and Portfolio using DEFAULT_ADMIN_ROLE but not recommended because ce
 actions require a synchronized update to both Portfolio and TradePairs contracts.
 
 
+
 ## Variables
 
-| Var | Type |
+### Public
+
+| Name | Type |
 | --- | --- |
+| AUCTION_ADMIN_ROLE | bytes32 |
+
+
+
 
 ## Events
 
@@ -26,269 +37,276 @@ actions require a synchronized update to both Portfolio and TradePairs contracts
 
 
 
-```solidity
+```solidity:no-line-numbers
 event PortfolioSet(contract IPortfolio _oldPortfolio, contract IPortfolio _newPortfolio)
 ```
 ### RoleUpdated
 
 
 
-```solidity
+```solidity:no-line-numbers
 event RoleUpdated(string name, string actionName, bytes32 updatedRole, address updatedAddress)
 ```
 
+
+
 ## Methods
 
-### initialize
+### Public
+
+#### initialize
 
 Initializer for upgradeable contract.
 
 **Dev notes:** \
 Grants admin role to the deployer.
 
-```solidity
+```solidity:no-line-numbers
 function initialize() public virtual
 ```
 
 
-### addAdmin
+#### addAdmin
 
 Adds Default Admin role to the address
 
 
-```solidity
+```solidity:no-line-numbers
 function addAdmin(address _address) public virtual
 ```
 
-#### Arguments
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _address | address | address to add role to |
 
 
-### removeAdmin
+#### removeAdmin
 
 Removes Default Admin role from the address
 
 
-```solidity
+```solidity:no-line-numbers
 function removeAdmin(address _address) public virtual
 ```
 
-#### Arguments
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _address | address | address to remove role from |
 
 
-### isAdmin
+#### isAdmin
 
 
 
-```solidity
+```solidity:no-line-numbers
 function isAdmin(address _address) public view returns (bool)
 ```
 
-#### Arguments
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _address | address | address to check |
 
 
-#### Return values
+##### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | bool | bool    true if address has Default Admin role |
 
-### addAuctionAdmin
-
-Adds Auction Admin role to the address
-
-
-```solidity
-function addAuctionAdmin(address _address) external
-```
-
-#### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _address | address | address to add role to |
-
-
-### removeAuctionAdmin
-
-Removes Auction Admin role from the address
-
-
-```solidity
-function removeAuctionAdmin(address _address) external
-```
-
-#### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _address | address | address to remove role from |
-
-
-### isAuctionAdmin
-
-
-
-```solidity
-function isAuctionAdmin(address _address) external view returns (bool)
-```
-
-#### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _address | address | address to check |
-
-
-#### Return values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bool | bool  true if address has Auction Admin role |
-
-### setPortfolio
-
-Set portfolio address
-
-
-```solidity
-function setPortfolio(contract IPortfolio _portfolio) external
-```
-
-#### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _portfolio | contract IPortfolio | address of portfolio contract |
-
-
-### getPortfolio
-
-
-
-```solidity
-function getPortfolio() external view returns (contract IPortfolio)
-```
-
-
-#### Return values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | contract IPortfolio | IPortfolio  portfolio contract |
-
-### pausePortfolio
+#### pausePortfolio
 
 (Un)pause portfolio operations
 
 **Dev notes:** \
 This also includes deposit/withdraw processes
 
-```solidity
+```solidity:no-line-numbers
 function pausePortfolio(bool _pause) public
 ```
 
-#### Arguments
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _pause | bool | true to pause, false to unpause |
 
 
-### pauseForUpgrade
-
-Implemented in the child contract, as the logic differs.
-
-
-```solidity
-function pauseForUpgrade(bool _pause) external virtual
-```
-
-#### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _pause | bool | true to pause, false to unpause |
-
-
-### fallback
-
-
-
-```solidity
-fallback() external
-```
-
-
-### stringToBytes32
+#### stringToBytes32
 
 
 **Dev notes:** \
 utility function to convert string to bytes32
 
-```solidity
+```solidity:no-line-numbers
 function stringToBytes32(string _string) public pure returns (bytes32 result)
 ```
 
-#### Arguments
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _string | string | string to convert |
 
 
-#### Return values
+##### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | result | bytes32 | bytes32 representation of the string |
 
-### bytes32ToString
+#### bytes32ToString
 
 
 **Dev notes:** \
 utility function to convert bytes32 to string
 
-```solidity
+```solidity:no-line-numbers
 function bytes32ToString(bytes32 _bytes32) public pure returns (string)
 ```
 
-#### Arguments
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _bytes32 | bytes32 | bytes32 to convert |
 
 
-#### Return values
+##### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | string | string  string representation of the bytes32 |
 
-### addTrustedContract
+
+### External
+
+#### addAuctionAdmin
+
+Adds Auction Admin role to the address
+
+
+```solidity:no-line-numbers
+function addAuctionAdmin(address _address) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _address | address | address to add role to |
+
+
+#### removeAuctionAdmin
+
+Removes Auction Admin role from the address
+
+
+```solidity:no-line-numbers
+function removeAuctionAdmin(address _address) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _address | address | address to remove role from |
+
+
+#### isAuctionAdmin
+
+
+
+```solidity:no-line-numbers
+function isAuctionAdmin(address _address) external view returns (bool)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _address | address | address to check |
+
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | bool | bool  true if address has Auction Admin role |
+
+#### setPortfolio
+
+Set portfolio address
+
+
+```solidity:no-line-numbers
+function setPortfolio(contract IPortfolio _portfolio) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _portfolio | contract IPortfolio | address of portfolio contract |
+
+
+#### getPortfolio
+
+
+
+```solidity:no-line-numbers
+function getPortfolio() external view returns (contract IPortfolio)
+```
+
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | contract IPortfolio | IPortfolio  portfolio contract |
+
+#### pauseForUpgrade
+
+Implemented in the child contract, as the logic differs.
+
+
+```solidity:no-line-numbers
+function pauseForUpgrade(bool _pause) external virtual
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _pause | bool | true to pause, false to unpause |
+
+
+#### fallback
+
+
+
+```solidity:no-line-numbers
+fallback() external
+```
+
+
+#### addTrustedContract
 
 Adds trusted contract to portfolio
 
 **Dev notes:** \
 Exchange needs to be DEFAULT_ADMIN on the Portfolio
 
-```solidity
+```solidity:no-line-numbers
 function addTrustedContract(address _contract, string _name) external
 ```
 
-#### Arguments
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -296,59 +314,59 @@ function addTrustedContract(address _contract, string _name) external
 | _name | string | name of trusted contract |
 
 
-### isTrustedContract
+#### isTrustedContract
 
 
 **Dev notes:** \
 Exchange needs to be DEFAULT_ADMIN on the Portfolio
 
-```solidity
+```solidity:no-line-numbers
 function isTrustedContract(address _contract) external view returns (bool)
 ```
 
-#### Arguments
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _contract | address | address to check |
 
 
-#### Return values
+##### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | bool | bool  true if contract is trusted |
 
-### removeTrustedContract
+#### removeTrustedContract
 
 Removes trusted contract from portfolio
 
 **Dev notes:** \
 Exchange needs to be DEFAULT_ADMIN on the Portfolio
 
-```solidity
+```solidity:no-line-numbers
 function removeTrustedContract(address _contract) external
 ```
 
-#### Arguments
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _contract | address | address of trusted contract |
 
 
-### addToken
+#### addToken
 
 Add new token to portfolio
 
 **Dev notes:** \
 Exchange needs to be DEFAULT_ADMIN on the Portfolio
 
-```solidity
+```solidity:no-line-numbers
 function addToken(bytes32 _symbol, address _tokenaddress, uint32 _srcChainId, uint8 _decimals, enum ITradePairs.AuctionMode _mode) external
 ```
 
-#### Arguments
+##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -357,6 +375,7 @@ function addToken(bytes32 _symbol, address _tokenaddress, uint32 _srcChainId, ui
 | _srcChainId | uint32 | Source Chain id |
 | _decimals | uint8 | decimals of the token |
 | _mode | enum ITradePairs.AuctionMode | starting auction mode |
+
 
 
 

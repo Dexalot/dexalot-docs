@@ -284,16 +284,13 @@ https://api.dexalot-test.com/api/trading/pairs
 
 ### Get Deployment (Contract Addresses and ABI)
 
-GET
-/trading/deployment/params?contracttype=contract_type&returnAbi=true&env=
-sub-en
+GET /trading/deployment/params?contracttype=contract_type&returnAbi=true&env=sub-env
 
 *Note: the previous trading/deploymentabi endpoint has been retired*
 
 #### Description
 
-Returns the deployment details of the Dexalot contracts including their
-abi
+Returns the deployment details of the Dexalot contracts including their abi
 
 #### Query Parameters
 
@@ -456,7 +453,8 @@ https://api.dexalot-test.com/api/trading/errorcodes
         "A-CNET-01": "Airdrop: contract does not have enough tokens",
         "A-MPNV-01": "Airdrop: Merkle proof is not valid for claim",
         "A-MPNV-02": "Airdrop: Merkle proof is not valid for releasableAmount",
-        "A-NTAD-01": "Airdrop: no tokens are due for claim"
+        "A-NTAD-01": "Airdrop: no tokens are due for claim",
+        ...
     }
 }
 ```
@@ -648,7 +646,7 @@ export interface CandleDataRaw {
 
 #### OrderBooks
 
-Orderbooks can also be accessed directly from the blockchain itself. And
+OrderBooks can also be accessed directly from the blockchain itself. And
 orderbooks provided by the websocket interface will inherently have a
 small delay compared to its blockchain state.
 
@@ -774,7 +772,7 @@ the subnet.
 ### Order Enum Type Reference
 
 ```ts
-static Orderstatus: any = {
+static OrderStatus: any = {
     "0": "NEW",
     "1": "REJECTED", // not used
     "2": "PARTIAL",
@@ -786,13 +784,13 @@ static Orderstatus: any = {
 ```
 
 ```ts
-static Orderside: any = {
+static OrderSide: any = {
  "BUY": 0
  "SELL": 1 }
 ```
 
 ```ts
-static Ordertype1 = {
+static OrderType1 = {
 "0": "MARKET",
 "1": "LIMIT",
 "2": "STOP",     // not used

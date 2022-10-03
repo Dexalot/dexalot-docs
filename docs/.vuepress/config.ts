@@ -29,7 +29,7 @@ export default defineUserConfig({
     headerDepth: 4,
     repo: "https://github.com/Dexalot",
     docsRepo: "https://github.com/Dexalot/dexalot-docs",
-    docsBranch: "main",
+    docsBranch: "dev",
     docsDir: "docs",
     editLink: false,
     iconAssets: "iconfont",

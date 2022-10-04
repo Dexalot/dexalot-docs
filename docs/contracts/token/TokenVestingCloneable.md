@@ -47,6 +47,7 @@ headerDepth: 4
 ```solidity:no-line-numbers
 event TokensReleased(address token, uint256 amount)
 ```
+
 ### TokenVestingRevoked
 
 
@@ -54,6 +55,7 @@ event TokensReleased(address token, uint256 amount)
 ```solidity:no-line-numbers
 event TokenVestingRevoked(address token)
 ```
+
 ### PortfolioChanged
 
 
@@ -61,6 +63,7 @@ event TokenVestingRevoked(address token)
 ```solidity:no-line-numbers
 event PortfolioChanged(address portfolio)
 ```
+
 
 
 

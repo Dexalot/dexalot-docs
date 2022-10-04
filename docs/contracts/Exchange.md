@@ -40,6 +40,7 @@ actions require a synchronized update to both Portfolio and TradePairs contracts
 ```solidity:no-line-numbers
 event PortfolioSet(contract IPortfolio _oldPortfolio, contract IPortfolio _newPortfolio)
 ```
+
 ### RoleUpdated
 
 
@@ -47,6 +48,7 @@ event PortfolioSet(contract IPortfolio _oldPortfolio, contract IPortfolio _newPo
 ```solidity:no-line-numbers
 event RoleUpdated(string name, string actionName, bytes32 updatedRole, address updatedAddress)
 ```
+
 
 
 

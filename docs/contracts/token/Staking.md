@@ -49,6 +49,7 @@ headerDepth: 4
 ```solidity:no-line-numbers
 event Staked(address user, uint256 amount)
 ```
+
 ### Withdrawn
 
 
@@ -56,6 +57,7 @@ event Staked(address user, uint256 amount)
 ```solidity:no-line-numbers
 event Withdrawn(address user, uint256 amount)
 ```
+
 ### Restaked
 
 
@@ -63,6 +65,7 @@ event Withdrawn(address user, uint256 amount)
 ```solidity:no-line-numbers
 event Restaked(address user, uint256 reward)
 ```
+
 ### RewardPaid
 
 
@@ -70,6 +73,7 @@ event Restaked(address user, uint256 reward)
 ```solidity:no-line-numbers
 event RewardPaid(address user, uint256 reward)
 ```
+
 ### RewardRateUpdated
 
 
@@ -77,6 +81,7 @@ event RewardPaid(address user, uint256 reward)
 ```solidity:no-line-numbers
 event RewardRateUpdated(uint256 rate)
 ```
+
 ### RewardsDurationUpdated
 
 
@@ -84,6 +89,7 @@ event RewardRateUpdated(uint256 rate)
 ```solidity:no-line-numbers
 event RewardsDurationUpdated(uint256 rewardsDuration)
 ```
+
 ### FundsRecovered
 
 
@@ -91,6 +97,7 @@ event RewardsDurationUpdated(uint256 rewardsDuration)
 ```solidity:no-line-numbers
 event FundsRecovered(uint256 amount, address token)
 ```
+
 
 ## Modifiers
 

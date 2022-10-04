@@ -144,63 +144,73 @@ enum AuctionMode {
 ```solidity:no-line-numbers
 event NewTradePair(uint8 version, bytes32 pair, uint8 basedisplaydecimals, uint8 quotedisplaydecimals, uint256 mintradeamount, uint256 maxtradeamount)
 ```
+
 ### OrderStatusChanged
 
 Emits a given order's latest state
 
 **Dev notes:** \
-The details of the emitted event is as follows: \
-`version`  event version \
-`traderaddress`  traders’s wallet (immutable) \
-`pair`  traded pair. ie. ALOT/AVAX in bytes32 (immutable) \
-`orderId`  unique order id assigned by the contract (immutable) \
-`clientOrderId`  client order id given by the sender of the order as a reference (immutable) \
-`price` price of the order entered by the trader. (0 if market order) (immutable) \
-`totalamount`   cumulative amount in quote currency. ⇒ price* quantityfilled . If
-multiple partial fills , the new partial fill price*quantity is added to the
-current value in the field. Average execution price can be quickly
-calculated by totalamount/quantityfilled regardless of the number of
+If there are multiple partial fills, the new partial fill `price * quantity`
+is added to the current value in `totalamount`. Average execution price can be
+quickly calculated by `totalamount / quantityfilled` regardless of the number of
 partial fills at different prices \
-`quantity`  order quantity (immutable) \
-`side` Order side      See #Side (immutable) \
-`type1`  Order Type1   See #Type1 (immutable) \
-`type2`  Order Type2   See #Type2 (immutable) \
-`status` Order Status  See #Status \
-`quantityfilled`  cumulative quantity filled \
-`totalfee` cumulative fee paid for the order (total fee is always in terms of
-received(incoming) currency. ie. if Buy ALOT/AVAX, fee is paid in ALOT, if Sell
-ALOT/AVAX , fee is paid in AVAX \
+`totalfee` is always in terms of received(incoming) currency. ie. if Buy ALOT/AVAX,
+fee is paid in ALOT, if Sell ALOT/AVAX , fee is paid in AVAX \
 **Note**: The execution price will always be equal or better than the Order price.
 
 ```solidity:no-line-numbers
 event OrderStatusChanged(uint8 version, address traderaddress, bytes32 pair, bytes32 orderId, bytes32 clientOrderId, uint256 price, uint256 totalamount, uint256 quantity, enum ITradePairs.Side side, enum ITradePairs.Type1 type1, enum ITradePairs.Type2 type2, enum ITradePairs.Status status, uint256 quantityfilled, uint256 totalfee)
 ```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| version | uint8 | event version |
+| traderaddress | address | traders’s wallet (immutable) |
+| pair | bytes32 | traded pair. ie. ALOT/AVAX in bytes32 (immutable) |
+| orderId | bytes32 | unique order id assigned by the contract (immutable) |
+| clientOrderId | bytes32 | client order id given by the sender of the order as a reference (immutable) |
+| price | uint256 | price of the order entered by the trader. (0 if market order) (immutable) |
+| totalamount | uint256 | cumulative amount in quote currency: `price * quantityfilled` |
+| quantity | uint256 | order quantity (immutable) |
+| side | enum ITradePairs.Side | Order Side  See #Side (immutable) |
+| type1 | enum ITradePairs.Type1 | Order Type1  See #Type1 (immutable) |
+| type2 | enum ITradePairs.Type2 | Order Type2  See #Type2 (immutable) |
+| status | enum ITradePairs.Status | Order Status See #Status |
+| quantityfilled | uint256 | cumulative quantity filled |
+| totalfee | uint256 | cumulative fee paid for the order |
 ### Executed
 
 Emits the Executed/Trade Event showing
 
 **Dev notes:** \
-The details of the emitted event is as follows: \
-`version`  event version \
-`pair`  traded pair. ie. ALOT/AVAX in bytes32 \
-`price`  executed price \
-`quantity`  executed quantity \
-`makerOrderId`  Maker Order id \
-`takerOrderId`  Taker Order id \
-`mlastFee`  fee paid by maker \
-`tlastFee`  fee paid by taker \
-`takerSide`  Side of the taker order. 0 - BUY, 1- SELL (Note: This can be used to identify
-the fee UNITs. If takerSide = 1, then the fee is paid by the Maker in Base
-Currency and the fee paid by the taker in Quote currency. If takerSide= 0
-then the fee is paid by the Maker in Quote Currency and the fee is paid by
-the taker in Base currency \
-`execId`  Unique trade id (execution id) assigned by the contract \
-`addressMaker`  maker traderaddress \
-`addressTaker`  taker traderaddress \
+The side of the taker order can be used to identify
+the fee unit. If takerSide = 1, then the fee is paid by the maker in base
+currency and the fee paid by the taker in quote currency. If takerSide = 0
+then the fee is paid by the maker in quote currency and the fee is paid by
+the taker in base currency
 
 ```solidity:no-line-numbers
 event Executed(uint8 version, bytes32 pair, uint256 price, uint256 quantity, bytes32 makerOrder, bytes32 takerOrder, uint256 feeMaker, uint256 feeTaker, enum ITradePairs.Side takerSide, uint256 execId, address addressMaker, address addressTaker)
 ```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| version | uint8 | event version |
+| pair | bytes32 | traded pair. ie. ALOT/AVAX in bytes32 |
+| price | uint256 | executed price |
+| quantity | uint256 | executed quantity |
+| makerOrder | bytes32 | maker Order id |
+| takerOrder | bytes32 | taker Order id |
+| feeMaker | uint256 | fee paid by maker |
+| feeTaker | uint256 | fee paid by taker |
+| takerSide | enum ITradePairs.Side | Side of the taker order. 0 - BUY, 1- SELL |
+| execId | uint256 | unique trade id (execution id) assigned by the contract |
+| addressMaker | address | maker traderaddress |
+| addressTaker | address | taker traderaddress |
 ### ParameterUpdated
 
 
@@ -208,6 +218,7 @@ event Executed(uint8 version, bytes32 pair, uint256 price, uint256 quantity, byt
 ```solidity:no-line-numbers
 event ParameterUpdated(uint8 version, bytes32 pair, string param, uint256 oldValue, uint256 newValue)
 ```
+
 
 
 

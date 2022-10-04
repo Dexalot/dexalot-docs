@@ -39,6 +39,7 @@ It implements delayedTransfers as well as volume caps per epoch per token
 ```solidity:no-line-numbers
 event DelayedTransferAdded(bytes32 id)
 ```
+
 ### DelayedTransferExecuted
 
 
@@ -46,6 +47,7 @@ event DelayedTransferAdded(bytes32 id)
 ```solidity:no-line-numbers
 event DelayedTransferExecuted(bytes32 id, struct IPortfolio.XFER xfer)
 ```
+
 ### DelayPeriodUpdated
 
 
@@ -53,6 +55,7 @@ event DelayedTransferExecuted(bytes32 id, struct IPortfolio.XFER xfer)
 ```solidity:no-line-numbers
 event DelayPeriodUpdated(uint256 period)
 ```
+
 ### DelayThresholdUpdated
 
 
@@ -60,6 +63,7 @@ event DelayPeriodUpdated(uint256 period)
 ```solidity:no-line-numbers
 event DelayThresholdUpdated(bytes32 symbol, uint256 threshold)
 ```
+
 ### EpochLengthUpdated
 
 
@@ -67,6 +71,7 @@ event DelayThresholdUpdated(bytes32 symbol, uint256 threshold)
 ```solidity:no-line-numbers
 event EpochLengthUpdated(uint256 length)
 ```
+
 ### EpochVolumeUpdated
 
 
@@ -74,6 +79,7 @@ event EpochLengthUpdated(uint256 length)
 ```solidity:no-line-numbers
 event EpochVolumeUpdated(bytes32 token, uint256 cap)
 ```
+
 
 
 

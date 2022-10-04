@@ -59,6 +59,7 @@ ExchangeSub needs to have DEFAULT_ADMIN_ROLE on this contract.
 ```solidity:no-line-numbers
 event ParameterUpdated(bytes32 pair, string _param, uint256 _oldValue, uint256 _newValue)
 ```
+
 ### AddressSet
 
 
@@ -66,6 +67,7 @@ event ParameterUpdated(bytes32 pair, string _param, uint256 _oldValue, uint256 _
 ```solidity:no-line-numbers
 event AddressSet(string name, string actionName, address oldAddress, address newAddress)
 ```
+
 ### RoleUpdated
 
 
@@ -73,6 +75,7 @@ event AddressSet(string name, string actionName, address oldAddress, address new
 ```solidity:no-line-numbers
 event RoleUpdated(string name, string actionName, bytes32 updatedRole, address updatedAddress)
 ```
+
 
 
 

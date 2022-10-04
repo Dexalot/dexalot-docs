@@ -44,6 +44,7 @@ event Claimed(address claimer, uint256 amount, uint256 timestamp)
 
 
 
+
 ## Methods
 
 ### Public

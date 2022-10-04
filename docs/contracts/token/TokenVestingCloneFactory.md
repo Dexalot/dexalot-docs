@@ -33,6 +33,7 @@ headerDepth: 4
 ```solidity:no-line-numbers
 event TokenVestingCloneFactoryInitialized(address implementation)
 ```
+
 ### NewClone
 
 
@@ -40,6 +41,7 @@ event TokenVestingCloneFactoryInitialized(address implementation)
 ```solidity:no-line-numbers
 event NewClone(address _clone)
 ```
+
 
 
 

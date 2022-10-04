@@ -44,6 +44,7 @@ their earned Dexalot Incentive Program (DIP) rewards.
 ```solidity:no-line-numbers
 event Claimed(address claimer, uint32 tokenIds, uint128[] amounts, uint256 timestamp)
 ```
+
 ### AddRewardToken
 
 
@@ -51,6 +52,7 @@ event Claimed(address claimer, uint32 tokenIds, uint128[] amounts, uint256 times
 ```solidity:no-line-numbers
 event AddRewardToken(contract IERC20Upgradeable token, uint32 tokenId, uint256 timestamp)
 ```
+
 
 
 

@@ -36,6 +36,7 @@ event CoinFlipped(uint80 roundid, int256 price, bool outcome)
 
 
 
+
 ## Methods
 
 ### Public

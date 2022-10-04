@@ -40,6 +40,7 @@ ExchangeSub is DEFAULT_ADMIN on both PortfolioSub and TradePairs contracts.
 ```solidity:no-line-numbers
 event TradePairsSet(contract ITradePairs _oldTradePairs, contract ITradePairs _newTradePairs)
 ```
+
 ### AuctionMatchFinished
 
 
@@ -47,6 +48,7 @@ event TradePairsSet(contract ITradePairs _oldTradePairs, contract ITradePairs _n
 ```solidity:no-line-numbers
 event AuctionMatchFinished(bytes32 pair)
 ```
+
 
 
 

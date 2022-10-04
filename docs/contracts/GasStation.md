@@ -35,6 +35,7 @@ It receives native coin and only sends out to the low balanced users via Portfol
 ```solidity:no-line-numbers
 event GasAmountChanged(uint256 amount)
 ```
+
 ### GasRequested
 
 
@@ -42,6 +43,7 @@ event GasAmountChanged(uint256 amount)
 ```solidity:no-line-numbers
 event GasRequested(address to, uint256 amount)
 ```
+
 
 
 

@@ -211,7 +211,23 @@ export default defineUserConfig({
       {
         text: "Trading API",
         icon: "api",
-        link: "apiv2"
+        prefix: "apiv2/",
+        link: "apiv2",
+        collapsable: true,
+        children: [
+          {
+            text: "RestApi",
+            link: "RestApi"
+          },
+          {
+            text: "Contracts",
+            link: "Contracts"
+          },
+          {
+            text: "Websocket",
+            link: "Websocket"
+          },
+        ]
       },
 
       {

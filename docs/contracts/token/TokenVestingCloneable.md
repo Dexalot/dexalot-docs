@@ -6,10 +6,6 @@ headerDepth: 4
 
 **Flexible, cloneable token vesting contract**
 
-
-
-
-
 ## Variables
 
 ### Public
@@ -17,8 +13,6 @@ headerDepth: 4
 | Name | Type |
 | --- | --- |
 | VERSION | bytes32 |
-
-
 
 ### Private
 
@@ -31,7 +25,7 @@ headerDepth: 4
 | _startPortfolioDeposits | uint256 |
 | _period | uint256 |
 | _revocable | bool |
-| _portfolio | IPortfolio |
+| _portfolio | contract IPortfolio |
 | _totalSupplyBeforeRevoke | uint256 |
 | _firstReleasePercentage | uint256 |
 | _releasedPercentage | mapping(address &#x3D;&gt; uint256) |
@@ -42,15 +36,11 @@ headerDepth: 4
 
 ### TokensReleased
 
-
-
 ```solidity:no-line-numbers
 event TokensReleased(address token, uint256 amount)
 ```
 
 ### TokenVestingRevoked
-
-
 
 ```solidity:no-line-numbers
 event TokenVestingRevoked(address token)
@@ -58,14 +48,9 @@ event TokenVestingRevoked(address token)
 
 ### PortfolioChanged
 
-
-
 ```solidity:no-line-numbers
 event PortfolioChanged(address portfolio)
 ```
-
-
-
 
 ## Methods
 
@@ -102,11 +87,9 @@ function initialize(address __beneficiary, uint256 __start, uint256 __cliffDurat
 | __portfolio | address | address of portfolio |
 | __owner | address |  |
 
-
 #### canFundPortfolio
 
 beneficiary check is not for access control, it is just for convenience in frontend
-
 
 ```solidity:no-line-numbers
 function canFundPortfolio(address __beneficiary) public view returns (bool)
@@ -118,24 +101,19 @@ function canFundPortfolio(address __beneficiary) public view returns (bool)
 | ---- | ---- | ----------- |
 | __beneficiary | address | address of beneficiary. |
 
-
 ##### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | bool | true if the vesting is funded to the portfolio. |
 
-
 ### External
 
 #### beneficiary
 
-
-
 ```solidity:no-line-numbers
 function beneficiary() external view returns (address)
 ```
-
 
 ##### Return values
 
@@ -145,12 +123,9 @@ function beneficiary() external view returns (address)
 
 #### cliff
 
-
-
 ```solidity:no-line-numbers
 function cliff() external view returns (uint256)
 ```
-
 
 ##### Return values
 
@@ -160,12 +135,9 @@ function cliff() external view returns (uint256)
 
 #### start
 
-
-
 ```solidity:no-line-numbers
 function start() external view returns (uint256)
 ```
-
 
 ##### Return values
 
@@ -175,12 +147,9 @@ function start() external view returns (uint256)
 
 #### duration
 
-
-
 ```solidity:no-line-numbers
 function duration() external view returns (uint256)
 ```
-
 
 ##### Return values
 
@@ -190,12 +159,9 @@ function duration() external view returns (uint256)
 
 #### startPortfolioDeposits
 
-
-
 ```solidity:no-line-numbers
 function startPortfolioDeposits() external view returns (uint256)
 ```
-
 
 ##### Return values
 
@@ -205,12 +171,9 @@ function startPortfolioDeposits() external view returns (uint256)
 
 #### revocable
 
-
-
 ```solidity:no-line-numbers
 function revocable() external view returns (bool)
 ```
-
 
 ##### Return values
 
@@ -220,12 +183,9 @@ function revocable() external view returns (bool)
 
 #### period
 
-
-
 ```solidity:no-line-numbers
 function period() external view returns (uint256)
 ```
-
 
 ##### Return values
 
@@ -234,8 +194,6 @@ function period() external view returns (uint256)
 | [0] | uint256 | _period duration in seconds for claim periods. |
 
 #### released
-
-
 
 ```solidity:no-line-numbers
 function released(address token) external view returns (uint256)
@@ -247,7 +205,6 @@ function released(address token) external view returns (uint256)
 | ---- | ---- | ----------- |
 | token | address | ERC20 token which is being vested. |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -255,8 +212,6 @@ function released(address token) external view returns (uint256)
 | [0] | uint256 | _released amount of the token released. |
 
 #### revoked
-
-
 
 ```solidity:no-line-numbers
 function revoked(address token) external view returns (bool)
@@ -268,7 +223,6 @@ function revoked(address token) external view returns (bool)
 | ---- | ---- | ----------- |
 | token | address | ERC20 token which is being vested. |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -277,12 +231,9 @@ function revoked(address token) external view returns (bool)
 
 #### getPercentage
 
-
-
 ```solidity:no-line-numbers
 function getPercentage() external view returns (uint256)
 ```
-
 
 ##### Return values
 
@@ -293,7 +244,6 @@ function getPercentage() external view returns (uint256)
 #### canFundWallet
 
 beneficiary check is not for access control, it is just for convenience in frontend
-
 
 ```solidity:no-line-numbers
 function canFundWallet(contract IERC20MetadataUpgradeable token, address __beneficiary) external view returns (bool)
@@ -306,7 +256,6 @@ function canFundWallet(contract IERC20MetadataUpgradeable token, address __benef
 | token | contract IERC20MetadataUpgradeable | ERC20 token which is being vested. |
 | __beneficiary | address | address of beneficiary. |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -315,12 +264,9 @@ function canFundWallet(contract IERC20MetadataUpgradeable token, address __benef
 
 #### getPortfolio
 
-
-
 ```solidity:no-line-numbers
 function getPortfolio() external view returns (address)
 ```
-
 
 ##### Return values
 
@@ -329,7 +275,6 @@ function getPortfolio() external view returns (address)
 | [0] | address | _portfolio portfolio address for funding |
 
 #### setPortfolio
-
 
 **Dev notes:** \
 sets the address for the portfolio.
@@ -344,11 +289,9 @@ function setPortfolio(address __portfolio) external
 | ---- | ---- | ----------- |
 | __portfolio | address | address of portfolio |
 
-
 #### release
 
 Transfers vested tokens to beneficiary.
-
 
 ```solidity:no-line-numbers
 function release(contract IERC20MetadataUpgradeable token) external
@@ -359,7 +302,6 @@ function release(contract IERC20MetadataUpgradeable token) external
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | token | contract IERC20MetadataUpgradeable | ERC20 token which is being vested. |
-
 
 #### releaseToPortfolio
 
@@ -378,7 +320,6 @@ function releaseToPortfolio(contract IERC20MetadataUpgradeable token) external
 | ---- | ---- | ----------- |
 | token | contract IERC20MetadataUpgradeable | ERC20 token which is being vested. |
 
-
 #### revoke
 
 Tokens already vested remain in the contract, the rest are returned to the owner.
@@ -396,9 +337,7 @@ function revoke(contract IERC20MetadataUpgradeable token) external
 | ---- | ---- | ----------- |
 | token | contract IERC20MetadataUpgradeable | ERC20 token which is being vested. |
 
-
 #### vestedAmount
-
 
 **Dev notes:** \
 Returns the amount for the amount remaining after the initial percentage vested at TGE.
@@ -413,9 +352,7 @@ function vestedAmount(contract IERC20MetadataUpgradeable token) external view re
 | ---- | ---- | ----------- |
 | token | contract IERC20MetadataUpgradeable | ERC20 token which is being vested. |
 
-
 #### releasedPercentageAmount
-
 
 **Dev notes:** \
 Returns the amount that has been released based on the initial percentage vested at TGE.
@@ -430,9 +367,7 @@ function releasedPercentageAmount(contract IERC20MetadataUpgradeable token) exte
 | ---- | ---- | ----------- |
 | token | contract IERC20MetadataUpgradeable | ERC20 token which is being vested. |
 
-
 #### vestedPercentageAmount
-
 
 **Dev notes:** \
 Returns the amount that is releaseable based on the initial percentage vested  at TGE.
@@ -447,13 +382,9 @@ function vestedPercentageAmount(contract IERC20MetadataUpgradeable token) extern
 | ---- | ---- | ----------- |
 | token | contract IERC20MetadataUpgradeable | ERC20 token which is being vested. |
 
-
-
-
 ### Private
 
 #### _releasableAmount
-
 
 **Dev notes:** \
 Calculates the amount that has already vested but hasn't been released yet.
@@ -467,7 +398,6 @@ function _releasableAmount(contract IERC20MetadataUpgradeable token) private vie
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | token | contract IERC20MetadataUpgradeable | ERC20 token which is being vested. |
-
 
 #### _vestedAmount
 
@@ -487,9 +417,7 @@ function _vestedAmount(contract IERC20MetadataUpgradeable token) private view re
 | ---- | ---- | ----------- |
 | token | contract IERC20MetadataUpgradeable | ERC20 token which is being vested. |
 
-
 #### _vestedByPercentage
-
 
 **Dev notes:** \
 Calculates the amount vested at TGE.
@@ -503,5 +431,4 @@ function _vestedByPercentage(contract IERC20MetadataUpgradeable token) private v
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | token | contract IERC20MetadataUpgradeable | ERC20 token which is being vested. |
-
 

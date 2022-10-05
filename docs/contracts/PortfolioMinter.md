@@ -6,11 +6,8 @@ headerDepth: 4
 
 **Intermediate contract to mint native tokens via NativeTokenMinter precompile.**
 
-
 **Dev notes:** \
 Only this contract is used to mint native tokens via NativeTokenMinter precompile.
-
-
 
 ## Variables
 
@@ -23,26 +20,19 @@ Only this contract is used to mint native tokens via NativeTokenMinter precompil
 | VERSION | bytes32 |
 | totalNativeMinted | uint256 |
 
-
-
 ### Private
 
 | Name | Type |
 | --- | --- |
-| nativeMinter | NativeMinterInterface |
+| nativeMinter | contract NativeMinterInterface |
 
 ## Events
 
 ### Mint
 
-
-
 ```solidity:no-line-numbers
 event Mint(address to, uint256 amount)
 ```
-
-
-
 
 ## Methods
 
@@ -66,8 +56,6 @@ function initialize(address _portfolio, address _nativeMinter) public
 | _portfolio | address | Address of the portfolioSub |
 | _nativeMinter | address | Address of the NativeMinter precompile |
 
-
-
 ### External
 
 #### pause
@@ -81,7 +69,6 @@ Only pauser can pause
 function pause() external
 ```
 
-
 #### unpause
 
 Unpauses minting
@@ -93,15 +80,11 @@ Only pauser can unpause
 function unpause() external
 ```
 
-
 #### getNativeMinter
-
-
 
 ```solidity:no-line-numbers
 function getNativeMinter() external view returns (address)
 ```
-
 
 ##### Return values
 
@@ -127,15 +110,9 @@ function mint(address _to, uint256 _amount) external virtual
 | _to | address | Address to mint to |
 | _amount | uint256 | Amount to mint |
 
-
 #### fallback
-
-
 
 ```solidity:no-line-numbers
 fallback() external
 ```
-
-
-
 

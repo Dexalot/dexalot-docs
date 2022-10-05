@@ -11,8 +11,6 @@ This contract is the mainnet version of the Dexalot Exchange.
 **Dev notes:** \
 ExchangeMain is DEFAULT_ADMIN to PortfolioMain contract.
 
-
-
 ## Variables
 
 ### Public
@@ -21,21 +19,19 @@ ExchangeMain is DEFAULT_ADMIN to PortfolioMain contract.
 | --- | --- |
 | VERSION | bytes32 |
 
+### Internal
 
-
+| Name | Type |
+| --- | --- |
+| priceFeed | contract AggregatorV3Interface |
 
 ## Events
 
 ### CoinFlipped
 
-
-
 ```solidity:no-line-numbers
 event CoinFlipped(uint80 roundid, int256 price, bool outcome)
 ```
-
-
-
 
 ## Methods
 
@@ -52,16 +48,13 @@ Sets Chainlink price feed address.
 function initialize() public
 ```
 
-
 #### isHead
 
 returns true/false = head/tail based on the latest AVAX/USD price
 
-
 ```solidity:no-line-numbers
 function isHead() public view returns (uint80 r, int256 p, bool o)
 ```
-
 
 ##### Return values
 
@@ -71,13 +64,11 @@ function isHead() public view returns (uint80 r, int256 p, bool o)
 | p | int256 | price of AVAX for this round id |
 | o | bool | outcome of the coin flip |
 
-
 ### External
 
 #### pauseForUpgrade
 
 (Un)pauses portoflioMain and portfolioBridgeMain for upgrade
-
 
 ```solidity:no-line-numbers
 function pauseForUpgrade(bool _pause) external
@@ -89,11 +80,9 @@ function pauseForUpgrade(bool _pause) external
 | ---- | ---- | ----------- |
 | _pause | bool | true to pause, false to unpause |
 
-
 #### setPriceFeed
 
 Sets Chainlink price feed address.
-
 
 ```solidity:no-line-numbers
 function setPriceFeed(address _address) external
@@ -105,15 +94,11 @@ function setPriceFeed(address _address) external
 | ---- | ---- | ----------- |
 | _address | address | address of the price feed contract |
 
-
 #### getPriceFeed
-
-
 
 ```solidity:no-line-numbers
 function getPriceFeed() external view returns (contract AggregatorV3Interface)
 ```
-
 
 ##### Return values
 
@@ -125,11 +110,7 @@ function getPriceFeed() external view returns (contract AggregatorV3Interface)
 
 emits coin flip results based on the latest AVAX/USD price
 
-
 ```solidity:no-line-numbers
 function flipCoin() external
 ```
-
-
-
 

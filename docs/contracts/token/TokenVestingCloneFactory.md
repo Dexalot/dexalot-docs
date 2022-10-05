@@ -6,10 +6,6 @@ headerDepth: 4
 
 **Clone factory for TokenVestingCloneable**
 
-
-
-
-
 ## Variables
 
 ### Public
@@ -21,14 +17,9 @@ headerDepth: 4
 | count | uint256 |
 | implementation | address |
 
-
-
-
 ## Events
 
 ### TokenVestingCloneFactoryInitialized
-
-
 
 ```solidity:no-line-numbers
 event TokenVestingCloneFactoryInitialized(address implementation)
@@ -36,14 +27,9 @@ event TokenVestingCloneFactoryInitialized(address implementation)
 
 ### NewClone
 
-
-
 ```solidity:no-line-numbers
 event NewClone(address _clone)
 ```
-
-
-
 
 ## Methods
 
@@ -51,18 +37,13 @@ event NewClone(address _clone)
 
 #### constructor
 
-
-
 ```solidity:no-line-numbers
 constructor() public
 ```
 
-
-
 ### External
 
 #### createTokenVesting
-
 
 **Dev notes:** \
 Create function for a new TokenVesting clone
@@ -86,9 +67,7 @@ function createTokenVesting(address __beneficiary, uint256 __start, uint256 __cl
 | __portfolio | address | address of portfolio |
 | __owner | address |  |
 
-
 #### getClone
-
 
 **Dev notes:** \
 Accessor method to get i-th clone
@@ -102,7 +81,4 @@ function getClone(uint256 index) external view returns (address)
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | index | uint256 | clone index |
-
-
-
 

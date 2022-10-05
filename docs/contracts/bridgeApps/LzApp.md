@@ -33,14 +33,12 @@ https://github.com/LayerZero-Labs/solidity-examples/blob/main/contracts/lzApp/Lz
 
 ```solidity:no-line-numbers
 event LzSetTrustedRemote(uint16 remoteChainId, bytes path)
-```
 
 ### LzSetTrustedRemoteAddress
 
 ```solidity:no-line-numbers
 event LzSetTrustedRemoteAddress(uint16 remoteChainId, bytes remoteAddress)
 ```
-
 
 ## Methods
 

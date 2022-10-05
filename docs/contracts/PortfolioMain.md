@@ -6,12 +6,9 @@ headerDepth: 4
 
 **Mainnet Portfolio**
 
-
 **Dev notes:** \
 This contract prevalidates the PortfolioSub checks and allows deposits to be sent to the subnet.
 ExchangeMain needs to have DEFAULT_ADMIN_ROLE on PortfolioMain.
-
-
 
 ## Variables
 
@@ -22,12 +19,6 @@ ExchangeMain needs to have DEFAULT_ADMIN_ROLE on PortfolioMain.
 | VERSION | bytes32 |
 | bridgeFeeCollected | mapping(bytes32 &#x3D;&gt; uint256) |
 | tokenMap | mapping(bytes32 &#x3D;&gt; contract IERC20Upgradeable) |
-
-
-
-
-
-
 
 ## Methods
 
@@ -51,14 +42,11 @@ function initialize(bytes32 _native, uint32 _chainId) public
 | _native | bytes32 | Native token of the network. AVAX in mainnet, ALOT in subnet. |
 | _chainId | uint32 |  |
 
-
-
 ### External
 
 #### getToken
 
 Frontend function to get the ERC20 token
-
 
 ```solidity:no-line-numbers
 function getToken(bytes32 _symbol) external view returns (contract IERC20Upgradeable)
@@ -70,7 +58,6 @@ function getToken(bytes32 _symbol) external view returns (contract IERC20Upgrade
 | ---- | ---- | ----------- |
 | _symbol | bytes32 | symbol of the token |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -78,8 +65,6 @@ function getToken(bytes32 _symbol) external view returns (contract IERC20Upgrade
 | [0] | contract IERC20Upgradeable | IERC20Upgradeable  ERC20 token |
 
 #### depositNative
-
-
 
 ```solidity:no-line-numbers
 function depositNative(address payable _from, enum IPortfolioBridge.BridgeProvider _bridge) external payable
@@ -92,10 +77,7 @@ function depositNative(address payable _from, enum IPortfolioBridge.BridgeProvid
 | _from | address payable | Address of the depositor |
 | _bridge | enum IPortfolioBridge.BridgeProvider | Enum for bridge type |
 
-
 #### depositToken
-
-
 
 ```solidity:no-line-numbers
 function depositToken(address _from, bytes32 _symbol, uint256 _quantity, enum IPortfolioBridge.BridgeProvider _bridge) external
@@ -109,7 +91,6 @@ function depositToken(address _from, bytes32 _symbol, uint256 _quantity, enum IP
 | _symbol | bytes32 | Symbol of the token |
 | _quantity | uint256 | Amount of token to deposit |
 | _bridge | enum IPortfolioBridge.BridgeProvider | Enum for bridge type |
-
 
 #### depositTokenFromContract
 
@@ -130,7 +111,6 @@ function depositTokenFromContract(address _from, bytes32 _symbol, uint256 _quant
 | _from | address | Address of the depositor |
 | _symbol | bytes32 | Symbol of the token |
 | _quantity | uint256 | Amount of token to deposit |
-
 
 #### processXFerPayload
 
@@ -155,7 +135,6 @@ function processXFerPayload(address _trader, bytes32 _symbol, uint256 _quantity,
 | _quantity | uint256 | Amount of token to be withdrawn |
 | _transaction | enum IPortfolio.Tx | Transaction type |
 
-
 #### lzRecoverPayload
 
 Recovers the stucked message from the LZ bridge, returns the funds to the depositor/withdrawer
@@ -173,7 +152,6 @@ function lzRecoverPayload(bytes _payload) external
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _payload | bytes | Payload of the message |
-
 
 #### collectBridgeFees
 
@@ -193,7 +171,6 @@ function collectBridgeFees(bytes32[] _symbols) external
 | ---- | ---- | ----------- |
 | _symbols | bytes32[] | Array of symbols of tokens to withdraw |
 
-
 #### collectNativeBridgeFees
 
 Allows the owner to withdraw the fees collected in AVAX from the bridge
@@ -206,9 +183,7 @@ Collect fees to pay for the bridge as native token
 function collectNativeBridgeFees() external
 ```
 
-
 #### updateTransferFeeRate
-
 
 **Dev notes:** \
 Only valid for the subnet. Implemented with an empty block here.
@@ -217,9 +192,7 @@ Only valid for the subnet. Implemented with an empty block here.
 function updateTransferFeeRate(uint256 _rate, enum IPortfolio.Tx _rateType) external
 ```
 
-
 #### setAuctionMode
-
 
 **Dev notes:** \
 Only valid for the subnet. Implemented with an empty block here.
@@ -228,9 +201,7 @@ Only valid for the subnet. Implemented with an empty block here.
 function setAuctionMode(bytes32 _symbol, enum ITradePairs.AuctionMode _mode) external
 ```
 
-
 #### withdrawNative
-
 
 **Dev notes:** \
 Only valid for the subnet. Implemented with an empty block here.
@@ -239,9 +210,7 @@ Only valid for the subnet. Implemented with an empty block here.
 function withdrawNative(address payable _to, uint256 _quantity) external
 ```
 
-
 #### withdrawToken
-
 
 **Dev notes:** \
 Only valid for the subnet. Implemented with an empty block here.
@@ -250,9 +219,7 @@ Only valid for the subnet. Implemented with an empty block here.
 function withdrawToken(address _to, bytes32 _symbol, uint256 _quantity, enum IPortfolioBridge.BridgeProvider) external
 ```
 
-
 #### adjustAvailable
-
 
 **Dev notes:** \
 Only valid for the subnet. Implemented with an empty block here.
@@ -261,9 +228,7 @@ Only valid for the subnet. Implemented with an empty block here.
 function adjustAvailable(enum IPortfolio.Tx _transaction, address _trader, bytes32 _symbol, uint256 _amount) external
 ```
 
-
 #### addExecution
-
 
 **Dev notes:** \
 Only valid for the subnet. Implemented with an empty block here.
@@ -272,14 +237,11 @@ Only valid for the subnet. Implemented with an empty block here.
 function addExecution(enum ITradePairs.Side _makerSide, address _makerAddr, address _takerAddr, bytes32 _baseSymbol, bytes32 _quoteSymbol, uint256 _baseAmount, uint256 _quoteAmount, uint256 _makerfeeCharged, uint256 _takerfeeCharged) external
 ```
 
-
-
 ### Internal
 
 #### addIERC20
 
 Add IERC20 token to the tokenMap. Only in the mainnet
-
 
 ```solidity:no-line-numbers
 function addIERC20(bytes32 _symbol, address _tokenaddress, uint32 _srcChainId, uint8 _decimals, enum ITradePairs.AuctionMode) internal
@@ -294,7 +256,6 @@ function addIERC20(bytes32 _symbol, address _tokenaddress, uint32 _srcChainId, u
 | _srcChainId | uint32 |  |
 | _decimals | uint8 | decimals of the token |
 |  | enum ITradePairs.AuctionMode |  |
-
 
 #### removeIERC20
 
@@ -314,14 +275,11 @@ function removeIERC20(bytes32 _symbol) internal
 | ---- | ---- | ----------- |
 | _symbol | bytes32 | symbol of the token |
 
-
-
 ### Private
 
 #### emitPortfolioEvent
 
 Wrapper for emit event
-
 
 ```solidity:no-line-numbers
 function emitPortfolioEvent(address _trader, bytes32 _symbol, uint256 _quantity, uint256 _feeCharged, enum IPortfolio.Tx transaction) private
@@ -336,5 +294,4 @@ function emitPortfolioEvent(address _trader, bytes32 _symbol, uint256 _quantity,
 | _quantity | uint256 | Amount of token used in the transaction |
 | _feeCharged | uint256 | Fee charged for the transaction |
 | transaction | enum IPortfolio.Tx | Transaction type |
-
 

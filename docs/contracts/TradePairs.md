@@ -6,15 +6,12 @@ headerDepth: 4
 
 **Implements the data structures and functions for trade pairs**
 
-
 **Dev notes:** \
 For each trade pair an entry is added tradePairMap.
 The naming convention for the trade pairs is as follows: BASEASSET/QUOTEASSET.
 For base asset AVAX and quote asset USDT the trade pair name is AVAX/USDT.
 ExchangeSub needs to have DEFAULT_ADMIN_ROLE on TradePairs.
 TradePairs should have EXECUTOR_ROLE on OrderBooks.
-
-
 
 ## Variables
 
@@ -25,8 +22,6 @@ TradePairs should have EXECUTOR_ROLE on OrderBooks.
 | ON_BEHALFOF_ROLE | bytes32 |
 | TENK | uint256 |
 | VERSION | bytes32 |
-
-
 
 ### Private
 
@@ -40,13 +35,10 @@ TradePairs should have EXECUTOR_ROLE on OrderBooks.
 | clientOrderIDMap | mapping(address &#x3D;&gt; mapping(bytes32 &#x3D;&gt; bytes32)) |
 | idCounter | uint256 |
 | orderMap | mapping(bytes32 &#x3D;&gt; struct ITradePairs.Order) |
-| orderBooks | OrderBooks |
-| portfolio | IPortfolio |
+| orderBooks | contract OrderBooks |
+| portfolio | contract IPortfolio |
 | tradePairsArray | bytes32[] |
 | tradePairMap | mapping(bytes32 &#x3D;&gt; struct ITradePairs.TradePair) |
-
-
-
 
 ## Methods
 
@@ -71,7 +63,6 @@ function initialize(address _orderbooks, address _portfolio) public
 | _orderbooks | address | orderbooks instance |
 | _portfolio | address | portfolio instance |
 
-
 #### pauseTradePair
 
 Pauses a specific Trade Pair
@@ -91,11 +82,9 @@ function pauseTradePair(bytes32 _tradePairId, bool _pause) public
 | _tradePairId | bytes32 | id of the trading pair |
 | _pause | bool | true to pause, false to unpause |
 
-
 #### getOrder
 
 Returns order details given the order id
-
 
 ```solidity:no-line-numbers
 function getOrder(bytes32 _orderId) public view returns (struct ITradePairs.Order)
@@ -107,7 +96,6 @@ function getOrder(bytes32 _orderId) public view returns (struct ITradePairs.Orde
 | ---- | ---- | ----------- |
 | _orderId | bytes32 | order id assigned by the contract |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -117,7 +105,6 @@ function getOrder(bytes32 _orderId) public view returns (struct ITradePairs.Orde
 #### getQuoteAmount
 
 Returns the quote amount for a given price and quantity
-
 
 ```solidity:no-line-numbers
 function getQuoteAmount(bytes32 _tradePairId, uint256 _price, uint256 _quantity) public view returns (uint256)
@@ -131,13 +118,11 @@ function getQuoteAmount(bytes32 _tradePairId, uint256 _price, uint256 _quantity)
 | _price | uint256 | price |
 | _quantity | uint256 | quantity |
 
-
 ##### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | uint256 | uint256  quote amount |
-
 
 ### External
 
@@ -169,7 +154,6 @@ function addTradePair(bytes32 _tradePairId, bytes32 _baseSymbol, uint8 _baseDeci
 | _maxTradeAmount | uint256 | maximum trade amount |
 | _mode | enum ITradePairs.AuctionMode | Auction Mode of the auction token. Auction token is always the BASE asset. |
 
-
 #### getTradePairs
 
 Gets a list of the trade Pairs
@@ -181,7 +165,6 @@ All pairs are returned. Even the delisted ones.
 function getTradePairs() external view returns (bytes32[])
 ```
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -192,11 +175,9 @@ function getTradePairs() external view returns (bytes32[])
 
 Returns the bookid given the tradePairId and side
 
-
 ```solidity:no-line-numbers
 function getBookId(bytes32 _tradePairId, enum ITradePairs.Side _side) external view returns (bytes32)
 ```
-
 
 ##### Return values
 
@@ -215,7 +196,6 @@ Can only be called by DEFAULT_ADMIN.
 function pause() external
 ```
 
-
 #### unpause
 
 Unpauses the contract
@@ -226,7 +206,6 @@ Can only be called by DEFAULT_ADMIN.
 ```solidity:no-line-numbers
 function unpause() external
 ```
-
 
 #### pauseAddOrder
 
@@ -246,7 +225,6 @@ function pauseAddOrder(bytes32 _tradePairId, bool _pause) external
 | _tradePairId | bytes32 | id of the trading pair |
 | _pause | bool | true to pause, false to unpause |
 
-
 #### setAuctionMode
 
 Sets the auction mode of a specific Trade Pair
@@ -264,7 +242,6 @@ function setAuctionMode(bytes32 _tradePairId, enum ITradePairs.AuctionMode _mode
 | ---- | ---- | ----------- |
 | _tradePairId | bytes32 | id of the trading pair |
 | _mode | enum ITradePairs.AuctionMode | Auction Mode |
-
 
 #### setAuctionPrice
 
@@ -286,11 +263,9 @@ function setAuctionPrice(bytes32 _tradePairId, uint256 _price) external
 | _tradePairId | bytes32 | id of the trading pair |
 | _price | uint256 | price of the auction |
 
-
 #### getAuctionData
 
 Returns the auction mode and the auction price of a specific Trade Pair
-
 
 ```solidity:no-line-numbers
 function getAuctionData(bytes32 _tradePairId) external view returns (uint8 mode, uint256 price)
@@ -301,7 +276,6 @@ function getAuctionData(bytes32 _tradePairId) external view returns (uint8 mode,
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _tradePairId | bytes32 | id of the trading pair |
-
 
 ##### Return values
 
@@ -314,7 +288,6 @@ function getAuctionData(bytes32 _tradePairId) external view returns (uint8 mode,
 
 Checks if TradePair already exists
 
-
 ```solidity:no-line-numbers
 function tradePairExists(bytes32 _tradePairId) external view returns (bool)
 ```
@@ -324,7 +297,6 @@ function tradePairExists(bytes32 _tradePairId) external view returns (bool)
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _tradePairId | bytes32 | id of the trading pair |
-
 
 ##### Return values
 
@@ -351,7 +323,6 @@ function setMinTradeAmount(bytes32 _tradePairId, uint256 _minTradeAmount) extern
 | _tradePairId | bytes32 | id of the trading pair |
 | _minTradeAmount | uint256 | minimum trade amount in terms of quote asset |
 
-
 #### getMinTradeAmount
 
 Returns the minimum trade amount allowed for a specific Trade Pair
@@ -369,7 +340,6 @@ function getMinTradeAmount(bytes32 _tradePairId) external view returns (uint256)
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _tradePairId | bytes32 | id of the trading pair |
-
 
 ##### Return values
 
@@ -396,7 +366,6 @@ function setMaxTradeAmount(bytes32 _tradePairId, uint256 _maxTradeAmount) extern
 | _tradePairId | bytes32 | id of the trading pair |
 | _maxTradeAmount | uint256 | maximum trade amount in terms of quote asset |
 
-
 #### getMaxTradeAmount
 
 Returns the maximum trade amount allowed for a specific Trade Pair
@@ -414,7 +383,6 @@ function getMaxTradeAmount(bytes32 _tradePairId) external view returns (uint256)
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _tradePairId | bytes32 | id of the trading pair |
-
 
 ##### Return values
 
@@ -440,7 +408,6 @@ function addOrderType(bytes32 _tradePairId, enum ITradePairs.Type1 _type) extern
 | _tradePairId | bytes32 | id of the trading pair |
 | _type | enum ITradePairs.Type1 | Order Type |
 
-
 #### removeOrderType
 
 Removes an order type that is previously allowed
@@ -459,7 +426,6 @@ function removeOrderType(bytes32 _tradePairId, enum ITradePairs.Type1 _type) ext
 | _tradePairId | bytes32 | id of the trading pair |
 | _type | enum ITradePairs.Type1 | Order Type |
 
-
 #### getAllowedOrderTypes
 
 Returns the allowed order types.
@@ -477,7 +443,6 @@ function getAllowedOrderTypes(bytes32 _tradePairId) external view returns (uint2
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _tradePairId | bytes32 | id of the trading pair |
-
 
 ##### Return values
 
@@ -505,7 +470,6 @@ function setDisplayDecimals(bytes32 _tradePairId, uint8 _displayDecimals, bool _
 | _displayDecimals | uint8 | display decimal |
 | _isBase | bool | true/false |
 
-
 #### getDisplayDecimals
 
 Returns the display decimals of the base or the quote asset in a tradePair
@@ -524,7 +488,6 @@ function getDisplayDecimals(bytes32 _tradePairId, bool _isBase) external view re
 | ---- | ---- | ----------- |
 | _tradePairId | bytes32 | id of the trading pair |
 | _isBase | bool | true/false |
-
 
 ##### Return values
 
@@ -551,7 +514,6 @@ function getDecimals(bytes32 _tradePairId, bool _isBase) external view returns (
 | _tradePairId | bytes32 | id of the trading pair |
 | _isBase | bool | true/false |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -561,7 +523,6 @@ function getDecimals(bytes32 _tradePairId, bool _isBase) external view returns (
 #### getSymbol
 
 Returns the base or quote symbol
-
 
 ```solidity:no-line-numbers
 function getSymbol(bytes32 _tradePairId, bool _isBase) external view returns (bytes32)
@@ -573,7 +534,6 @@ function getSymbol(bytes32 _tradePairId, bool _isBase) external view returns (by
 | ---- | ---- | ----------- |
 | _tradePairId | bytes32 | id of the trading pair |
 | _isBase | bool | true/false |
-
 
 ##### Return values
 
@@ -600,11 +560,9 @@ function updateRate(bytes32 _tradePairId, uint8 _rate, enum ITradePairs.RateType
 | _rate | uint8 | Percent Rate `(_rate/100)% = _rate/10000: _rate=10 => 0.10%` |
 | _rateType | enum ITradePairs.RateType | Rate Type, 0 maker or 1 taker |
 
-
 #### getMakerRate
 
 Returns Maker Rate (Commission)
-
 
 ```solidity:no-line-numbers
 function getMakerRate(bytes32 _tradePairId) external view returns (uint8)
@@ -616,7 +574,6 @@ function getMakerRate(bytes32 _tradePairId) external view returns (uint8)
 | ---- | ---- | ----------- |
 | _tradePairId | bytes32 | id of the trading pair |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -627,7 +584,6 @@ function getMakerRate(bytes32 _tradePairId) external view returns (uint8)
 
 Returns Taker Rate (Commission)
 
-
 ```solidity:no-line-numbers
 function getTakerRate(bytes32 _tradePairId) external view returns (uint8)
 ```
@@ -637,7 +593,6 @@ function getTakerRate(bytes32 _tradePairId) external view returns (uint8)
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _tradePairId | bytes32 | id of the trading pair |
-
 
 ##### Return values
 
@@ -665,11 +620,9 @@ function setAllowedSlippagePercent(bytes32 _tradePairId, uint8 _allowedSlippageP
 | _tradePairId | bytes32 | id of the trading pair |
 | _allowedSlippagePercent | uint8 | allowed slippage percent=20 (Default = 20 : 20% = 20/100) |
 
-
 #### getAllowedSlippagePercent
 
 Allowed slippage percent for market orders, before the market order gets an unsolicited cancel.
-
 
 ```solidity:no-line-numbers
 function getAllowedSlippagePercent(bytes32 _tradePairId) external view returns (uint8)
@@ -680,7 +633,6 @@ function getAllowedSlippagePercent(bytes32 _tradePairId) external view returns (
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _tradePairId | bytes32 | id of the trading pair |
-
 
 ##### Return values
 
@@ -717,7 +669,6 @@ function getNBook(bytes32 _tradePairId, enum ITradePairs.Side _side, uint256 _nP
 | _lastPrice | uint256 | The price point to start at |
 | _lastOrder | bytes32 | the orderid to start at |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -731,7 +682,6 @@ function getNBook(bytes32 _tradePairId, enum ITradePairs.Side _side, uint256 _nP
 
 Returns order details given the trader and the clientOrderId
 
-
 ```solidity:no-line-numbers
 function getOrderByClientOrderId(address _trader, bytes32 _clientOrderId) external view returns (struct ITradePairs.Order)
 ```
@@ -742,7 +692,6 @@ function getOrderByClientOrderId(address _trader, bytes32 _clientOrderId) extern
 | ---- | ---- | ----------- |
 | _trader | address | user's address |
 | _clientOrderId | bytes32 | client Order id assigned by the user |
-
 
 ##### Return values
 
@@ -795,7 +744,6 @@ function addOrder(address _trader, bytes32 _clientOrderId, bytes32 _tradePairId,
 | _type1 | enum ITradePairs.Type1 | enum ITradePairs.Type1 Type of the order. 0 MARKET , 1 LIMIT (STOP and STOPLIMIT NOT Supported) |
 | _type2 | enum ITradePairs.Type2 | enum ITradePairs.Type2 SubType of the order |
 
-
 #### matchAuctionOrder
 
 Function to match Auction orders
@@ -814,7 +762,6 @@ function matchAuctionOrder(bytes32 _takerOrderId, uint8 _maxCount) external retu
 | ---- | ---- | ----------- |
 | _takerOrderId | bytes32 | Taker Order id |
 | _maxCount | uint8 | controls max number of fills an order can get at a time to avoid running out of gas |
-
 
 ##### Return values
 
@@ -841,7 +788,6 @@ function unsolicitedCancel(bytes32 _tradePairId, bool _isBuyBook, uint8 _maxCoun
 | _isBuyBook | bool | true if buy Orderbook |
 | _maxCount | uint8 | controls max number of orders to cancel at a time to avoid running out of gas |
 
-
 #### cancelReplaceOrder
 
 Cancels an order and immediatly enters a similar order in the same direction.
@@ -865,7 +811,6 @@ function cancelReplaceOrder(bytes32 _orderId, bytes32 _clientOrderId, uint256 _p
 | _price | uint256 | price of the new order |
 | _quantity | uint256 | quantity of the new order |
 
-
 #### cancelOrder
 
 Cancels an order given the order id supplied
@@ -882,7 +827,6 @@ function cancelOrder(bytes32 _orderId) external
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _orderId | bytes32 | order id to cancel |
-
 
 #### cancelAllOrders
 
@@ -903,17 +847,11 @@ function cancelAllOrders(bytes32[] _orderIds) external
 | ---- | ---- | ----------- |
 | _orderIds | bytes32[] | array of order ids |
 
-
 #### fallback
-
-
 
 ```solidity:no-line-numbers
 fallback() external
 ```
-
-
-
 
 ### Private
 
@@ -935,16 +873,13 @@ function setAuctionModePrivate(bytes32 _tradePairId, enum ITradePairs.AuctionMod
 | _tradePairId | bytes32 | id of the trading pair |
 | _mode | enum ITradePairs.AuctionMode | Auction Mode |
 
-
 #### getNextOrderId
 
 Returns the next Id to be used as order id
 
-
 ```solidity:no-line-numbers
 function getNextOrderId() private returns (bytes32)
 ```
-
 
 ##### Return values
 
@@ -956,11 +891,9 @@ function getNextOrderId() private returns (bytes32)
 
 increments the id counter to be used as order id or as an execution id
 
-
 ```solidity:no-line-numbers
 function getNextId() private returns (uint256)
 ```
-
 
 ##### Return values
 
@@ -1016,7 +949,6 @@ function emitStatusUpdate(bytes32 _orderId) private
 | ---- | ---- | ----------- |
 | _orderId | bytes32 | order id |
 
-
 #### handleExecution
 
 Calculates the commission and updates the oder state after an execution
@@ -1037,7 +969,6 @@ function handleExecution(bytes32 _orderId, uint256 _price, uint256 _quantity, ui
 | _price | uint256 | execution price ( Can be different than order price) |
 | _quantity | uint256 | execution quantity |
 | _rate | uint8 | maker or taker rate |
-
 
 ##### Return values
 
@@ -1066,7 +997,6 @@ function addExecution(bytes32 _makerOrderId, bytes32 _takerOrderId, uint256 _pri
 | _price | uint256 | execution price |
 | _quantity | uint256 | execution quantity |
 
-
 #### emitExecuted
 
 Emits the Executed Event showing \
@@ -1087,7 +1017,6 @@ the taker in Base currency \
 `addressMaker`  maker traderaddress \
 `addressTaker`  taker traderaddress \
 
-
 ```solidity:no-line-numbers
 function emitExecuted(uint256 _price, uint256 _quantity, bytes32 _makerOrderId, bytes32 _takerOrderId, uint256 _mlastFee, uint256 _tlastFee) private
 ```
@@ -1102,7 +1031,6 @@ function emitExecuted(uint256 _price, uint256 _quantity, bytes32 _makerOrderId, 
 | _takerOrderId | bytes32 | Taker Order id |
 | _mlastFee | uint256 | fee paid by maker |
 | _tlastFee | uint256 | fee paid by taker |
-
 
 #### addOrderChecks
 
@@ -1128,11 +1056,9 @@ function addOrderChecks(address _trader, bytes32 _clientOrderId, bytes32 _tradeP
 | _quantity | uint256 | quantity |
 | _type1 | enum ITradePairs.Type1 | Type1 : MARKET,LIMIT etc |
 
-
 #### addLimitOrder
 
 Private function. Adds a LIMIT Order. See #addOrder.
-
 
 ```solidity:no-line-numbers
 function addLimitOrder(address _trader, bytes32 _clientOrderId, bytes32 _tradePairId, uint256 _price, uint256 _quantity, enum ITradePairs.Side _side, enum ITradePairs.Type2 _type2) private
@@ -1150,11 +1076,9 @@ function addLimitOrder(address _trader, bytes32 _clientOrderId, bytes32 _tradePa
 | _side | enum ITradePairs.Side | See #addOrder |
 | _type2 | enum ITradePairs.Type2 | See #addOrder |
 
-
 #### addMarketOrder
 
 Private function. Adds a MARKET Order. See #addOrder.
-
 
 ```solidity:no-line-numbers
 function addMarketOrder(address _trader, bytes32 _clientOrderId, bytes32 _tradePairId, uint256 _quantity, enum ITradePairs.Side _side) private
@@ -1169,7 +1093,6 @@ function addMarketOrder(address _trader, bytes32 _clientOrderId, bytes32 _tradeP
 | _tradePairId | bytes32 | See #addOrder |
 | _quantity | uint256 | See #addOrder |
 | _side | enum ITradePairs.Side | See #addOrder |
-
 
 #### matchOrder
 
@@ -1191,7 +1114,6 @@ function matchOrder(bytes32 _takerOrderId, uint8 _maxCount) private returns (uin
 | _takerOrderId | bytes32 | Taker Order id |
 | _maxCount | uint8 | Max number of fills an order can get at a time to avoid running out of gas (Defaults 255). |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -1202,7 +1124,6 @@ function matchOrder(bytes32 _takerOrderId, uint8 _maxCount) private returns (uin
 
 Cancels an order and makes the locked amount available in the porftolio
 
-
 ```solidity:no-line-numbers
 function doOrderCancel(bytes32 _orderId) private
 ```
@@ -1212,5 +1133,4 @@ function doOrderCancel(bytes32 _orderId) private
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _orderId | bytes32 | order id to cancel |
-
 

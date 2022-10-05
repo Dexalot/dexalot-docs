@@ -21,8 +21,6 @@ Documenention has been added.
 
 ### Node
 
-
-
 ```solidity
 struct Node {
   uint256 parent;
@@ -33,8 +31,6 @@ struct Node {
 ```
 ### Tree
 
-
-
 ```solidity
 struct Tree {
   uint256 root;
@@ -44,11 +40,7 @@ struct Tree {
 
 ## Enum Types
 
-
 ## Variables
-
-
-
 
 ### Private
 
@@ -56,19 +48,13 @@ struct Tree {
 | --- | --- |
 | EMPTY | uint256 |
 
-
-
-
 ## Methods
-
-
 
 ### Internal
 
 #### first
 
 Returns the first node in the tree
-
 
 ```solidity:no-line-numbers
 function first(struct RBTLibrary.Tree self) internal view returns (uint256 _key)
@@ -80,7 +66,6 @@ function first(struct RBTLibrary.Tree self) internal view returns (uint256 _key)
 | ---- | ---- | ----------- |
 | self | struct RBTLibrary.Tree | stored tree from contract |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -90,7 +75,6 @@ function first(struct RBTLibrary.Tree self) internal view returns (uint256 _key)
 #### last
 
 Returns the last node in the tree
-
 
 ```solidity:no-line-numbers
 function last(struct RBTLibrary.Tree self) internal view returns (uint256 _key)
@@ -102,7 +86,6 @@ function last(struct RBTLibrary.Tree self) internal view returns (uint256 _key)
 | ---- | ---- | ----------- |
 | self | struct RBTLibrary.Tree | stored tree from contract |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -112,7 +95,6 @@ function last(struct RBTLibrary.Tree self) internal view returns (uint256 _key)
 #### next
 
 Returns the next node in the tree
-
 
 ```solidity:no-line-numbers
 function next(struct RBTLibrary.Tree self, uint256 _target) internal view returns (uint256 _cursor)
@@ -125,7 +107,6 @@ function next(struct RBTLibrary.Tree self, uint256 _target) internal view return
 | self | struct RBTLibrary.Tree | stored tree from contract |
 | _target | uint256 | the node for which the next node is returned |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -135,7 +116,6 @@ function next(struct RBTLibrary.Tree self, uint256 _target) internal view return
 #### prev
 
 Returns the previous node in the tree
-
 
 ```solidity:no-line-numbers
 function prev(struct RBTLibrary.Tree self, uint256 _target) internal view returns (uint256 cursor)
@@ -148,7 +128,6 @@ function prev(struct RBTLibrary.Tree self, uint256 _target) internal view return
 | self | struct RBTLibrary.Tree | stored tree from contract |
 | _target | uint256 | the node for which the previous node is returned |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -158,7 +137,6 @@ function prev(struct RBTLibrary.Tree self, uint256 _target) internal view return
 #### exists
 
 Checks if node with a key exists
-
 
 ```solidity:no-line-numbers
 function exists(struct RBTLibrary.Tree self, uint256 _key) internal view returns (bool)
@@ -171,7 +149,6 @@ function exists(struct RBTLibrary.Tree self, uint256 _key) internal view returns
 | self | struct RBTLibrary.Tree | stored tree from contract |
 | _key | uint256 | key for a node |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -181,7 +158,6 @@ function exists(struct RBTLibrary.Tree self, uint256 _key) internal view returns
 #### isEmpty
 
 Checks if key is empty
-
 
 ```solidity:no-line-numbers
 function isEmpty(uint256 _key) internal pure returns (bool)
@@ -193,7 +169,6 @@ function isEmpty(uint256 _key) internal pure returns (bool)
 | ---- | ---- | ----------- |
 | _key | uint256 | key for a node |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -204,11 +179,9 @@ function isEmpty(uint256 _key) internal pure returns (bool)
 
 Returns the definition of empty
 
-
 ```solidity:no-line-numbers
 function getEmpty() internal pure returns (uint256)
 ```
-
 
 ##### Return values
 
@@ -220,7 +193,6 @@ function getEmpty() internal pure returns (uint256)
 
 Returns the node struct for a key
 
-
 ```solidity:no-line-numbers
 function getNode(struct RBTLibrary.Tree self, uint256 _key) internal view returns (uint256 _returnKey, uint256 _parent, uint256 _left, uint256 _right, bool _red)
 ```
@@ -231,7 +203,6 @@ function getNode(struct RBTLibrary.Tree self, uint256 _key) internal view return
 | ---- | ---- | ----------- |
 | self | struct RBTLibrary.Tree | stored tree from contract |
 | _key | uint256 | key for a node |
-
 
 ##### Return values
 
@@ -247,7 +218,6 @@ function getNode(struct RBTLibrary.Tree self, uint256 _key) internal view return
 
 Inserts a new node to the tree with a key
 
-
 ```solidity:no-line-numbers
 function insert(struct RBTLibrary.Tree self, uint256 _key) internal
 ```
@@ -259,11 +229,9 @@ function insert(struct RBTLibrary.Tree self, uint256 _key) internal
 | self | struct RBTLibrary.Tree |  |
 | _key | uint256 | key for the node being inserted |
 
-
 #### remove
 
 Removes a new node from the tree with a key
-
 
 ```solidity:no-line-numbers
 function remove(struct RBTLibrary.Tree self, uint256 _key) internal
@@ -276,14 +244,11 @@ function remove(struct RBTLibrary.Tree self, uint256 _key) internal
 | self | struct RBTLibrary.Tree | stored tree from contract |
 | _key | uint256 | key for the node being removed |
 
-
-
 ### Private
 
 #### treeMinimum
 
 Returns the key for the minimum node in the tree
-
 
 ```solidity:no-line-numbers
 function treeMinimum(struct RBTLibrary.Tree self, uint256 _key) private view returns (uint256)
@@ -296,7 +261,6 @@ function treeMinimum(struct RBTLibrary.Tree self, uint256 _key) private view ret
 | self | struct RBTLibrary.Tree | stored tree from contract |
 | _key | uint256 |  |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -306,7 +270,6 @@ function treeMinimum(struct RBTLibrary.Tree self, uint256 _key) private view ret
 #### treeMaximum
 
 Returns the key for the maximum node in the tree
-
 
 ```solidity:no-line-numbers
 function treeMaximum(struct RBTLibrary.Tree self, uint256 _key) private view returns (uint256)
@@ -319,7 +282,6 @@ function treeMaximum(struct RBTLibrary.Tree self, uint256 _key) private view ret
 | self | struct RBTLibrary.Tree | stored tree from contract |
 | _key | uint256 |  |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -329,7 +291,6 @@ function treeMaximum(struct RBTLibrary.Tree self, uint256 _key) private view ret
 #### rotateLeft
 
 Do a left rotation for the key in the tree
-
 
 ```solidity:no-line-numbers
 function rotateLeft(struct RBTLibrary.Tree self, uint256 _key) private
@@ -342,11 +303,9 @@ function rotateLeft(struct RBTLibrary.Tree self, uint256 _key) private
 | self | struct RBTLibrary.Tree | stored tree from contract |
 | _key | uint256 | key of the node being returned |
 
-
 #### rotateRight
 
 Do a right rotation for the key in the tree
-
 
 ```solidity:no-line-numbers
 function rotateRight(struct RBTLibrary.Tree self, uint256 _key) private
@@ -359,11 +318,9 @@ function rotateRight(struct RBTLibrary.Tree self, uint256 _key) private
 | self | struct RBTLibrary.Tree | stored tree from contract |
 | _key | uint256 | key of the node being returned |
 
-
 #### insertFixup
 
 Insert fixup during insertion of a node with the key in the tree
-
 
 ```solidity:no-line-numbers
 function insertFixup(struct RBTLibrary.Tree self, uint256 _key) private
@@ -376,11 +333,9 @@ function insertFixup(struct RBTLibrary.Tree self, uint256 _key) private
 | self | struct RBTLibrary.Tree | stored tree from contract |
 | _key | uint256 | key of the node being inserted |
 
-
 #### replaceParent
 
 Replaces two parent nodes in the tree
-
 
 ```solidity:no-line-numbers
 function replaceParent(struct RBTLibrary.Tree self, uint256 a, uint256 b) private
@@ -394,11 +349,9 @@ function replaceParent(struct RBTLibrary.Tree self, uint256 a, uint256 b) privat
 | a | uint256 | node in the tree |
 | b | uint256 | mode in the tree |
 
-
 #### removeFixup
 
 Remove fixup during removal of a node with the key in the tree
-
 
 ```solidity:no-line-numbers
 function removeFixup(struct RBTLibrary.Tree self, uint256 _key) private
@@ -410,5 +363,4 @@ function removeFixup(struct RBTLibrary.Tree self, uint256 _key) private
 | ---- | ---- | ----------- |
 | self | struct RBTLibrary.Tree | stored tree from contract |
 | _key | uint256 | key of the node being removed |
-
 

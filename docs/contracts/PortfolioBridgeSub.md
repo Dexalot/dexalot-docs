@@ -11,8 +11,6 @@ This contracts checks volume and threshold limits for withdrawals.
 **Dev notes:** \
 It implements delayedTransfers as well as volume caps per epoch per token
 
-
-
 ## Variables
 
 ### Public
@@ -27,14 +25,9 @@ It implements delayedTransfers as well as volume caps per epoch per token
 | epochVolumeCaps | mapping(bytes32 &#x3D;&gt; uint256) |
 | lastOpTimestamps | mapping(bytes32 &#x3D;&gt; uint256) |
 
-
-
-
 ## Events
 
 ### DelayedTransferAdded
-
-
 
 ```solidity:no-line-numbers
 event DelayedTransferAdded(bytes32 id)
@@ -42,15 +35,11 @@ event DelayedTransferAdded(bytes32 id)
 
 ### DelayedTransferExecuted
 
-
-
 ```solidity:no-line-numbers
 event DelayedTransferExecuted(bytes32 id, struct IPortfolio.XFER xfer)
 ```
 
 ### DelayPeriodUpdated
-
-
 
 ```solidity:no-line-numbers
 event DelayPeriodUpdated(uint256 period)
@@ -58,15 +47,11 @@ event DelayPeriodUpdated(uint256 period)
 
 ### DelayThresholdUpdated
 
-
-
 ```solidity:no-line-numbers
 event DelayThresholdUpdated(bytes32 symbol, uint256 threshold)
 ```
 
 ### EpochLengthUpdated
-
-
 
 ```solidity:no-line-numbers
 event EpochLengthUpdated(uint256 length)
@@ -74,14 +59,9 @@ event EpochLengthUpdated(uint256 length)
 
 ### EpochVolumeUpdated
 
-
-
 ```solidity:no-line-numbers
 event EpochVolumeUpdated(bytes32 token, uint256 cap)
 ```
-
-
-
 
 ## Methods
 
@@ -89,13 +69,9 @@ event EpochVolumeUpdated(bytes32 token, uint256 cap)
 
 #### VERSION
 
-
-
 ```solidity:no-line-numbers
 function VERSION() public pure returns (bytes32)
 ```
-
-
 
 ### External
 
@@ -117,7 +93,6 @@ function sendXChainMessage(enum IPortfolioBridge.BridgeProvider _bridge, struct 
 | _bridge | enum IPortfolioBridge.BridgeProvider | Bridge type to send over |
 | _xfer | struct IPortfolio.XFER | XFER message to send |
 
-
 #### setDelayThresholds
 
 Sets delay thresholds for tokens
@@ -136,7 +111,6 @@ function setDelayThresholds(bytes32[] _tokens, uint256[] _thresholds) external
 | _tokens | bytes32[] | Array of tokens |
 | _thresholds | uint256[] | Array of thresholds |
 
-
 #### setDelayPeriod
 
 Sets delay period for delayed transfers
@@ -153,7 +127,6 @@ function setDelayPeriod(uint256 _period) external
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _period | uint256 | Delay period in seconds |
-
 
 #### executeDelayedTransfer
 
@@ -172,7 +145,6 @@ function executeDelayedTransfer(bytes32 _id) external
 | ---- | ---- | ----------- |
 | _id | bytes32 | Transfer ID |
 
-
 #### setEpochLength
 
 Sets epoch length for volume control
@@ -189,7 +161,6 @@ function setEpochLength(uint256 _length) external
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _length | uint256 | Epoch length in seconds |
-
 
 #### setEpochVolumeCaps
 
@@ -208,8 +179,6 @@ function setEpochVolumeCaps(bytes32[] _tokens, uint256[] _caps) external
 | ---- | ---- | ----------- |
 | _tokens | bytes32[] | Array of tokens |
 | _caps | uint256[] | Array of caps |
-
-
 
 ### Internal
 
@@ -231,7 +200,6 @@ function checkTreshholds(struct IPortfolio.XFER _xfer) internal returns (bool)
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _xfer | struct IPortfolio.XFER | XFER message |
-
 
 ##### Return values
 
@@ -259,20 +227,17 @@ function getTokenId(bytes32 _symbol) internal view returns (bytes32)
 | ---- | ---- | ----------- |
 | _symbol | bytes32 | symbol of the token |
 
-
 ##### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | bytes32 | bytes32  symbolId |
 
-
 ### Private
 
 #### addDelayedTransfer
 
 Adds transfer to delayed queue
-
 
 ```solidity:no-line-numbers
 function addDelayedTransfer(bytes32 _id, struct IPortfolio.XFER _xfer) private
@@ -284,7 +249,6 @@ function addDelayedTransfer(bytes32 _id, struct IPortfolio.XFER _xfer) private
 | ---- | ---- | ----------- |
 | _id | bytes32 | Transfer ID |
 | _xfer | struct IPortfolio.XFER | XFER message |
-
 
 #### updateVolume
 
@@ -304,5 +268,4 @@ function updateVolume(bytes32 _token, uint256 _amount) private
 | ---- | ---- | ----------- |
 | _token | bytes32 | Token symbol |
 | _amount | uint256 | Amount to add to volume |
-
 

@@ -19,8 +19,6 @@ TradePairs should have EXECUTOR_ROLE in OrderBooks.
 
 ### OrderBook
 
-
-
 ```solidity
 struct OrderBook {
   mapping(uint256 => struct Bytes32LinkedListLibrary.LinkedList) orderList;
@@ -31,7 +29,6 @@ struct OrderBook {
 
 ## Enum Types
 
-
 ## Variables
 
 ### Public
@@ -41,27 +38,20 @@ struct OrderBook {
 | EXECUTOR_ROLE | bytes32 |
 | VERSION | bytes32 |
 
-
-
 ### Private
 
 | Name | Type |
 | --- | --- |
 | orderBookMap | mapping(bytes32 &#x3D;&gt; struct OrderBooks.OrderBook) |
-| tradePairs | ITradePairs |
+| tradePairs | contract ITradePairs |
 
 ## Events
 
 ### TradePairsSet
 
-
-
 ```solidity:no-line-numbers
 event TradePairsSet(address _oldTradePairs, address _newTradePairs)
 ```
-
-
-
 
 ## Methods
 
@@ -71,16 +61,13 @@ event TradePairsSet(address _oldTradePairs, address _newTradePairs)
 
 Initializer for upgradeable contract.
 
-
 ```solidity:no-line-numbers
 function initialize() public
 ```
 
-
 #### removeFirstOrder
 
 Removes the first order from the order book
-
 
 ```solidity:no-line-numbers
 function removeFirstOrder(bytes32 _orderBookID, uint256 _price) public
@@ -93,14 +80,11 @@ function removeFirstOrder(bytes32 _orderBookID, uint256 _price) public
 | _orderBookID | bytes32 | Order book ID |
 | _price | uint256 | Price |
 
-
-
 ### External
 
 #### setTradePairs
 
 Sets trade pairs contract
-
 
 ```solidity:no-line-numbers
 function setTradePairs(address _tradePairs) external
@@ -112,15 +96,11 @@ function setTradePairs(address _tradePairs) external
 | ---- | ---- | ----------- |
 | _tradePairs | address | address of the trade pairs contract |
 
-
 #### getTradePairs
-
-
 
 ```solidity:no-line-numbers
 function getTradePairs() external view returns (contract ITradePairs)
 ```
-
 
 ##### Return values
 
@@ -131,7 +111,6 @@ function getTradePairs() external view returns (contract ITradePairs)
 #### addToOrderbooks
 
 Adds OrderBook with its side
-
 
 ```solidity:no-line-numbers
 function addToOrderbooks(bytes32 _orderBookID, enum ITradePairs.Side _side) external
@@ -144,11 +123,9 @@ function addToOrderbooks(bytes32 _orderBookID, enum ITradePairs.Side _side) exte
 | _orderBookID | bytes32 | . |
 | _side | enum ITradePairs.Side | BuyBook or SellBook |
 
-
 #### bestPrice
 
 Returns the Best Bid or Best ASK depending on the OrderBook side
-
 
 ```solidity:no-line-numbers
 function bestPrice(bytes32 _orderBookID) external view returns (uint256 price)
@@ -160,7 +137,6 @@ function bestPrice(bytes32 _orderBookID) external view returns (uint256 price)
 | ---- | ---- | ----------- |
 | _orderBookID | bytes32 | Order book ID |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -171,7 +147,6 @@ function bestPrice(bytes32 _orderBookID) external view returns (uint256 price)
 
 Returns the OrderId of the Best Bid or Best ASK depending on the OrderBook side
 
-
 ```solidity:no-line-numbers
 function getTopOfTheBook(bytes32 _orderBookID) external view returns (uint256 price, bytes32 orderId)
 ```
@@ -181,7 +156,6 @@ function getTopOfTheBook(bytes32 _orderBookID) external view returns (uint256 pr
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _orderBookID | bytes32 | Order book ID |
-
 
 ##### Return values
 
@@ -208,7 +182,6 @@ function isNotCrossedBook(bytes32 _sellBookId, bytes32 _buyBookId) external view
 | _sellBookId | bytes32 | Sell Order book ID |
 | _buyBookId | bytes32 | Buy Order book ID |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -216,8 +189,6 @@ function isNotCrossedBook(bytes32 _sellBookId, bytes32 _buyBookId) external view
 | [0] | bool | bool True if orderbook is not crossed and clear |
 
 #### exists
-
-
 
 ```solidity:no-line-numbers
 function exists(bytes32 _orderBookID, uint256 _price) external view returns (bool doesExist)
@@ -230,7 +201,6 @@ function exists(bytes32 _orderBookID, uint256 _price) external view returns (boo
 | _orderBookID | bytes32 | Order book ID |
 | _price | uint256 | Price |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -238,7 +208,6 @@ function exists(bytes32 _orderBookID, uint256 _price) external view returns (boo
 | doesExist | bool | True if price exists |
 
 #### getNode
-
 
 **Dev notes:** \
 used for getting red-black-tree details in debugging
@@ -254,7 +223,6 @@ function getNode(bytes32 _orderBookID, uint256 _price) external view returns (ui
 | _orderBookID | bytes32 | Order book ID |
 | _price | uint256 | Price |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -268,7 +236,6 @@ function getNode(bytes32 _orderBookID, uint256 _price) external view returns (ui
 | size | uint256 | Size of the tree |
 
 #### getQuantitiesAtPrice
-
 
 **Dev notes:** \
 Used for getting the quantities in linked list of orders at a price
@@ -284,7 +251,6 @@ function getQuantitiesAtPrice(bytes32 _orderBookID, uint256 _price) external vie
 | _orderBookID | bytes32 | Order book ID |
 | _price | uint256 | Price |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -294,7 +260,6 @@ function getQuantitiesAtPrice(bytes32 _orderBookID, uint256 _price) external vie
 #### nextPrice
 
 Next price from a tree of prices
-
 
 ```solidity:no-line-numbers
 function nextPrice(bytes32 _orderBookID, enum ITradePairs.Side _side, uint256 _price) external view returns (uint256 price)
@@ -307,7 +272,6 @@ function nextPrice(bytes32 _orderBookID, enum ITradePairs.Side _side, uint256 _p
 | _orderBookID | bytes32 | Order book ID |
 | _side | enum ITradePairs.Side | Side |
 | _price | uint256 | Price |
-
 
 ##### Return values
 
@@ -334,7 +298,6 @@ function getHead(bytes32 _orderBookID, uint256 price) external view returns (byt
 | _orderBookID | bytes32 | Order book ID |
 | price | uint256 | Price |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -344,7 +307,6 @@ function getHead(bytes32 _orderBookID, uint256 price) external view returns (byt
 #### nextOrder
 
 Get next order at a price from linked list of orders
-
 
 ```solidity:no-line-numbers
 function nextOrder(bytes32 _orderBookID, uint256 _price, bytes32 _orderId) external view returns (bytes32 nextId)
@@ -358,7 +320,6 @@ function nextOrder(bytes32 _orderBookID, uint256 _price, bytes32 _orderId) exter
 | _price | uint256 | Price |
 | _orderId | bytes32 | Order ID |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -368,7 +329,6 @@ function nextOrder(bytes32 _orderBookID, uint256 _price, bytes32 _orderId) exter
 #### getBookSize
 
 Used for getting number of price levels on an order book
-
 
 ```solidity:no-line-numbers
 function getBookSize(bytes32 _orderBookID) external view returns (uint256)
@@ -380,7 +340,6 @@ function getBookSize(bytes32 _orderBookID) external view returns (uint256)
 | ---- | ---- | ----------- |
 | _orderBookID | bytes32 | Order book ID |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -390,7 +349,6 @@ function getBookSize(bytes32 _orderBookID) external view returns (uint256)
 #### getNOrders
 
 Get all orders at N price levels
-
 
 ```solidity:no-line-numbers
 function getNOrders(bytes32 _orderBookID, uint256 _nPrice, uint256 _nOrder, uint256 _lastPrice, bytes32 _lastOrder) external view returns (uint256[] prices, uint256[] quantities, uint256, bytes32)
@@ -406,7 +364,6 @@ function getNOrders(bytes32 _orderBookID, uint256 _nPrice, uint256 _nOrder, uint
 | _lastPrice | uint256 | Last price |
 | _lastOrder | bytes32 | Last order |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -417,7 +374,6 @@ function getNOrders(bytes32 _orderBookID, uint256 _nPrice, uint256 _nOrder, uint
 | [3] | bytes32 | bytes32  Last order |
 
 #### getNOrdersOld
-
 
 **Dev notes:** \
 **Deprecated**. Use getNOrders instead. This is implemented with an unbound loop.
@@ -435,7 +391,6 @@ function getNOrdersOld(bytes32 _orderBookID, uint256 _n, uint256 _type) external
 | _n | uint256 | Number of order to return |
 | _type | uint256 | Type |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -446,7 +401,6 @@ function getNOrdersOld(bytes32 _orderBookID, uint256 _n, uint256 _type) external
 #### matchTrade
 
 Match orders
-
 
 ```solidity:no-line-numbers
 function matchTrade(bytes32 _orderBookID, uint256 _price, uint256 _takerOrderRemainingQuantity, uint256 _makerOrderRemainingQuantity) external returns (uint256)
@@ -460,7 +414,6 @@ function matchTrade(bytes32 _orderBookID, uint256 _price, uint256 _takerOrderRem
 | _price | uint256 | Price |
 | _takerOrderRemainingQuantity | uint256 | Remaining quantity of the taker order |
 | _makerOrderRemainingQuantity | uint256 | Remaining quantity of the maker order |
-
 
 ##### Return values
 
@@ -487,11 +440,9 @@ function addOrder(bytes32 _orderBookID, bytes32 _orderUid, uint256 _price) exter
 | _orderUid | bytes32 | Order UID |
 | _price | uint256 | Price |
 
-
 #### removeOrder
 
 Removes order from order book
-
 
 ```solidity:no-line-numbers
 function removeOrder(bytes32 _orderBookID, bytes32 _orderUid, uint256 _price) external
@@ -505,10 +456,7 @@ function removeOrder(bytes32 _orderBookID, bytes32 _orderUid, uint256 _price) ex
 | _orderUid | bytes32 | Order UID |
 | _price | uint256 | Price |
 
-
 #### orderListExists
-
-
 
 ```solidity:no-line-numbers
 function orderListExists(bytes32 _orderBookID, uint256 _price) external view returns (bool)
@@ -521,20 +469,15 @@ function orderListExists(bytes32 _orderBookID, uint256 _price) external view ret
 | _orderBookID | bytes32 | Order book ID |
 | _price | uint256 | Price |
 
-
 ##### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | bool | bool  True if exists |
 
-
-
 ### Private
 
 #### root
-
-
 
 ```solidity:no-line-numbers
 function root(bytes32 _orderBookID) private view returns (uint256 price)
@@ -546,7 +489,6 @@ function root(bytes32 _orderBookID) private view returns (uint256 price)
 | ---- | ---- | ----------- |
 | _orderBookID | bytes32 | Order book ID |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -554,7 +496,6 @@ function root(bytes32 _orderBookID) private view returns (uint256 price)
 | price | uint256 | Root price |
 
 #### first
-
 
 **Dev notes:** \
 if it is SellBook it will return the best Ask
@@ -569,7 +510,6 @@ function first(bytes32 _orderBookID) private view returns (uint256 price)
 | ---- | ---- | ----------- |
 | _orderBookID | bytes32 | Order book ID |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -577,7 +517,6 @@ function first(bytes32 _orderBookID) private view returns (uint256 price)
 | price | uint256 | Lowest price in the orderbook |
 
 #### last
-
 
 **Dev notes:** \
 if it is BuyBook it will return the best Bid
@@ -592,7 +531,6 @@ function last(bytes32 _orderBookID) private view returns (uint256 price)
 | ---- | ---- | ----------- |
 | _orderBookID | bytes32 | Order book ID |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -600,8 +538,6 @@ function last(bytes32 _orderBookID) private view returns (uint256 price)
 | price | uint256 | Highest price in the orderbook |
 
 #### next
-
-
 
 ```solidity:no-line-numbers
 function next(bytes32 _orderBookID, uint256 _price) private view returns (uint256 price)
@@ -614,7 +550,6 @@ function next(bytes32 _orderBookID, uint256 _price) private view returns (uint25
 | _orderBookID | bytes32 | Order book ID |
 | _price | uint256 | Price |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -622,8 +557,6 @@ function next(bytes32 _orderBookID, uint256 _price) private view returns (uint25
 | price | uint256 | Price next to the price |
 
 #### prev
-
-
 
 ```solidity:no-line-numbers
 function prev(bytes32 _orderBookID, uint256 _price) private view returns (uint256 price)
@@ -635,7 +568,6 @@ function prev(bytes32 _orderBookID, uint256 _price) private view returns (uint25
 | ---- | ---- | ----------- |
 | _orderBookID | bytes32 | Order book ID |
 | _price | uint256 | Price |
-
 
 ##### Return values
 

@@ -6,9 +6,8 @@ headerDepth: 4
 
 **Generic Layer Zero Application Implementation**
 
-
-
-
+**Dev notes:** \
+https://github.com/LayerZero-Labs/solidity-examples/blob/main/contracts/lzApp/LzApp.sol
 
 ## Variables
 
@@ -19,24 +18,30 @@ headerDepth: 4
 | gasForDestinationLzReceive | uint256 |
 | lzTrustedRemoteLookup | mapping(uint16 &#x3D;&gt; bytes) |
 
+### Internal
 
-
+| Name | Type |
+| --- | --- |
+| lzEndpoint | contract ILayerZeroEndpoint |
+| lzOutNonce | uint64 |
+| lzInNonce | uint64 |
+| lzRemoteChainId | uint16 |
 
 ## Events
 
-### LZTrustedRemoteSet
-
-
+### LzSetTrustedRemote
 
 ```solidity:no-line-numbers
-event LZTrustedRemoteSet(uint16 remoteChainId, bytes remoteAddress)
+event LzSetTrustedRemote(uint16 remoteChainId, bytes path)
 ```
 
+### LzSetTrustedRemoteAddress
 
-
+```solidity:no-line-numbers
+event LzSetTrustedRemoteAddress(uint16 remoteChainId, bytes remoteAddress)
+```
 
 ## Methods
-
 
 ### External
 
@@ -57,15 +62,11 @@ function setLzEndPoint(address _endpoint) external
 | ---- | ---- | ----------- |
 | _endpoint | address | Address of the Layer Zero Endpoint |
 
-
 #### getLzEndPoint
-
-
 
 ```solidity:no-line-numbers
 function getLzEndPoint() external view returns (contract ILayerZeroEndpoint)
 ```
-
 
 ##### Return values
 
@@ -93,9 +94,7 @@ function lzReceive(uint16 _srcChainId, bytes _srcAddress, uint64 _nonce, bytes _
 | _nonce | uint64 | Nonce received |
 | _payload | bytes | Payload received |
 
-
 #### getConfig
-
 
 **Dev notes:** \
 parameter for address is ignored as it is defaulted to the address of this contract
@@ -113,7 +112,6 @@ function getConfig(uint16 _version, uint16 _chainId, address, uint256 _configTyp
 |  | address |  |
 | _configType | uint256 | Config type |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -123,7 +121,6 @@ function getConfig(uint16 _version, uint16 _chainId, address, uint256 _configTyp
 #### setConfig
 
 Sets generic config for LayerZero user Application
-
 
 ```solidity:no-line-numbers
 function setConfig(uint16 _version, uint16 _chainId, uint256 _configType, bytes _config) external
@@ -137,7 +134,6 @@ function setConfig(uint16 _version, uint16 _chainId, uint256 _configType, bytes 
 | _chainId | uint16 | Chain id |
 | _configType | uint256 | Config type |
 | _config | bytes | Config to set |
-
 
 #### setSendVersion
 
@@ -156,7 +152,6 @@ function setSendVersion(uint16 _version) external
 | ---- | ---- | ----------- |
 | _version | uint16 | Version to set |
 
-
 #### setReceiveVersion
 
 Sets receive message version
@@ -174,25 +169,41 @@ function setReceiveVersion(uint16 _version) external
 | ---- | ---- | ----------- |
 | _version | uint16 | Version to set |
 
-
 #### setLZTrustedRemote
 
-Sets trusted remote address
+Set the trusted path for the cross-chain communication
 
 **Dev notes:** \
-Allow owner to set it multiple times.
+_path = abi.encodePacked(remoteAddress, localAddress)
 
 ```solidity:no-line-numbers
-function setLZTrustedRemote(uint16 _srcChainId, bytes _srcAddress) external virtual
+function setLZTrustedRemote(uint16 _srcChainId, bytes _path) external
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _srcChainId | uint16 | Source chain id |
-| _srcAddress | bytes | Source contract address |
+| _srcChainId | uint16 | Source(Remote) chain id |
+| _path | bytes | abi.encodePacked(sourceAddress, localAddress) |
 
+#### setLZTrustedRemoteAddress
+
+Sets trusted remote address for the cross-chain communication
+
+**Dev notes:** \
+Allow DEFAULT_ADMIN to set it multiple times.
+
+```solidity:no-line-numbers
+function setLZTrustedRemoteAddress(uint16 _srcChainId, bytes _srcAddress) external virtual
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _srcChainId | uint16 | Source(Remote) chain id |
+| _srcAddress | bytes | Source(Remote) contract address |
 
 #### forceResumeReceive
 
@@ -213,7 +224,6 @@ function forceResumeReceive(uint16 _srcChainId, bytes _srcAddress) external virt
 | _srcChainId | uint16 | Source chain id |
 | _srcAddress | bytes | Source contract address |
 
-
 #### retryPayload
 
 Retries the stucked message in the bridge, if any
@@ -233,10 +243,27 @@ function retryPayload(uint16 _srcChainId, bytes _srcAddress, bytes _payload) ext
 | _srcAddress | bytes | Source contract address |
 | _payload | bytes | Payload to retry |
 
+#### getTrustedRemoteAddress
+
+Gets the Trusted Remote Address per given chainId
+
+```solidity:no-line-numbers
+function getTrustedRemoteAddress(uint16 _srcChainId) external view returns (bytes)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _srcChainId | uint16 | Source chain id |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | bytes | bytes  Trusted Source Address |
 
 #### hasStoredPayload
-
-
 
 ```solidity:no-line-numbers
 function hasStoredPayload(uint16 _srcChainId, bytes _srcAddress) external view returns (bool)
@@ -249,7 +276,6 @@ function hasStoredPayload(uint16 _srcChainId, bytes _srcAddress) external view r
 | _srcChainId | uint16 | Source chain id |
 | _srcAddress | bytes | Source contract address |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -257,8 +283,6 @@ function hasStoredPayload(uint16 _srcChainId, bytes _srcAddress) external view r
 | [0] | bool | bool  True if the bridge has stored payload, means it is stuck |
 
 #### getInboundNonce
-
-
 
 ```solidity:no-line-numbers
 function getInboundNonce(uint16 _srcChainId, bytes _srcAddress) external view returns (uint64)
@@ -271,7 +295,6 @@ function getInboundNonce(uint16 _srcChainId, bytes _srcAddress) external view re
 | _srcChainId | uint16 | Source chain id |
 | _srcAddress | bytes | Source contract address |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -279,8 +302,6 @@ function getInboundNonce(uint16 _srcChainId, bytes _srcAddress) external view re
 | [0] | uint64 | uint64  Inbound nonce |
 
 #### getOutboundNonce
-
-
 
 ```solidity:no-line-numbers
 function getOutboundNonce(uint16 _dstChainId, address _srcAddress) external view returns (uint64)
@@ -293,42 +314,17 @@ function getOutboundNonce(uint16 _dstChainId, address _srcAddress) external view
 | _dstChainId | uint16 | Destination chain id |
 | _srcAddress | address | Source contract address |
 
-
 ##### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | uint64 | uint64  Outbound nonce |
 
-#### isLZTrustedRemote
-
-
-
-```solidity:no-line-numbers
-function isLZTrustedRemote(uint16 _srcChainId, bytes _srcAddress) external view returns (bool)
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _srcChainId | uint16 | Source chain id |
-| _srcAddress | bytes | Source contract address |
-
-
-##### Return values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bool | bool  True if the source address is trusted |
-
-
 ### Internal
 
 #### lzSend
 
 Sends message
-
 
 ```solidity:no-line-numbers
 function lzSend(bytes _payload, address payable _refundAddress) internal virtual returns (uint256)
@@ -341,7 +337,6 @@ function lzSend(bytes _payload, address payable _refundAddress) internal virtual
 | _payload | bytes | Payload to send |
 | _refundAddress | address payable | Refund address |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -351,7 +346,6 @@ function lzSend(bytes _payload, address payable _refundAddress) internal virtual
 #### lzEstimateFees
 
 Estimates message fees
-
 
 ```solidity:no-line-numbers
 function lzEstimateFees(bytes _payload) internal view returns (uint256 messageFee, bytes adapterParams)
@@ -363,12 +357,10 @@ function lzEstimateFees(bytes _payload) internal view returns (uint256 messageFe
 | ---- | ---- | ----------- |
 | _payload | bytes | Message payload |
 
-
 ##### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | messageFee | uint256 | Message fee |
 | adapterParams | bytes | Adapter parameters |
-
 

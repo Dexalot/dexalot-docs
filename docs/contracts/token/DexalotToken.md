@@ -6,51 +6,31 @@ headerDepth: 4
 
 **Dexalot Token (ALOT) contract**
 
-
-
-
-
-
-
-
-
 ## Methods
 
 ### Public
 
 #### constructor
 
-
-
 ```solidity:no-line-numbers
 constructor() public
 ```
 
-
 #### pause
-
-
 
 ```solidity:no-line-numbers
 function pause() public
 ```
 
-
 #### unpause
-
-
 
 ```solidity:no-line-numbers
 function unpause() public
 ```
 
-
-
-
 ### Internal
 
 #### _beforeTokenTransfer
-
 
 **Dev notes:** \
 Hook that is called before any transfer of tokens. This includes
@@ -70,32 +50,21 @@ To learn more about hooks, head to xref:ROOT:extending-contracts.adoc#using-hook
 function _beforeTokenTransfer(address from, address to, uint256 amount) internal
 ```
 
-
 #### _afterTokenTransfer
-
-
 
 ```solidity:no-line-numbers
 function _afterTokenTransfer(address from, address to, uint256 amount) internal
 ```
 
-
 #### _mint
-
-
 
 ```solidity:no-line-numbers
 function _mint(address to, uint256 amount) internal
 ```
 
-
 #### _burn
-
-
 
 ```solidity:no-line-numbers
 function _burn(address account, uint256 amount) internal
 ```
-
-
 

@@ -22,8 +22,6 @@ compatible with solidity 0.8.x. Documenention has also been modified to align wi
 
 ### LinkedList
 
-
-
 ```solidity
 struct LinkedList {
   mapping(bytes32 => mapping(bool => bytes32)) list;
@@ -32,11 +30,7 @@ struct LinkedList {
 
 ## Enum Types
 
-
 ## Variables
-
-
-
 
 ### Private
 
@@ -47,17 +41,11 @@ struct LinkedList {
 | NEXT | bool |
 | PREV | bool |
 
-
-
-
 ## Methods
-
-
 
 ### Internal
 
 #### listExists
-
 
 **Dev notes:** \
 Returns true if the list exists
@@ -72,9 +60,7 @@ function listExists(struct Bytes32LinkedListLibrary.LinkedList self) internal vi
 | ---- | ---- | ----------- |
 | self | struct Bytes32LinkedListLibrary.LinkedList | stored linked list from contract |
 
-
 #### nodeExists
-
 
 **Dev notes:** \
 Returns true if the node exists
@@ -90,9 +76,7 @@ function nodeExists(struct Bytes32LinkedListLibrary.LinkedList self, bytes32 _no
 | self | struct Bytes32LinkedListLibrary.LinkedList | stored linked list from contract |
 | _node | bytes32 | a node to search for |
 
-
 #### sizeOf
-
 
 **Dev notes:** \
 Returns the number of elements in the list
@@ -107,9 +91,7 @@ function sizeOf(struct Bytes32LinkedListLibrary.LinkedList self) internal view r
 | ---- | ---- | ----------- |
 | self | struct Bytes32LinkedListLibrary.LinkedList | stored linked list from contract |
 
-
 #### getNode
-
 
 **Dev notes:** \
 Returns the links of a node as a tuple
@@ -125,9 +107,7 @@ function getNode(struct Bytes32LinkedListLibrary.LinkedList self, bytes32 _node)
 | self | struct Bytes32LinkedListLibrary.LinkedList | stored linked list from contract |
 | _node | bytes32 | id of the node to get |
 
-
 #### getAdjacent
-
 
 **Dev notes:** \
 Returns the link of a node `_node` in direction `_direction`.
@@ -144,9 +124,7 @@ function getAdjacent(struct Bytes32LinkedListLibrary.LinkedList self, bytes32 _n
 | _node | bytes32 | id of the node to step from |
 | _direction | bool | direction to step in |
 
-
 #### createLink
-
 
 **Dev notes:** \
 Creates a bidirectional link between two nodes on direction `_direction`
@@ -164,9 +142,7 @@ function createLink(struct Bytes32LinkedListLibrary.LinkedList self, bytes32 _no
 | _link | bytes32 | node to link to in the _direction |
 | _direction | bool |  |
 
-
 #### insert
-
 
 **Dev notes:** \
 Inserts node `_new` beside existing node `_node` in direction `_direction`.
@@ -184,9 +160,7 @@ function insert(struct Bytes32LinkedListLibrary.LinkedList self, bytes32 _node, 
 | _new | bytes32 | new node to insert |
 | _direction | bool | direction to insert node in |
 
-
 #### remove
-
 
 **Dev notes:** \
 Removes an entry from the linked list
@@ -202,9 +176,7 @@ function remove(struct Bytes32LinkedListLibrary.LinkedList self, bytes32 _node) 
 | self | struct Bytes32LinkedListLibrary.LinkedList | stored linked list from contract |
 | _node | bytes32 | node to remove from the list |
 
-
 #### push
-
 
 **Dev notes:** \
 Pushes an enrty to the head of the linked list
@@ -221,9 +193,7 @@ function push(struct Bytes32LinkedListLibrary.LinkedList self, bytes32 _node, bo
 | _node | bytes32 | new entry to push to the head |
 | _direction | bool | push to the head (NEXT) or tail (PREV) |
 
-
 #### pop
-
 
 **Dev notes:** \
 Pops the first entry from the linked list
@@ -238,6 +208,4 @@ function pop(struct Bytes32LinkedListLibrary.LinkedList self, bool _direction) i
 | ---- | ---- | ----------- |
 | self | struct Bytes32LinkedListLibrary.LinkedList | stored linked list from contract |
 | _direction | bool | pop from the head (NEXT) or the tail (PREV) |
-
-
 

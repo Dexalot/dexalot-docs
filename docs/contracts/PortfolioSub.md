@@ -24,8 +24,6 @@ In return, It will deduct a tiny amount of the token transferred.
 
 ### AssetEntry
 
-
-
 ```solidity
 struct AssetEntry {
   uint256 total;
@@ -36,8 +34,6 @@ struct AssetEntry {
 ## Enum Types
 
 ### AssetType
-
-
 
 ```solidity
 enum AssetType {
@@ -63,18 +59,13 @@ enum AssetType {
 | walletBalanceDepositThreshold | uint256 |
 | withdrawFeeRate | uint256 |
 
-
-
 ### Private
 
 | Name | Type |
 | --- | --- |
-| gasStation | IGasStation |
-| portfolioMinter | IPortfolioMinter |
+| gasStation | contract IGasStation |
+| portfolioMinter | contract IPortfolioMinter |
 | treasury | address |
-
-
-
 
 ## Methods
 
@@ -97,7 +88,6 @@ function initialize(bytes32 _native, uint32 _chainId) public
 | ---- | ---- | ----------- |
 | _native | bytes32 | Native token of the chain |
 | _chainId | uint32 |  |
-
 
 #### addToken
 
@@ -127,7 +117,6 @@ function addToken(bytes32 _symbol, address _tokenAddress, uint32 _srcChainId, ui
 | _decimals | uint8 | Decimals of the token |
 | _mode | enum ITradePairs.AuctionMode | Starting auction mode of the token |
 
-
 #### removeToken
 
 Remove IERC20 token from the tokenMap
@@ -146,12 +135,9 @@ function removeToken(bytes32 _symbol) public
 | ---- | ---- | ----------- |
 | _symbol | bytes32 | symbol of the token |
 
-
-
 ### External
 
 #### setFeeAddress
-
 
 **Dev notes:** \
 Only callable by the owner
@@ -165,7 +151,6 @@ function setFeeAddress(address _feeAddress) external
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _feeAddress | address | Address to collect trading fees |
-
 
 #### setAuctionMode
 
@@ -185,11 +170,9 @@ function setAuctionMode(bytes32 _symbol, enum ITradePairs.AuctionMode _mode) ext
 | _symbol | bytes32 | Symbol of the token |
 | _mode | enum ITradePairs.AuctionMode | New auction mode |
 
-
 #### getBalance
 
 Frontend function to show traders total and available balance for a token
-
 
 ```solidity:no-line-numbers
 function getBalance(address _owner, bytes32 _symbol) external view returns (uint256 total, uint256 available, enum PortfolioSub.AssetType assetType)
@@ -201,7 +184,6 @@ function getBalance(address _owner, bytes32 _symbol) external view returns (uint
 | ---- | ---- | ----------- |
 | _owner | address | Address of the trader |
 | _symbol | bytes32 | Symbol of the token |
-
 
 ##### Return values
 
@@ -241,7 +223,6 @@ function addExecution(enum ITradePairs.Side _makerSide, address _makerAddr, addr
 | _makerfeeCharged | uint256 | Fee charged to the maker |
 | _takerfeeCharged | uint256 | Fee charged to the taker |
 
-
 #### processXFerPayload
 
 Processes the message coming from the bridge
@@ -265,7 +246,6 @@ function processXFerPayload(address _trader, bytes32 _symbol, uint256 _quantity,
 | _quantity | uint256 | Amount of the token |
 | _transaction | enum IPortfolio.Tx | Transaction type |
 
-
 #### lzRecoverPayload
 
 Recovers the stucked message from the LZ bridge, returns the funds to the depositor/withdrawer
@@ -284,11 +264,9 @@ function lzRecoverPayload(bytes _payload) external
 | ---- | ---- | ----------- |
 | _payload | bytes | Payload of the message |
 
-
 #### depositNative
 
 This function is only used to deposit native ALOT from the subnet wallet
-
 
 ```solidity:no-line-numbers
 function depositNative(address payable _from, enum IPortfolioBridge.BridgeProvider) external payable
@@ -300,7 +278,6 @@ function depositNative(address payable _from, enum IPortfolioBridge.BridgeProvid
 | ---- | ---- | ----------- |
 | _from | address payable | Address of the depositor |
 |  | enum IPortfolioBridge.BridgeProvider |  |
-
 
 #### withdrawNative
 
@@ -320,11 +297,9 @@ function withdrawNative(address payable _to, uint256 _quantity) external
 | _to | address payable | Address of the withdrawer |
 | _quantity | uint256 | Amount of the native ALOT to withdraw |
 
-
 #### withdrawToken
 
 Withdraws the token to the mainnet
-
 
 ```solidity:no-line-numbers
 function withdrawToken(address _to, bytes32 _symbol, uint256 _quantity, enum IPortfolioBridge.BridgeProvider _bridge) external
@@ -339,11 +314,9 @@ function withdrawToken(address _to, bytes32 _symbol, uint256 _quantity, enum IPo
 | _quantity | uint256 | Amount of the token |
 | _bridge | enum IPortfolioBridge.BridgeProvider | Enum bridge type |
 
-
 #### adjustAvailable
 
 Function for TradePairs to adjust total and available as a result of an order update
-
 
 ```solidity:no-line-numbers
 function adjustAvailable(enum IPortfolio.Tx _transaction, address _trader, bytes32 _symbol, uint256 _amount) external
@@ -357,7 +330,6 @@ function adjustAvailable(enum IPortfolio.Tx _transaction, address _trader, bytes
 | _trader | address | Address of the trader |
 | _symbol | bytes32 | Symbol of the token |
 | _amount | uint256 | Amount of the token |
-
 
 #### transferToken
 
@@ -378,7 +350,6 @@ function transferToken(address _to, bytes32 _symbol, uint256 _quantity) external
 | _symbol | bytes32 | Symbol of the token |
 | _quantity | uint256 | Amount of the token |
 
-
 #### withdrawFees
 
 Withdraws collected fees to the mainnet
@@ -390,15 +361,11 @@ Only admin can call this function
 function withdrawFees() external
 ```
 
-
 #### getGasStation
-
-
 
 ```solidity:no-line-numbers
 function getGasStation() external view returns (contract IGasStation)
 ```
-
 
 ##### Return values
 
@@ -423,15 +390,11 @@ function setGasStation(contract IGasStation _gasStation) external
 | ---- | ---- | ----------- |
 | _gasStation | contract IGasStation | Gas station contract to be set |
 
-
 #### getTreasury
-
-
 
 ```solidity:no-line-numbers
 function getTreasury() external view returns (address)
 ```
-
 
 ##### Return values
 
@@ -456,15 +419,11 @@ function setTreasury(address _treasury) external
 | ---- | ---- | ----------- |
 | _treasury | address | Address of the treasury wallet |
 
-
 #### getPortfolioMinter
-
-
 
 ```solidity:no-line-numbers
 function getPortfolioMinter() external view returns (contract IPortfolioMinter)
 ```
-
 
 ##### Return values
 
@@ -489,7 +448,6 @@ function setPortfolioMinter(contract IPortfolioMinter _portfolioMinter) external
 | ---- | ---- | ----------- |
 | _portfolioMinter | contract IPortfolioMinter | Portfolio minter contract to be set |
 
-
 #### setWalletBalanceDepositThreshold
 
 Sets wallet balance deposit thresholds
@@ -506,7 +464,6 @@ function setWalletBalanceDepositThreshold(uint256 _amount) external
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _amount | uint256 | Amount of native token to be set as threshold |
-
 
 #### updateTransferFeeRate
 
@@ -526,9 +483,7 @@ function updateTransferFeeRate(uint256 _rate, enum IPortfolio.Tx _rateType) exte
 | _rate | uint256 | Transfer fee rate to be set |
 | _rateType | enum IPortfolio.Tx | Tx type for which the transfer fee rate is to be set |
 
-
 #### getToken
-
 
 **Dev notes:** \
 Only valid for the mainnet. Implemented with an empty block here.
@@ -537,9 +492,7 @@ Only valid for the mainnet. Implemented with an empty block here.
 function getToken(bytes32 _symbol) external view returns (contract IERC20Upgradeable)
 ```
 
-
 #### depositToken
-
 
 **Dev notes:** \
 Only valid for the mainnet. Implemented with an empty block here.
@@ -548,9 +501,7 @@ Only valid for the mainnet. Implemented with an empty block here.
 function depositToken(address _from, bytes32 _symbol, uint256 _quantity, enum IPortfolioBridge.BridgeProvider) external
 ```
 
-
 #### depositTokenFromContract
-
 
 **Dev notes:** \
 Only valid for the mainnet. Implemented with an empty block here.
@@ -558,8 +509,6 @@ Only valid for the mainnet. Implemented with an empty block here.
 ```solidity:no-line-numbers
 function depositTokenFromContract(address _from, bytes32 _symbol, uint256 _quantity) external
 ```
-
-
 
 ### Internal
 
@@ -581,7 +530,6 @@ function getSwapAmount(bytes32 _symbol, uint256 _gasAmount) internal view return
 | _symbol | bytes32 | Symbol of the token |
 | _gasAmount | uint256 | Amount of gas to be swapped |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -591,7 +539,6 @@ function getSwapAmount(bytes32 _symbol, uint256 _gasAmount) internal view return
 #### addIERC20
 
 Add IERC20 token to the tokenMap
-
 
 ```solidity:no-line-numbers
 function addIERC20(bytes32 _symbol, address _tokenaddress, uint32 _srcChainId, uint8 _decimals, enum ITradePairs.AuctionMode) internal
@@ -607,9 +554,7 @@ function addIERC20(bytes32 _symbol, address _tokenaddress, uint32 _srcChainId, u
 | _decimals | uint8 | Token decimals |
 |  | enum ITradePairs.AuctionMode |  |
 
-
 #### removeIERC20
-
 
 **Dev notes:** \
 Only valid for the mainnet. Implemented with an empty block here.
@@ -617,8 +562,6 @@ Only valid for the mainnet. Implemented with an empty block here.
 ```solidity:no-line-numbers
 function removeIERC20(bytes32 _symbol) internal
 ```
-
-
 
 ### Private
 
@@ -645,7 +588,6 @@ function safeIncrease(address _trader, bytes32 _symbol, uint256 _amount, uint256
 | _feeCharged | uint256 | Fee charged for the _transaction |
 | _transaction | enum IPortfolio.Tx | Transaction type |
 
-
 #### safeDecreaseTotal
 
 Decreases the total balance of the user
@@ -669,11 +611,9 @@ function safeDecreaseTotal(address _trader, bytes32 _symbol, uint256 _amount, ui
 | _feeCharged | uint256 | Fee charged for the transaction |
 | _transaction | enum IPortfolio.Tx | Transaction type |
 
-
 #### safeDecrease
 
 Decreases the available balance of the user
-
 
 ```solidity:no-line-numbers
 function safeDecrease(address _trader, bytes32 _symbol, uint256 _amount, uint256 _feeCharged, enum IPortfolio.Tx _transaction) private
@@ -689,10 +629,7 @@ function safeDecrease(address _trader, bytes32 _symbol, uint256 _amount, uint256
 | _feeCharged | uint256 | Fee charged for the transaction |
 | _transaction | enum IPortfolio.Tx | Transaction type |
 
-
 #### transferToken
-
-
 
 ```solidity:no-line-numbers
 function transferToken(address _from, address _to, bytes32 _symbol, uint256 _quantity, uint256 _feeCharged, enum IPortfolio.Tx _transaction, bool _decreaseTotalOnly) private
@@ -710,11 +647,9 @@ function transferToken(address _from, address _to, bytes32 _symbol, uint256 _qua
 | _transaction | enum IPortfolio.Tx | Transaction type |
 | _decreaseTotalOnly | bool | If true, only total balance is decreased |
 
-
 #### safeTransferFee
 
 Transfers the fees collected to the fee address
-
 
 ```solidity:no-line-numbers
 function safeTransferFee(bytes32 _symbol, uint256 _feeCharged) private
@@ -727,11 +662,9 @@ function safeTransferFee(bytes32 _symbol, uint256 _feeCharged) private
 | _symbol | bytes32 | Symbol of the token |
 | _feeCharged | uint256 | Fee charged for the transaction |
 
-
 #### emitPortfolioEvent
 
 Wrapper for emit event
-
 
 ```solidity:no-line-numbers
 function emitPortfolioEvent(address _trader, bytes32 _symbol, uint256 _quantity, uint256 _feeCharged, enum IPortfolio.Tx _transaction) private
@@ -746,5 +679,4 @@ function emitPortfolioEvent(address _trader, bytes32 _symbol, uint256 _quantity,
 | _quantity | uint256 | Amount of token used in the transaction |
 | _feeCharged | uint256 | Fee charged for the transaction |
 | _transaction | enum IPortfolio.Tx | Transaction type |
-
 

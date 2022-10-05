@@ -18,8 +18,6 @@ All the functions pertaining to Auction can also be called directly in
 TradePairs and Portfolio using DEFAULT_ADMIN_ROLE but not recommended because certain
 actions require a synchronized update to both Portfolio and TradePairs contracts.
 
-
-
 ## Variables
 
 ### Public
@@ -28,14 +26,15 @@ actions require a synchronized update to both Portfolio and TradePairs contracts
 | --- | --- |
 | AUCTION_ADMIN_ROLE | bytes32 |
 
+### Internal
 
-
+| Name | Type |
+| --- | --- |
+| portfolio | contract IPortfolio |
 
 ## Events
 
 ### PortfolioSet
-
-
 
 ```solidity:no-line-numbers
 event PortfolioSet(contract IPortfolio _oldPortfolio, contract IPortfolio _newPortfolio)
@@ -43,14 +42,9 @@ event PortfolioSet(contract IPortfolio _oldPortfolio, contract IPortfolio _newPo
 
 ### RoleUpdated
 
-
-
 ```solidity:no-line-numbers
 event RoleUpdated(string name, string actionName, bytes32 updatedRole, address updatedAddress)
 ```
-
-
-
 
 ## Methods
 
@@ -67,11 +61,9 @@ Grants admin role to the deployer.
 function initialize() public virtual
 ```
 
-
 #### addAdmin
 
 Adds Default Admin role to the address
-
 
 ```solidity:no-line-numbers
 function addAdmin(address _address) public virtual
@@ -83,11 +75,9 @@ function addAdmin(address _address) public virtual
 | ---- | ---- | ----------- |
 | _address | address | address to add role to |
 
-
 #### removeAdmin
 
 Removes Default Admin role from the address
-
 
 ```solidity:no-line-numbers
 function removeAdmin(address _address) public virtual
@@ -99,10 +89,7 @@ function removeAdmin(address _address) public virtual
 | ---- | ---- | ----------- |
 | _address | address | address to remove role from |
 
-
 #### isAdmin
-
-
 
 ```solidity:no-line-numbers
 function isAdmin(address _address) public view returns (bool)
@@ -113,7 +100,6 @@ function isAdmin(address _address) public view returns (bool)
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _address | address | address to check |
-
 
 ##### Return values
 
@@ -138,9 +124,7 @@ function pausePortfolio(bool _pause) public
 | ---- | ---- | ----------- |
 | _pause | bool | true to pause, false to unpause |
 
-
 #### stringToBytes32
-
 
 **Dev notes:** \
 utility function to convert string to bytes32
@@ -155,7 +139,6 @@ function stringToBytes32(string _string) public pure returns (bytes32 result)
 | ---- | ---- | ----------- |
 | _string | string | string to convert |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -163,7 +146,6 @@ function stringToBytes32(string _string) public pure returns (bytes32 result)
 | result | bytes32 | bytes32 representation of the string |
 
 #### bytes32ToString
-
 
 **Dev notes:** \
 utility function to convert bytes32 to string
@@ -178,20 +160,17 @@ function bytes32ToString(bytes32 _bytes32) public pure returns (string)
 | ---- | ---- | ----------- |
 | _bytes32 | bytes32 | bytes32 to convert |
 
-
 ##### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | string | string  string representation of the bytes32 |
 
-
 ### External
 
 #### addAuctionAdmin
 
 Adds Auction Admin role to the address
-
 
 ```solidity:no-line-numbers
 function addAuctionAdmin(address _address) external
@@ -203,11 +182,9 @@ function addAuctionAdmin(address _address) external
 | ---- | ---- | ----------- |
 | _address | address | address to add role to |
 
-
 #### removeAuctionAdmin
 
 Removes Auction Admin role from the address
-
 
 ```solidity:no-line-numbers
 function removeAuctionAdmin(address _address) external
@@ -219,10 +196,7 @@ function removeAuctionAdmin(address _address) external
 | ---- | ---- | ----------- |
 | _address | address | address to remove role from |
 
-
 #### isAuctionAdmin
-
-
 
 ```solidity:no-line-numbers
 function isAuctionAdmin(address _address) external view returns (bool)
@@ -234,7 +208,6 @@ function isAuctionAdmin(address _address) external view returns (bool)
 | ---- | ---- | ----------- |
 | _address | address | address to check |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -244,7 +217,6 @@ function isAuctionAdmin(address _address) external view returns (bool)
 #### setPortfolio
 
 Set portfolio address
-
 
 ```solidity:no-line-numbers
 function setPortfolio(contract IPortfolio _portfolio) external
@@ -256,15 +228,11 @@ function setPortfolio(contract IPortfolio _portfolio) external
 | ---- | ---- | ----------- |
 | _portfolio | contract IPortfolio | address of portfolio contract |
 
-
 #### getPortfolio
-
-
 
 ```solidity:no-line-numbers
 function getPortfolio() external view returns (contract IPortfolio)
 ```
-
 
 ##### Return values
 
@@ -276,7 +244,6 @@ function getPortfolio() external view returns (contract IPortfolio)
 
 Implemented in the child contract, as the logic differs.
 
-
 ```solidity:no-line-numbers
 function pauseForUpgrade(bool _pause) external virtual
 ```
@@ -287,15 +254,11 @@ function pauseForUpgrade(bool _pause) external virtual
 | ---- | ---- | ----------- |
 | _pause | bool | true to pause, false to unpause |
 
-
 #### fallback
-
-
 
 ```solidity:no-line-numbers
 fallback() external
 ```
-
 
 #### addTrustedContract
 
@@ -315,9 +278,7 @@ function addTrustedContract(address _contract, string _name) external
 | _contract | address | address of trusted contract |
 | _name | string | name of trusted contract |
 
-
 #### isTrustedContract
-
 
 **Dev notes:** \
 Exchange needs to be DEFAULT_ADMIN on the Portfolio
@@ -331,7 +292,6 @@ function isTrustedContract(address _contract) external view returns (bool)
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _contract | address | address to check |
-
 
 ##### Return values
 
@@ -356,7 +316,6 @@ function removeTrustedContract(address _contract) external
 | ---- | ---- | ----------- |
 | _contract | address | address of trusted contract |
 
-
 #### addToken
 
 Add new token to portfolio
@@ -377,7 +336,4 @@ function addToken(bytes32 _symbol, address _tokenaddress, uint32 _srcChainId, ui
 | _srcChainId | uint32 | Source Chain id |
 | _decimals | uint8 | decimals of the token |
 | _mode | enum ITradePairs.AuctionMode | starting auction mode |
-
-
-
 

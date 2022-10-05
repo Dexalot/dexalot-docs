@@ -6,26 +6,16 @@ headerDepth: 4
 
 **Common utility functions used across Dexalot&#x27;s smart contracts.**
 
-
 **Dev notes:** \
 This library provides a set of simple, pure functions to be used in other contracts.
 
-
-
-
-
-
-
 ## Methods
-
-
 
 ### Internal
 
 #### decimalsOk
 
 Checks the validity of price and quantity given the evm and display decimals.
-
 
 ```solidity:no-line-numbers
 function decimalsOk(uint256 _value, uint8 _decimals, uint8 _displayDecimals) internal pure returns (bool)
@@ -39,7 +29,6 @@ function decimalsOk(uint256 _value, uint8 _decimals, uint8 _displayDecimals) int
 | _decimals | uint8 | evm decimals |
 | _displayDecimals | uint8 | base or quote display decimals |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -49,7 +38,6 @@ function decimalsOk(uint256 _value, uint8 _decimals, uint8 _displayDecimals) int
 #### getRemainingQuantity
 
 Returns the remaining quantity for an Order struct.
-
 
 ```solidity:no-line-numbers
 function getRemainingQuantity(uint256 _quantity, uint256 _quantityFilled) internal pure returns (uint256)
@@ -62,7 +50,6 @@ function getRemainingQuantity(uint256 _quantity, uint256 _quantityFilled) intern
 | _quantity | uint256 | original order quantity |
 | _quantityFilled | uint256 | filled quantity |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -72,7 +59,6 @@ function getRemainingQuantity(uint256 _quantity, uint256 _quantityFilled) intern
 #### matchingAllowed
 
 Checks if a tradePair is in auction and if matching is not allowed in the orderbook.
-
 
 ```solidity:no-line-numbers
 function matchingAllowed(enum ITradePairs.AuctionMode _mode) internal pure returns (bool)
@@ -84,7 +70,6 @@ function matchingAllowed(enum ITradePairs.AuctionMode _mode) internal pure retur
 | ---- | ---- | ----------- |
 | _mode | enum ITradePairs.AuctionMode | Auction Mode |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -95,7 +80,6 @@ function matchingAllowed(enum ITradePairs.AuctionMode _mode) internal pure retur
 
 Checks if the auction is in a restricted state.
 
-
 ```solidity:no-line-numbers
 function isAuctionRestricted(enum ITradePairs.AuctionMode _mode) internal pure returns (bool)
 ```
@@ -105,7 +89,6 @@ function isAuctionRestricted(enum ITradePairs.AuctionMode _mode) internal pure r
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _mode | enum ITradePairs.AuctionMode | Auction Mode |
-
 
 ##### Return values
 
@@ -133,7 +116,6 @@ function canCancel(uint256 _quantity, uint256 _quantityFilled, enum ITradePairs.
 | _quantityFilled | uint256 | quantityFilled of the order |
 | _orderStatus | enum ITradePairs.Status | status of the order |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -158,7 +140,6 @@ function floor(uint256 _a, uint256 _m) internal pure returns (uint256)
 | _a | uint256 | number to round down |
 | _m | uint256 | number of digits from the right to round down |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -168,7 +149,6 @@ function floor(uint256 _a, uint256 _m) internal pure returns (uint256)
 #### min
 
 Returns the minuimum of the two uint256 arguments
-
 
 ```solidity:no-line-numbers
 function min(uint256 _a, uint256 _b) internal pure returns (uint256)
@@ -181,7 +161,6 @@ function min(uint256 _a, uint256 _b) internal pure returns (uint256)
 | _a | uint256 | A |
 | _b | uint256 | B |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -191,7 +170,6 @@ function min(uint256 _a, uint256 _b) internal pure returns (uint256)
 #### bytes32ToString
 
 Converts a bytes32 value to a string
-
 
 ```solidity:no-line-numbers
 function bytes32ToString(bytes32 _bytes32) internal pure returns (string)
@@ -203,7 +181,6 @@ function bytes32ToString(bytes32 _bytes32) internal pure returns (string)
 | ---- | ---- | ----------- |
 | _bytes32 | bytes32 | bytes32 data to be converted to string |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -213,7 +190,6 @@ function bytes32ToString(bytes32 _bytes32) internal pure returns (string)
 #### stringToBytes32
 
 Converts a string to a bytes32 value
-
 
 ```solidity:no-line-numbers
 function stringToBytes32(string _string) internal pure returns (bytes32 result)
@@ -225,7 +201,6 @@ function stringToBytes32(string _string) internal pure returns (bytes32 result)
 | ---- | ---- | ----------- |
 | _string | string | a sting to be converted to bytes32 |
 
-
 ##### Return values
 
 | Name | Type | Description |
@@ -235,7 +210,6 @@ function stringToBytes32(string _string) internal pure returns (bytes32 result)
 #### getIdForToken
 
 Returns the symbolId that consists of symbol+chainid
-
 
 ```solidity:no-line-numbers
 function getIdForToken(bytes32 _symbol, uint32 _srcChainId) internal pure returns (bytes32 id)
@@ -248,11 +222,31 @@ function getIdForToken(bytes32 _symbol, uint32 _srcChainId) internal pure return
 | _symbol | bytes32 | token symbol of an asset |
 | _srcChainId | uint32 | chain id where the asset exists |
 
-
 ##### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | id | bytes32 | the resulting symbolId |
 
+#### slice
+
+Copied from Layer0 Libs
+
+```solidity:no-line-numbers
+function slice(bytes _bytes, uint256 _start, uint256 _length) internal pure returns (bytes)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _bytes | bytes | Bytes to slice |
+| _start | uint256 | Start |
+| _length | uint256 | Length |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | bytes | bytes   Bytes returned |
 

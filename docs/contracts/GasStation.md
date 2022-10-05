@@ -9,9 +9,6 @@ headerDepth: 4
 This contract swaps other tokens with subnet native coin to send users native coin for gas.
 It receives native coin and only sends out to the low balanced users via PortfolioSub.
 
-
-
-
 ## Variables
 
 ### Public
@@ -23,14 +20,9 @@ It receives native coin and only sends out to the low balanced users via Portfol
 | VERSION | bytes32 |
 | gasAmount | uint256 |
 
-
-
-
 ## Events
 
 ### GasAmountChanged
-
-
 
 ```solidity:no-line-numbers
 event GasAmountChanged(uint256 amount)
@@ -38,14 +30,9 @@ event GasAmountChanged(uint256 amount)
 
 ### GasRequested
 
-
-
 ```solidity:no-line-numbers
 event GasRequested(address to, uint256 amount)
 ```
-
-
-
 
 ## Methods
 
@@ -69,8 +56,6 @@ function initialize(address _swapper, uint256 _gasAmount) public
 | _swapper | address | Address of the swapper contract (PortfolioSub in our case) |
 | _gasAmount | uint256 | Amount of gas to be distrubuted to the users |
 
-
-
 ### External
 
 #### pause
@@ -84,7 +69,6 @@ Only pauser can pause
 function pause() external
 ```
 
-
 #### unpause
 
 Unpauses gas distribution
@@ -95,7 +79,6 @@ Only pauser can unpause
 ```solidity:no-line-numbers
 function unpause() external
 ```
-
 
 #### setGasAmount
 
@@ -114,7 +97,6 @@ function setGasAmount(uint256 _gasAmount) external
 | ---- | ---- | ----------- |
 | _gasAmount | uint256 | New gas amount |
 
-
 #### requestGas
 
 Swapper contract will request gas after depositing bridge fee to our EOA
@@ -131,7 +113,6 @@ function requestGas(address _to) external
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _to | address | Address of the user to receive gas |
-
 
 #### withdrawNative
 
@@ -150,18 +131,13 @@ function withdrawNative(uint256 _amount) external
 | ---- | ---- | ----------- |
 | _amount | uint256 | Amount of alot to withdraw |
 
-
 #### receive
-
-
 
 ```solidity:no-line-numbers
 receive() external payable
 ```
 
-
 #### fallback
-
 
 **Dev notes:** \
 we revert transaction if a non-existing function is called
@@ -169,7 +145,4 @@ we revert transaction if a non-existing function is called
 ```solidity:no-line-numbers
 fallback() external payable
 ```
-
-
-
 

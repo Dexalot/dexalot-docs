@@ -59,19 +59,30 @@ export default defineUserConfig({
     },
 
     navbar: [
-      { text: "Tutorials & Articles",
-        link: "https://medium.com/dexalot",
-        icon: "read"
-      },
-
-      { text: "Landing",
+      {
+        text: "Landing",
         link: "https://dexalot.com/",
         icon: "launch"
       },
-
-      { text: "App",
+      {
+        text: "App",
         link: "https://app.dexalot.com/",
         icon: "launch"
+      },
+      {
+        text: "Medium",
+        link: "https://medium.com/dexalot",
+        icon: "read"
+      },
+      {
+        text: "Discord",
+        link: "https://discord.com/invite/S4NP9w7Xwn",
+        icon: "wechat"
+      },
+      {
+        text: "Telegram",
+        link: "https://t.me/dexalot",
+        icon: "wechat"
       },
     ],
 
@@ -82,6 +93,7 @@ export default defineUserConfig({
         text: "Articles",
         icon: "overflow",
         collapsable: true,
+        link: "articles",
         prefix: "articles/",
         children: [
           {
@@ -96,7 +108,7 @@ export default defineUserConfig({
         text: "Smart Contracts",
         icon: "note",
         collapsable: true,
-        link: "contracts/",
+        link: "contracts",
         prefix: "contracts/",
         children: [
           {

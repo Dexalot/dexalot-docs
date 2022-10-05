@@ -78,7 +78,6 @@ event RewardsDurationUpdated(uint256 rewardsDuration)
 event FundsRecovered(uint256 amount, address token)
 ```
 
-
 ## Modifiers
 
 #### updateReward

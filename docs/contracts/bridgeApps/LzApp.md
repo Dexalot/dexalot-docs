@@ -41,6 +41,7 @@ event LzSetTrustedRemote(uint16 remoteChainId, bytes path)
 event LzSetTrustedRemoteAddress(uint16 remoteChainId, bytes remoteAddress)
 ```
 
+
 ## Methods
 
 ### External

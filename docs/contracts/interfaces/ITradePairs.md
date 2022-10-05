@@ -190,6 +190,7 @@ event Executed(uint8 version, bytes32 pair, uint256 price, uint256 quantity, byt
 | execId | uint256 | unique trade id (execution id) assigned by the contract |
 | addressMaker | address | maker traderaddress |
 | addressTaker | address | taker traderaddress |
+
 ### ParameterUpdated
 
 ```solidity:no-line-numbers

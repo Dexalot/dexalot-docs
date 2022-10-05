@@ -197,8 +197,8 @@ Clears the blocking message in the LZ bridge, if any
 
 **Dev notes:** \
 Force resume receive action is destructive
-should be used only when the bridge is stuck and message is already recovered
-   Only callable by admin
+should be used only when the bridge is stuck and message is already recovered. \
+It is only callable by admin.
 
 ```solidity:no-line-numbers
 function lzForceResumeReceive(uint16 _srcChainId, bytes _srcAddress) external

@@ -264,8 +264,8 @@ function setGasForDestinationLzReceive(uint256 _gas) external
 
 #### addToken
 
-Adds the given token to the portfoBrige. PortfolioBrigeSub the list will be bigger as they could be
-from different mainnet chains
+Adds the given token to the portfolioBridge. PortfolioBrigeSub the list will be bigger as they could
+be from different mainnet chains
 
 **Dev notes:** \
 `addToken` is only callable by admin or from Portfolio when a new common symbol is added for the

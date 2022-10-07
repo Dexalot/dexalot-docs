@@ -98,7 +98,7 @@ Allows deposits from trusted contracts
 
 **Dev notes:** \
 Used by Avalaunch for DD deposits and Vesting Contracts.
-                Keepig for backward compatibility instead of using ON_BEHALF_ROLE
+Keeping for backward compatibility instead of using ON_BEHALF_ROLE.
 
 ```solidity:no-line-numbers
 function depositTokenFromContract(address _from, bytes32 _symbol, uint256 _quantity) external
@@ -118,9 +118,9 @@ Processes the message coming from the bridge
 
 **Dev notes:** \
 Only process WITHDRAW messages as it is the only message that can be sent to the portfolio main
-                Even when the contract is paused, this method is allowed for the messages that
-                are in flight to complete properly. Pause for upgrade, then wait to make sure no messages are in
-                fligh then upgrade
+Even when the contract is paused, this method is allowed for the messages that
+are in flight to complete properly. Pause for upgrade, then wait to make sure no messages are in
+flight then upgrade
 
 ```solidity:no-line-numbers
 function processXFerPayload(address _trader, bytes32 _symbol, uint256 _quantity, enum IPortfolio.Tx _transaction) external
@@ -140,8 +140,8 @@ function processXFerPayload(address _trader, bytes32 _symbol, uint256 _quantity,
 Recovers the stucked message from the LZ bridge, returns the funds to the depositor/withdrawer
 
 **Dev notes:** \
-Only call this just before calling force resume receive function for the LZ bridge
-    Only the owner can call this function
+Only call this just before calling force resume receive function for the LZ bridge. \
+Only the DEFAULT_ADMIN can call this function.
 
 ```solidity:no-line-numbers
 function lzRecoverPayload(bytes _payload) external

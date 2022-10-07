@@ -790,7 +790,7 @@ function unsolicitedCancel(bytes32 _tradePairId, bool _isBuyBook, uint8 _maxCoun
 
 #### cancelReplaceOrder
 
-Cancels an order and immediatly enters a similar order in the same direction.
+Cancels an order and immediately enters a similar order in the same direction.
 
 **Dev notes:** \
 Only the quantity and the price of the order can be changed. All the other order
@@ -951,7 +951,7 @@ function emitStatusUpdate(bytes32 _orderId) private
 
 #### handleExecution
 
-Calculates the commission and updates the oder state after an execution
+Calculates the commission and updates the order state after an execution
 
 **Dev notes:** \
 Updates the `totalAmount`, `quantityFilled`, `totalFee` and the status of the order.
@@ -1000,8 +1000,8 @@ function addExecution(bytes32 _makerOrderId, bytes32 _takerOrderId, uint256 _pri
 #### emitExecuted
 
 Emits the Executed Event showing \
-`ersion`  event version \
-`pair`  traded pair. ie. ALOT/AVAX in bytes32 \
+`version`  event version \
+`tradePairId`  traded pair from makerOrder, i.e. ALOT/AVAX in bytes32 \
 `_price`  see below \
 `_quantity`  see below \
 `_makerOrderId`  see below \
@@ -1015,7 +1015,7 @@ then the fee is paid by the Maker in Quote Currency and the fee is paid by
 the taker in Base currency \
 `execId`  Unique trade id (execution id) assigned by the contract \
 `addressMaker`  maker traderaddress \
-`addressTaker`  taker traderaddress \
+`addressTaker`  taker traderaddress
 
 ```solidity:no-line-numbers
 function emitExecuted(uint256 _price, uint256 _quantity, bytes32 _makerOrderId, bytes32 _takerOrderId, uint256 _mlastFee, uint256 _tlastFee) private

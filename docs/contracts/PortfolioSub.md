@@ -10,12 +10,12 @@ Receives messages from mainnet for deposits and sends withdraw requests to mainn
    transfers tokens between traders as their orders gets matched.
 
 **Dev notes:** \
-Allows one to withdraw and deposit native token from/to the subnet wallet. Any other token has be be
+Allows one to withdraw and deposit native token from/to the subnet wallet. Any other token has to be
 deposited via PortfolioBridge using processXFerPayload function. It can only be invoked by a bridge
-provider&#x27;s message receive event.
-Any other token token including ALOT (native) can be withdrawn to mainnet using withdrawToken that will
-send the holdings back to the user&#x27;s wallet in the mainnet.
-TradePairs needs to have EXECUTOR_ROLE on PortfolioSub contract.
+provider&#x27;s message receive event. \
+Any other token including ALOT (native) can be withdrawn to mainnet using withdrawToken that will
+send the holdings back to the user&#x27;s wallet in the mainnet. \
+TradePairs needs to have EXECUTOR_ROLE on PortfolioSub contract. \
 If a trader deposits a token and has 0 ALOT in his subnet wallet, this contract will make a call
 to GasStation to deposit a small amount of ALOT to the user&#x27;s wallet to be used for gas.
 In return, It will deduct a tiny amount of the token transferred.
@@ -94,14 +94,14 @@ function initialize(bytes32 _native, uint32 _chainId) public
 Adds the given token to the portfolioSub with 0 address in the subnet.
 
 **Dev notes:** \
-Only callable by admin
-We don't allow tokens with same symbols.
-Native symbol is also added as a token with 0 address.
+This function is only callable by admin. \
+We don't allow tokens with same symbols. \
+Native symbol is also added as a token with 0 address. \
 PortfolioSub keeps track of total deposited tokens in tokenTotals for sanity checks against mainnet
-It has no ERC20 Contracts hence, it overwtires the addresses with address(0).
+It has no ERC20 Contracts hence, it overwrites the addresses with address(0). \
 But PortfolioBridgeSub keeps all the symbols added from all different mainnet chains separately with
 their original details including the addresses
-except AVAX which passed with address(0).
+except AVAX which is passed with address(0).
 
 ```solidity:no-line-numbers
 function addToken(bytes32 _symbol, address _tokenAddress, uint32 _srcChainId, uint8 _decimals, enum ITradePairs.AuctionMode _mode) public
@@ -251,8 +251,8 @@ function processXFerPayload(address _trader, bytes32 _symbol, uint256 _quantity,
 Recovers the stucked message from the LZ bridge, returns the funds to the depositor/withdrawer
 
 **Dev notes:** \
-Only call this just before calling force resume receive function for the LZ bridge
-Only the DEFAULT_ADMIN can call this function
+Only call this just before calling force resume receive function for the LZ bridge. \
+Only the DEFAULT_ADMIN can call this function.
 
 ```solidity:no-line-numbers
 function lzRecoverPayload(bytes _payload) external

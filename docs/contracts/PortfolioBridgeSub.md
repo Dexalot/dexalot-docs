@@ -209,7 +209,7 @@ function checkTreshholds(struct IPortfolio.XFER _xfer) internal returns (bool)
 
 #### getTokenId
 
-Retruns the symbolId used the subnet given the targetChainId
+Returns the symbolId used the subnet given the targetChainId
 
 **Dev notes:** \
 it uses the defaultTargetChain instead of instead of portfolio.getChainId() that PortfolioBridge uses.

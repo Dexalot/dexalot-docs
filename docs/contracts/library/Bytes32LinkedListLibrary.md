@@ -28,8 +28,6 @@ struct LinkedList {
 }
 ```
 
-## Enum Types
-
 ## Variables
 
 ### Private

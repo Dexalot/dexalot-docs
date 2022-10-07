@@ -128,6 +128,7 @@ export default defineUserConfig({
               "PortfolioBridgeSub",
               "PortfolioMinter",
               "GasStation",
+              "DexalotSubnetBalances"
             ],
           },
 

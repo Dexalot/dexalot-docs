@@ -38,8 +38,6 @@ struct Tree {
 }
 ```
 
-## Enum Types
-
 ## Variables
 
 ### Private

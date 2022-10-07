@@ -173,9 +173,6 @@ function setReceiveVersion(uint16 _version) external
 
 Set the trusted path for the cross-chain communication
 
-**Dev notes:** \
-_path = abi.encodePacked(remoteAddress, localAddress)
-
 ```solidity:no-line-numbers
 function setLZTrustedRemote(uint16 _srcChainId, bytes _path) external
 ```
@@ -185,7 +182,7 @@ function setLZTrustedRemote(uint16 _srcChainId, bytes _path) external
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _srcChainId | uint16 | Source(Remote) chain id |
-| _path | bytes | abi.encodePacked(sourceAddress, localAddress) |
+| _path | bytes | Remote contract address concatenated with the local contract address, 40 bytes abi.encodePacked(sourceAddress, localAddress) |
 
 #### setLZTrustedRemoteAddress
 
@@ -222,7 +219,7 @@ function forceResumeReceive(uint16 _srcChainId, bytes _srcAddress) external virt
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _srcChainId | uint16 | Source chain id |
-| _srcAddress | bytes | Source contract address |
+| _srcAddress | bytes | Remote contract address concatenated with the local contract address, 40 bytes. |
 
 #### retryPayload
 
@@ -240,7 +237,7 @@ function retryPayload(uint16 _srcChainId, bytes _srcAddress, bytes _payload) ext
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _srcChainId | uint16 | Source chain id |
-| _srcAddress | bytes | Source contract address |
+| _srcAddress | bytes | Remote contract address concatenated with the local contract address, 40 bytes. |
 | _payload | bytes | Payload to retry |
 
 #### getTrustedRemoteAddress
@@ -261,7 +258,7 @@ function getTrustedRemoteAddress(uint16 _srcChainId) external view returns (byte
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| [0] | bytes | bytes  Trusted Source Address |
+| [0] | bytes | bytes  Trusted Source Remote Address |
 
 #### hasStoredPayload
 
@@ -274,7 +271,7 @@ function hasStoredPayload(uint16 _srcChainId, bytes _srcAddress) external view r
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _srcChainId | uint16 | Source chain id |
-| _srcAddress | bytes | Source contract address |
+| _srcAddress | bytes | Remote contract address concatenated with the local contract address, 40 bytes |
 
 ##### Return values
 
@@ -319,6 +316,25 @@ function getOutboundNonce(uint16 _dstChainId, address _srcAddress) external view
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | uint64 | uint64  Outbound nonce |
+
+#### isLZTrustedRemote
+
+```solidity:no-line-numbers
+function isLZTrustedRemote(uint16 _srcChainId, bytes _srcAddress) external view returns (bool)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _srcChainId | uint16 | Source chain id |
+| _srcAddress | bytes | Remote contract address concatenated with the local contract address, 40 bytes |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | bool | bool  True if the source address is trusted |
 
 ### Internal
 

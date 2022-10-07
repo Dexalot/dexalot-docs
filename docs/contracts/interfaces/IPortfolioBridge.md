@@ -6,6 +6,32 @@ headerDepth: 4
 
 **Interface of PortfolioBridge**
 
+## Enum Types
+
+### XChainMsgType
+
+```solidity
+enum XChainMsgType {
+  XFER
+}
+```
+### Direction
+
+```solidity
+enum Direction {
+  SENT,
+  RECEIVED
+}
+```
+### BridgeProvider
+
+```solidity
+enum BridgeProvider {
+  LZ,
+  CELER
+}
+```
+
 ## Events
 
 ### XChainXFerMessage

@@ -26,8 +26,6 @@ struct BalanceTree {
 }
 ```
 
-## Enum Types
-
 ## Variables
 
 ### Public

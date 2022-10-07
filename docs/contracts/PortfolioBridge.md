@@ -11,7 +11,7 @@ will be added as needed. This contract encapsulates all bridge provider implemen
 doesn&#x27;t need to know about.
 
 **Dev notes:** \
-The information flow for messages between PortfolioMain and PortfolopSub is as follows: \
+The information flow for messages between PortfolioMain and PortfolioSub is as follows: \
 PortfolioMain &#x3D;&gt; PortfolioBridgeMain &#x3D;&gt; BridgeProviderA/B/n &#x3D;&gt; PortfolioBridgeSub &#x3D;&gt; PortfolioSub \
 PortfolioSub &#x3D;&gt; PortfolioBridgeSub &#x3D;&gt; BridgeProviderA/B/n &#x3D;&gt; PortfolioBridgeMain &#x3D;&gt; PortfolioMain \
 PortfolioBridge also serves as a symbol mapper to support multichain symbol handling. \

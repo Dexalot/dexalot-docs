@@ -2,6 +2,7 @@ import { defineUserConfig } from "vuepress"
 import { hopeTheme } from "vuepress-theme-hope";
 import { searchPlugin } from "@vuepress/plugin-search";
 import { commentPlugin } from "vuepress-plugin-comment2";
+import { componentsPlugin } from "vuepress-plugin-components";
 
 export default defineUserConfig({
   lang: "en-US",
@@ -28,6 +29,9 @@ export default defineUserConfig({
       reactionsEnabled: true,
       inputPosition: "bottom"
     }),
+    componentsPlugin({
+      components: ["YouTube"]
+    })
   ],
   markdown: {
     headers: {

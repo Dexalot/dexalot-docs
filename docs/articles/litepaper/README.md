@@ -9,6 +9,8 @@ editLink: true
 Dexalot’s mission is to bring the traditional exchange experience - namely the Central Limit Order Book capability - in a decentralized manner through the use of a fast and scalable blockchain - Avalanche.
 
 You tube
+<YouTube id="vRvaswPuMNg" />
+
 
 Dexalot is built on Avalanche platform’s C-Chain technology for its implementation as it offers the following advantages:
 1. 100% compatibility with the mature Ethereum Virtual Machine technology.

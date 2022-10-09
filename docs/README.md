@@ -27,4 +27,9 @@ features:
     icon: api
     details: "Learn how to interact with Dexalot"
     link: apiv2
+
+  - title: Tutorials
+    icon: markdown
+    details: "Watch and Learn how to use Dexalot"
+    link: articles
 ---

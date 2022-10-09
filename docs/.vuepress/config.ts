@@ -109,6 +109,21 @@ export default defineUserConfig({
       },
 
       {
+        text: "Contents",
+        icon: "overflow",
+        collapsable: true,
+        link: "contents",
+        prefix: "contents/",
+        children: [
+          {
+            text: "Litepaper",
+            icon: "read",
+            link: "litepaper"
+          }
+        ]
+      },
+
+      {
         text: "Smart Contracts",
         icon: "note",
         collapsable: true,

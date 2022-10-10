@@ -6,7 +6,7 @@ next: contents/litepaper
 editLink: true
 ---
 
-This folder keeps the articles authored by Dexalot team.
+This folder keeps the articles and tutorials authored by Dexalot team.
 
 ## Docs
 

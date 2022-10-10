@@ -118,7 +118,7 @@ export default defineUserConfig({
           {
             text: "Litepaper",
             icon: "read",
-            link: "litepaper"
+            link: "contents/articles/litepaper"
           }
         ]
       },

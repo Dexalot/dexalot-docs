@@ -589,8 +589,8 @@ function sendXChainMessageInternal(enum IPortfolioBridge.BridgeProvider _bridge,
 Overriden by PortfolioBridgeSub
 
 **Dev notes:** \
-Tresholds not checked in the Mainnet. Neither for Incoming nor outgoing.
-But both are checked in the subnet.
+Tresholds are not checked in the Mainnet neither for Incoming nor outgoing messages.
+But they are checked in the subnet for both.
 
 ```solidity:no-line-numbers
 function checkTreshholds(struct IPortfolio.XFER) internal virtual returns (bool)

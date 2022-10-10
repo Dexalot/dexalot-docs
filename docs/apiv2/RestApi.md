@@ -45,9 +45,11 @@ https://api.dexalot-test.com/api/trading/environments
         "chain_instance": "https://api.avax-test.network/ext/bc/C/rpc",
         "chain_id": 43113,
         "chain_name": "Avalanche Fuji C-Chain",
+        "chain_wss": "wss://api.avax-test.network/ext/bc/C/rpc",
         "native_token_name": "Avalanche",
         "native_token_symbol": "AVAX",
         "lzchain_id": 10006,
+        "lzscanner_url": "https://testnet.layerzero-scan.com",
         "explorer": "https://testnet.snowtrace.io/",
         "token_url": "https://testnet.snowtrace.io/address/"
     },

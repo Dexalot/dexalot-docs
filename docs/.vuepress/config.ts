@@ -120,7 +120,8 @@ export default defineUserConfig({
             icon: "read",
             collapsable: true,
             children: [
-                "litepaper"
+                "litepaper",
+                "dip"
             ],
           },
           {

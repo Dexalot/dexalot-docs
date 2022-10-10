@@ -2,5 +2,5 @@
 editLink: true
 ---
 
-# The Dexalot-Subnet
-an introduction — How to Use
+# How to use
+watch tutorial

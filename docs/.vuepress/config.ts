@@ -113,7 +113,7 @@ export default defineUserConfig({
         icon: "overflow",
         collapsable: true,
         link: "contents",
-        prefix: "contents/",
+        prefix: "contents/articles",
         children: [
           {
             text: "Articles",
@@ -128,6 +128,7 @@ export default defineUserConfig({
             icon: "read",
             collapsable: true,
             children: [
+                "litepaper",
                 "how_to_use",
                 "how_to_test"
             ],

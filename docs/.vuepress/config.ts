@@ -116,10 +116,13 @@ export default defineUserConfig({
         prefix: "contents/articles",
         children: [
           {
-            text: "Litepaper",
+            text: "Articles",
             icon: "read",
-            link: "litepaper"
-          }
+            collapsable: true,
+            children: [
+                "litepaper"
+            ],
+          },
         ]
       },
 

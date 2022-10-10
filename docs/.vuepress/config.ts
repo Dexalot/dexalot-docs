@@ -149,7 +149,8 @@ export default defineUserConfig({
             collapsable: true,
             children: [
               "Exchange",
-              "ExchangeMain"
+              "ExchangeMain",
+              "Litepaper"
             ],
           },
 

@@ -144,8 +144,8 @@ export default defineUserConfig({
         prefix: "contents/",
         children: [
           {
-            text: "Main Contracts",
-            icon: "proposal",
+            text: "Articles",
+            icon: "read",
             collapsable: true,
             children: [
               "Exchange",

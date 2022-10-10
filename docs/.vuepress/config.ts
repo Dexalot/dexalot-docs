@@ -149,30 +149,18 @@ export default defineUserConfig({
             collapsable: true,
             children: [
               "Exchange",
-              "ExchangeMain",
-              "ExchangeSub",
-              "Portfolio",
-              "PortfolioMain",
-              "PortfolioSub",
-              "OrderBooks",
-              "TradePairs",
-              "PortfolioBridge",
-              "PortfolioBridgeSub",
-              "PortfolioMinter",
-              "GasStation",
-              "DexalotSubnetBalances"
+              "ExchangeMain"
             ],
           },
 
           {
-            text: "Libraries",
-            icon: "api",
+            text: "Tutorials",
+            icon: "read",
             prefix: "library/",
             collapsable: true,
             children: [
               "Bytes32LinkedListLibrary",
-              "RBTLibrary",
-              "UtilsLibrary"
+              "RBTLibrary"
             ],
           },
 
@@ -253,27 +241,7 @@ export default defineUserConfig({
         ],  // children under Legal end
       },  // Legal end
 
-      {
-        text: "Trading API",
-        icon: "api",
-        prefix: "apiv2/",
-        link: "apiv2",
-        collapsable: true,
-        children: [
-          {
-            text: "RestApi",
-            link: "RestApi"
-          },
-          {
-            text: "Contracts",
-            link: "Contracts"
-          },
-          {
-            text: "Websocket",
-            link: "Websocket"
-          },
-        ]
-      },
+
 
       {
         text: "Smart Contracts",

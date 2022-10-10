@@ -148,7 +148,6 @@ export default defineUserConfig({
             icon: "read",
             collapsable: true,
             children: [
-              "Exchange",
               "Litepaper",
               "Dip"
             ],
@@ -157,11 +156,11 @@ export default defineUserConfig({
           {
             text: "Tutorials",
             icon: "read",
-            prefix: "library/",
+            prefix: "articles/",
             collapsable: true,
             children: [
-              "Bytes32LinkedListLibrary",
-              "RBTLibrary"
+              "Litepaper",
+              "Dip"
             ],
           },
         ]  // children under Smart Contracts end

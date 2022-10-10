@@ -2,7 +2,7 @@
 title: Contents
 icon: note
 prev: /
-next: articles
+next: contracts
 editLink: true
 ---
 

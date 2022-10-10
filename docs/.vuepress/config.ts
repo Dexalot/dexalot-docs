@@ -141,7 +141,7 @@ export default defineUserConfig({
         icon: "note",
         collapsable: true,
         link: "contents",
-        prefix: "contents",
+        prefix: "articles",
         children: [
           {
             text: "Articles",

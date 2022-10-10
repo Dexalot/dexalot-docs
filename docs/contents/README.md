@@ -2,7 +2,7 @@
 title: Contents
 icon: note
 prev: /
-next: contents/litepaper
+next: articles
 editLink: true
 ---
 

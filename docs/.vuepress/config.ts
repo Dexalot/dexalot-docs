@@ -117,7 +117,10 @@ export default defineUserConfig({
           {
             text: "howtouse",
             icon: "read",
-            link: "howtouse",
+            children:[
+              "howtouse",
+              "howtotest"
+          ]
           }
         ]
       },

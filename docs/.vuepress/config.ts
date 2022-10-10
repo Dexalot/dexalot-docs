@@ -118,7 +118,6 @@ export default defineUserConfig({
           {
             text: "Articles",
             icon: "read",
-            link: "articles",
             collapsable: true,
             children: [
                 "litepaper",

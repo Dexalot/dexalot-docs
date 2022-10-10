@@ -197,8 +197,8 @@ Clears the blocking message in the LZ bridge, if any
 
 **Dev notes:** \
 Force resume receive action is destructive
-should be used only when the bridge is stuck and message is already recovered
-   Only callable by admin
+should be used only when the bridge is stuck and message is already recovered. \
+It is only callable by admin.
 
 ```solidity:no-line-numbers
 function lzForceResumeReceive(uint16 _srcChainId, bytes _srcAddress) external
@@ -209,7 +209,7 @@ function lzForceResumeReceive(uint16 _srcChainId, bytes _srcAddress) external
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _srcChainId | uint16 | LZ Chain ID of the source chain |
-| _srcAddress | bytes | Address of the source contract |
+| _srcAddress | bytes | Remote contract address concatenated with the local contract address, 40 bytes. |
 
 #### lzRetryPayload
 
@@ -227,7 +227,7 @@ function lzRetryPayload(uint16 _srcChainId, bytes _srcAddress, bytes _payload) e
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _srcChainId | uint16 | LZ Chain ID of the source chain |
-| _srcAddress | bytes | Address of the source contract |
+| _srcAddress | bytes | Remote contract address concatenated with the local contract address, 40 bytes. |
 | _payload | bytes | Payload of the stucked message |
 
 #### lzRecoverPayload

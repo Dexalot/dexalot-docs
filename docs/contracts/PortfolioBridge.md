@@ -11,11 +11,11 @@ will be added as needed. This contract encapsulates all bridge provider implemen
 doesn&#x27;t need to know about.
 
 **Dev notes:** \
-The information flow for messages between PortfolioMain and PortfolopSub is as follows:
-PortfolioMain &#x3D;&gt; PortfolioBridgeMain &#x3D;&gt; BridgeProviderA/B/n &#x3D;&#x3D;&#x3D;&#x3D;&gt; PortfolioBridgeSub &#x3D;&#x3D;&gt; PortfolioSub
-PortfolioSub &#x3D;&gt; PortfolioBridgeSub &#x3D;&gt; BridgeProviderA/B/n &#x3D;&#x3D;&#x3D;&#x3D;&gt; PortfolioBridgeMain &#x3D;&#x3D;&gt; PortfolioMain
-PortfolioBirdge also serves as a symbol mapper to support multichain symbol handling.
-PortfolioBridgeMain always maps the symbol as SYMBOL+portolio.srcChainId and expects the same back,
+The information flow for messages between PortfolioMain and PortfolioSub is as follows: \
+PortfolioMain &#x3D;&gt; PortfolioBridgeMain &#x3D;&gt; BridgeProviderA/B/n &#x3D;&gt; PortfolioBridgeSub &#x3D;&gt; PortfolioSub \
+PortfolioSub &#x3D;&gt; PortfolioBridgeSub &#x3D;&gt; BridgeProviderA/B/n &#x3D;&gt; PortfolioBridgeMain &#x3D;&gt; PortfolioMain \
+PortfolioBridge also serves as a symbol mapper to support multichain symbol handling. \
+PortfolioBridgeMain always maps the symbol as SYMBOL + portolio.srcChainId and expects the same back,
 i.e USDC43114 if USDC is from Avalanche Mainnet. USDC1 if it is from Etherum.
 PortfolioBridgeSub always maps the symbol that it receives into a common symbol on receipt,
 i.e USDC43114 is mapped to USDC.
@@ -220,7 +220,8 @@ function getDefaultBridgeProvider() external view returns (enum IPortfolioBridge
 Set portfolio address to grant role
 
 **Dev notes:** \
-Only admin can set portfolio address. One to one relationship between Portflio and PortfolioBridge
+Only admin can set portfolio address.
+There is a one to one relationship between Portfolio and PortfolioBridge.
 
 ```solidity:no-line-numbers
 function setPortfolio(address _portfolio) external
@@ -263,13 +264,14 @@ function setGasForDestinationLzReceive(uint256 _gas) external
 
 #### addToken
 
-Adds the given token to the portfoBrige. PortfoBrigeSub the list will be bigger as they could be from
-different mainnet chains
+Adds the given token to the portfolioBridge. PortfolioBrigeSub the list will be bigger as they could
+be from different mainnet chains
 
 **Dev notes:** \
-Only callable by admin or from Portfolio when a new common symbol is added for the first time.
-    The same common symbol but different symbolId are required when adding a token to PortfoBrigeSub.
-    Native symbol is also added as a token with 0 address
+`addToken` is only callable by admin or from Portfolio when a new common symbol is added for the
+first time. The same common symbol but different symbolId are required when adding a token to
+PortfolioBrigeSub. \
+Native symbol is also added as a token with 0 address
 
 ```solidity:no-line-numbers
 function addToken(bytes32 _symbol, address _tokenAddress, uint32 _srcChainId, uint8 _decimals, enum ITradePairs.AuctionMode) external
@@ -506,7 +508,7 @@ fallback() external payable
 
 #### getTokenId
 
-Retruns the symbolId used in the mainnet given the srcChainId
+Returns the symbolId used in the mainnet given the srcChainId
 
 **Dev notes:** \
 PortfolioBridgeSub uses the defaultTargetChain instead of portfolio.getChainId()
@@ -532,7 +534,7 @@ function getTokenId(bytes32 _symbol) internal view virtual returns (bytes32)
 
 #### getSymbolForId
 
-Retruns the locally used symbol given the symbolId
+Returns the locally used symbol given the symbolId
 
 **Dev notes:** \
 Mainnet receives the messages in the same format that it sent out, by symbolId
@@ -587,8 +589,8 @@ function sendXChainMessageInternal(enum IPortfolioBridge.BridgeProvider _bridge,
 Overriden by PortfolioBridgeSub
 
 **Dev notes:** \
-Tresholds not checked in the Mainnet. Neither for Incoming nor outgoing.
-But both are checked in the subnet.
+Tresholds are not checked in the Mainnet neither for Incoming nor outgoing messages.
+But they are checked in the subnet for both.
 
 ```solidity:no-line-numbers
 function checkTreshholds(struct IPortfolio.XFER) internal virtual returns (bool)

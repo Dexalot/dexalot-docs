@@ -27,8 +27,6 @@ struct OrderBook {
 }
 ```
 
-## Enum Types
-
 ## Variables
 
 ### Public

@@ -163,57 +163,6 @@ export default defineUserConfig({
               "RBTLibrary"
             ],
           },
-
-          {
-            text: "Interfaces",
-            icon: "api",
-            prefix: "interfaces/",
-            collapsable: true,
-            children: [
-              "IGasStation",
-              "IPortfolio",
-              "IPortfolioBridge",
-              "IPortfolioMinter",
-              "ITradePairs",
-              "NativeMinterInterface",
-              {
-                text: "LayerZero",
-                prefix: "layerZero/",
-                collapsable: true,
-                children: [
-                  "ILayerZeroEndpoint",
-                  "ILayerZeroReceiver",
-                  "ILayerZeroUserApplicationConfig"
-                ]
-              },
-            ],
-          },
-
-          {
-            text: "Bridge Apps",
-            icon: "link",
-            prefix: "bridgeApps/",
-            collapsable: true,
-            children: [
-              "LzApp"
-            ],
-          },
-
-          {
-            text: "Auxiliary Contracts",
-            icon: "proposal",
-            prefix: "token/",
-            collapsable: true,
-            children: [
-              "Airdrop",
-              "DexalotToken",
-              "IncentiveDistributor",
-              "MockToken",
-              "Staking",
-              "TokenVestingCloneable",
-              "TokenVestingCloneFactory"
-            ],
-          }
         ]  // children under Smart Contracts end
       },  // Smart Contracts end
 

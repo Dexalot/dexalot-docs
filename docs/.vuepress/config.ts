@@ -114,14 +114,9 @@ export default defineUserConfig({
         link: "tutorials",
         prefix: "tutorials/",
         children: [
-          {
-            text: "howtouse",
-            icon: "read",
-            children:[
-              "howtouse",
-              "howtotest"
-          ]
-          }
+
+              "howtouse"
+
         ]
       },
       {

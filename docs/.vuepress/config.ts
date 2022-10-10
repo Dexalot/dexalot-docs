@@ -107,6 +107,20 @@ export default defineUserConfig({
           }
         ]
       },
+      {
+        text: "Tutorials",
+        icon: "overflow",
+        collapsable: true,
+        link: "tutorials",
+        prefix: "tutorials/",
+        children: [
+          {
+            text: "howtouse",
+            icon: "read",
+            link: "howtouse"
+          }
+        ]
+      },
 
       {
         text: "Contents",
@@ -142,6 +156,7 @@ export default defineUserConfig({
         collapsable: true,
         link: "contents",
         prefix: "articles",
+
         children: [
           {
             text: "Articles",

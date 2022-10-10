@@ -12,3 +12,4 @@ This folder keeps the articles authored by Dexalot team.
 
 
 * [How to use](/tutorials/howtouse)
+*[How to test](/tutorials/howtotest)

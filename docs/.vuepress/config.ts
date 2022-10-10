@@ -123,6 +123,14 @@ export default defineUserConfig({
                 "litepaper"
             ],
           },
+          {
+            text: "Tutorials",
+            icon: "read",
+            collapsable: true,
+            children: [
+                "litepaper"
+            ],
+          },
         ]
       },
 

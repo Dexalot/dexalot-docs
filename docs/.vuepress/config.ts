@@ -130,8 +130,8 @@ export default defineUserConfig({
             collapsable: true,
             children: [
                 "litepaper",
-                "how_to_use",
-                "how_to_test"
+                "howtouse",
+                "howtotest"
             ],
           },
         ]

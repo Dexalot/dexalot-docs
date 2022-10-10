@@ -121,65 +121,6 @@ export default defineUserConfig({
           }
         ]
       },
-
-      {
-        text: "Contents",
-        icon: "overflow",
-        collapsable: true,
-        link: "contents",
-        prefix: "contents/",
-        children: [
-          {
-            text: "Articles",
-            icon: "read",
-            collapsable: true,
-            children: [
-                "litepaper",
-                "dip"
-            ],
-          },
-          {
-            text: "Tutorials",
-            icon: "read",
-            collapsable: true,
-            children: [
-                "litepaper",
-                "howtouse",
-                "howtotest"
-            ],
-          },
-        ]
-      },
-      {
-        text: "Contents",
-        icon: "note",
-        collapsable: true,
-        link: "contents",
-        prefix: "articles",
-
-        children: [
-          {
-            text: "Articles",
-            icon: "read",
-            collapsable: true,
-            children: [
-              "Litepaper",
-              "Dip"
-            ],
-          },
-
-          {
-            text: "Tutorials",
-            icon: "read",
-            prefix: "tutorials",
-            collapsable: true,
-            children: [
-              "howtouse",
-              "Dip"
-            ],
-          },
-        ]  // children under Smart Contracts end
-      },  // Smart Contracts end
       {
         text: "Smart Contracts",
         icon: "note",

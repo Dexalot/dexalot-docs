@@ -113,7 +113,7 @@ export default defineUserConfig({
         icon: "overflow",
         collapsable: true,
         link: "contents",
-        prefix: "contents/articles",
+        prefix: "contents/",
         children: [
           {
             text: "Articles",

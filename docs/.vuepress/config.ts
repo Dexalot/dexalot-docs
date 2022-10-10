@@ -156,7 +156,6 @@ export default defineUserConfig({
           {
             text: "Tutorials",
             icon: "read",
-            prefix: "articles/",
             collapsable: true,
             children: [
               "Litepaper",

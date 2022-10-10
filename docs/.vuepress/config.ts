@@ -165,33 +165,6 @@ export default defineUserConfig({
           },
         ]  // children under Smart Contracts end
       },  // Smart Contracts end
-
-      {
-        text: "Legal",
-        icon: "note",
-        prefix: "legal/",
-        collapsable: true,
-        children: [
-          {
-            text: "License",
-            icon: "file",
-            link: "License"
-          },
-          {
-            text: "Privacy Policy",
-            icon: "file",
-            link: "PrivacyPolicy"
-          },
-          {
-            text: "Terms and Conditions",
-            icon: "file",
-            link: "TermsAndConditions"
-          }
-        ],  // children under Legal end
-      },  // Legal end
-
-
-
       {
         text: "Smart Contracts",
         icon: "note",

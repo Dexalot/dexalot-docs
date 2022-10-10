@@ -137,11 +137,11 @@ export default defineUserConfig({
         ]
       },
       {
-        text: "Smart Contracts",
+        text: "Contents",
         icon: "note",
         collapsable: true,
-        link: "contracts",
-        prefix: "contracts/",
+        link: "contents",
+        prefix: "contents/",
         children: [
           {
             text: "Main Contracts",

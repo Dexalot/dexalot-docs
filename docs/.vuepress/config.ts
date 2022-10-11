@@ -71,12 +71,7 @@ export default defineUserConfig({
 
     navbar: [
       {
-        text: "Landing",
-        link: "https://dexalot.com/",
-        icon: "launch"
-      },
-      {
-        text: "App",
+        text: "Exchange",
         link: "https://app.dexalot.com/",
         icon: "launch"
       },

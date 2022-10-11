@@ -3,7 +3,8 @@ editLink: true
 ---
 
 # The Dexalot-Subnet
-an introduction — How to Use
+
+**an introduction — How to Use**
 
 ![Subnetlogo](/images/howtouse/Subnetlogo.png)
 
@@ -17,7 +18,7 @@ Here is an Introduction to Dexalot’s new Subnet Beta application.
 
 <YouTube id="vRvaswPuMNg" />
 
-# The Dashboard —
+## The Dashboard
 The website dashboard is similar to what you are already familiar with. Connect your wallet (Core, Metamask, and WalletConnect) just as you have done before. If you need a refresher, watch [these tutorials](https://medium.com/dexalot/tagged/dexalot-tutorial) and learn the [basics](https://medium.com/dexalot/learn-the-basics-e893a62261a3).
 
 Next to the wallet connect button is a drop-down menu for switching between the Mainnet and the Subnet. Since this is an application on the Avalanche test network you see “Fuji” listed as the Mainnet.
@@ -42,7 +43,7 @@ The Dashboard contains all of the elements you have come to expect.
 
 ![producttour](/images/howtouse/producttour.png)
 
-# How to Trade —
+## How to Trade
 Obtain test AVAX from the [Avalanche faucet](https://faucet.avax.network/) by entering your wallet address and then deposit them to your portfolio.
 Click on the Portfolio tab and at the right of the Avax token line… you will see a three-dot menu from which you can select “Deposit to Subnet”; enter an amount and confirm your transaction with your wallet.
 
@@ -60,7 +61,7 @@ You are now in the Dexalot-Subnet so when you click on the three-dot menu next t
 
 ![withdraw](/images/howtouse/withdraw.png)
 
-# New Features —
+## New Features
 
 A new option “Send in Subnet” permits you to send tokens to any address of your choosing directly from within the Dexalot-Subnet.
 

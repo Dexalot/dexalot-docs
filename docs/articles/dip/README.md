@@ -9,13 +9,13 @@ The Dexalot Subnet is launching, so it’s time to celebrate. We are introducing
 
 Dexalot Subnet users can expect cheaper transaction/trading fees, better liquidity, tighter bid-offer spreads, blazing speed, and much more. And, with DIP, you will also be rewarded for trading on Dexalot.
 
-##  **Program Highlights —**
+##  **Program Highlights**
 
 Total Monthly Rewards: 200,000 $ALOT tokens
 Start of Program: Q4 2022
 Duration of Program: Up to 2 years
 
-##  **How it works —**
+##  **How it works**
 
 Every month, users of Dexalot will be scored and ranked based on three factors:
 
@@ -32,15 +32,17 @@ Each factor is individually calculated, which means you will accumulate a monthl
 
 At the end of each month, your final monthly score will be compared to the total monthly score for all users that month. Your monthly $ALOT award is the proportion of your score to the total score for all users multiplied by the total monthly token reward of 200,000 $ALOT.
 
-##  **Calculations —**
+##  **Calculations**
 
 User Score = (E^ 0.15) x (O^ 0.80) x (A^ 0.05)
+
 Monthly Rewards = (200,000 $ALOT x User Score)/Aggregate User Scores
-How to monitor your rewards —
+
+## **How to monitor your rewards**
 
 You can track your monthly score on our website along with top-ranked users and total user scores throughout the month.
 
-##  **Additional Information —**
+##  **Additional Information**
 
 Washed trades will not count towards monthly scores.
 Volatility (standard deviation) of each trading pair is calculated periodically.

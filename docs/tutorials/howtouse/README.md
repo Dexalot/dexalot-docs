@@ -16,3 +16,50 @@ This Avalanche Subnet is a dual-chain application containing both a Mainnet and 
 Here is an Introduction to Dexalot’s new Subnet Beta application.
 
 <YouTube id="vRvaswPuMNg" />
+
+# The Dashboard —
+The website dashboard is similar to what you are already familiar with. Connect your wallet (Core, Metamask, and WalletConnect) just as you have done before. If you need a refresher, watch these tutorials and learn the basics.
+
+Next to the wallet connect button is a drop-down menu for switching between the Mainnet and the Subnet. Since this is an application on the Avalanche test network you see “Fuji” listed as the Mainnet.
+
+The subnet uses $ALOT, the Dexalot token, to pay for gas and these funds are held for you in a “gas” tank on the Subnet. You can add or remove gas at any time.
+
+The Dashboard contains all of the elements you have come to expect.
+
+Trade pairs — on the far left side. Simply click on the pair you are interested in trading with and the order book will update.
+Order book — to the right of the trade pairs’ section.
+Trade History — in the center top of the page, with a more detailed time-stamped list located on the far right.
+Trade, Orders, Portfolio, and Transfers Tabs — in the center bottom of the page where most of the action takes place. To review all of these sections and tabs and what they contain please take the Product Tour located in the Help menu drop-down.
+
+How to trade —
+Obtain test AVAX from the Avalanche faucet by entering your wallet address and then deposit them to your portfolio.
+Click on the Portfolio tab and at the right of the Avax token line… you will see a three-dot menu from which you can select “Deposit to Subnet”; enter an amount and confirm your transaction with your wallet.
+
+Now before you can start trading you need to connect to the Subnet.
+
+To do that click on the drop-down next to the wallet connect button and select - Dexalot-Subnet.
+
+Since $ALOT is used as the gas token you have the option of adding or removing ALOT from your gas tank — the place designed to pay your gas fees associated with your transactions.
+
+A new option “Send in Subnet” permits you to send tokens to any address of your choosing directly from within the Dexalot-Subnet.
+
+Another feature is the addition of new trade types available in the Trade tab.
+
+Click on the Trade Tab and hover over any type to obtain more information.
+So … go ahead and use the test AVAX you obtained to make a trade with either ALOT or USDC. You simply enter the price you would like on the left buy-side, an amount above the minimum noted in red at the bottom of the text boxes. Click buy and confirm the transaction in your wallet and own your trade.
+
+Yet another new feature is the ability to replace your order.
+
+If you have an order in the order book, you can replace it by clicking on the three-dot menu next to your order in the Orders tab you want to replace. So if you had placed a buy order that was not immediately filled you may use this new feature to change your order type, amount, or price and convert the order into one that is immediately marketable.
+
+The transfers tab now also has more information available to you, including where your action occurred, the type of bridge you used, and the gas fees that resulted from your transaction.
+
+Dexalot is looking to complete thorough testing of the Dexalot-Subnet and we are thankful to everyone for providing crucial feedback. You too can help improve the Subnet by simply following the steps outlined above and report back any comments, observations or issues encountered. You can read a detailed guide to testing the Dexalot-Subnet here. You may send your test results to support@dexalot.com or simply chat with moderators on Dexalot Discord.
+
+Thanks for being a part of this exciting development of Web 3.0, DeFi and the growth of the Avalanche ecosystem with Dexalot. Welcome aboard.
+
+Writer: Brad McFall
+
+Editor: Dan Marcoulis
+
+Graphics: Can Toygar

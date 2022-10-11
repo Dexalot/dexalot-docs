@@ -24,7 +24,7 @@ Next to the wallet connect button is a drop-down menu for switching between the 
 
 ![connect](/images/howtouse/connect.png)
 
-The subnet uses $ALOT, the Dexalot token, to pay for gas and these funds are held for you in a “gas” tank on the Subnet. You can add or remove gas at any time.
+The subnet [uses $ALOT, the Dexalot token, to pay for gas](https://medium.com/dexalot/the-dexalot-subnet-96b2a05cb435) and these funds are held for you in a “gas” tank on the Subnet. You can add or remove gas at any time.
 
 ![subnetgasttank](/images/howtouse/subnetgastank.png)
 
@@ -32,18 +32,18 @@ The Dashboard contains all of the elements you have come to expect.
 
 ![dashboard](/images/howtouse/dashboard.png)
 
-**Trade pairs** — on the far left side. Simply click on the pair you are interested in trading with and the order book will update.
+* **Trade pairs** — on the far left side. Simply click on the pair you are interested in trading with and the order book will update.
 
-**Order book** — to the right of the trade pairs’ section.
+* **Order book** — to the right of the trade pairs’ section.
 
-**Trade History** — in the center top of the page, with a more detailed time-stamped list located on the far right.
+* **Trade History** — in the center top of the page, with a more detailed time-stamped list located on the far right.
 
-**Trade, Orders, Portfolio, and Transfers Tabs** — in the center bottom of the page where most of the action takes place. To review all of these sections and tabs and what they contain please take the Product Tour located in the Help menu drop-down.
+* **Trade, Orders, Portfolio, and Transfers Tabs** — in the center bottom of the page where most of the action takes place. To review all of these sections and tabs and what they contain please take the Product Tour located in the Help menu drop-down.
 
 ![producttour](/images/howtouse/producttour.png)
 
 # How to Trade —
-Obtain test AVAX from the Avalanche faucet by entering your wallet address and then deposit them to your portfolio.
+Obtain test AVAX from the [Avalanche faucet](https://faucet.avax.network/) by entering your wallet address and then deposit them to your portfolio.
 Click on the Portfolio tab and at the right of the Avax token line… you will see a three-dot menu from which you can select “Deposit to Subnet”; enter an amount and confirm your transaction with your wallet.
 
 ![subnetdeposit](/images/howtouse/subnetdeposit.png)
@@ -83,7 +83,7 @@ The transfers tab now also has more information available to you, including wher
 
 ![transferstab](/images/howtouse/transferstab.png)
 
-Dexalot is looking to complete thorough testing of the Dexalot-Subnet and we are thankful to everyone for providing crucial feedback. You too can help improve the Subnet by simply following the steps outlined above and report back any comments, observations or issues encountered. You can read a detailed guide to testing the Dexalot-Subnet here. You may send your test results to support@dexalot.com or simply chat with moderators on Dexalot Discord.
+Dexalot is looking to complete thorough testing of the Dexalot-Subnet and we are thankful to everyone for providing crucial feedback. You too can help improve the Subnet by simply following the steps outlined above and report back any comments, observations or issues encountered. You can read a detailed guide to testing the Dexalot-Subnet [here](https://medium.com/dexalot/the-dexalot-subnet-public-testing-4bea8bc80521). You may send your test results to [support@dexalot.com](support@dexalot.com ) or simply chat with moderators on Dexalot Discord.
 
 Thanks for being a part of this exciting development of Web 3.0, DeFi and the growth of the Avalanche ecosystem with Dexalot. Welcome aboard.
 

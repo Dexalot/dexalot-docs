@@ -106,7 +106,7 @@ via the RESTAPI nor WS.
 
 ###  Detailed
 
-![Detailed dual-chain architecture](/images/api/detailed.png)
+![Detailed dual-chain architecture](/images/api/detailed_dark1.png)
 
 ## Docs
 

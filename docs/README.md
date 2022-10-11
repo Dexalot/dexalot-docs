@@ -31,5 +31,5 @@ features:
   - title: Tutorials
     icon: markdown
     details: "Watch and Learn how to use Dexalot"
-    link: articles
+    link: tutorials
 ---

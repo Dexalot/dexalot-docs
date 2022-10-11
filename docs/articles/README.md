@@ -6,7 +6,7 @@ next: /articles/litepaper
 editLink: true
 ---
 
-This folder keeps the articles authored by the Dexalot team.  Learn the Concepts background an vision from a variety of articles.  Articles in different languages can be found on Dexalot Medium.  [https://medium.com/dexalot/tagged/dexalot-translations](https://medium.com/dexalot/tagged/dexalot-translations)
+This folder keeps the articles authored by the Dexalot team.  Learn the concepts background an vision from a variety of articles.  Read all about these aspects in other languages on [https://medium.com/dexalot/tagged/dexalot-translations](https://medium.com/dexalot/tagged/dexalot-translations)
 
 ## Docs
 

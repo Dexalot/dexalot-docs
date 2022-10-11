@@ -1,6 +1,6 @@
 ---
 title: Auxiliary Contracts
-icon: note
+icon: file-code
 prev: /contracts
 next: /contracts/token/Airdrop
 editLink: true

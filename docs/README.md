@@ -30,6 +30,6 @@ features:
 
   - title: Tutorials
     icon: markdown
-    details: "Watch and Learn how to use Dexalot"
+    details: "Watch and learn how to use Dexalot"
     link: tutorials
 ---

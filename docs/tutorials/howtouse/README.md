@@ -33,8 +33,11 @@ The Dashboard contains all of the elements you have come to expect.
 ![dashboard](/images/howtouse/dashboard.png)
 
 Trade pairs — on the far left side. Simply click on the pair you are interested in trading with and the order book will update.
+
 Order book — to the right of the trade pairs’ section.
+
 Trade History — in the center top of the page, with a more detailed time-stamped list located on the far right.
+
 Trade, Orders, Portfolio, and Transfers Tabs — in the center bottom of the page where most of the action takes place. To review all of these sections and tabs and what they contain please take the Product Tour located in the Help menu drop-down.
 
 ![producttour](/images/howtouse/producttour.png)

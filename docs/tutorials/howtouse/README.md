@@ -22,18 +22,28 @@ The website dashboard is similar to what you are already familiar with. Connect 
 
 Next to the wallet connect button is a drop-down menu for switching between the Mainnet and the Subnet. Since this is an application on the Avalanche test network you see “Fuji” listed as the Mainnet.
 
+![connect](/images/howtouse/connect.png)
+
 The subnet uses $ALOT, the Dexalot token, to pay for gas and these funds are held for you in a “gas” tank on the Subnet. You can add or remove gas at any time.
 
+![subnetgasttank](/images/howtouse/subnetgastank.png)
+
 The Dashboard contains all of the elements you have come to expect.
+
+![dashboard](/images/howtouse/dashboard.png)
 
 Trade pairs — on the far left side. Simply click on the pair you are interested in trading with and the order book will update.
 Order book — to the right of the trade pairs’ section.
 Trade History — in the center top of the page, with a more detailed time-stamped list located on the far right.
 Trade, Orders, Portfolio, and Transfers Tabs — in the center bottom of the page where most of the action takes place. To review all of these sections and tabs and what they contain please take the Product Tour located in the Help menu drop-down.
 
-How to trade —
+![producttour](/images/howtouse/producttour.png)
+
+# How to trade —
 Obtain test AVAX from the Avalanche faucet by entering your wallet address and then deposit them to your portfolio.
 Click on the Portfolio tab and at the right of the Avax token line… you will see a three-dot menu from which you can select “Deposit to Subnet”; enter an amount and confirm your transaction with your wallet.
+
+![subnetdeposit](/images/howtouse/subnetdeposit.png)
 
 Now before you can start trading you need to connect to the Subnet.
 

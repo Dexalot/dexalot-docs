@@ -90,8 +90,10 @@ Dexalot is looking to complete thorough testing of the Dexalot-Subnet and we are
 
 ![typesbanner](/images/howtouse/typesbanner.png)
 
-Author: Brad McFall
+---
 
-Editor: Dan Marcoulis
+**Author**: Brad McFall
 
-Graphics: Can Toygar
+**Editor**: Dan Marcoulis
+
+**Graphics**: Can Toygar

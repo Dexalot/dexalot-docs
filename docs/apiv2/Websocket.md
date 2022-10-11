@@ -1,4 +1,6 @@
 ---
+icon: link
+prev: Contracts
 editLink: true
 ---
 

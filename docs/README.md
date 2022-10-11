@@ -14,22 +14,22 @@ actions:
 
 features:
   - title: Articles
-    icon: markdown
+    icon: book-reader
     details: "Learn the concepts, background and vision"
     link: articles
 
   - title: Tutorials
-    icon: markdown
+    icon: mortar-board
     details: "Read, watch and learn how to use Dexalot"
     link: tutorials
 
   - title: Smart Contracts
-    icon: markdown
+    icon: code
     details: "Main and auxiliary contracts that make the dual-chain application"
     link: contracts
 
   - title: Trading API
-    icon: api
+    icon: link
     details: "Learn how to interact with Dexalot"
     link: apiv2
 ---

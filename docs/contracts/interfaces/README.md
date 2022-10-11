@@ -1,5 +1,6 @@
 ---
 title: Interfaces
+icon: file-code
 prev: /contracts
 next: /contracts/interfaces/ITradePairs
 editLink: true

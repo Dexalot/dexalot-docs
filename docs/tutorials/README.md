@@ -6,10 +6,9 @@ next: /tutorials/howtouse
 editLink: true
 ---
 
-This folder keeps the articles authored by Dexalot team.
+This folder keeps the articles authored by the Dexalot team.
 
 ## Docs
 
 
 * [How to use](/tutorials/howtouse)
-*[How to test](/tutorials/howtotest)

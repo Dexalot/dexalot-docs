@@ -104,6 +104,11 @@ export default defineUserConfig({
             text: "Litepaper",
             icon: "read",
             link: "litepaper"
+          },
+          {
+            text: "Dexalot Incentive Program",
+            icon: "read",
+            link: "dip"
           }
         ]
       },
@@ -114,9 +119,7 @@ export default defineUserConfig({
         link: "tutorials",
         prefix: "tutorials/",
         children: [
-
-              "howtouse"
-
+              "howtouse",
         ]
       },
       {

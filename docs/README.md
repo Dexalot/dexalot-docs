@@ -18,6 +18,11 @@ features:
     details: "Learn the concepts, background and vision"
     link: articles
 
+  - title: Tutorials
+    icon: markdown
+    details: "Read, watch and learn how to use Dexalot"
+    link: tutorials
+
   - title: Smart Contracts
     icon: markdown
     details: "Main and auxiliary contracts that make the dual-chain application"
@@ -27,9 +32,4 @@ features:
     icon: api
     details: "Learn how to interact with Dexalot"
     link: apiv2
-
-  - title: Tutorials
-    icon: markdown
-    details: "Watch and learn how to use Dexalot"
-    link: tutorials
 ---

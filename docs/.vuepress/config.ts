@@ -55,6 +55,13 @@ export default defineUserConfig({
     contributors: false,
     lastUpdated: true,
 
+    plugins: {
+      mdEnhance: {
+        imageMark: true,
+        imageSize: true
+      }
+    },
+
     themeColor: {
       blue: "#2196f3",
       red: "#f26d6d",

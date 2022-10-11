@@ -39,7 +39,7 @@ Trade, Orders, Portfolio, and Transfers Tabs — in the center bottom of the pag
 
 ![producttour](/images/howtouse/producttour.png)
 
-# How to trade —
+# How to Trade —
 Obtain test AVAX from the Avalanche faucet by entering your wallet address and then deposit them to your portfolio.
 Click on the Portfolio tab and at the right of the Avax token line… you will see a three-dot menu from which you can select “Deposit to Subnet”; enter an amount and confirm your transaction with your wallet.
 
@@ -56,6 +56,8 @@ Since $ALOT is used as the gas token you have the option of adding or removing A
 You are now in the Dexalot-Subnet so when you click on the three-dot menu next to the token of your choice you have a few different options including to withdraw your token amounts back to your wallet in the Mainnet.
 
 ![withdraw](/images/howtouse/withdraw.png)
+
+# New Features
 
 A new option “Send in Subnet” permits you to send tokens to any address of your choosing directly from within the Dexalot-Subnet.
 

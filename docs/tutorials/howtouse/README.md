@@ -9,16 +9,16 @@ an introduction — How to Use
 
 The new Dexalot Subnet is now ready for you to test and try out!
 
-After months of building and testing everyone can join in and enjoy the beta version of the first DeFi CLOB (central limit order book) on Avalanche.
+After months [of building and testing](https://medium.com/dexalot/the-dexalot-subnet-96b2a05cb435) everyone can join in and enjoy the beta version of the first DeFi CLOB (central limit order book) on Avalanche.
 
-This Avalanche Subnet is a dual-chain application containing both a Mainnet and a Subnet. By executing trades with the Dexalot token ALOT on the Dexalot Subnet, transaction gas fees are kept amazingly low. Navigate here and you are good to go.
+This Avalanche Subnet is [a dual-chain application](https://medium.com/dexalot/the-dexalot-subnet-96b2a05cb435) containing both a Mainnet and a Subnet. By executing trades with the Dexalot token ALOT on the Dexalot Subnet, transaction gas fees are kept amazingly low. Navigate [here](https://app.dexalot-test.com/trade) and you are good to go.
 
 Here is an Introduction to Dexalot’s new Subnet Beta application.
 
 <YouTube id="vRvaswPuMNg" />
 
 # The Dashboard —
-The website dashboard is similar to what you are already familiar with. Connect your wallet (Core, Metamask, and WalletConnect) just as you have done before. If you need a refresher, watch these tutorials and learn the basics.
+The website dashboard is similar to what you are already familiar with. Connect your wallet (Core, Metamask, and WalletConnect) just as you have done before. If you need a refresher, watch [these tutorials](https://medium.com/dexalot/tagged/dexalot-tutorial) and learn the [basics](https://medium.com/dexalot/learn-the-basics-e893a62261a3).
 
 Next to the wallet connect button is a drop-down menu for switching between the Mainnet and the Subnet. Since this is an application on the Avalanche test network you see “Fuji” listed as the Mainnet.
 
@@ -32,13 +32,13 @@ The Dashboard contains all of the elements you have come to expect.
 
 ![dashboard](/images/howtouse/dashboard.png)
 
-Trade pairs — on the far left side. Simply click on the pair you are interested in trading with and the order book will update.
+**Trade pairs** — on the far left side. Simply click on the pair you are interested in trading with and the order book will update.
 
-Order book — to the right of the trade pairs’ section.
+**Order book** — to the right of the trade pairs’ section.
 
-Trade History — in the center top of the page, with a more detailed time-stamped list located on the far right.
+**Trade History** — in the center top of the page, with a more detailed time-stamped list located on the far right.
 
-Trade, Orders, Portfolio, and Transfers Tabs — in the center bottom of the page where most of the action takes place. To review all of these sections and tabs and what they contain please take the Product Tour located in the Help menu drop-down.
+**Trade, Orders, Portfolio, and Transfers Tabs** — in the center bottom of the page where most of the action takes place. To review all of these sections and tabs and what they contain please take the Product Tour located in the Help menu drop-down.
 
 ![producttour](/images/howtouse/producttour.png)
 

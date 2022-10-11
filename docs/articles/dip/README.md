@@ -46,3 +46,9 @@ Washed trades will not count towards monthly scores.
 Volatility (standard deviation) of each trading pair is calculated periodically.
 Only open orders within two standard deviations of the mid-price will be considered for Orderbook Contribution (O).
 Eligible assets for DIP at launch: AVAX, BTC, ETH and ALOT.
+
+Author: Brad McFall
+
+Editor: Dan Marcoulis
+
+Graphics: Can Toygar

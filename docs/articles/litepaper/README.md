@@ -59,7 +59,7 @@ The Dexalot platform is made up of components that provide various services:
 
 **Automated Market Makers**: These are the participants who are providing liquidity and two way pricing on Dexalot.
 
-![Dexalot Architecture](/images/litepaper/architecture.png)
+![Dexalot Architecture](/images/litepaper/architecture_1.png)
 
 ### Privacy
 

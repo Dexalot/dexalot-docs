@@ -60,7 +60,7 @@ You are now in the Dexalot-Subnet so when you click on the three-dot menu next t
 
 ![withdraw](/images/howtouse/withdraw.png)
 
-# New Features
+# New Features -
 
 A new option “Send in Subnet” permits you to send tokens to any address of your choosing directly from within the Dexalot-Subnet.
 

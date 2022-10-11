@@ -89,7 +89,7 @@ Thanks for being a part of this exciting development of Web 3.0, DeFi and the gr
 
 ![typesbanner](/images/howtouse/typesbanner.png)
 
-Writer: Brad McFall
+Author: Brad McFall
 
 Editor: Dan Marcoulis
 

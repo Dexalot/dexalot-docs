@@ -49,24 +49,40 @@ Now before you can start trading you need to connect to the Subnet.
 
 To do that click on the drop-down next to the wallet connect button and select - Dexalot-Subnet.
 
+![networkswitch](/images/howtouse/networkswitch.png)
+
 Since $ALOT is used as the gas token you have the option of adding or removing ALOT from your gas tank — the place designed to pay your gas fees associated with your transactions.
+
+You are now in the Dexalot-Subnet so when you click on the three-dot menu next to the token of your choice you have a few different options including to withdraw your token amounts back to your wallet in the Mainnet.
+
+![withdraw](/images/howtouse/withdraw.png)
 
 A new option “Send in Subnet” permits you to send tokens to any address of your choosing directly from within the Dexalot-Subnet.
 
 Another feature is the addition of new trade types available in the Trade tab.
 
+![tradetypes](/images/howtouse/tradetypes.png)
+
 Click on the Trade Tab and hover over any type to obtain more information.
 So … go ahead and use the test AVAX you obtained to make a trade with either ALOT or USDC. You simply enter the price you would like on the left buy-side, an amount above the minimum noted in red at the bottom of the text boxes. Click buy and confirm the transaction in your wallet and own your trade.
+
+![trade](/images/howtouse/trade.png)
 
 Yet another new feature is the ability to replace your order.
 
 If you have an order in the order book, you can replace it by clicking on the three-dot menu next to your order in the Orders tab you want to replace. So if you had placed a buy order that was not immediately filled you may use this new feature to change your order type, amount, or price and convert the order into one that is immediately marketable.
 
+![cancel](/images/howtouse/cancel.png)
+
 The transfers tab now also has more information available to you, including where your action occurred, the type of bridge you used, and the gas fees that resulted from your transaction.
+
+![transferstab](/images/howtouse/transferstab.png)
 
 Dexalot is looking to complete thorough testing of the Dexalot-Subnet and we are thankful to everyone for providing crucial feedback. You too can help improve the Subnet by simply following the steps outlined above and report back any comments, observations or issues encountered. You can read a detailed guide to testing the Dexalot-Subnet here. You may send your test results to support@dexalot.com or simply chat with moderators on Dexalot Discord.
 
 Thanks for being a part of this exciting development of Web 3.0, DeFi and the growth of the Avalanche ecosystem with Dexalot. Welcome aboard.
+
+![typesbanner](/images/howtouse/typesbanner.png)
 
 Writer: Brad McFall
 

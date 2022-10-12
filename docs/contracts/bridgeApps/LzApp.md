@@ -395,4 +395,3 @@ function lzEstimateFees(bytes _payload) internal view returns (uint256 messageFe
 | ---- | ---- | ----------- |
 | messageFee | uint256 | Message fee |
 | adapterParams | bytes | Adapter parameters |
-

@@ -1,6 +1,6 @@
 ---
 title: Articles
-icon: note
+icon: book-reader
 prev: /
 next: /articles/litepaper
 editLink: true

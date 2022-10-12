@@ -1,6 +1,6 @@
 ---
 title: Libraries
-icon: note
+icon: file-code
 prev: /contracts
 next: /contracts/library/UtilsLibrary
 editLink: true

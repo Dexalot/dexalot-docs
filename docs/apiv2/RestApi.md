@@ -1,4 +1,7 @@
 ---
+icon: link
+prev: /apiv2
+next: Contracts
 editLink: true
 ---
 

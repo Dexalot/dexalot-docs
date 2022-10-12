@@ -34,6 +34,11 @@ export const enSidebarConfig = sidebar({
           icon: "play",
           link: "howtouse"
         },
+        {
+          text: "Dexalot Subnet Testing",
+          icon: "play",
+          link: "howtotest"
+        },
       ]
     },
     {

@@ -34,9 +34,8 @@ At the end of each month, your final monthly score will be compared to the total
 
 ##  Calculations
 
-User Score = (E^ 0.15) x (O^ 0.80) x (A^ 0.05)
-
-Monthly Rewards = (200,000 $ALOT x User Score)/Aggregate User Scores
+* User Score = (E^ 0.15) x (O^ 0.80) x (A^ 0.05)
+* Monthly Rewards = (200,000 $ALOT x User Score)/Aggregate User Scores
 
 ## How to monitor your rewards
 

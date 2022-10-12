@@ -33,6 +33,7 @@ https://github.com/LayerZero-Labs/solidity-examples/blob/main/contracts/lzApp/Lz
 
 ```solidity:no-line-numbers
 event LzSetTrustedRemote(uint16 remoteChainId, bytes path)
+```
 
 ### LzSetTrustedRemoteAddress
 
@@ -394,4 +395,3 @@ function lzEstimateFees(bytes _payload) internal view returns (uint256 messageFe
 | ---- | ---- | ----------- |
 | messageFee | uint256 | Message fee |
 | adapterParams | bytes | Adapter parameters |
-

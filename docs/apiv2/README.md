@@ -1,8 +1,9 @@
 ---
+title: Dexalot Trading API (v2)
+icon: link
+next: RestApi
 editLink: true
 ---
-
-# Dexalot Trading API (v2)
 
 ## Version History
 
@@ -106,7 +107,7 @@ via the RESTAPI nor WS.
 
 ###  Detailed
 
-![Detailed dual-chain architecture](/images/api/detailed.png)
+![Detailed dual-chain architecture](/images/api/detailed_dark1.png)
 
 ## Docs
 

@@ -28,9 +28,6 @@ export default defineUserConfig({
       strict: true,
       reactionsEnabled: true,
       inputPosition: "bottom"
-    }),
-    componentsPlugin({
-      components: ["YouTube"]
     })
   ],
   markdown: {
@@ -49,11 +46,19 @@ export default defineUserConfig({
     docsBranch: "dev",
     docsDir: "docs",
     editLink: false,
-    iconAssets: "iconfont",
+    iconAssets: "fontawesome",
     fullscreen: true,
     backToTop: true,
     contributors: false,
     lastUpdated: true,
+
+    plugins: {
+      components: ["YouTube"],
+      mdEnhance: {
+        imageMark: true,
+        imageSize: true
+      },
+    },
 
     themeColor: {
       blue: "#2196f3",
@@ -64,29 +69,24 @@ export default defineUserConfig({
 
     navbar: [
       {
-        text: "Landing",
-        link: "https://dexalot.com/",
-        icon: "launch"
-      },
-      {
-        text: "App",
+        text: "Exchange",
         link: "https://app.dexalot.com/",
-        icon: "launch"
+        icon: "exchange"
       },
       {
         text: "Medium",
         link: "https://medium.com/dexalot",
-        icon: "read"
+        icon: "book-reader"
       },
       {
         text: "Discord",
         link: "https://discord.com/invite/S4NP9w7Xwn",
-        icon: "wechat"
+        icon: "comments"
       },
       {
         text: "Telegram",
         link: "https://t.me/dexalot",
-        icon: "wechat"
+        icon: "comments"
       },
     ],
 
@@ -95,29 +95,47 @@ export default defineUserConfig({
 
       {
         text: "Articles",
-        icon: "overflow",
+        icon: "book-reader",
         collapsable: true,
         link: "articles",
         prefix: "articles/",
         children: [
           {
             text: "Litepaper",
-            icon: "read",
+            icon: "book-open",
             link: "litepaper"
+          },
+          {
+            text: "Dexalot Incentive Program",
+            icon: "book-open",
+            link: "dip"
           }
         ]
       },
-
+      {
+        text: "Tutorials",
+        icon: "mortar-board",
+        collapsable: true,
+        link: "tutorials",
+        prefix: "tutorials/",
+        children: [
+          {
+            text: "Dexalot Subnet Intro",
+            icon: "play",
+            link: "howtouse"
+          },
+        ]
+      },
       {
         text: "Smart Contracts",
-        icon: "note",
+        icon: "code",
         collapsable: true,
         link: "contracts",
         prefix: "contracts/",
         children: [
           {
             text: "Main Contracts",
-            icon: "proposal",
+            icon: "file-code",
             collapsable: true,
             children: [
               "Exchange",
@@ -138,7 +156,7 @@ export default defineUserConfig({
 
           {
             text: "Libraries",
-            icon: "api",
+            icon: "file-code",
             prefix: "library/",
             collapsable: true,
             children: [
@@ -150,7 +168,7 @@ export default defineUserConfig({
 
           {
             text: "Interfaces",
-            icon: "api",
+            icon: "file-code",
             prefix: "interfaces/",
             collapsable: true,
             children: [
@@ -175,7 +193,7 @@ export default defineUserConfig({
 
           {
             text: "Bridge Apps",
-            icon: "link",
+            icon: "file-code",
             prefix: "bridgeApps/",
             collapsable: true,
             children: [
@@ -185,7 +203,7 @@ export default defineUserConfig({
 
           {
             text: "Auxiliary Contracts",
-            icon: "proposal",
+            icon: "file-code",
             prefix: "token/",
             collapsable: true,
             children: [
@@ -202,8 +220,30 @@ export default defineUserConfig({
       },  // Smart Contracts end
 
       {
+        text: "Trading API",
+        icon: "link",
+        prefix: "apiv2/",
+        link: "apiv2",
+        collapsable: true,
+        children: [
+          {
+            text: "RestApi",
+            link: "RestApi"
+          },
+          {
+            text: "Contracts",
+            link: "Contracts"
+          },
+          {
+            text: "Websocket",
+            link: "Websocket"
+          },
+        ]
+      },
+
+      {
         text: "Legal",
-        icon: "note",
+        icon: "gavel",
         prefix: "legal/",
         collapsable: true,
         children: [
@@ -226,36 +266,14 @@ export default defineUserConfig({
       },  // Legal end
 
       {
-        text: "Trading API",
-        icon: "api",
-        prefix: "apiv2/",
-        link: "apiv2",
-        collapsable: true,
-        children: [
-          {
-            text: "RestApi",
-            link: "RestApi"
-          },
-          {
-            text: "Contracts",
-            link: "Contracts"
-          },
-          {
-            text: "Websocket",
-            link: "Websocket"
-          },
-        ]
-      },
-
-      {
         text: "Contact",
-        icon: "call",
+        icon: "envelope",
         link: "Contact"
       },
 
       {
         text: "About",
-        icon: "info",
+        icon: "circle-info",
         link: "About"
       }
     ],  // sidebar end

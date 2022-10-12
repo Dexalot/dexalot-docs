@@ -1,8 +1,8 @@
 ---
-title: Articles
+title: Artículos
 icon: book-reader
-prev: /
-next: /articles/litepaper
+prev: /es/
+next: /es/articles/dip
 editLink: true
 ---
 

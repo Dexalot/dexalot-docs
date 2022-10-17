@@ -28,7 +28,7 @@ O valor total em US$ de todos negociações executadas por você no mês.
 
 Você será pontuado pela “qualidade” de seus pedidos com base no tamanho (valor em US$) de seus pedidos, na duração das ordens que permanecem no livro de ofertas e na distância de seus pedidos do preço médio.
 
-### A - $ALOT Tokens Deposited ($ALOT Tokens Depositados)
+### A — $ALOT Tokens Deposited ($ALOT Tokens Depositados)
 
 O número total de $ALOT tokens depositados em seu portfólio Dexalot no mês.
 
@@ -47,7 +47,7 @@ Você pode acompanhar sua pontuação mensal em nosso site junto com os usuário
 
 ##  Informações adicionais
 
-* Washed trades não contará para as pontuações mensais. (Operações de manipulação mercadológica)
+* Wash trades não contará para as pontuações mensais. (Operações de manipulação mercadológica)
 * A volatilidade (desvio padrão) de cada par de negociação é calculada periodicamente.
 * Somente pedidos abertos dentro de dois desvios padrão do preço médio serão considerados para a Contribuição do Livro de Pedidos (O).
 * Ativos elegíveis para DIP no lançamento: AVAX, BTC, ETH e ALOT.

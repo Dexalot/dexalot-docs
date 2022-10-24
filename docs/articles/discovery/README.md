@@ -4,7 +4,7 @@ editLink: true
 
 # Dexalot Discovery
 
-# *Where No Dex Has Gone Before*
+## Where No Dex Has Gone Before
 
 ![discoverybanner](/images/discovery/discoverybanner.png)
 
@@ -27,7 +27,7 @@ Avalaunch (and others) literally paved the way to a novel and fair distribution 
 
 While the pre-market capital raise process works quite well, the issues begin when the projects complete their capital raise and the time comes for listing.
 
-# Here are the high-level issues that we know exist when IDOs gets listed:
+## Here are the high-level issues that we know exist when IDOs gets listed:
 
 * IDOs are typically launched on AMM platforms, such as Uniswap, which open up for trading at a specific time (single transaction functionality), which creates a situation where speed matters.
 
@@ -45,7 +45,7 @@ While the pre-market capital raise process works quite well, the issues begin wh
 
 * The net result is that retail users who are “slow” transaction-wise, suffering relatively long latencies associated with using wallets like Metamask, have to use very large slippage % settings so that their orders get executed. Users however who have automation and knowledge around how to take advantage of the mechanics of consensus have a distinctive edge to make money without really necessarily intending to invest into any project.
 
-# **Dexalot presents Dexalot Discovery to even the playing field.**
+## Dexalot presents Dexalot Discovery to even the playing field.
 
 * **Dexalot Discovery** aims to solve the above problems by creating a fair process by which users and the overall the market can discover the appropriate price for newly listed tokens without worrying about speed or bots.
 
@@ -65,7 +65,7 @@ While the pre-market capital raise process works quite well, the issues begin wh
 
 7. Any participating Project can now utilize their liquidity allocations to create liquidity pools if they choose to do so on various AMMs with the discovered price and continue to be priced on Dexalot.
 
-# Conclusion
+## Conclusion
 
 In essence, Dexalot can utilize its CLOB capability with a few enhancements to equalize the chance for anyone to get a piece of a particular project. Users should have ample time to present their best bids and offers (similar to how one registers for an IDO on Avalaunch). They don’t have to worry about being front-run by bots or people who know more about the technical ins and outs of how the Avalanche platform works. Ultimately, users will have a better outcome by participating in the ecosystem this way. Dexalot also understands that it is extremely difficult to build a killer decentralized application in the environment that we operate in today. We would like to make at least the listing-part easier for all rockstar teams who are building new and cool products for the Avalanche ecosystem.
 

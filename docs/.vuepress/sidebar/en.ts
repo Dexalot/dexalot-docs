@@ -28,6 +28,11 @@ export const enSidebarConfig = sidebar({
           text: "Dexalot Discovery",
           icon: "book-open",
           link: "discovery"
+        },
+        {
+          text: "Subnet Validation",
+          icon: "book-open",
+          link: "validation"
         }
       ]
     },

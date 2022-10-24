@@ -55,8 +55,8 @@ End: 10a EST Nov 17th
 Own your trade
 Understanding DIP and how it awards participants is key to winning the contest!
 
-Author: Brad McFall
+**Author**: Brad McFall
 
-Editor: Dan Marcoulis
+**Editor**: Dan Marcoulis
 
-Graphics: Can Toygar
+**Graphics**: Can Toygar

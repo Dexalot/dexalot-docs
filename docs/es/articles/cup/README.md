@@ -1,7 +1,7 @@
 # Dexalot Trading Cup
 ## #Trade2TheSubnet
 
-![cup_1es](/images/cup_es/cup_1es.png)
+![cup_1es](/images/cup/cup_1es.png)
 
 ¡La Subnet ya casi está aquí! Tanto si has participado de #Stake2TheSubnet como si eres nuevo en Dexalot, es momento de comenzar a cosechar algunas recomepensas. Estamos ofreciendo a los usuarios una nueva y divertida serie de competiciones de trading, con nuevos premios, tokens de prueba y reglas cada dos semanas. ¿Estás listo para #Trade2theSubnet? Prepare, porque nuestra primer entrada la Dexalot Trading Cup comienza el jueves 7 de Noviembre y los mejores traders se repartirán 1.000 $ALOT! La fórmula es simple; ingresa, recoge tus tokens de prueba, opera y GANA.
 

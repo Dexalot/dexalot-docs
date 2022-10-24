@@ -59,3 +59,5 @@ Você pode acompanhar sua pontuação mensal em nosso site junto com os usuário
 **Editor**: Dan Marcoulis
 
 **Graphics**: Can Toygar
+
+**Traductores**: Marian y Leandro

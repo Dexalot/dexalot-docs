@@ -13,6 +13,11 @@ export const esSidebarConfig = sidebar({
           text: "Incentivo da Dexalot",
           icon: "book-open",
           link: "dip"
+        },
+        {
+          text: "Dexalot Trading Cup",
+          icon: "book-open",
+          link: "cup"
         }
       ]
     },

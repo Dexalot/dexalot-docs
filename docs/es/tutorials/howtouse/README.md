@@ -1,98 +1,96 @@
 ---
 editLink: true
 ---
-
-# The Dexalot-Subnet
-an introduction — How to Use
+# La Dexalot-Subnet
+Introducción — Como utilizarla
 
 ![Subnetlogo](/images/howtouse/Subnetlogo.png)
 
-The new Dexalot Subnet is now ready for you to test and try out!
+La nueva Dexalot Subnet ya está lista para que la testees y la pruebes!
 
-After months [of building and testing](https://medium.com/dexalot/the-dexalot-subnet-96b2a05cb435) everyone can join in and enjoy the beta version of the first DeFi CLOB (central limit order book) on Avalanche.
+Después de meses [de construcción y testeos](https://medium.com/dexalot/testing-p%C3%BAblico-de-la-dexalot-subnet-37e7e9df487b) todos pueden unirse y disfrutar la versión beta del primer CLOB (de sus siglas en ingles “central limit order book”, en español “líbro central de ordenes límite central”) DeFi en Avalanche.
 
-This Avalanche Subnet is [a dual-chain application](https://medium.com/dexalot/the-dexalot-subnet-96b2a05cb435) containing both a Mainnet and a Subnet. By executing trades with the Dexalot token ALOT on the Dexalot Subnet, transaction gas fees are kept amazingly low. Navigate [here](https://app.dexalot-test.com/trade) and you are good to go.
+Ésta Subnet de Avalanche [es una aplicación a dual-chain](https://medium.com/dexalot/la-dexalot-subnet-2b8c84a67868) que contiene tanto a la Mainnet como a la Subnet. Al ejecutar operaciones con el token de Dexalot ALOT en la Dexalot Subnet, las tarifas de gas de las transacciones se mantienen sorprendentemente bajas. Dirígete [aquí](https://app.dexalot-test.com/trade) y estás listo para comenzar.
 
-Here is an Introduction to Dexalot’s new Subnet Beta application.
+Aquí hay una introducción a la aplicación de la nueva Subnet Beta de Dexalot.
 
 <YouTube id="vRvaswPuMNg" />
 
-# The Dashboard
-The website dashboard is similar to what you are already familiar with. Connect your wallet (Core, Metamask, and WalletConnect) just as you have done before. If you need a refresher, watch [these tutorials](https://medium.com/dexalot/tagged/dexalot-tutorial) and learn the [basics](https://medium.com/dexalot/learn-the-basics-e893a62261a3).
+## El Panel de Control
+El panel de control del sitio web es similar al que ya conoces. Conecta tu wallet (Core, Metamask, y WalletConnect) tal como hiciste antes. Si necesitas un repaso, mira [éstos tutoriales](https://medium.com/dexalot/tagged/dexalot-tutorial) y [aprende lo básico](https://medium.com/dexalot/aprende-lo-b%C3%A1sico-749d29fad69f).
 
-Next to the wallet connect button is a drop-down menu for switching between the Mainnet and the Subnet. Since this is an application on the Avalanche test network you see “Fuji” listed as the Mainnet.
+* Al lado del botón de conexión de la wallet hay un menú desplegable para cambiar entre la Mainnet y la Subnet. Dado que ésta es una aplicación en la red de prueba de Avalanche, verás “Fuji” está listada como la Mainnet.
 
 ![connect](/images/howtouse/connect.png)
 
-The subnet [uses $ALOT, the Dexalot token, to pay for gas](https://medium.com/dexalot/the-dexalot-subnet-96b2a05cb435) and these funds are held for you in a “gas” tank on the Subnet. You can add or remove gas at any time.
+La subnet utiliza $ALOT, el token de Dexalot, para pagar el gas y éstos fondos se retienen en un “gas tank” (tanque de gas) en la Subnet. Puedes agregar o remover gas en cualquier momento.
 
 ![subnetgasttank](/images/howtouse/subnetgastank.png)
 
-The Dashboard contains all of the elements you have come to expect.
+El Panel de Control contiene todos los elementos que puedes esperar.
 
 ![dashboard](/images/howtouse/dashboard.png)
 
-* **Trade pairs** — on the far left side. Simply click on the pair you are interested in trading with and the order book will update.
-
-* **Order book** — to the right of the trade pairs’ section.
-
-* **Trade History** — in the center top of the page, with a more detailed time-stamped list located on the far right.
-
-* **Trade, Orders, Portfolio, and Transfers Tabs** — in the center bottom of the page where most of the action takes place. To review all of these sections and tabs and what they contain please take the Product Tour located in the Help menu drop-down.
+* Trade pairs (Pares de negociación) — en el extremo izquierdo. Simplemente has click en el par en el que te interese operar y el libro de ordenes se actualizará.
+* Order book (Líbro de ordenes) — a la izquierda de la sección de “trade pairs”.
+* Trade History (Historial de operaciones) — en la parte central superior de la página, con una mas detallada lista de indicación de tiempo en la parte extrema derecha.
+* Trade, Orders, Portfolio, and Transfers Tabs (Pestañas Operación, Ordenes, Portfolio y Trasferencias) — en la parte central inferior de la página es donde tiene lugar la mayor parte de la acción. Para revisar todas éstas secciones y pestañas, y que es lo que contienen, por favor toma el “Product Tour” (Tour del Producto) ubicado en el menú desplegable de “Help” (Ayuda).
 
 ![producttour](/images/howtouse/producttour.png)
 
-# How to Trade
-Obtain test AVAX from the [Avalanche faucet](https://faucet.avax.network/) by entering your wallet address and then deposit them to your portfolio.
-Click on the Portfolio tab and at the right of the Avax token line… you will see a three-dot menu from which you can select “Deposit to Subnet”; enter an amount and confirm your transaction with your wallet.
+## Como operar
+Puedes obtener AVAX de prueba desde el [faucet de Avalanche](https://faucet.avax.network/) introduciendo tu wallet address y luego depositarlos en tu portfolio.
+Click en la pestaña “Portfolio” y a la derecha de la línea del token Avax, verás un menú de tres puntos desde donde puedes sleccionar “Deposit to Subnet” (Depositar en la Subnet); ingresar una cantidad y confirmar tu transacción con tu wallet.
 
 ![subnetdeposit](/images/howtouse/subnetdeposit.png)
 
-Now before you can start trading you need to connect to the Subnet.
+Ahora, antes de comenzar a operar, debes conectarte a la Subnet.
 
-To do that click on the drop-down next to the wallet connect button and select - Dexalot-Subnet.
+Para ello, has click en el menú desplegable junto al botón de conexión de la wallet connect y selecciona “Dexalot-Subnet”.
 
 ![networkswitch](/images/howtouse/networkswitch.png)
 
-Since $ALOT is used as the gas token you have the option of adding or removing ALOT from your gas tank — the place designed to pay your gas fees associated with your transactions.
-
-You are now in the Dexalot-Subnet so when you click on the three-dot menu next to the token of your choice you have a few different options including to withdraw your token amounts back to your wallet in the Mainnet.
+Ahora estás en la Dexalot-Subnet, asi que cuando haces click en el menú de tres puntos junto al token de tu elección, tienes diferentes opciones, incluida la de retirar las cantidades de token de vuelta a tu wallet en la Mainnet.
 
 ![withdraw](/images/howtouse/withdraw.png)
 
-# New Features
+Dado que $ALOT es usado como el gas token, tienes la opción de agregar o remover ALOT de tu gas tank — el lugar diseñado para pagar tus tarifas de gas asociadas a tus transacciones.
 
-A new option “Send in Subnet” permits you to send tokens to any address of your choosing directly from within the Dexalot-Subnet.
+## Nuevas características
 
-Another feature is the addition of new trade types available in the Trade tab.
+La nueva opción “Send in Subnet” (enviar en la Subnet) te permite enviar tokens a cualquier address de tu elección directamente desde la Dexalot-Subnet.
+
+Otra característica es el agregado de nuevos tipos de operaciones disponibles en la pestaña “Trade”.
 
 ![tradetypes](/images/howtouse/tradetypes.png)
 
-Click on the Trade Tab and hover over any type to obtain more information.
-So … go ahead and use the test AVAX you obtained to make a trade with either ALOT or USDC. You simply enter the price you would like on the left buy-side, an amount above the minimum noted in red at the bottom of the text boxes. Click buy and confirm the transaction in your wallet and own your trade.
+Click en la pestaña “Trade” y pase el indicador del mouse por encima de cualquier tipo de operación para obtener mas información.
+Así que … sigue adelante y usa los AVAX de prueba obtenidos para hacer un trade ALOT o USDC. Simplemente ingresa el precio que deseas en el lado izquierdo de buy (compra), una cantidad por encima de mínimo señalado en rojo en la parte inferior de los cajones de texto. Click en “buy” y confirma la transacción en tu wallet y sé dueño de tu operación.
 
 ![trade](/images/howtouse/trade.png)
 
-Yet another new feature is the ability to replace your order.
+Otra nueva característica es la posibilidad de reemplazar tu orden.
 
-If you have an order in the order book, you can replace it by clicking on the three-dot menu next to your order in the Orders tab you want to replace. So if you had placed a buy order that was not immediately filled you may use this new feature to change your order type, amount, or price and convert the order into one that is immediately marketable.
+Si tienes una orden en el libro de ordenes, puedes reemplazarla haciendo click en el menú de tres puntos junto a la pestaña “Orders” de la orden que deseas reemplazar. Así que, si has ingresado una orden de compra que no fue inmediatamente completada, puedes usar ésta nueva característica para cambiar el tipo de orden, la cantidad o el precio, y convertir la orden en una orden inmediatemente comercializable.
 
 ![cancel](/images/howtouse/cancel.png)
 
-The transfers tab now also has more information available to you, including where your action occurred, the type of bridge you used, and the gas fees that resulted from your transaction.
+La pestaña “Transfers” ahora tiene mas información disponible para ti, incluyendo donde se produjo tu acción, el tipo de bridge que has utilizado, y las tarifas de gas que resultaron de tu transacción.
 
 ![transferstab](/images/howtouse/transferstab.png)
 
-Dexalot is looking to complete thorough testing of the Dexalot-Subnet and we are thankful to everyone for providing crucial feedback. You too can help improve the Subnet by simply following the steps outlined above and report back any comments, observations or issues encountered. You can read a detailed guide to testing the Dexalot-Subnet [here](https://medium.com/dexalot/the-dexalot-subnet-public-testing-4bea8bc80521). You may send your test results to [support@dexalot.com](support@dexalot.com ) or simply chat with moderators on Dexalot Discord.
+Dexalot está en busca de completar pruebas exhaustivas de la Dexalot-Subnet y estamos agradecidos a todos quienes nos proporcionaron un feedback crucial. Tu también puedes ayudar a mejorar la Subnet, simplemente siguiendo los pasos descritos anteriormente y reportando cualquier comentario, observación o inconveniente encontrado. Puedes leer [aquí](https://medium.com/dexalot/testing-p%C3%BAblico-de-la-dexalot-subnet-37e7e9df487b) una guía detallada para probar la Dexalot-Subnet. Puedes enviar los resultados de tus pruebas a [support@dexalot.com](support@dexalot.com) o simplemente chatear con los moderadores en el Discord de Dexalot.
 
-**Thanks for being a part of this exciting development of Web 3.0, DeFi and the growth of the Avalanche ecosystem with Dexalot. Welcome aboard.**
+**Gracias por ser parte de éste emocionante desarrollo de Web 3.0, DeFi y el crecimiento de ecosistema de Avalanche con Dexalot. Bienvenido a bordo.**
 
 ![typesbanner](/images/howtouse/typesbanner.png)
 
 ---
 
-**Author**: Brad McFall
+**Autor**: Brad McFall
 
 **Editor**: Dan Marcoulis
 
-**Graphics**: Can Toygar
+**Gráficos**: Can Toygar
+
+**Traductores**: Marian y Leandro

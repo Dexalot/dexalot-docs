@@ -15,9 +15,29 @@ export const enSidebarConfig = sidebar({
           link: "litepaper"
         },
         {
+          text: "The Dexalot Subnet",
+          icon: "book-open",
+          link: "subnet"
+        },
+        {
           text: "Dexalot Incentive Program",
           icon: "book-open",
           link: "dip"
+        },
+        {
+          text: "Dexalot Validation Program",
+          icon: "book-open",
+          link: "validation"
+        },
+        {
+          text: "Dexalot Discovery",
+          icon: "book-open",
+          link: "discovery"
+        },
+        {
+          text: "Dexalot Trading Cup",
+          icon: "book-open",
+          link: "cup"
         }
       ]
     },
@@ -33,6 +53,11 @@ export const enSidebarConfig = sidebar({
           text: "Dexalot Subnet Intro",
           icon: "play",
           link: "howtouse"
+        },
+        {
+          text: "Dexalot Subnet Testing",
+          icon: "play",
+          link: "howtotest"
         },
       ]
     },

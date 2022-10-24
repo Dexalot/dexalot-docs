@@ -13,6 +13,11 @@ export const esSidebarConfig = sidebar({
           text: "Incentivo da Dexalot",
           icon: "book-open",
           link: "dip"
+        },
+        {
+          text: "Dexalot Trading Cup",
+          icon: "book-open",
+          link: "cup"
         }
       ]
     },
@@ -25,7 +30,7 @@ export const esSidebarConfig = sidebar({
       prefix: "/es/tutorials/",
       children: [
         {
-          text: "Dexalot sub-redes",
+          text: "La Dexalot-Subnet",
           icon: "play",
           link: "howtouse"
         },

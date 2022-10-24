@@ -15,24 +15,24 @@ export const enSidebarConfig = sidebar({
           link: "litepaper"
         },
         {
-          text: "Dexalot Incentive Program",
-          icon: "book-open",
-          link: "dip"
-        },
-        {
           text: "The Dexalot Subnet",
           icon: "book-open",
           link: "subnet"
         },
         {
+          text: "Dexalot Incentive Program",
+          icon: "book-open",
+          link: "dip"
+        },
+        {
+          text: "Dexalot Validation Program",
+          icon: "book-open",
+          link: "validation"
+        },
+        {
           text: "Dexalot Discovery",
           icon: "book-open",
           link: "discovery"
-        },
-        {
-          text: "Subnet Validation",
-          icon: "book-open",
-          link: "validation"
         }
       ]
     },

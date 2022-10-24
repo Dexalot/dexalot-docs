@@ -27,7 +27,7 @@ Avalaunch (and others) literally paved the way to a novel and fair distribution 
 
 While the pre-market capital raise process works quite well, the issues begin when the projects complete their capital raise and the time comes for listing.
 
-## Here are the high-level issues that we know exist when IDOs gets listed:
+## High-level issues that exist when IDOs get listed:
 
 * IDOs are typically launched on AMM platforms, such as Uniswap, which open up for trading at a specific time (single transaction functionality), which creates a situation where speed matters.
 

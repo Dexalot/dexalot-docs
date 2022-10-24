@@ -74,3 +74,9 @@ One can withdraw an asset only when connected to the Subnet. The withdrawal remo
 
 ![roadmap](/images/subnet/roadmap.png)
 Stay tuned for upcoming announcements, media, and articles that will show you how to test and try out the new Dexalot Subnet.
+
+**Author**: Brad McFall
+
+**Editor**: Dan Marcoulis
+
+**Graphics**: Can Toygar

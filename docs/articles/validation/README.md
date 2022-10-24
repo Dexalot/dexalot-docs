@@ -3,7 +3,7 @@ editLink: true
 ---
 # Dexalot Validation Program
 ![subnet](/images/validation/subnet.png)
-## Info for Validators and Delegators
+## Information for Validators and Delegators
 The Dexalot team has been working hard all spring and summer on building our Avalanche subnet, and we are happy to announce the launching of the new Dexalot is just around the corner. Users will have a far better trading experience with cheaper transaction and trading fees unmatched on Avalanche, better liquidity, tighter bid-offer spreads, blazing speed, and many other new features and innovations that are coming out soon. Stay tuned to this and our other channels for further announcements on everything we are building.
 
 However, for today, we want to focus on our plans for validators and delegators.
@@ -63,3 +63,9 @@ This is made possible because Dexalot will be running a majority of the initial 
 Users who staked for at least 2 continuous months in Option 1 of #Stake2theSubnet will receive a proportionate share of at least 25% of aggregate trading fees collected by Dexalot for up to 1 year unless and until governance becomes active and there is a proposed vote otherwise. Total trading fees distributed to all such users will not exceed $5,000,000. This distribution will be weighted by the number of $ALOT tokens locked and the duration of the lock on the Subnet.
 
 **Get some sunscreen on and enter what is surely to be a bright future for the Avalanche ecosystem as the Dexalot subnet platform and exchange comes on-line.**
+
+**Author**: Brad McFall
+
+**Editor**: Dan Marcoulis
+
+**Graphics**: Can Toygar

@@ -3,14 +3,14 @@ editLink: true
 ---
 # Dexalot Validation Program
 ![subnet](/images/validation/subnet.png)
-## **Info for Validators and Delegators**
+## Info for Validators and Delegators
 The Dexalot team has been working hard all spring and summer on building our Avalanche subnet, and we are happy to announce the launching of the new Dexalot is just around the corner. Users will have a far better trading experience with cheaper transaction and trading fees unmatched on Avalanche, better liquidity, tighter bid-offer spreads, blazing speed, and many other new features and innovations that are coming out soon. Stay tuned to this and our other channels for further announcements on everything we are building.
 
 However, for today, we want to focus on our plans for validators and delegators.
 
 As you may be aware, the path to the subnet began with Dexalot’s #Stake2theSubnet campaign in which users were incentivized to stake their Dexalot token ($ALOT) in order to become potential validators or delegators for the Dexalot subnet. Since this campaign is coming to an end, here is your guide for everything that Dexalot validators and delegators need to know, including what validation on the Dexalot subnet will look like, how you can join in to help secure the first DeFi subnet on Avalanche, and what you can do with your #Stake2theSubnet stake if you are not becoming a validator.
 
-### **VALIDATORS**
+### Validators
 
 All Avalanche subnets are individual blockchains made up of a group of validators run through virtual machines. Dexalot will start with 10 nodes run by operators comprising of the Dexalot Foundation, private sale participants and other users in the ecosystem.
 
@@ -45,7 +45,7 @@ You will be asked:
 
 ![Dextrbridge](/images/validation/dextrbridge.png)
 
-### **DELEGATORS**
+### Delegators
 
 If you are not selected as a validator you can still participate in the distribution of subnet validation rewards by delegating your #Stake2theSubnet stake. In fact anyone with a minimum of 750 $ALOT will be able to delegate regardless of whether you participated in Option 1 or Option 2 of #Stake2theSubnet.
 
@@ -58,7 +58,7 @@ As delegators you will be able to receive the same 9% APY reward that validators
 
 This is made possible because Dexalot will be running a majority of the initial nodes and will pass on all validator rewards directly to delegators.
 
-### **REWARDS FOR OPTION 1 STAKING**
+### Rewards for option 1 staking
 
 Users who staked for at least 2 continuous months in Option 1 of #Stake2theSubnet will receive a proportionate share of at least 25% of aggregate trading fees collected by Dexalot for up to 1 year unless and until governance becomes active and there is a proposed vote otherwise. Total trading fees distributed to all such users will not exceed $5,000,000. This distribution will be weighted by the number of $ALOT tokens locked and the duration of the lock on the Subnet.
 

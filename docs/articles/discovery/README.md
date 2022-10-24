@@ -75,7 +75,7 @@ The above process is a product of many discussions with ecosystem champions. How
 
 **See you soon anon!**
 
-*Where no DEX has gone before!*
+**Where no DEX has gone before!**
 
 Author: FireStorm
 

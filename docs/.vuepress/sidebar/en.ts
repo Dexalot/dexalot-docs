@@ -33,6 +33,11 @@ export const enSidebarConfig = sidebar({
           text: "Dexalot Discovery",
           icon: "book-open",
           link: "discovery"
+        },
+        {
+          text: "Dexalot Trading Cup",
+          icon: "book-open",
+          link: "cup"
         }
       ]
     },

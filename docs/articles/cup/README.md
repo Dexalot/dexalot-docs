@@ -53,6 +53,7 @@ The Subnet is almost here! Whether you’ve been participating in #Stake2TheSubn
 * Continue trading
 * End: 10a EST Nov 17th
 * Own your trade
+
 **Understanding DIP and how it awards participants is key to winning the contest!**
 
 **Author**: Brad McFall

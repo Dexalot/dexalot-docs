@@ -30,7 +30,7 @@ export const esSidebarConfig = sidebar({
       prefix: "/es/tutorials/",
       children: [
         {
-          text: "Dexalot sub-redes",
+          text: "La Dexalot-Subnet",
           icon: "play",
           link: "howtouse"
         },

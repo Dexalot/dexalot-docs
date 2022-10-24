@@ -71,7 +71,7 @@ In essence, Dexalot can utilize its CLOB capability with a few enhancements to e
 
 While Dexalot is aiming to mitigate as much nefarious activity as possible with the above process, we know that updating our mitigation implementation is a battle that we will have to wage going forward because the space is ever-evolving. Dexalot is intending to continuously evaluate, monitor, and improve this process as more data is collected and more projects are listed.
 
-The above process is a product of many discussions with ecosystem champions. However, Dexalot knows that there are folks out there who can improve it even more. If you are one of those people who have a bright idea to further improve Dexalot Discovery for the end-user, please don’t hesitate to reach out to us either by Twitter, Telegram or our newly minted Discord.
+The above process is a product of many discussions with ecosystem champions. However, Dexalot knows that there are folks out there who can improve it even more. If you are one of those people who have a bright idea to further improve **Dexalot Discovery** for the end-user, please don’t hesitate to reach out to us either by Twitter, Telegram or our newly minted Discord.
 
 **See you soon anon!**
 

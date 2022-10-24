@@ -10,7 +10,7 @@ editLink: true
 
 The Dexalot team has been working hard building our Avalanche Subnet, and it’s almost here! Our Subnet is currently being tested in the Avalanche Fuji test network, so users are sure to enjoy a newly enhanced trading experience once complete. Cheaper transaction fees, better liquidity, and blazing speed are just a few of the many new features coming with the subnet. Let’s take a look at the novel structure of the new Dexalot and how it establishes a foundation for a multi-chain future as an Avalanche Subnet.
 
-<YouTube id="vRvaswPuMNg" /> You tube
+<YouTube id="vRvaswPuMNg" />
 
 
 The original Dexalot Testnet was introduced on August 6, 2021, followed by the Mainnet launch on Dec 6, 2021. Subsequently, the Dexalot Subnet Testnet was created on April 25, 2022. Simply said, all chain environments are being updated as Dexalot migrates to the new architecture.

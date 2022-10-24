@@ -3,11 +3,6 @@ editLink: true
 ---
 # The Dexalot Subnet
 
----
-editLink: true
----
-# The Dexalot Subnet
-
 ![subnet](/images/subnet/subnet.png)
 **An innovative exchange on the horizontal scaling paradigm of the Avalanche ecosystem**
 

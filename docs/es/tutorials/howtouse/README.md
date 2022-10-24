@@ -16,7 +16,7 @@ Aquí hay una introducción a la aplicación de la nueva Subnet Beta de Dexalot.
 
 <YouTube id="vRvaswPuMNg" />
 
-## El Panel de Control —
+## El Panel de Control
 El panel de control del sitio web es similar al que ya conoces. Conecta tu wallet (Core, Metamask, y WalletConnect) tal como hiciste antes. Si necesitas un repaso, mira [éstos tutoriales](https://medium.com/dexalot/tagged/dexalot-tutorial) y [aprende lo básico](https://medium.com/dexalot/aprende-lo-b%C3%A1sico-749d29fad69f).
 
 * Al lado del botón de conexión de la wallet hay un menú desplegable para cambiar entre la Mainnet y la Subnet. Dado que ésta es una aplicación en la red de prueba de Avalanche, verás “Fuji” está listada como la Mainnet.
@@ -38,7 +38,7 @@ El Panel de Control contiene todos los elementos que puedes esperar.
 
 ![producttour](/images/howtouse/producttour.png)
 
-## Como operar —
+## Como operar
 Puedes obtener AVAX de prueba desde el [faucet de Avalanche](https://faucet.avax.network/) introduciendo tu wallet address y luego depositarlos en tu portfolio.
 Click en la pestaña “Portfolio” y a la derecha de la línea del token Avax, verás un menú de tres puntos desde donde puedes sleccionar “Deposit to Subnet” (Depositar en la Subnet); ingresar una cantidad y confirmar tu transacción con tu wallet.
 

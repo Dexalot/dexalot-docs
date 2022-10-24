@@ -1,19 +1,18 @@
 ---
 editLink: true
 ---
-
-# The Dexalot-Subnet
-an introduction — How to Use
+# La Dexalot-Subnet
+Introducción — Como utilizarla
 
 ![Subnetlogo](/images/howtouse/Subnetlogo.png)
 
-The new Dexalot Subnet is now ready for you to test and try out!
+La nueva Dexalot Subnet ya está lista para que la testees y la pruebes!
 
-After months [of building and testing](https://medium.com/dexalot/the-dexalot-subnet-96b2a05cb435) everyone can join in and enjoy the beta version of the first DeFi CLOB (central limit order book) on Avalanche.
+Después de meses de construcción y testeos todos pueden unirse y disfrutar la versión beta del primer CLOB (de sus siglas en ingles “central limit order book”, en español “líbro central de ordenes límite central”) DeFi en Avalanche.
 
-This Avalanche Subnet is [a dual-chain application](https://medium.com/dexalot/the-dexalot-subnet-96b2a05cb435) containing both a Mainnet and a Subnet. By executing trades with the Dexalot token ALOT on the Dexalot Subnet, transaction gas fees are kept amazingly low. Navigate [here](https://app.dexalot-test.com/trade) and you are good to go.
+Ésta Subnet de Avalanche es una aplicación a dual-chain que contiene tanto a la Mainnet como a la Subnet. Al ejecutar operaciones con el token de Dexalot ALOT en la Dexalot Subnet, las tarifas de gas de las transacciones se mantienen sorprendentemente bajas. Dirígete aquí y estás listo para comenzar.
 
-Here is an Introduction to Dexalot’s new Subnet Beta application.
+Aquí hay una introducción a la aplicación de la nueva Subnet Beta de Dexalot.
 
 <YouTube id="vRvaswPuMNg" />
 

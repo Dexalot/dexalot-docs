@@ -17,12 +17,12 @@ MetaMask is an application that allows you to manage account keys and send/recei
 
 a. Use drop-down menu in Metamask and select “Custom RPC”
 
-b. The next steps are Dexalot specific
+b. The next steps are Dexalot specific:
 
-c. Enter Network name, New RPC URL, Chain ID, Symbol, and Explorer
+c. Enter **Network name**, **New RPC URL**, **Chain ID**, **Symbol**, and **Explorer**
 (Information at [Dexalot Help](https://app.dexalot.com/help))
 
-![mmnetworks](/images/metamaskuse/mmnetworks.png)
+![mmnetwks](/images/metamaskuse/mmnetwks.png)
 
 ## How to use Metamask with Dexalot
 

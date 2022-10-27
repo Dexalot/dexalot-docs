@@ -56,6 +56,7 @@ The Subnet is almost here! Whether you’ve been participating in #Stake2TheSubn
 
 **Understanding DIP and how it awards participants is key to winning the contest!**
 
+---
 **Author**: Brad McFall
 
 **Editor**: Dan Marcoulis

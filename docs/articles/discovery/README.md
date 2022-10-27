@@ -77,6 +77,8 @@ The above process is a product of many discussions with ecosystem champions. How
 
 **Where no DEX has gone before!**
 
+---
+
 Author: FireStorm
 
 Editor: Brad McFall

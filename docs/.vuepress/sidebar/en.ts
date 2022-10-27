@@ -59,6 +59,11 @@ export const enSidebarConfig = sidebar({
           icon: "play",
           link: "howtotest"
         },
+        {
+          text: "Metamask Install",
+          icon: "play",
+          link: "metamaskuse"
+        },
       ]
     },
     {

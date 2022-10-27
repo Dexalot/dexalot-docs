@@ -67,7 +67,7 @@ export const enSidebarConfig = sidebar({
         {
           text: "Pending Transaction Help",
           icon: "play",
-          link: "recovermmtxn"
+          link: "recovrmmtxn"
         }
       ]
     },

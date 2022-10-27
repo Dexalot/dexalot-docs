@@ -8,6 +8,8 @@ editLink: true
 
 MetaMask is an application that allows you to manage account keys and send/receive Ethereum-based cryptocurrencies from your phone or browser. You will need a MetaMask account to use it to start trading on Dexalot.
 
+<YouTube id="8V7r3vIm_Pc" />
+
 1. [Download MetaMask](https://metamask.io/). Metamask will install as an extension in your current web browser.
 2. Create a wallet or import your wallet
 ![mmuseinstall](/images/metamaskuse/mmuseinstall.png)

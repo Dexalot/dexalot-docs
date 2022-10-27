@@ -64,6 +64,11 @@ export const enSidebarConfig = sidebar({
           icon: "play",
           link: "metamaskuse"
         },
+        {
+          text: "Pending Transaction Help",
+          icon: "play",
+          link: "recovermmtxn"
+        }
       ]
     },
     {

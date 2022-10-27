@@ -24,7 +24,7 @@ c. Enter **Network name**, **New RPC URL**, **Chain ID**, **Symbol**, and **Expl
 
 ![mmnetwks](/images/metamaskuse/mmnetwks.png)
 
-## How to use Metamask with Dexalot
+## How to start trading
 
 Now that you have installed MetaMask and linked your account with Dexalot, learn [how to transfer funds from Avalanche to MetaMask](https://medium.com/dexalot/transfers-between-your-avalanche-and-metamask-wallets-60f226abf3e4) to start trading.
 

@@ -98,3 +98,9 @@ Use “Replace Order” for each asset at least once to change one parameter of 
 Use the new “Send in Subnet” functionality to send funds to another account you have.
 From another account, enter at least 1 taker order for each of your assets.
 Withdraw your assets back to the Mainnet.
+---
+**Author**: Brad McFall
+
+**Editor**: Dan Marcoulis
+
+**Graphics**: Can Toygar

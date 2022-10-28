@@ -18,6 +18,16 @@ export const esSidebarConfig = sidebar({
           text: "Incentivos de Dexalot",
           icon: "book-open",
           link: "dip"
+        },
+        {
+          text: "La Dexalot Subnet",
+          icon: "book-open",
+          link: "subnet"
+        },
+        {
+          text: "Dexalot Discovery",
+          icon: "book-open",
+          link: "discovery"
         }
       ]
     },

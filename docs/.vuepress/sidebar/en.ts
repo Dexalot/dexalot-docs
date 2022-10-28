@@ -10,14 +10,9 @@ export const enSidebarConfig = sidebar({
       prefix: "articles/",
       children: [
         {
-          text: "Litepaper",
+          text: "Dexalot Trading Cup",
           icon: "book-open",
-          link: "litepaper"
-        },
-        {
-          text: "The Dexalot Subnet",
-          icon: "book-open",
-          link: "subnet"
+          link: "cup"
         },
         {
           text: "Dexalot Incentive Program",
@@ -25,9 +20,9 @@ export const enSidebarConfig = sidebar({
           link: "dip"
         },
         {
-          text: "Dexalot Validation Program",
+          text: "The Dexalot Subnet",
           icon: "book-open",
-          link: "validation"
+          link: "subnet"
         },
         {
           text: "Dexalot Discovery",
@@ -35,9 +30,9 @@ export const enSidebarConfig = sidebar({
           link: "discovery"
         },
         {
-          text: "Dexalot Trading Cup",
+          text: "Litepaper",
           icon: "book-open",
-          link: "cup"
+          link: "litepaper"
         }
       ]
     },

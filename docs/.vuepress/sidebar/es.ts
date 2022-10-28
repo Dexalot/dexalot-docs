@@ -10,14 +10,14 @@ export const esSidebarConfig = sidebar({
       prefix: "/es/articles/",
       children: [
         {
-          text: "Incentivo da Dexalot",
-          icon: "book-open",
-          link: "dip"
-        },
-        {
           text: "Dexalot Trading Cup",
           icon: "book-open",
           link: "cup"
+        },
+        {
+          text: "Incentivo da Dexalot",
+          icon: "book-open",
+          link: "dip"
         }
       ]
     },

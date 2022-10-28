@@ -6,6 +6,6 @@ next: /es/articles/dip
 editLink: true
 ---
 
-This folder contains articles authored by the Dexalot team.  Learn the concepts background and vision from a variety of articles.  Read all about these aspects in other languages on
+Ésta carpeta contiene artículos creados por el equipo de Dexalot. Aprende los conceptos de fondo y la visión de una variedad de artículos. Lee todo sobre éstos aspectos en otros idiomas en:
 
 [https://medium.com/dexalot/tagged/dexalot-translations](https://medium.com/dexalot/tagged/dexalot-translations)

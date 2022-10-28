@@ -3,4 +3,4 @@ editLink: true
 ---
 # Sobre
 
-Dexalot is a revolutionary decentralized exchange aiming at bringing the traditional centralized exchange look and feel to a decentralized on-chain application. Its mission is to bring a truly inclusive and transparent environment where Dexalot users can trade crypto securely and efficiently, with no slippage or custody risk. It is built on Avalanche, the fastest smart contracts platform in the blockchain industry.
+Dexalot un revolucionario exchange descentralizado que tiene como objetivo llevar la apariencia y la sensación de uso de un exchange tradicional centralizado a una aplicación descentralizada on-chain. Su misión es proporcionar un entorno verdaderamente inclusivo y transparente donde los usuarios de Dexalot puedan intercambiar criptos de forma segura y eficiente, sin riesgo de slippage o deslizamiento ni de custodia. Está construido en Avalanche, la plataforma mas rápida de contratos inteligentes de la industrial blockchain.

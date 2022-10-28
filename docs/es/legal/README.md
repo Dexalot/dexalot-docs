@@ -5,4 +5,4 @@ next: /legal/License.md
 ---
 # Legal
 
-Consulte las páginas en inglés para la sección legal por favor.
+Para la sección legal, por favor consulta las páginas en ingles.

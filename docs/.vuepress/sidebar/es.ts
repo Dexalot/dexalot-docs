@@ -15,7 +15,7 @@ export const esSidebarConfig = sidebar({
           link: "cup"
         },
         {
-          text: "Incentivo da Dexalot",
+          text: "Incentivos de Dexalot",
           icon: "book-open",
           link: "dip"
         }

@@ -2,7 +2,7 @@
 editLink: true
 ---
 
-# O Programa de Incentivo da Dexalot
+# Programa de Incentivos de Dexalot
 
 ![Dipbanner](/images/dip/dipban.png)
 

@@ -69,7 +69,7 @@ This approach allows Dexalot to scale to multiple bridges (to further reduce ris
 
 * Additional bridges will be introduced in the future by deploying multiple PortfolioMain contracts for different chains.
 
-## **Testing Task List**
+## Testing Task List
 
 Please note the following points during your tests:
 

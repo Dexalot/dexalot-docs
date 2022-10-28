@@ -44,6 +44,11 @@ export const esSidebarConfig = sidebar({
           icon: "play",
           link: "howtouse"
         },
+        {
+          text: "Testing Público de la Dexalot-Subnet",
+          icon: "play",
+          link: "howtotest"
+        },
       ]
     },
 

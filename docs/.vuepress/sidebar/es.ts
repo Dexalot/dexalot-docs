@@ -49,6 +49,11 @@ export const esSidebarConfig = sidebar({
           icon: "play",
           link: "howtotest"
         },
+        {
+          text: "Metamask Instalar",
+          icon: "play",
+          link: "metamaskuse"
+        },
       ]
     },
 

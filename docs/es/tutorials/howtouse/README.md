@@ -93,4 +93,4 @@ Dexalot está en busca de completar pruebas exhaustivas de la Dexalot-Subnet y e
 
 **Gráficos**: Can Toygar
 
-**Traductores**: Marian y Leandro
+**Traductores**: Mariano Davo y Leandro Davo

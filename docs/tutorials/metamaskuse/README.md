@@ -12,6 +12,7 @@ MetaMask is an application that allows you to manage account keys and send/recei
 
 1. [Download MetaMask](https://metamask.io/). Metamask will install as an extension in your current web browser.
 2. Create a wallet or import your wallet
+
 ![mmuseinstall](/images/metamaskuse/mmuseinstall.png)
 
 3. Connect MetaMask to Avalanche Mainnet

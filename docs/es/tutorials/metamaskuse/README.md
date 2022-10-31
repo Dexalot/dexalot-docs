@@ -1,7 +1,7 @@
 ---
 editLink: true
 ---
-# Como instalar MetaMask
+# Cómo instalar MetaMask
 
 ![mmusecover](/images/metamaskuse/mmusecover.png)
 

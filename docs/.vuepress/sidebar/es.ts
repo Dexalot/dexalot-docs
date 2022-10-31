@@ -40,17 +40,17 @@ export const esSidebarConfig = sidebar({
       prefix: "/es/tutorials/",
       children: [
         {
-          text: "La Dexalot-Subnet",
+          text: "Introducción a la Dexalot Subnet",
           icon: "play",
           link: "howtouse"
         },
         {
-          text: "Testing Público de la Dexalot-Subnet",
+          text: "Testing de la Dexalot-Subnet",
           icon: "play",
           link: "howtotest"
         },
         {
-          text: "Metamask Instalar",
+          text: "Instalación de MetaMask",
           icon: "play",
           link: "metamaskuse"
         },

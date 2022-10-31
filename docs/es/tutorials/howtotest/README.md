@@ -2,18 +2,15 @@
 editLink: true
 ---
 # La Dexalot-Subnet
-Cómo testearla
+## Cómo testearla
 
 ![Dextr](/images/howtotest/dextrcomp.png)
-— Bienvenido a la Dexalot-Subnet —
-
-## Introducción
 
 El equipo de Dexalot se complace en presentar la Dexalot-Subnet para testing público. El equipo de desarrolladores pasó meses programando sin parar, escribiendo smart contracts y otros códigos para migrar la Mainnet de Dexalot a la Subnet de Dexalot. A Dexalot le encantaría tu ayuda para que la Subnet Dexalot sea aún mejor. Estamos agradecidos a la comunidad por ayudarnos a llegar hasta aquí. Gracias por ayudarnos a llegar a la siguiente etapa en el desarrollo de Dexalot.
 
 En tanto que la Subnet es esenciamente igual que la Mainnet con la que estás familiarizado, simplemente puedes conectarte y usarla.
 
-## Ve a ésta [URL](https://app.dexalot-test.com/trade) y ya estás listo para comenzar.
+**Ve a ésta [URL](https://app.dexalot-test.com/trade) y ya estás listo para comenzar.**
 
 Sentite libre de probarla usando ésta Introduction o lee a continuación para aprender mas para ayudarte y guiarte en tu testeo.
 
@@ -70,20 +67,43 @@ Mas bridges adicionales se introducirán en el futuro, desplegando múltiples co
 
 Por favor, tenga en cuenta los siguientes puntos durante tus pruebas:
 
-Por cada tareas que se indica a continuación, realiza el seguimiento de la cantidad de tokens en tu wallet, así como el total y el disponible del portfolio. Asegurate que las cantidades coincidan con las que esperas ver. Has éstos controles de seguridad a medida que vayas realizando tus pruebas.
+1. Por cada tareas que se indica a continuación, realiza el seguimiento de la cantidad de tokens en tu wallet, así como el total y el disponible del portfolio. Asegurate que las cantidades coincidan con las que esperas ver. Has éstos controles de seguridad a medida que vayas realizando tus pruebas.
 
-Es necesario crear de 6 a 12 bloques antes que se comprometa un depósito o retiro en la cadena, ya que implica una transferencia de mensaje a través del bridge. Como la actividad en Fuji es relativamente alta, el aspecto limitante será la actividad en la Subnet. Dependiendo del nivel de actividad de la Subnet, las operaciones de transferencias pueden retrasarse. Si los fondos no se entregan incluso después de 1 hora , por favor, avise al equipo de dearrolladores a través de los canales de ayuda, ya que el bridge puede estar bloqueado.
-Deposita desde la Mainnet a la Subnet al menos los siguientes tres activos (por comodidad, se incluyen las address Fuji de los activos soportados en la Subnet):
-AVAX (nativo)
-ALOT (0x9983F755Bbd60d1886CbfE103c98C272AA0F03d6)
+2. Es necesario crear de 6 a 12 bloques antes que se comprometa un depósito o retiro en la cadena, ya que implica una transferencia de mensaje a través del bridge. Como la actividad en Fuji es relativamente alta, el aspecto limitante será la actividad en la Subnet. Dependiendo del nivel de actividad de la Subnet, las operaciones de transferencias pueden retrasarse. Si los fondos no se entregan incluso después de 1 hora , por favor, avise al equipo de dearrolladores a través de los canales de ayuda, ya que el bridge puede estar bloqueado.
+
+* Deposita desde la Mainnet a la Subnet al menos los siguientes tres activos (por comodidad, se incluyen las address Fuji de los activos soportados en la Subnet):
+
+* AVAX (nativo)
+
+* ALOT (0x9983F755Bbd60d1886CbfE103c98C272AA0F03d6)
+
 Uno de los siguientes
 
-ETH (0x16F3e7B8327F2cA3f49Efbb1510d5842F7d4a68C)
-SER (0xf52602253474ddaF6111133ADc1F7C3d28A30ABd)
-USDC (0x68B773B8C10F2ACE8aC51980A1548B6B48a2eC54)
-USDT.e (0x2B62a6c0C750250034e328547Aa38830bd768a18)
-Cambia a la Subnet e ingresa al menos 4 maker orders (2 de venta y 2 de compra) por cada uno de tus activos.
-Usa “Replace Order” por cada activo al menos una vez para cambiar un parámetro de la orden.
-Usa la nueva funcionalidad “Send in Subnet” para enviar fondos a otra cuenta que tengas.
-Desde la otra cuenta, ingresa al menos 1 orden tomadora para cada uno de tus activos.
-Retira tus activos a Mainnet.
+1. ETH (0x16F3e7B8327F2cA3f49Efbb1510d5842F7d4a68C)
+2. SER (0xf52602253474ddaF6111133ADc1F7C3d28A30ABd)
+3. USDC (0x68B773B8C10F2ACE8aC51980A1548B6B48a2eC54)
+4. USDT.e (0x2B62a6c0C750250034e328547Aa38830bd768a18)
+
+* Cambia a la Subnet e ingresa al menos 4 maker orders (2 de venta y 2 de compra) por cada uno de tus activos.
+
+* Usa “Replace Order” por cada activo al menos una vez para cambiar un parámetro de la orden.
+
+* Usa la nueva funcionalidad “Send in Subnet” para enviar fondos a otra cuenta que tengas.
+
+* Desde la otra cuenta, ingresa al menos 1 orden tomadora para cada uno de tus activos.
+
+* Retira tus activos a Mainnet.
+
+![willtest](/images/howtotest/dextrbarttest.png)
+
+**Piensa en casos límite o extremos y testealos. Trata de romper las cosas. Es mejor romper cosas en los testeos!**
+
+---
+
+**Autor**: Brad McFall
+
+**Editor**: Dan Marcoulis
+
+**Gráficos**: Can Toygar
+
+**Traductores**: Mariano Davo y Leandro Davo

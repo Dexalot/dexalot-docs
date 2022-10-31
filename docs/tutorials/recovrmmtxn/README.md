@@ -2,8 +2,8 @@
 editLink: true
 ---
 
-# Pending Metamask Transactions
- How to Recover
+# Fix Pending Metamask Transactions
+ How to
 ---
  Dexalot is built on top of the Avalanche network, which is clearly growing in popularity very quickly. One consequence of this growing use: gas fees can be periodically high for one app as a result of high activity on another app. When traffic is high, [transactions can be pending](https://snowtrace.io/chart/pendingtx) for longer than usual.
 
@@ -46,13 +46,13 @@ b. Click on the colorful circle icon on the top-right, and click Settings from t
 
 ![metamasksettings](/images/recovrmmtxn/mmstngs.png)
 
-c. In the Settings menu, select Advanced.
+c. In the Settings menu, select **Advanced**.
 
-d. Scroll down until you see Advanced gas controls. Toggle this to ON.
+d. Scroll down until you see **Advanced gas controls**. Toggle this to ON.
 
-![gascontrols](/images/recovrmmtxn/gscntrls.png)
+![gascontrols](/images/recovrmmtxn/gscntlrs.png)
 
-e. Still in Advanced settings, keep scrolling until you see Customize transaction nonce. Toggle this to ON.
+e. Still in Advanced settings, keep scrolling until you see **Customize transaction nonce**. Toggle this to **ON**.
 
 ### 2. Finding the nonce of your stuck transaction
 a. Open your MetaMask wallet and go into the activity session. There will be a list of your recent transactions. When you find the one that’s stuck, left click with your mouse anywhere inside the transaction field.
@@ -64,7 +64,7 @@ a. Open your MetaMask wallet and go into the activity session. There will be a l
 ### 3. Overwrite the Stuck Transaction
 Now we’re going to make a new transaction to replace the stuck one. We’ll customize the nonce number, so that it’s the same as the one that you just wrote down.
 
-a. Create a new transaction to replace your stuck transaction. Create the exact same transaction as the one that is pending, but make this one with a custom nonce, and increase the Transaction Fee.
+a. Create a new transaction to replace your stuck transaction. Create the exact same transaction as the one that is pending, but make this one with a custom nonce, and increase the **Transaction Fee**.
 
 ![transactionfee](/images/recovrmmtxn/txnfee.png)
 
@@ -74,11 +74,11 @@ b. Click on Edit
 
 c. Now set the max base fee to the Standard, Fast or Rapid rate you have found from the Gas Tracker — here you could set it between 60 and 70 and then click Save.
 
-d. Find the CUSTOM NONCE entry and change the nonce to the number you wrote down.
+d. Find the **CUSTOM NONCE** entry and change the nonce to the number you wrote down.
 
 ![customnonce](/images/recovrmmtxn/cstmnonce.png)
 
-e. Click Confirm.
+e. Click **Confirm**.
 
 f. Your new transaction should now be accepted into a block. To check, open MetaMask and click the Activity tab.
 
@@ -86,7 +86,7 @@ g. Your completed transaction should show at the top of your Activity list. If i
 
 h. Since no wallet can create two transactions of the same nonce, if the replacement transaction you make is successful, your stuck transaction will be canceled.
 
-Lastly, aside from network congestion you may have a MetaMask software issue. You may not be able know this until you have tried to speed up your transaction, and the problem persists repeatedly. If this is the case then you will need contact MetaMask for support.
+Lastly, aside from network congestion you may have a MetaMask software issue. You may not be able know this until you have tried to speed up your transaction, and the problem persists repeatedly. If this is the case then you will need contact [MetaMask](https://metamask.zendesk.com/hc/en-us/requests/new) for support.
 
 ---
 

@@ -4,7 +4,7 @@ import { commonNavbarEntries } from "./common"
 export const esNavbarConfig = navbar(
   [
     {
-      text: "Intercambio",
+      text: "Exchange",
       link: "https://app.dexalot.com/",
       icon: "exchange"
     },

@@ -23,7 +23,7 @@ One of the guiding principles that Dexalot embraces is the continuous improvemen
 
 A big issue that users continuously suffer from is malicious price action that occurs during the listing of various IDOs (listings of new project tokens for trading).
 
-Avalaunch (and others) literally paved the way to a novel and fair distribution of project allocations to a larger group of people. They’ve even implemented sophisticated algorithms to mitigate the “whale” effect, where a single large participant was ending up with too much of the allocation. There are now other IDO platforms doing their part in assisting ecosystem projects raise capital and are employing ideas to minimize the effects of bad actors as well. Dexalot has partnered with Avalaunch and is a firm believer in their ethos and their capabilities.
+[Avalaunch](https://avalaunch.app/) (and others) literally paved the way to a novel and fair distribution of project allocations to a larger group of people. They’ve even implemented sophisticated algorithms to mitigate the “whale” effect, where a single large participant was ending up with too much of the allocation. There are now other IDO platforms doing their part in assisting ecosystem projects raise capital and are employing ideas to minimize the effects of bad actors as well. [Dexalot](https://dexalot.com/) has partnered with Avalaunch and is a firm believer in their ethos and their capabilities.
 
 While the pre-market capital raise process works quite well, the issues begin when the projects complete their capital raise and the time comes for listing.
 
@@ -76,6 +76,8 @@ The above process is a product of many discussions with ecosystem champions. How
 **See you soon anon!**
 
 **Where no DEX has gone before!**
+
+---
 
 Author: FireStorm
 

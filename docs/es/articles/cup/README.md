@@ -52,6 +52,8 @@
 
 **Entender el DIP (Programa de Incentivos de Dexalot) y como premia a los participantes es clave para ganar la competencia!**
 
+---
+
 Autor: Brad McFall
 
 Editor: Dan Marcoulis

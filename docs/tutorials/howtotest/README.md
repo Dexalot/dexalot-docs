@@ -4,18 +4,15 @@ editLink: true
 
 # The Dexalot-Subnet Public Testing
 
- **How to Test**
+ ## How to Test
 
 ![Dextr](/images/howtotest/dextrcomp.png)
-— Welcome to the Dexalot-Subnet —
-
-## **Introduction**
 
 The Dexalot team is happy to present the Dexalot-Subnet for public testing. The dev team spent months of non-stop programming writing smart contracts and other code to migrate Dexalot’s Mainnet to the Dexalot Subnet. Dexalot would love your help to make the Dexalot Subnet even better. We are grateful to the community for helping us to get here. Thank you for helping us to get to the next stage in the development of Dexalot.
 
 Since the Subnet is essentially just like the Mainnet you are familiar with, you can just connect and use it.
 
-### **Navigate to this URL and you are good to go.**
+ **Navigate to [this URL](https://app.dexalot-test.com/trade) and you are good to go.**
 
 Feel free to try it out using this Introduction or read below to learn more to help and guide you in your testing.
 
@@ -69,7 +66,7 @@ This approach allows Dexalot to scale to multiple bridges (to further reduce ris
 
 * Additional bridges will be introduced in the future by deploying multiple PortfolioMain contracts for different chains.
 
-## **Testing Task List**
+## Testing Task List
 
 Please note the following points during your tests:
 
@@ -94,7 +91,22 @@ One of
 4. USDT.e (0x2B62a6c0C750250034e328547Aa38830bd768a18)
 
 Switch to the Subnet and enter at least 4 maker orders (2 sell and 2 buy orders) for each of your assets.
-Use “Replace Order” for each asset at least once to change one parameter of the order.
-Use the new “Send in Subnet” functionality to send funds to another account you have.
-From another account, enter at least 1 taker order for each of your assets.
-Withdraw your assets back to the Mainnet.
+
+* Use “Replace Order” for each asset at least once to change one parameter of the order.
+
+* Use the new “Send in Subnet” functionality to send funds to another account you have.
+
+* From another account, enter at least 1 taker order for each of your assets.
+
+* Withdraw your assets back to the Mainnet.
+
+![willtest](/images/howtotest/dextrbarttest.png)
+
+**Think of edge/extreme cases and test them. Try to break things. It is better to break things in testing!**
+
+---
+**Author**: Brad McFall
+
+**Editor**: Dan Marcoulis
+
+**Graphics**: Can Toygar

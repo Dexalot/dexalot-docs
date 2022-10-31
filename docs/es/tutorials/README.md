@@ -6,6 +6,6 @@ next: /es/tutorials/howtouse
 editLink: true
 ---
 
-This folder contains tutorials authored by the Dexalot team.  Read, watch and learn about Dexalot with these step by step guides. Additional guides can be found on
+Ésta carpeta contiene tutoriales creados por el equipo de Dexalot. Lee, ve y aprende sobre Dexalot con éstas guías paso a paso. Puedes encontrar mas guías en:
 
 [https://medium.com/dexalot/tagged/dexalot-tutorial](https://medium.com/dexalot/tagged/dexalot-tutorial)

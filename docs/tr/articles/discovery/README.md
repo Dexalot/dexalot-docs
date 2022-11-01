@@ -66,7 +66,7 @@ IDO listeleme süresi genellikle çok rekabetçi olduğu için (çünkü tüm ku
 
 7- Discovery’e katılan bir proje çeşitli AMM lere likitide eklemek isterse keşfedilen ve dexalotta devam eden fiyattan likitide ekleyebilirler.
 
-##  Çözüm
+##  Sonuç
 
 Özünde Dexalot, herkesin belirli bir projeden pay alma şansını eşitlemek için CLOB kapasitesini birkaç geliştirmeyle kullanır. Kullanıcılar, en iyi tekliflerini sunmak için yeterli zamana sahip olmalıdır (kullanıcının Avalaunch’ta bir IDO’ya nasıl kaydolduğuna benzer şekilde). Anında işlem yapan botlar veya Avalanche platformunun nasıl çalıştığını daha fazla bilen bilgi sahibi kişiler tarafından yönetilme konusunda endişelenmeleri gerekmez. Sonuçta, kullanıcılar ekosisteme bu şekilde katılarak daha iyi bir sonuca sahip olacaklar. Dexalot ayrıca, bugün içinde faaliyet gösterdiğimiz ortamda son derece merkezi olmayan bir uygulama oluşturmanın son derece zor olduğunun da farkındadır. Avalanche ekosistemi için yeni ve harika ürünler geliştiren tüm rock yıldızı ekipler için en azından listeleme kısmını kolaylaştırmak istiyoruz.
 

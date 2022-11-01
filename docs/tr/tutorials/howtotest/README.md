@@ -2,15 +2,19 @@
 editLink: true
 ---
 
-# The Dexalot-Subnet Public Testing
+# Dexalot-Subnet Public Testi
 
- ## How to Test
+## Test Nasıl Yapılır
 
 ![Dextr](/images/howtotest/dextrcomp.png)
 
-The Dexalot team is happy to present the Dexalot-Subnet for public testing. The dev team spent months of non-stop programming writing smart contracts and other code to migrate Dexalot’s Mainnet to the Dexalot Subnet. Dexalot would love your help to make the Dexalot Subnet even better. We are grateful to the community for helping us to get here. Thank you for helping us to get to the next stage in the development of Dexalot.
+Dexalot ekibi, herkesin kullanımına açık olan Dexalot-Subnet testini sunmaktan mutluluk duyuyor. Geliştirme ekibi, Dexalot Mainnet’i Dexalot Subnet’e taşımak için akıllı sözleşmeler ve diğer kodlar için aylarca kesintisiz programlama yaptı. Dexalot, Dexalot Subnet’ini daha da iyi hale getirmek için yardımınıza ihtiyaç duyuyor. Buralara gelmemize yardımcı oldukları için topluluğa minnettarız. Dexalot’un geliştirilmesinde bir sonraki aşamaya geçmemize yardımcı olduğunuz için teşekkür ederiz.
 
-Since the Subnet is essentially just like the Mainnet you are familiar with, you can just connect and use it.
+Subnet, zaten aşina olduğunuz Mainnet’e benzediği için, direkt bağlanıp kullanabilirsiniz.
+
+[Bu bağlantıya](https://app.dexalot-test.com/trade) gitmeniz yeterli…
+
+Aşağıdaki tanıtım videosu yardımıyla testi denemekten çekinmeyin veya testinizde size yardımcı olacak ve size rehberlik edecek daha fazla bilgi edinmek için aşağıdakileri okuyun.
 
  **Navigate to [this URL](https://app.dexalot-test.com/trade) and you are good to go.**
 
@@ -18,13 +22,19 @@ Feel free to try it out using this Introduction or read below to learn more to h
 
 <YouTube id="vRvaswPuMNg" />
 
-This is a public beta and we hope the community can help us stress-test our systems. If you want to help, but don’t know where to start, feel free to use the task list below.
+Bu herkese açık bir beta sürümüdür ve topluluğun sistemlerimizi stres testine tabi tutmamıza yardımcı olabileceğini umuyoruz. Yardım etmek istiyor ancak nereden başlayacağınızı bilmiyorsanız, aşağıdaki görev listesini kullanmaktan çekinmeyin.
 
-The Dexalot developers will address as many bugs and usability issues as possible. Please report back any observations and concerns you would like the team to examine. Please attach screenshots of your concerns and enough information including transaction ids to assist them in addressing your observations and they will make changes as necessary.
+Dexalot geliştiricileri, mümkün olduğunca çok sayıda hata ve kullanım sorununu ele alacaktır. Lütfen ekibin incelemesini istediğiniz tüm gözlemlerinizi ve varsa sorunları geri bildirin. Lütfen karşılaştığınız hataların ekran görüntülerini ve gözlemlerinizi ele almalarına yardımcı olmak için transaction id’ leri de dahil olmak üzere yeterli bilgiyi ekleyin; ekibimiz gerekli değişiklikleri yapacaklardır.
 
-You can email the team your report at [support@dexalot.com](support@dexalot.com). Dexalot community managers and moderators are available in Discord to help you and you may leave your comments in the Subnet Testing thread within the #Subnet channel. See you there!
+Ekibe raporunuzu, [support@dexalot.com](support@dexalot.com) adresinden e-posta ile gönderebilirsiniz. Dexalot topluluk yöneticileri ve moderatörleri size yardımcı olmak için Discord’da olacaklardır ve yorumlarınızı #Subnet kanalındaki Subnet Testing bölümüne bırakabilirsiniz. Orada görüşmek üzere!
 
-**Happy Testing!!**
+**Mutlu Testler!!**
+
+## Mimari
+
+Dexalot’un yeni mimarisine, aynı anda Mainnet ve Subnet erişimine imkan veren frontend aracılığıyla ulaşabilirsiniz. Yeni çift-zincir mimarisi, Dexalot’un daha zorlu işlemleri subnete yüklemesine olanak tanır ve hızı artırırken gaz maliyetini düşürür.
+
+Frontend uygulaması, halihazırda yürürlükte olan tek zincirli uygulamaya benzerken, altında yatan akıllı kontratlar, backend ve veritabanı mimarisinin tamamı önemli değişiklikler gördü. Ayrı bir köprüleme arayüzü yoktur. Tüm köprü işlevleri, size sorunsuz bir kullanıcı deneyimi sağlamak için Dexalot’un Mainnet akıllı kontratlar portfolyosuna(PortfolioMain) ve Subnet portfolyosuna (PortfolioSub) entegre edilmiştir. LayerZero başlangıçta tek köprü sağlayıcısı olacak ve gerektiğinde gelecekte daha fazla köprü eklenebilecektir.
 
 ## **Architecture**
 
@@ -34,79 +44,76 @@ The frontend app is similar to the single-chain implementation already in place,
 
 ![roadmap](/images/howtotest/roadmp.png)
 
-This approach allows Dexalot to scale to multiple bridges (to further reduce risk from single points of failure) and for assets in chains other than Avalanche to be tradeable on the Dexalot-Subnet.
+Bu yaklaşım, Dexalot’un birden çok köprüye ölçeklenmesine (bir noktadan kaynaklanan hata riskini daha da azaltmak için) ve Avalanche dışındaki zincirlerdeki varlıkların Dexalot-Subnet’te takas edilebilir olmasına olanak tanır.
 
-## Things to remember, new features and key concepts
+## Bilinmesi gerekenler, yeni özellikler ve temel kavramlar
 
-* One can deposit an asset only when connected to the Mainnet. The deposit locks the user’s asset on the PortfolioMain and deposits the same amount in the PortfolioSub all in one transaction.
+* Bir varlık yalnızca Mainnet’e bağlıyken yatırılabilir. Yatırma işlemi, kullanıcının varlığını PortfolioMain’de kilitler ve aynı tutarı tek bir işlemde PortfolioSub’a yatırır.
 
-* Users will have two wallets for each account: one in the Mainnet and one in the Subnet accessible through supported wallet applications like Core, MetaMask and WalletConnect providers. More wallets will be added in the future.
+* Kullanıcıların her hesap için iki cüzdanı olacaktır: biri Mainnet, diğeri Subnette, Core, MetaMask ve WalletConnect sağlayıcıları gibi desteklenen cüzdan uygulamaları aracılığıyla erişilebilir. Gelecekte daha fazla cüzdan eklenecektir.
 
-* The Mainnet wallet holds all assets in the Mainnet as before, and assets need to be deposited into Dexalot there for trading. All bridge functions are integrated into deposit and withdrawal actions.
+* Mainnet cüzdanı, daha önce olduğu gibi Mainnet’teki tüm varlıkları tutar ve varlıkların alım satım için orada Dexalot’a yatırılması gerekir. Tüm köprü işlevleri, para yatırma ve çekme işlemlerine entegre edilmiştir.
 
-* The Subnet wallet holds only $ALOT for gas payments. That’s why the Subnet wallet is also referred to as the “Gas Tank”.
-
+Subnet cüzdanı, gaz ödemeleri için yalnızca $ALOT tutar. Bu nedenle Subnet cüzdanına “Gaz Tankı” da denir.
 ![submaintank](/images/howtotest/submaintank.png)
 
-* “Add Gas” transfers ALOT from portfolioSub to the Subnet wallet.
+* “Add Gas” fonksiyonu ALOT’u portföySub’dan subret cüzdanına aktaracaktır.
 
-* “Remove Gas” transfers ALOT from the Subnet wallet to PortfolioSub.
+* “Remove Gas” fonksiyonu ALOT’u Subnet cüzdanından PortfolioSub’a aktaracaktır.
 
 ![addrmgas](/images/howtotest/addrmgas.png)
 
-* ALOT available in the PortfolioSub transferred from the Mainnet wallet or the Subnet wallet (“Gas Tank”) can be used in trading or withdrawals.
+* Mainnet cüzdanından veya Subnet cüzdanından (“Gas Tank”) aktarılan PortfolioSub’da bulunan ALOT, alım satım veya para çekme işlemlerinde kullanılacaktır.
 
-* PortfolioSub tracks the Total and Available balances of a users’ assets without creating any ERC20s in the Subnet. These balances are updated when deposit, withdrawal and trading functions are used.
+* PortfolioSub, Subnette herhangi bir ERC20 oluşturmadan kullanıcıların varlıklarının Toplam ve Kullanılabilir bakiyelerini izler. Bu bakiyeler para yatırma, çekme ve alım satım fonksiyonları kullanıldığında güncellenir.
 
-* As there are no ERC20 tokens in the Subnet, only the ALOT balance (“Gas Tank” balance) will be visible in the wallets like Core or MetaMask when connected to the Subnet.
+* Subnette ERC20 tokenları olmadığından ve Alt Ağa bağlanıldığında Core veya MetaMask gibi cüzdanlarda yalnızca ALOT bakiyesi (“Gaz Tankı” bakiyesi) görünür olacaktır.
 
-* All trading is done while connected to the Subnet.
+* Tüm ticaret, Subnet’e bağlıyken yapılır.
 
-* One can withdraw an asset only when connected to the Subnet. The withdrawal removes the amount from the PortfolioSub and unlocks the same amount from the PortfolioMain, subsequently transferring the withdrawn asset to the user’s Mainnet wallet all in one transaction.
+* Bir varlık yalnızca Subnet’e bağlandığında çekilebilir. Para çekme işlemi, tutarı PortföySub’dan kaldırır ve aynı tutarı PortföyAna’dan açar, daha sonra çekilen varlığın tümü tek bir işlemde kullanıcının Mainnet cüzdanına aktarılır.
 
-* Additional bridges will be introduced in the future by deploying multiple PortfolioMain contracts for different chains.
+* Farklı zincirler için birden çok PortfolioMain sözleşmesi dağıtılarak gelecekte ek köprüler tanıtılacaktır.
 
-## Testing Task List
+## Test Görev Listesi
 
-Please note the following points during your tests:
+1. Aşağıdaki her görev için cüzdanlarınızdaki tutarların yanı sıra portföy toplamını ve kullanılabilirliğini takip edin. Tutarların, görmeyi beklediğiniz miktara ulaştığından emin olun.
 
-1.  For every task below keep track of your amounts in your wallets as well as portfolio total and available. Make sure the amounts add up to what you are expecting to see. Make these sanity checks as you carry on with your tests.
+2. Köprü üzerinden bir mesaj aktarımı içerdiğinden, zincire bir para yatırma veya çekme işlemi yapılmadan önce 6–12 blok oluşturulmalıdır. Fuji’deki etkinlik nispeten yüksek olduğundan, hız sınırlayan basamak Subnetteki etkinlik olacaktır. Subnet etkinliğinin düzeyine bağlı olarak, aktarım işlemleri gecikebilir. 1 saat geçmesine rağmen para teslim edilmezse, köprü bloke olabileceğinden lütfen destek kanalları aracılığıyla geliştirici ekibini uyarın.
 
-2.  6–12 blocks need to be created before a deposit or withdrawal is committed to the chain as it involves a message transfer over the bridge. As the activity on Fuji is relatively high the rate-limiting step will be the activity on the Subnet. Depending on the level of Subnet activity, the transfer operations may be delayed. If funds are not delivered even after 1 hour please alert the dev team via support channels as the bridge may be blocked.
-
-* Deposit from the Mainnet to the Subnet at least for the following three assets (for convenience the Fuji addresses of assets supported in the Subnet are included):
+* En azından aşağıdaki üç varlık için Mainnetten, Subnete para yatırın. (kolaylık olması için Alt Ağda desteklenen varlıkların Fuji adresleri dahil edilmiştir):
 
 * AVAX (native)
 
 * ALOT (0x9983F755Bbd60d1886CbfE103c98C272AA0F03d6)
+Aşağıdakilerden biri,
 
-One of
+1. ETH (0x16F3e7B8327F2cA3f49Efbb1510d5842F7d4a68C)
 
-1.  ETH (0x16F3e7B8327F2cA3f49Efbb1510d5842F7d4a68C)
-
-2.  SER (0xf52602253474ddaF6111133ADc1F7C3d28A30ABd)
+2. SER (0xf52602253474ddaF6111133ADc1F7C3d28A30ABd)
 
 3. USDC (0x68B773B8C10F2ACE8aC51980A1548B6B48a2eC54)
 
 4. USDT.e (0x2B62a6c0C750250034e328547Aa38830bd768a18)
 
-Switch to the Subnet and enter at least 4 maker orders (2 sell and 2 buy orders) for each of your assets.
+* Subnete geçin ve varlıklarınızın her biri için en az 4 maker order(2 satış ve 2 satın alma emri) girin.
 
-* Use “Replace Order” for each asset at least once to change one parameter of the order.
+* Siparişin bir parametresini değiştirmek için her varlık için en az bir kez “Replace Order” seçeneğini kullanın.
 
-* Use the new “Send in Subnet” functionality to send funds to another account you have.
+* Sahip olduğunuz başka bir hesaba para göndermek için yeni “Send in Subnet” işlevini kullanın.
 
-* From another account, enter at least 1 taker order for each of your assets.
-
-* Withdraw your assets back to the Mainnet.
+* Başka bir hesaptan, varlıklarınızın her biri için en az 1 taker order girin.
+Varlıklarınızı Mainnet’e geri çekin.
 
 ![willtest](/images/howtotest/dextrbarttest.png)
 
-**Think of edge/extreme cases and test them. Try to break things. It is better to break things in testing!**
+**Sınırları zorlayın, ekstrem durumları test edin. Bir şeyleri bozmaya çalışın. Testte bir şeyleri bozmak her zaman iyidir!**
 
 ---
-**Author**: Brad McFall
+**Yazar**: Brad McFall
 
-**Editor**: Dan Marcoulis
+**Editör**: Dan Marcoulis
 
-**Graphics**: Can Toygar
+**Grafikler**: Can Toygar
+
+**Çeviren**: ZainCypher

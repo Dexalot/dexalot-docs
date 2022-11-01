@@ -35,6 +35,11 @@ export default hopeTheme({
       navbar: esNavbarConfig,
       sidebar: esSidebarConfig
     },
+
+    "/vi/": {
+      navbar: esNavbarConfig,
+      sidebar: esSidebarConfig
+    },
   },
 
   plugins: {

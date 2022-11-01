@@ -15,6 +15,11 @@ export default defineUserConfig({
       title: "Dexalot | Docs",
       description: "El hogar del contenido técnico"
     },
+    "/vi/": {
+      lang: "vi-VI",
+      title: "Dexalot | Docs",
+      description: "The home for technical content"
+    },
   },
 
   plugins: [
@@ -26,7 +31,10 @@ export default defineUserConfig({
         },
         '/es/': {
           placeholder: 'Buscar',
-        }
+        },
+        '/vi/': {
+          placeholder: 'Search',
+        },
       }
     }),
     commentPlugin({

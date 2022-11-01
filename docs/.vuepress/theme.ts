@@ -2,10 +2,12 @@ import { hopeTheme } from "vuepress-theme-hope";
 import {
   enNavbarConfig,
   esNavbarConfig,
+  viNavbarConfig,
 } from "./navbar/index";
 import {
   enSidebarConfig,
   esSidebarConfig,
+  viSidebarConfig,
 } from "./sidebar/index";
 
 export default hopeTheme({
@@ -37,8 +39,8 @@ export default hopeTheme({
     },
 
     "/vi/": {
-      navbar: esNavbarConfig,
-      sidebar: esSidebarConfig
+      navbar: viNavbarConfig,
+      sidebar: viSidebarConfig
     },
   },
 

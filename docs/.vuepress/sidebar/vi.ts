@@ -1,7 +1,7 @@
 import { sidebar } from "vuepress-theme-hope";
 
 export const viSidebarConfig = sidebar({
-  "/es/": [
+  "/vi/": [
     {
       text: "Artículos",
       icon: "book-reader",

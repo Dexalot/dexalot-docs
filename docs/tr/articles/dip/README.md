@@ -20,11 +20,17 @@ Programın Süresi: 2 yıla kadar
 
 Her ay, Dexalot kullanıcıları üç faktöre göre puanlanacak ve sıralama yapılacak:
 
-* **E** — Yürütülen Hacim: Ay içinde gerçekleştirdiğiniz tüm işlemlerin toplam USD değeri.
+### E
+---
+Yürütülen Hacim: Ay içinde gerçekleştirdiğiniz tüm işlemlerin toplam USD değeri.
 
-* **O** — Sipariş Defterine Katkınız: Siparişlerinizi bir nevi “kalitesine” yani siparişlerinizin boyutuna (USD değeri olarak), siparişlerinizin sipariş defterinde kalma süresine ve siparişlerinizin sipariş defterindeki orta fiyata olan uzaklığına göre puanınız belirlenecek.
+### O
+---
+Sipariş Defterine Katkınız: Siparişlerinizi bir nevi “kalitesine” yani siparişlerinizin boyutuna (USD değeri olarak), siparişlerinizin sipariş defterinde kalma süresine ve siparişlerinizin sipariş defterindeki orta fiyata olan uzaklığına göre puanınız belirlenecek.
 
-* **A** — Yatırılan $ALOT tokenları: Ay içinde Dexalot portföyünüze yatırılan toplam $ALOT token sayısı.
+### A
+---
+Yatırılan $ALOT tokenları: Ay içinde Dexalot portföyünüze yatırılan toplam $ALOT token sayısı.
 
 Her faktör ayrı ayrı hesaplanır; bu, yalnızca alım satım gerçekleştirseniz veya bir sipariş ekleseniz veya $ALOT token yatırsanız bile aylık bir puan kazanacağınız anlamına gelir. Ancak;
 * Ne kadar çok işlem yaparsanız,

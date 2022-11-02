@@ -15,7 +15,7 @@ Alt ağ neredeyse burada! İster #Stake2TheSubnet’e katılmış, ister Dexalot
 * Tarih: 7 Kasım
 * Ticaret çifti: kAVAX / kUSDC
 * Katılımcılar: toplam 2.500
-* Sıralamalar: DIP (Dexalot Teşvik Programı) puanları ile belirlenecek
+* Sıralamalar: DIP ([Dexalot Teşvik Programı](https://medium.com/dexalot/ch%C6%B0%C6%A1ng-tr%C3%ACnh-khuy%E1%BA%BFn-kh%C3%ADch-dexalot-1458e76540b5)) puanları ile belirlenecek
 * Kazananlar: Puan sıralamasında ilk 5 yarışmacı
 
 ## Kurallar

@@ -10,6 +10,11 @@ export const viSidebarConfig = sidebar({
       prefix: "/vi/articles/",
       children: [
         {
+          text: "Dexalot Trading Cup",
+          icon: "book-open",
+          link: "cup"
+        },
+        {
           text: "Incentivos de Dexalot",
           icon: "book-open",
           link: "dip"

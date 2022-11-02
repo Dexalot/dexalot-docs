@@ -3,6 +3,6 @@ icon: gavel
 editLink: true
 next: /legal/License.md
 ---
-# Legal
+#  Pháp l
 
-Para la sección legal, por favor consulta las páginas en ingles.
+Vui lòng tham khảo các trang tiếng Anh cho phần pháp lý.

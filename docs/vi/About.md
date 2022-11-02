@@ -1,6 +1,6 @@
 ---
 editLink: true
 ---
-# Sobre
+# About
 
-Dexalot un revolucionario exchange descentralizado que tiene como objetivo llevar la apariencia y la sensación de uso de un exchange tradicional centralizado a una aplicación descentralizada on-chain. Su misión es proporcionar un entorno verdaderamente inclusivo y transparente donde los usuarios de Dexalot puedan intercambiar criptos de forma segura y eficiente, sin riesgo de slippage o deslizamiento ni de custodia. Está construido en Avalanche, la plataforma mas rápida de contratos inteligentes de la industrial blockchain.
+Dexalot là một sàn giao dịch phi tập trung mang tính cách mạng mang lại giao diện trao đổi tập trung truyền thống cho một ứng dụng trên chuỗi phi tập trung. Sứ mệnh của nó là mang lại một môi trường thực sự toàn diện và minh bạch, nơi người dùng Dexalot có thể giao dịch tiền điện tử một cách an toàn và hiệu quả, không có rủi ro trượt giá hoặc lưu ký. Nó được xây dựng trên Avalanche, nền tảng hợp đồng thông minh nhanh nhất trong ngành công nghiệp blockchain.

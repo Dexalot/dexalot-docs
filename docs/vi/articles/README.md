@@ -1,11 +1,11 @@
 ---
-title: Artículos
+title: Bài viết
 icon: book-reader
 prev: /vi/
 next: /vi/articles/dip
 editLink: true
 ---
 
-Ésta carpeta contiene artículos creados por el equipo de Dexalot. Aprende los conceptos de fondo y la visión de una variedad de artículos. Lee todo sobre éstos aspectos en otros idiomas en:
+Thư mục này chứa các bài viết do nhóm Dexalot biên soạn. Tìm hiểu khái niệm nền tảng và tầm nhìn từ nhiều bài viết khác nhau. Đọc tất cả về các khía cạnh này bằng những ngôn ngữ khác trên
 
 [https://medium.com/dexalot/tagged/dexalot-translations](https://medium.com/dexalot/tagged/dexalot-translations)

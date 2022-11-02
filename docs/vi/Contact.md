@@ -2,17 +2,17 @@
 editLink: true
 ---
 
-# Contacto
+# Contact
 
-## Soporte
+## Hỗ trợ
 
 [support@dexalot.com](mailto:support@dexalot.com)
 
-## Empleo
+## Nghề nghiệp
 
 [career@dexalot.com](mailto:career@dexalot.com)
 
-## Redes Sociales
+## Truyền thông mạng xã hội
 
 ### Twitter
 

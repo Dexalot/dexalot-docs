@@ -13,13 +13,13 @@ actions:
     type: primary
 
 features:
-  - title: Artículos
+  - title: Bài viết
     icon: book-reader
-    details: "Aprende los conceptos, antecedentes y visión"
+    details: "Tìm hiểu các khái niệm, nền tảng và tầm nhìn"
     link: articles
 
-  - title: Tutoriales
+  - title: Hướng dẫn
     icon: mortar-board
-    details: "Lea, mire y aprenda a usar Dexalot"
+    details: "Đọc, xem và tìm hiểu cách sử dụng Dexalot"
     link: tutorials
 ---

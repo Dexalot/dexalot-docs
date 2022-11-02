@@ -3,7 +3,7 @@ import { sidebar } from "vuepress-theme-hope";
 export const viSidebarConfig = sidebar({
   "/vi/": [
     {
-      text: "Artículos",
+      text: "Bài viết",
       icon: "book-reader",
       collapsable: true,
       link: "/vi/articles",
@@ -23,7 +23,7 @@ export const viSidebarConfig = sidebar({
     },
 
     {
-      text: "Tutoriales",
+      text: "Hướng dẫn",
       icon: "mortar-board",
       collapsable: true,
       link: "/vi/tutorials",
@@ -38,7 +38,7 @@ export const viSidebarConfig = sidebar({
     },
 
     {
-      text: "Legal",
+      text: "Pháp l",
       icon: "gavel",
       link: "/vi/legal",
       prefix: "/vilegal/",
@@ -46,13 +46,13 @@ export const viSidebarConfig = sidebar({
     },
 
     {
-      text: "Contacto",
+      text: "Contact",
       icon: "envelope",
       link: "/vi/Contact"
     },
 
     {
-      text: "Sobre",
+      text: "Hỗ trợ",
       icon: "circle-info",
       link: "/vi/About"
     }

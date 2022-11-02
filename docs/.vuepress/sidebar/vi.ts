@@ -15,9 +15,14 @@ export const viSidebarConfig = sidebar({
           link: "cup"
         },
         {
-          text: "Incentivos de Dexalot",
+          text: "Chương trình khuyến khích Dexalot",
           icon: "book-open",
           link: "dip"
+        },
+        {
+          text: "Khám phá Dexalot",
+          icon: "book-open",
+          link: "discovery"
         },
       ]
     },
@@ -30,7 +35,7 @@ export const viSidebarConfig = sidebar({
       prefix: "/vi/tutorials/",
       children: [
         {
-          text: "Introducción a la Dexalot Subnet",
+          text: "Mạng con Dexalot Intro",
           icon: "play",
           link: "howtouse"
         },
@@ -46,7 +51,7 @@ export const viSidebarConfig = sidebar({
     },
 
     {
-      text: "Contact",
+      text: "Tiếp xúc",
       icon: "envelope",
       link: "/vi/Contact"
     },

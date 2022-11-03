@@ -23,7 +23,7 @@ Một trong những nguyên tắc chỉ đạo mà Dexalot áp dụng là liên 
 
 Một vấn đề lớn mà người dùng liên tục mắc phải là hành động làm giá xảy ra trong quá trình niêm yết các IDO khác nhau (niêm yết các mã thông báo dự án mới để giao dịch).
 
-[Avalaunch](https://avalaunch.app/) (và những dự án khác) theo đúng nghĩa đen đã mở đường cho một sự phân bổ mới, công bằng trong việc phân bổ dự án cho một nhóm người lớn hơn. Họ thậm chí họ đã triển khai các thuật toán phức tạp để giảm thiểu hiệu ứng “cá voi”, khi mà một “tay to” nhận được quá nhiều phân bổ. Hiện đã có các nền tảng IDO khác thực hiện vai trò của mình bằng việc hỗ trợ các dự án trong hệ sinh thái huy động vốn, và cũng đang áp dụng các ý tưởng để giảm thiểu tác động từ các tác nhân xấu. Dexalot đã hợp tác với Avalaunch và tin tưởng vững chắc vào đặc tính, khả năng của họ.
+[Avalaunch](https://avalaunch.app/) (và những dự án khác) theo đúng nghĩa đen đã mở đường cho một sự phân bổ mới, công bằng trong việc phân bổ dự án cho một nhóm người lớn hơn. Họ thậm chí họ đã triển khai các thuật toán phức tạp để giảm thiểu hiệu ứng “cá voi”, khi mà một “tay to” nhận được quá nhiều phân bổ. Hiện đã có các nền tảng IDO khác thực hiện vai trò của mình bằng việc hỗ trợ các dự án trong hệ sinh thái huy động vốn, và cũng đang áp dụng các ý tưởng để giảm thiểu tác động từ các tác nhân xấu. [Dexalot]((https://dexalot.com/)) đã hợp tác với Avalaunch và tin tưởng vững chắc vào đặc tính, khả năng của họ.
 
 Trong khi quy trình huy động vốn trước khi niêm yết hoạt động khá tốt, thì các vấn đềlại bắt đầu xảy ra khi các dự án hoàn thành quá trình gọi vốn và vào thời điểm niêm yết.
 

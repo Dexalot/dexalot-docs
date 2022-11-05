@@ -1,6 +1,6 @@
 import { sidebar } from "vuepress-theme-hope";
 
-export const trSidebarConfig = sidebar({
+export const viSidebarConfig = sidebar({
   "/tr/": [
     {
       text: "Artículos",

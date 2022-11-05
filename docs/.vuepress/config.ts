@@ -18,7 +18,7 @@ export default defineUserConfig({
     "/vi/": {
       lang: "vi-VI",
       title: "Dexalot | Docs",
-      description: "The home for technical content"
+      description: "Trang chủ cho nội dung kỹ thuật"
     },
   },
 
@@ -33,7 +33,7 @@ export default defineUserConfig({
           placeholder: 'Buscar',
         },
         '/vi/': {
-          placeholder: 'Search',
+          placeholder: 'Tìm kiếm',
         },
       }
     }),

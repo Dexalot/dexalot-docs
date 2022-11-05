@@ -43,7 +43,7 @@ export const viSidebarConfig = sidebar({
     },
 
     {
-      text: "Pháp l",
+      text: "Pháp lý",
       icon: "gavel",
       link: "/vi/legal",
       prefix: "/vilegal/",
@@ -57,7 +57,7 @@ export const viSidebarConfig = sidebar({
     },
 
     {
-      text: "Hỗ trợ",
+      text: "Về",
       icon: "circle-info",
       link: "/vi/About"
     }

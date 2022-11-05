@@ -8,7 +8,7 @@ tagline: Ngôi nhà dành cho các nhà phát triển!! ✨
 footer: true
 
 actions:
-  - text: Empezar 💡
+  - text: Bắt đầu 💡
     link: articles
     type: primary
 

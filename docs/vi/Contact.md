@@ -2,7 +2,7 @@
 editLink: true
 ---
 
-# Contact
+# Liên hệ
 
 ## Hỗ trợ
 

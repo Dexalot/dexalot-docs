@@ -20,15 +20,15 @@ Thời lượng của chương trình: Lên đến 2 năm
 
 Hàng tháng, người dùng Dexalot sẽ được chấm điểm và xếp hạng dựa trên ba yếu tố:
 
-### E
+### E Khối lượng thực hiện
 ---
 Khối lượng đã thực hiện: Tổng giá trị US$ của tất cả các giao dịch bạn thực hiện trong tháng.
 
-### O
+### O Sổ lệnh Đóng góp
 ---
 Đóng góp vào sổ đặt hàng : Bạn sẽ được chấm điểm về “chất lượng” của đơn đặt hàng dựa trên quy mô (giá trị US$) của đơn đặt hàng, thời hạn đơn đặt hàng của bạn vẫn còn trên sổ đặt hàng và khoảng cách đơn đặt hàng của bạn đến giữa giá bán.
 
-### A
+### A Tokens $ALOT đã nạp
 ---
 Mã thông báo $ALOT đã được ký quỹ: Tổng số mã thông báo $ALOT được gửi vào danh mục đầu tư Dexalot của bạn trong tháng.
 

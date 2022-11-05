@@ -20,6 +20,11 @@ export default defineUserConfig({
       title: "Dexalot | Docs",
       description: "Trang chủ cho nội dung kỹ thuật"
     },
+    "/tr/": {
+      lang: "tr-TR",
+      title: "Dexalot | Docs",
+      description: "The home for technical content"
+    },
   },
 
   plugins: [
@@ -34,6 +39,9 @@ export default defineUserConfig({
         },
         '/vi/': {
           placeholder: 'Tìm kiếm',
+        },
+        '/tr/': {
+          placeholder: 'Search',
         },
       }
     }),

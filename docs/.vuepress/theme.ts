@@ -42,6 +42,12 @@ export default hopeTheme({
       navbar: viNavbarConfig,
       sidebar: viSidebarConfig
     },
+
+    "/tr/": {
+      navbar: viNavbarConfig,
+      sidebar: viSidebarConfig
+    },
+
   },
 
   plugins: {

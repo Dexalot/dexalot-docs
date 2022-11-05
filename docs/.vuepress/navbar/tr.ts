@@ -1,7 +1,7 @@
 import { navbar } from "vuepress-theme-hope";
 import { commonNavbarEntries } from "./common"
 
-export const viNavbarConfig = navbar(
+export const trNavbarConfig = navbar(
   [
     {
       text: "Exchange",

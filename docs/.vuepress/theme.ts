@@ -3,6 +3,7 @@ import {
   enNavbarConfig,
   esNavbarConfig,
   viNavbarConfig,
+  trNavbarConfig,
 } from "./navbar/index";
 import {
   enSidebarConfig,
@@ -40,12 +41,12 @@ export default hopeTheme({
 
     "/vi/": {
       navbar: viNavbarConfig,
-      sidebar: viSidebarConfig
+      sidebar: viSidebarConfig,
     },
 
     "/tr/": {
-      navbar: viNavbarConfig,
-      sidebar: viSidebarConfig
+      navbar: trNavbarConfig,
+      sidebar: viSidebarConfig,
     },
 
   },

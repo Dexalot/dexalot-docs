@@ -4,83 +4,85 @@ editLink: true
 # The Dexalot Subnet
 
 ![subnet](/images/subnet/subnet.png)
-An innovative exchange on the horizontal scaling paradigm of the Avalanche ecosystem
+Một exchange sáng tạo trên mô hình mở rộng theo chiều ngang của hệ sinh thái Avalanche.
 
 ## Introduction
 
-The Dexalot team has been working hard building our Avalanche Subnet, and it’s almost here! Our Subnet is currently being tested in the Avalanche Fuji test network, so users are sure to enjoy a newly enhanced trading experience once complete. Cheaper transaction fees, better liquidity, and blazing speed are just a few of the many new features coming with the subnet. Let’s take a look at the novel structure of the new Dexalot and how it establishes a foundation for a multi-chain future as an Avalanche Subnet.
+Nhóm Dexalot đã và đang làm việc chăm chỉ để xây dựng Mạng con Avalanche của chúng ta và nó sắp hoàn thành! Mạng con của chúng ta hiện đang được thử nghiệm trong mạng thử nghiệm Avalanche Fuji, vì vậy người dùng chắc chắn sẽ tận hưởng trải nghiệm giao dịch mới được nâng cao sau khi hoàn tất. Phí giao dịch rẻ hơn, thanh khoản tốt hơn và tốc độ giao dịch nhanh chỉ là một vài trong số rất nhiều tính năng mới đi kèm với mạng con. Hãy cùng xem cấu trúc mới của Dexalot mới và cách nó thiết lập nền tảng cho một tương lai đa chuỗi như một Subnet Avalanche.
 
-The original Dexalot Testnet was introduced on August 6, 2021, followed by the Mainnet launch on Dec 6, 2021. Subsequently, the [Dexalot Subnet Testnet](https://medium.com/dexalot/the-dexalot-subnet-c08605afdf64) was created on April 25, 2022. Simply said, all chain environments are being updated as Dexalot migrates to the new architecture.
+Dexalot Testnet ban đầu được giới thiệu vào ngày 6 tháng 8 năm 2021, tiếp theo là ra mắt Mainnet vào ngày 6 tháng 12 năm 2021. Sau đó, [Dexalot Subnet Testnet](https://medium.com/dexalot/the-dexalot-subnet-7a776408a01b) được tạo vào ngày 25 tháng 4 năm 2022. Nói một cách đơn giản, tất cả các môi trường chuỗi đang được cập nhật khi Dexalot di chuyển sang kiến ​​trúc mới.
 
-The new Dexalot is a dual-chain application existing on both the Avalanche C-Chain (Mainnet) and Dexalot Subnet (Subnet). The Mainnet and Subnet communicate by generic message passing with the use of high-end bridge technologies. Previously, trading on Dexalot meant that all of your actions were sent to a single blockchain, but that’s changing in a big way. Dexalot’s new architecture allows for interaction between multiple blockchains from its frontend, instead of just one. This is not only more efficient but also paves the way for future innovations.
+Dexalot mới là một ứng dụng chuỗi kép hiện có trên cả Avalanche C-Chain (Mainnet) và Dexalot Subnet (Mạng con). Mainnet và Subnet giao tiếp bằng cách truyền thông điệp chung với việc sử dụng các công nghệ cầu nối cao cấp. Trước đây, giao dịch trên Dexalot có nghĩa là tất cả các hành động của bạn đều được gửi đến một blockchain duy nhất, nhưng điều đó đang thay đổi theo một cách lớn. Kiến trúc mới của Dexalot cho phép tương tác giữa nhiều blockchains từ giao diện người dùng của nó, thay vì chỉ một. Điều này không chỉ hiệu quả hơn mà còn mở đường cho những đổi mới trong tương lai.
 
 ![trading](/images/subnet/trading.png)
-How users interact with Dexalot — before and after migration to the new Dexalot Subnet
+Cách người dùng tương tác với Dexalot — trước và sau khi chuyển sang Mạng con Dexalot mới
 
-With the new architecture, you will need to deposit from the Mainnet, trade in the Subnet and withdraw from the Subnet. The advantage of doing it this way is the fact that the assets never leave the originating chain while trades are occurring in the subnet.
+Với kiến ​​trúc mới, bạn sẽ cần phải gửi tiền từ Mainnet, giao dịch trong Subnet và rút tiền từ Subnet. Lợi thế của việc làm theo cách này là thực tế là các tài sản không bao giờ rời khỏi chuỗi ban đầu trong khi các giao dịch đang diễn ra trong mạng con.
 
-To switch between these two blockchains, simply select from the drop down menu found right next to the wallet connect button on the familiar Dexalot dashboard.
+Để chuyển đổi giữa hai blockchain này, chỉ cần chọn Menu thả xuống được tìm thấy ngay bên cạnh nút kết nối ví trên bảng điều khiển Dexalot quen thuộc.
 
 ![chainswitch](/images/subnet/chainswitch.png)
 ![mainsub](/images/subnet/mainsub.png)
 
-## Architecture
+## Kiến ​​​​trúc
 
-The frontend app is similar to the single-chain implementation already in place, while the underlying contracts, backend, and database architecture have all seen substantial changes.
+Ứng dụng giao diện người dùng tương tự như triển khai chuỗi đơn đã có sẵn, trong khi các hợp đồng cơ bản, phụ trợ và kiến ​​trúc cơ sở dữ liệu đều có những thay đổi đáng kể.
 
-The novel dual-chain architecture allows Dexalot to unload more demanding operations to the subnet, reducing the gas cost while increasing speed. Dexalot’s new architecture is accessed through its frontend, which has been upgraded to be Mainnet and Subnet aware simultaneously. In addition, there is no separate bridging interface. All bridge functionality is integrated into Dexalot’s Mainnet smart contracts portfolio (PortfolioMain) and Subnet portfolio (PortfolioSub) to provide a seamless user experience for you. LayerZero will be the sole bridge provider at the start, and more bridges could be added in the future as needed. This approach will allow Dexalot to scale to multiple bridges (to further reduce risk from single points of failure) and for assets in chains other than Avalanche to be tradeable on the Dexalot Subnet.
+Kiến trúc chuỗi kép mới lạ cho phép Dexalot tải các hoạt động đòi hỏi nhiều hơn vào mạng con, giảm chi phí gas trong khi tăng tốc độ. Kiến trúc mới của Dexalot được truy cập thông qua giao diện người dùng của nó, đã được nâng cấp để nhận biết Mainnet và Subnet cùng lúc. Ngoài ra, không có giao diện bắc cầu riêng biệt. Tất cả chức năng cầu nối được tích hợp vào danh mục hợp đồng thông minh Mainnet (PortfolioMain) và danh mục đầu tư mạng con (PortfolioSub) của Dexalot để cung cấp trải nghiệm người dùng liền mạch . LayerZero sẽ là nhà cung cấp cầu duy nhất khi bắt đầu và nhiều cầu hơn có thể được bổ sung trong tương lai nếu cần. Cách tiếp cận này sẽ cho phép Dexalot mở rộng quy mô đến nhiều cầu (để giảm rủi ro hơn nữa từ các điểm lỗi đơn lẻ) và để các tài sản trong chuỗi không phải Avalanche có thể giao dịch trên Dexalot Subnet.
 
-### Phase 1
+### Giai đoạn 1
 ---
-The first phase of the migration began on July 14, 2022. The Fuij testnet network was shut down briefly to support multiple blockchains using the same database schema — the first step of the multi-chain application. The Dexalot user’s view (as seen on the dashboard website) is created mostly by querying the records from the database (see the Dexalot litepaper) that is populated by a drop copy of the blockchain events. A new backend infrastructure with readers and writers capable of interacting with multiple blockchains was also deployed successfully during this phase.
+Giai đoạn đầu tiên của quá trình di chuyển bắt đầu vào ngày 14 tháng 7 năm 2022. Mạng Fuij testnet đã bị đóng cửa trong thời gian ngắn để hỗ trợ nhiều blockchains sử dụng cùng một lược đồ cơ sở dữ liệu — bước đầu tiên của ứng dụng đa chuỗi. Chế độ xem của người dùng Dexalot (như được thấy trên trang web bảng điều khiển) được tạo chủ yếu bằng cách truy vấn các bản ghi từ cơ sở dữ liệu (xem [Litepaper Dexalot](https://dexalot.com/docs/DEXALOT-Litepaper.pdf) ) được điền bởi một bản sao nhỏ của các sự kiện blockchain. Một cơ sở hạ tầng phụ trợ mới với người đọc và người viết có khả năng tương tác với nhiều blockchain cũng đã được triển khai thành công trong giai đoạn này.
 
-### Phase 2
+### Giai đoạn 2
 ---
-During the first week of August, the Mainnet was shut down in order to enable the Subnet environment for testing. The current Mainnet operates with 4 smart contracts and this system was updated to include 10+ smart contracts. This development environment has been deployed on the Avalanche Fuji test network and is undergoing internal testing.
+Trong tuần đầu tiên của tháng 8, Mainnet đã ngừng hoạt động để có thể thử nghiệm môi trường Subnet. Mainnet hiện tại hoạt động với 4 hợp đồng thông minh và hệ thống này đã được cập nhật để bao gồm hơn 10 hợp đồng thông minh. Môi trường phát triển này đã được triển khai trên mạng thử nghiệm Avalanche Fuji và đang trong quá trình thử nghiệm nội bộ.
 
-## Typical Trading Flow
+## Các giao dịch điển hình
 
-* Connect your wallet
-* Deposit tokens from Mainnet
-* Trade in Subnet
-* Withdraw from Subnet
+* Kết nối ví của bạn
+* Gửi mã thông báo từ Mainnet
+* Giao dịch trong mạng con
+* Rút tiền từ Mạng con
 
-## Key Concepts and Differences
+## Các khái niệm chính và sự khác biệt
 
-* One can deposit an asset only when connected to Mainnet. The deposit locks the user’s asset on the PortfolioMain and deposits the same amount in the PortfolioSub all in one transaction.
+* Bạn chỉ có thể gửi một tài sản khi được kết nối với Mainnet. Khoản tiền gửi sẽ khóa tài sản của người dùng trên PortfolioMain và gửi cùng một số tiền vào PortfolioSub, tất cả chỉ trong một giao dịch.
 
-* Users will have two wallets for each account: one in the Mainnet and one in the Subnet accessible through supported wallet applications like Core, MetaMask and WalletConnect providers. More wallets will be added in the future.
+* Người dùng sẽ có hai ví cho mỗi tài khoản: một trong Mainnet và một trong Subnet có thể truy cập thông qua các ứng dụng ví được hỗ trợ như nhà cung cấp Core, MetaMask và WalletConnect. Nhiều ví hơn sẽ được thêm vào trong tương lai.
 
-* The mainnet wallet holds all assets in the Mainnet as before, and assets need to be deposited into Dexalot there for trading. All bridge functions are integrated into deposit and withdrawal actions.
+* Ví mainnet giữ tất cả tài sản trong Mainnet như trước đây và tài sản cần được gửi vào Dexalot ở đó để giao dịch. Tất cả các chức năng cầu nối được tích hợp vào các hành động gửi tiền và rút tiền.
 
-* The subnet wallet holds only $ALOT for gas payments. That’s why the Subnet wallet is also referred to as the “Gas Tank”.
+* Ví mạng con chỉ giữ $ALOT cho các khoản thanh toán bằng gas. Đó là lý do tại sao ví Subnet còn được gọi là “Gas Tank”.
 
 ![gastank](/images/subnet/gastank.png)
-* “Add Gas” will transfer ALOT from portfolioSub to subnet wallet.
-* “Remove Gas” will transfer ALOT from the Subnet wallet to PortfolioSub.
+* “Add Gas” sẽ chuyển ALOT từ portfolioSub sang ví mạng con.
+* “Remove Gas” sẽ chuyển ALOT từ ví Subnet sang PortfolioSub.
 
 ![subnetportfolio](/images/subnet/subnetportfolio.png)
 
-* ALOT available in the PortfolioSub transferred from Mainnet wallet or Subnet wallet (“Gas Tank”) can be used in trading or withdrawals.
+* ALOT có sẵn trong PortfolioSub được chuyển từ ví Mainnet hoặc ví Subnet (“Gas Tank”) có thể được sử dụng trong giao dịch hoặc rút tiền.
 
-* PortfolioSub tracks the Total and Available balances of users’ assets without creating any ERC20s in the subnet. These balances are updated when deposit, withdrawal and trading functions are used.
+* PortfolioSub theo dõi số dư Tổng số và Số dư khả dụng của tài sản của người dùng mà không cần tạo bất kỳ ERC20 nào trong mạng con. Các số dư này được cập nhật khi các chức năng gửi tiền, rút ​​tiền và giao dịch được sử dụng.
 
-* As there are no ERC20 tokens in the Subnet and only the ALOT balance (“Gas Tank” balance) will be visible in the wallets like Core or MetaMask when connected to the Subnet.
+* Vì không có mã thông báo ERC20 trong Mạng con và chỉ số dư ALOT (số dư “Bình xăng”) sẽ hiển thị trong các ví như Core hoặc MetaMask khi được kết nối với Mạng con.
+Tất cả giao dịch được thực hiện khi kết nối với mạng con.
 
-* All trading is done while connected to the subnet.
-One can withdraw an asset only when connected to the Subnet. The withdrawal removes the amount from the PortfolioSub and unlocks the same amount from the PortfolioMain, subsequently transferring the withdrawn asset to the user’s Mainnet wallet all in one transaction.
+* Người ta chỉ có thể rút tài sản khi được kết nối với Mạng con. Việc rút tiền sẽ xóa số tiền khỏi PortfolioSub và mở khóa số tiền tương tự từ PortfolioMain, sau đó chuyển tài sản đã rút vào ví Mainnet của người dùng tất cả trong một giao dịch.
 
-* Additional bridges will be introduced in the future by deploying multiple PortfolioMain contracts for different chains.
+* Các cầu nối bổ sung sẽ được giới thiệu trong tương lai bằng cách triển khai nhiều hợp đồng PortfolioMain cho các chuỗi khác nhau.
 
 ## Roadmap
 
 ![roadmap](/images/subnet/roadmap.png)
-Stay tuned for upcoming announcements, media, and articles that will show you how to test and try out the new Dexalot Subnet.
+Hãy theo dõi các thông báo, phương tiện truyền thông và các bài báo sắp tới, điều này sẽ hướng dẫn bạn cách kiểm tra và dùng thử Dexalot Subnet mới!
 
 ---
 
-**Author**: Brad McFall
+**Biên kịch**: Brad McFall
 
-**Editor**: Dan Marcoulis
+**Biên tập viên**: Dan Marcoulis
 
-**Graphics**: Can Toygar
+**Đồ họa**: Can Toygar
+
+**Người dịch**: Luong Hung

@@ -1,11 +1,11 @@
 ---
-title: Bài viết
+title: Articles
 icon: book-reader
 prev: /vi/
 next: /vi/articles/dip
 editLink: true
 ---
 
-Thư mục này chứa các bài viết do nhóm Dexalot biên soạn. Tìm hiểu khái niệm nền tảng và tầm nhìn từ nhiều bài viết khác nhau. Đọc tất cả về các khía cạnh này bằng những ngôn ngữ khác trên
+Bu klasör Dexalot takımı tarafından hazırlanmış makaleleri içerir. Bu çeşitli makalelerden konseptlerin arkaplanı ve vizyonu ile ilgili bilgi sahibi olabilirsiniz. Bu yazıları diğer dillerde buradan okuyabilirsiniz:
 
 [https://medium.com/dexalot/tagged/dexalot-translations](https://medium.com/dexalot/tagged/dexalot-translations)

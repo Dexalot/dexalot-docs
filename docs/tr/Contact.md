@@ -4,15 +4,15 @@ editLink: true
 
 # Contact
 
-## Support
+## Destek
 
 [support@dexalot.com](mailto:support@dexalot.com)
 
-## Career
+## Kariyer
 
 [career@dexalot.com](mailto:career@dexalot.com)
 
-## Social Media
+## Sosyal Medya
 
 ### Twitter
 

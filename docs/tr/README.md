@@ -3,23 +3,23 @@ home: true
 icon: home
 title: Home
 heroImage: /images/dexalot_heroImage.png
-heroText: Dexalot Vietnam
-tagline: Ngôi nhà dành cho các nhà phát triển!! ✨
+heroText: Dexalot Turkey
+tagline: The home for developers!! ✨
 footer: true
 
 actions:
-  - text: Bắt đầu 💡
+  - text: Get started 💡
     link: articles
     type: primary
 
 features:
-  - title: Bài viết
+  - title: Articles
     icon: book-reader
-    details: "Tìm hiểu các khái niệm, nền tảng và tầm nhìn"
+    details: "Dexalot konsepti, vizyonu ve arka planıyla"
     link: articles
 
-  - title: Hướng dẫn
+  - title: Tutorials
     icon: mortar-board
-    details: "Đọc, xem và tìm hiểu cách sử dụng Dexalot"
+    details: "Read watch and learn how to use Dexalot"
     link: tutorials
 ---

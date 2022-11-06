@@ -66,13 +66,13 @@ export const viSidebarConfig = sidebar({
     },
 
     {
-      text: "Contacto",
+      text: "Contact",
       icon: "envelope",
       link: "/tr/Contact"
     },
 
     {
-      text: "Sobre",
+      text: "About",
       icon: "circle-info",
       link: "/tr/About"
     }

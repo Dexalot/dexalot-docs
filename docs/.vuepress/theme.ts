@@ -9,6 +9,7 @@ import {
   enSidebarConfig,
   esSidebarConfig,
   viSidebarConfig,
+  trSidebarConfig,
 } from "./sidebar/index";
 
 export default hopeTheme({
@@ -46,7 +47,7 @@ export default hopeTheme({
 
     "/tr/": {
       navbar: trNavbarConfig,
-      sidebar: viSidebarConfig,
+      sidebar: trSidebarConfig,
     },
 
   },

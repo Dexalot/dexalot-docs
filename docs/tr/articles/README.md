@@ -1,5 +1,5 @@
 ---
-title: Articles
+title: Makaleleri
 icon: book-reader
 prev: /vi/
 next: /vi/articles/dip

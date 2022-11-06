@@ -2,7 +2,7 @@
 editLink: true
 ---
 
-# Contact
+# İletişim
 
 ## Destek
 

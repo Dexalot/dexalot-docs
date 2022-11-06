@@ -1,5 +1,5 @@
 ---
-title: Tutorials
+title: Içerikler
 icon: mortar-board
 prev: /vi/
 next: /vi/tutorials/howtouse

@@ -3,24 +3,24 @@ import { sidebar } from "vuepress-theme-hope";
 export const trSidebarConfig = sidebar({
   "/tr/": [
     {
-      text: "Artículos",
+      text: "Makaleleri",
       icon: "book-reader",
       collapsable: true,
       link: "/tr/articles",
       prefix: "/tr/articles/",
       children: [
         {
-          text: "Dexalot Trading Cup",
+          text: "Dexalot Ticaret Kupası",
           icon: "book-open",
           link: "cup"
         },
         {
-          text: "Incentivos de Dexalot",
+          text: "Dexalot Teşvik Programı",
           icon: "book-open",
           link: "dip"
         },
         {
-          text: "La Dexalot Subnet",
+          text: "Dexalot Subnet",
           icon: "book-open",
           link: "subnet"
         },
@@ -33,24 +33,24 @@ export const trSidebarConfig = sidebar({
     },
 
     {
-      text: "Tutoriales",
+      text: "Içerikler",
       icon: "mortar-board",
       collapsable: true,
       link: "/tr/tutorials",
       prefix: "/tr/tutorials/",
       children: [
         {
-          text: "Introducción a la Dexalot Subnet",
+          text: "Subnet’e giriş-",
           icon: "play",
           link: "howtouse"
         },
         {
-          text: "Testing de la Dexalot-Subnet",
+          text: "Dexalot-Subnet Testi",
           icon: "play",
           link: "howtotest"
         },
         {
-          text: "Instalación de MetaMask",
+          text: "MetaMask nasıl kurulur",
           icon: "play",
           link: "metamaskuse"
         },
@@ -58,7 +58,7 @@ export const trSidebarConfig = sidebar({
     },
 
     {
-      text: "Legal",
+      text: "Hukuki",
       icon: "gavel",
       link: "/tr/legal",
       prefix: "/trlegal/",
@@ -66,13 +66,13 @@ export const trSidebarConfig = sidebar({
     },
 
     {
-      text: "Contact",
+      text: "İletişim",
       icon: "envelope",
       link: "/tr/Contact"
     },
 
     {
-      text: "About",
+      text: "Hakkında",
       icon: "circle-info",
       link: "/tr/About"
     }

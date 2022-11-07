@@ -15,11 +15,11 @@ actions:
 features:
   - title: Makaleler
     icon: book-reader
-    details: "Dexalot konsepti, vizyonu ve arka planıyla"
+    details: "Konsept, arka plan ve vizyonumuz hakkında bilgi sahibi olun"
     link: articles
 
   - title: Öğretici Içerikler
     icon: mortar-board
-    details: "Read watch and learn how to use Dexalot"
+    details: "Dexalot'un nasıl kullanılacağını öğrenmek için, okuyun ve izleyin"
     link: tutorials
 ---

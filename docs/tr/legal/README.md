@@ -3,6 +3,6 @@ icon: gavel
 editLink: true
 next: /legal/License.md
 ---
-# Legal
+# Yasal Bilgiler
 
 Hukuki kısım için İngilizce sayfalara başvurun.

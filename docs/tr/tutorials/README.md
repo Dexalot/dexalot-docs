@@ -1,5 +1,5 @@
 ---
-title: Içerikler
+title: Öğretici Içerikler
 icon: mortar-board
 prev: /vi/
 next: /vi/tutorials/howtouse

@@ -20,15 +20,15 @@ Programın Süresi: 2 yıla kadar
 
 Her ay, Dexalot kullanıcıları üç faktöre göre puanlanacak ve sıralama yapılacak:
 
-### E
+### E Gerçekleşmiş Hacim
 ---
 Yürütülen Hacim: Ay içinde gerçekleştirdiğiniz tüm işlemlerin toplam USD değeri.
 
-### O
+### O Emir Defteri Katkısı
 ---
 Sipariş Defterine Katkınız: Siparişlerinizi bir nevi “kalitesine” yani siparişlerinizin boyutuna (USD değeri olarak), siparişlerinizin sipariş defterinde kalma süresine ve siparişlerinizin sipariş defterindeki orta fiyata olan uzaklığına göre puanınız belirlenecek.
 
-### A
+### A atırılan $ALOT token miktarı
 ---
 Yatırılan $ALOT tokenları: Ay içinde Dexalot portföyünüze yatırılan toplam $ALOT token sayısı.
 
@@ -59,12 +59,10 @@ Lansman sırasında DIP için geçerli varlıklar: AVAX, BTC, ETH ve ALOT.
 
 ---
 
-Yazar: Brad McFall
+**Yazar**: Brad McFall
 
-Editör: Dan Marcoulis
+**Editör**: Dan Marcoulis
 
-Grafikler: Can Toygar
+**Grafikler**: Can Toygar
 
-Çeviri: Onur YILMAZ
-
-Dexalot Hakkında:
+**Çeviri**: Onur YILMAZ

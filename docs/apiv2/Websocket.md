@@ -191,7 +191,9 @@ export interface WsOrderbookData {
 export interface WsSinglebook {
     prices: string
     quantities: string
-    totals?: string
+    baseCumulative?: string
+    quoteCumulative?: string
+    quoteTotal?: string
 }
 ```
 

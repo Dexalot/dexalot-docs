@@ -79,8 +79,8 @@ The above process is a product of many discussions with ecosystem champions. How
 
 ---
 
-Author: FireStorm
+**Author**: FireStorm
 
-Editor: Brad McFall
+**Editor**: Brad McFall
 
-Graphics: Can Toygar
+**Graphics**: Can Toygar

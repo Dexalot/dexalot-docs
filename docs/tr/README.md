@@ -4,7 +4,7 @@ icon: home
 title: Home
 heroImage: /images/dexalot_heroImage.png
 heroText: Hub-Dexalot Bilgi Merkezi
-tagline: Geliştiriciler için bir merkez!! ✨
+tagline: Geliştiriciler için bir merkez! ✨
 footer: true
 
 actions:

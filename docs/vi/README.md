@@ -4,7 +4,7 @@ icon: home
 title: Home
 heroImage: /images/dexalot_heroImage.png
 heroText: Dexalot Vietnam
-tagline: Ngôi nhà dành cho các nhà phát triển!! ✨
+tagline: Ngôi nhà dành cho các nhà phát triển! ✨
 footer: true
 
 actions:

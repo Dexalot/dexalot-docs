@@ -3,7 +3,7 @@ import { sidebar } from "vuepress-theme-hope";
 export const trSidebarConfig = sidebar({
   "/tr/": [
     {
-      text: "Makaleleri",
+      text: "Makaleler",
       icon: "book-reader",
       collapsable: true,
       link: "/tr/articles",
@@ -33,14 +33,14 @@ export const trSidebarConfig = sidebar({
     },
 
     {
-      text: "Içerikler",
+      text: "Öğretici Içerikler",
       icon: "mortar-board",
       collapsable: true,
       link: "/tr/tutorials",
       prefix: "/tr/tutorials/",
       children: [
         {
-          text: "Subnet’e giriş-",
+          text: "Subnet’e giriş",
           icon: "play",
           link: "howtouse"
         },
@@ -58,7 +58,7 @@ export const trSidebarConfig = sidebar({
     },
 
     {
-      text: "Hukuki",
+      text: "Yasal Bilgiler",
       icon: "gavel",
       link: "/tr/legal",
       prefix: "/trlegal/",

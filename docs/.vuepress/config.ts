@@ -23,7 +23,7 @@ export default defineUserConfig({
     "/tr/": {
       lang: "tr-TR",
       title: "Dexalot | Docs",
-      description: "The home for technical content"
+      description: "Geliştiriciler için bir merkez"
     },
   },
 
@@ -41,7 +41,7 @@ export default defineUserConfig({
           placeholder: 'Tìm kiếm',
         },
         '/tr/': {
-          placeholder: 'Search',
+          placeholder: 'Ara',
         },
       }
     }),

@@ -3,22 +3,22 @@ home: true
 icon: home
 title: Home
 heroImage: /images/dexalot_heroImage.png
-heroText: Dexalot Knowledge Hub
-tagline: The home for developers!! ✨
+heroText: Hub-Dexalot Bilgi Merkezi
+tagline: Geliştiriciler için bir merkez!! ✨
 footer: true
 
 actions:
-  - text: Get started 💡
+  - text: Başlayın 💡
     link: articles
     type: primary
 
 features:
-  - title: Makaleleri
+  - title: Makaleler
     icon: book-reader
     details: "Dexalot konsepti, vizyonu ve arka planıyla"
     link: articles
 
-  - title: Içerikler
+  - title: Öğretici Içerikler
     icon: mortar-board
     details: "Read watch and learn how to use Dexalot"
     link: tutorials

@@ -15,6 +15,16 @@ export default defineUserConfig({
       title: "Dexalot | Docs",
       description: "El hogar del contenido técnico"
     },
+    "/vi/": {
+      lang: "vi-VI",
+      title: "Dexalot | Docs",
+      description: "Trang chủ cho nội dung kỹ thuật"
+    },
+    "/tr/": {
+      lang: "tr-TR",
+      title: "Dexalot | Docs",
+      description: "Geliştiriciler için bir merkez"
+    },
   },
 
   plugins: [
@@ -26,7 +36,13 @@ export default defineUserConfig({
         },
         '/es/': {
           placeholder: 'Buscar',
-        }
+        },
+        '/vi/': {
+          placeholder: 'Tìm kiếm',
+        },
+        '/tr/': {
+          placeholder: 'Ara',
+        },
       }
     }),
     commentPlugin({

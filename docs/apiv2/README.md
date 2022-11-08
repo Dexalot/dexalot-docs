@@ -53,6 +53,17 @@ other bridges will be added as needed.<br />
 <td>getNBuyBook getNSellBook replaced with a single getNBook
 function</td>
 </tr>
+<tr>
+<td>v2.5</td>
+<td>2022-11-07</td>
+<td>Websocket orderbook message changes:
+    <ul>
+        <li>(Breaking Change) Renamed "totals" field to "baseCumulative"</li>
+        <li>Added "quoteCumulative" which shows the cumulative quote amount</li>
+        <li>Added "quoteTotal" which shows quote asset orderbook line total</li>
+    </ul>
+</td>
+</tr>
 </table>
 
 ## Architecture

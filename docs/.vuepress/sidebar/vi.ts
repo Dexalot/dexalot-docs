@@ -40,7 +40,7 @@ export const viSidebarConfig = sidebar({
       prefix: "/vi/tutorials/",
       children: [
         {
-          text: "Mạng con Dexalot Intro",
+          text: "Mạng con Dexalot",
           icon: "play",
           link: "howtouse"
         },

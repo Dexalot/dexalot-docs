@@ -4,7 +4,7 @@ editLink: true
 
 # Mạng con Dexalot
 
-# Phần giới thiệu - Cách sử dụng
+ **Phần giới thiệu - Cách sử dụng**
 
 ![Subnetlogo](/images/howtouse/Subnetlogo.png)
 

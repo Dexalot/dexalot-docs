@@ -2,9 +2,10 @@
 editLink: true
 ---
 # DEXALOT SUBNET
-Avalanche ekosisteminin yatay ölçeklendirme paradigmasında yenilikçi bir değişim
+
 
 ![subnet](/images/subnet/subnet.png)
+Avalanche ekosisteminin yatay ölçeklendirme paradigmasında yenilikçi bir değişim
 
 Dexalot ekibi, Avalanche Subnetimizi oluşturmak için çok çalışıyor ve neredeyse sona gelmek üzere. Subnetimiz şu anda Avalanche Fuji test ağında test ediliyor, tamamlandıktan sonra kullanıcılar yeni geliştirilmiş bir ticaret deneyiminin keyfini çıkaracaklar. Daha ucuz işlem ücretleri, daha iyi likidite ve inanılmaz hız, subnetler ile gelen birçok yeni özellikten sadece birkaçı. Yeni Dexalot’un özgün yapısına ve Avalanche subnet’i olarak çok zincirli bir gelecek için nasıl bir temel oluşturduğuna bir göz atalım.
 

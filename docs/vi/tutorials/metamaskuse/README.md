@@ -23,23 +23,22 @@ a. Sử dụng menu trong Metamask và chọn “Custom RPC”
 
 b. (Các bước tiếp theo là Dexalot cụ thể)
 
-c. (Nhập tên mạng, URL RPC mới, ID chuỗi, Biểu tượng và Trình khám phá)
+c. (Nhập **tên mạng**, **URL RPC mới**, **ID chuỗi**, **Biểu tượng** và **Trình khám phá**)
 
 ([Thông tin từ trợ giúp của Dexalot](https://dexalot.com/) )
 
-c. Enter **Network name**, **New RPC URL**, **Chain ID**, **Symbol**, and **Explorer**
-(Information at [Dexalot Help](https://app.dexalot.com/help))
-
 ![mmnetwks](/images/metamaskuse/mmnetwks.png)
 
-## How to start trading
+## Cách bắt đầu giao dịch
 
-Now that you have installed MetaMask and linked your account with Dexalot, learn [how to transfer funds from Avalanche to MetaMask](https://medium.com/dexalot/transfers-between-your-avalanche-and-metamask-wallets-60f226abf3e4) to start trading.
+
+Bây giờ bạn đã cài đặt MetaMask và liên kết tài khoản của mình với Dexalot thành công, hãy tìm hiểu cách chuyển tiền từ Avalanche sang MetaMask để bắt đầu giao dịch.
 
 ---
+**Tác giả**: Ethan Celebuski
 
-**Author**: Ethan Celebuski
+**Biên tập viên**: Brad McFall
 
-**Editor**: Brad McFall
+**Đồ họa**: Can Toygar
 
-**Graphics**: Can Toygar
+**Người dịch**: Luong Hung

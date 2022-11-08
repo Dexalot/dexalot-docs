@@ -2,43 +2,46 @@
 editLink: true
 ---
 
-# Fix Pending Metamask Transactions
- How to
+# Khắc phục các giao dịch Metamask đang chờ xử lý
+ Cực kì đơn giản để thực hiện
+
 ---
- Dexalot is built on top of the Avalanche network, which is clearly growing in popularity very quickly. One consequence of this growing use: gas fees can be periodically high for one app as a result of high activity on another app. When traffic is high, [transactions can be pending](https://snowtrace.io/chart/pendingtx) for longer than usual.
+Dexalot được xây dựng trên mạng Avalanche, mạng này rõ ràng đang phát triển rất nhanh chóng. Một hệ quả của việc sử dụng ngày càng tăng này: phí gas có thể cao theo định kỳ đối với một ứng dụng do hoạt động cao trên ứng dụng khác. Khi lưu lượng truy cập cao, các giao dịch có thể bị chờ xử lý lâu hơn bình thường.
+
+Dexalot được xây dựng trên mạng Avalanche, mạng này rõ ràng đang phát triển rất nhanh chóng. Một hệ quả của việc sử dụng ngày càng tăng này: phí gas có thể cao theo định kỳ đối với một ứng dụng do hoạt động cao trên ứng dụng khác. Khi lưu lượng truy cập cao, [các giao dịch có thể bị chờ xử lý](https://snowtrace.io/chart/pendingtx) lâu hơn bình thường.
 
  ![pendingchart](/images/recovrmmtxn/pendngchrt.png)
 
-Dexalot itself does not have a high enough amount of activity to result in high gas costs for other apps, or cause other transactions to remain pending for long periods. If you check the [Snow Trace gas tracker](https://snowtrace.io/gastracker) , you’ll be able to see when the gas costs are high and transactions are “stuck” on the network. The Gas Tracker continuously updates the pending transactions, and sorts by the price of gas being spent for each transaction.
+ Bản thân Dexalot không có lượng hoạt động đủ cao để dẫn đến chi phí gas cao cho các ứng dụng khác hoặc khiến các giao dịch khác phải chờ xử lý trong thời gian dài. Nếu bạn kiểm tra công [cụ theo dõi gas Snow Trace](https://snowtrace.io/gastracker) , bạn sẽ có thể biết khi nào chi phí xăng cao và các giao dịch bị “kẹt” trên mạng. Công cụ theo dõi gas liên tục cập nhật các giao dịch đang chờ xử lý và sắp xếp theo giá khí được sử dụng cho mỗi giao dịch.
 
  ![gastransactionsorted](/images/recovrmmtxn/gastxnsortd.png)
 
-An average gas cost of anything greater than 30 nAVAX means that your Dexalot transaction will take longer than normal to complete. Transaction gas costs of over 20–30 nAVAX indicate an increasingly congested blockchain network state.
+Chi phí gas trung bình lớn hơn 30 nAVAX có nghĩa là giao dịch Dexalot của bạn sẽ mất nhiều thời gian hơn bình thường để hoàn thành. Chi phí gas giao dịch trên 20–30 nAVAX cho thấy trạng thái mạng blockchain ngày càng tắc nghẽn.
 
  ![metamaskpending](/images/recovrmmtxn/mmpending.png)
 
-Before you try one of one of the two two solutions listed below, simply do a hard refresh of your browser (Press Ctrl+F5 , Shift+F5 or Ctrl+Shift+R). If this doesn’t work, you can cancel the transaction if you’re no longer interested in having the pending transaction complete.
+Trước khi thử một trong hai giải pháp được liệt kê bên dưới, bạn chỉ cần làm mới trình duyệt của mình (Nhấn Ctrl + F5, Shift + F5 hoặc Ctrl + Shift + R). Nếu điều này không hiệu quả, bạn có thể hủy giao dịch nếu bạn không còn quan tâm đến việc hoàn tất giao dịch đang chờ xử lý.
 
-## Solution 1 — Increase gas being spent for your existing and pending transaction
+## Giải pháp 1 — Tăng gas cho giao dịch hiện tại và đang chờ xử lý của bạn
 
 ![pendingspeedup](/images/recovrmmtxn/pendngspeedup.png)
 
-You can click on the “speed up” button to edit your priority and max fee. By default, the new transaction has slightly more priority and max fee (say 10% more than the previous), but you can edit to your liking.
+Bạn có thể nhấp vào nút “tăng tốc” để chỉnh sửa mức độ ưu tiên và mức phí tối đa của mình. Theo mặc định, giao dịch mới có mức phí ưu tiên và tối đa cao hơn một chút (giả sử cao hơn 10% so với giao dịch trước đó), nhưng bạn có thể chỉnh sửa theo ý thích của mình.
 
 ![speedupoptions](/images/recovrmmtxn/speedpopts.png)
 
-Have a look at Snowtrace’s gas tracker to get an estimate of the average base fee, which is currently getting accepted. If the max fee of the network is much higher than your transaction, set the max fee cap to match the network’s. In the example above, you could set the max fee cap somewhere between 60 and 74 GWEI(in nAVAX). Once you’ve decided, click Save. You have now sped up your transaction, and hopefully, it will go through faster than if the gas being spent hadn’t been increased.
+Hãy xem công cụ theo gas của Snowtrace để có ước tính về phí cơ bản trung bình, đang mặc định. Nếu phí tối đa của mạng cao hơn nhiều so với giao dịch của bạn, hãy đặt giới hạn phí tối đa để phù hợp với mạng. Trong ví dụ trên, bạn có thể đặt giới hạn phí tối đa trong khoảng từ 60 đến 74 GWEI (trong nAVAX). Khi bạn đã quyết định, hãy nhấp vào Lưu . Bây giờ bạn đã tăng tốc giao dịch của mình và hy vọng, nó sẽ diễn ra nhanh hơn so với khi lượng gas không được tăng lên.
 
-If you already know that the network is busy, you can choose to set the max priority fee high before you even send the transaction. That way, you might not need to speed it up later. Here is a short video explaining the process.
+Nếu bạn đã biết rằng mạng đang bận, bạn có thể chọn đặt mức phí ưu tiên tối đa cao trước khi bạn gửi giao dịch. Bằng cách đó, bạn có thể không cần tăng tốc sau này. Đây là một đoạn video ngắn giải thích quá trình này.
 
 <YouTube id="gsfJywNxpi4" />
 
-## Solution 2 — Force cancellation of your pending transaction by creating another transaction with the same nonce, but higher amount of gas
+## Giải pháp 2 — Hủy giao dịch đang chờ xử lý của bạn bằng cách tạo một giao dịch khác với cùng một nonce, nhưng lượng gas cao hơn
 
-If the new transaction gets accepted, the nonce of the pending transaction will fail as it has already been used. Consequently, your former pending state with MetaMask will no longer exist. Your transaction will cancel out of a pending state, as long as the gas amount in the new transaction is high enough to pass through the network faster than if it hadn’t been changed. If the increased gas added to your on-going transaction results in an accepted transaction, you will exit the pending state successfully.
+Nếu giao dịch mới được chấp nhận, giao dịch đang chờ xử lý sẽ không thành công vì nó đã được sử dụng. Do đó, trạng thái đang chờ xử lý trước đây của bạn với MetaMask sẽ không còn tồn tại. Giao dịch của bạn sẽ bị hủy ở trạng thái đang chờ xử lý, miễn là lượng gas trong giao dịch mới đủ cao để chuyển qua mạng nhanh hơn so với khi nó chưa được thay đổi. Nếu lượng gas tăng được thêm vào giao dịch đang diễn ra của bạn dẫn đến một giao dịch được chấp nhận, bạn sẽ thoát khỏi trạng thái chờ xử lý thành công.
 
-### 1. Enable Customized Transaction Nonce
-a. Open your MetaMask plugin.
+### 1. Bật Nonce giao dịch tùy chỉnh
+. Mở plugin MetaMask của bạn.
 
 ![metamaskplugin](/images/recovrmmtxn/mmplgin.png)
 

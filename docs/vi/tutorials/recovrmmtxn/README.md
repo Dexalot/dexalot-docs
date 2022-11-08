@@ -4,7 +4,7 @@ editLink: true
 
 # Khắc phục các giao dịch Metamask đang chờ xử lý
  Cực kì đơn giản để thực hiện
-
+![fixmmcover](/images/recovrmmtxn/fixpendngcvr.png)
 ---
 Dexalot được xây dựng trên mạng Avalanche, mạng này rõ ràng đang phát triển rất nhanh chóng. Một hệ quả của việc sử dụng ngày càng tăng này: phí gas có thể cao theo định kỳ đối với một ứng dụng do hoạt động cao trên ứng dụng khác. Khi lưu lượng truy cập cao, các giao dịch có thể bị chờ xử lý lâu hơn bình thường.
 
@@ -41,60 +41,63 @@ Nếu bạn đã biết rằng mạng đang bận, bạn có thể chọn đặt
 Nếu giao dịch mới được chấp nhận, giao dịch đang chờ xử lý sẽ không thành công vì nó đã được sử dụng. Do đó, trạng thái đang chờ xử lý trước đây của bạn với MetaMask sẽ không còn tồn tại. Giao dịch của bạn sẽ bị hủy ở trạng thái đang chờ xử lý, miễn là lượng gas trong giao dịch mới đủ cao để chuyển qua mạng nhanh hơn so với khi nó chưa được thay đổi. Nếu lượng gas tăng được thêm vào giao dịch đang diễn ra của bạn dẫn đến một giao dịch được chấp nhận, bạn sẽ thoát khỏi trạng thái chờ xử lý thành công.
 
 ### 1. Bật Nonce giao dịch tùy chỉnh
-. Mở plugin MetaMask của bạn.
+1.  Mở plugin MetaMask của bạn.
 
 ![metamaskplugin](/images/recovrmmtxn/mmplgin.png)
 
-b. Click on the colorful circle icon on the top-right, and click Settings from the drop down menu.
+2. Nhấp vào biểu tượng vòng tròn đầy màu sắc ở trên cùng bên phải và nhấp vào **Cài đặt** từ menu thả xuống.
 
 ![metamasksettings](/images/recovrmmtxn/mmstngs.png)
 
-c. In the Settings menu, select **Advanced**.
+3. Trong menu Cài đặt, chọn **Nâng cao (Advanced)** .
 
-d. Scroll down until you see **Advanced gas controls**. Toggle this to ON.
+4. Cuộn xuống cho đến khi bạn nhìn thấy **Điều khiển gas nâng cao (Advanced gas controls)** . Chuyển sang chế **độ BẬT** .
 
 ![gascontrols](/images/recovrmmtxn/gscntlrs.png)
 
-e. Still in Advanced settings, keep scrolling until you see **Customize transaction nonce**. Toggle this to **ON**.
+5. Vẫn trong Cài đặt nâng cao, hãy tiếp tục cuộn cho đến khi bạn thấy **Tùy chỉnh giao dịch nonce(Customize transaction nonce)** . Chuyển sang chế **độ BẬT** .
 
-### 2. Finding the nonce of your stuck transaction
-a. Open your MetaMask wallet and go into the activity session. There will be a list of your recent transactions. When you find the one that’s stuck, left click with your mouse anywhere inside the transaction field.
+### 2. Tìm thời điểm bắt đầu giao dịch bị mắc kẹt của bạn
+
+1. Mở ví **MetaMask** của bạn và tham gia phiên hoạt động. Sẽ có một danh sách các giao dịch gần đây của bạn. Khi bạn tìm thấy một giao dịch bị kẹt, hãy nhấp chuột trái vào bất kỳ vị trí nào bên trong trường giao dịch.
 
 ![transactionnonce](/images/recovrmmtxn/txnnonce.png)
 
-*make a note of the “nonce”. That’s a kind of identifier, which we’ll re-use later — here, it’s 124
+* ghi lại “nonce”. Đó là một loại số nhận dạng, chúng tôi sẽ sử dụng lại sau — đây, nó là 124
 
-### 3. Overwrite the Stuck Transaction
-Now we’re going to make a new transaction to replace the stuck one. We’ll customize the nonce number, so that it’s the same as the one that you just wrote down.
+### 3. Ghi đè Giao dịch bị mắc kẹt
+Bây giờ chúng ta sẽ thực hiện một giao dịch mới để thay thế giao dịch bị mắc kẹt. Chúng tôi sẽ tùy chỉnh số nonce để nó giống với số mà bạn vừa viết ra.
 
-a. Create a new transaction to replace your stuck transaction. Create the exact same transaction as the one that is pending, but make this one with a custom nonce, and increase the **Transaction Fee**.
+1. Tạo một giao dịch mới để thay thế giao dịch bị kẹt của bạn. Tạo giao dịch giống hệt như giao dịch đang chờ xử lý, nhưng thực hiện giao dịch này với nonce tùy chỉnh và tăng **Phí giao dịch(Transaction Fee)** .
 
 ![transactionfee](/images/recovrmmtxn/txnfee.png)
 
-b. Click on Edit
+2. Nhấp vào Chỉnh sửa
 
 ![editfee](/images/recovrmmtxn/edtfee.png)
 
-c. Now set the max base fee to the Standard, Fast or Rapid rate you have found from the Gas Tracker — here you could set it between 60 and 70 and then click Save.
+3. Bây giờ, hãy đặt mức phí cơ bản tối đa thành mức Tiêu chuẩn, Nhanh hoặc Nhanh hơn mức mà bạn đã tìm thấy từ Công cụ theo dõi gas— ở đây bạn có thể đặt mức phí này từ 60 đến 70 và sau đó nhấp vào Lưu.
 
-d. Find the **CUSTOM NONCE** entry and change the nonce to the number you wrote down.
+4. Tìm mục nhập **CUSTOM NONCE** và thay đổi số nonce thành số bạn đã viết ra.
 
 ![customnonce](/images/recovrmmtxn/cstmnonce.png)
 
-e. Click **Confirm**.
+5. Nhấp vào **Xác nhận(Confirm)** .
 
-f. Your new transaction should now be accepted into a block. To check, open MetaMask and click the Activity tab.
+6. Giao dịch mới của bạn bây giờ sẽ được chấp nhận thành một khối. Để kiểm tra, hãy mở MetaMask và nhấp vào tab **Hoạt động(Activity)**.
 
-g. Your completed transaction should show at the top of your Activity list. If it still says “Pending” in orange, you’ll need to wait a little longer, or try the process again with an even higher transaction fee (gas price).
+7. Giao dịch đã hoàn thành của bạn sẽ hiển thị ở đầu danh sách Hoạt động của bạn. Nếu nó vẫn cho biết “Đang chờ xử lý” bằng màu cam, bạn sẽ cần đợi thêm một chút nữa hoặc thử lại quy trình với phí giao dịch thậm chí còn cao hơn (giá gas).
 
-h. Since no wallet can create two transactions of the same nonce, if the replacement transaction you make is successful, your stuck transaction will be canceled.
+8. Vì không có ví nào có thể tạo hai giao dịch giống nhau nên nếu giao dịch thay thế bạn thực hiện thành công, giao dịch bị mắc kẹt của bạn sẽ bị hủy.
 
-Lastly, aside from network congestion you may have a MetaMask software issue. You may not be able know this until you have tried to speed up your transaction, and the problem persists repeatedly. If this is the case then you will need contact [MetaMask](https://metamask.zendesk.com/hc/en-us/requests/new) for support.
+Cuối cùng, ngoài việc tắc nghẽn mạng, bạn có thể gặp sự cố phần mềm MetaMask. Bạn có thể không biết điều này cho đến khi bạn đã cố gắng tăng tốc giao dịch của mình và sự cố vẫn lặp đi lặp lại. Nếu đúng như vậy thì bạn cần liên hệ với [MetaMask](https://metamask.zendesk.com/hc/en-us/requests/new) để được hỗ trợ.
 
 ---
 
-**Author**: Brad McFall
+**Biên kịch**: Brad McFall
 
-**Editor**: Dan Marcoulis
+**Biên tập viên**: Dan Marcoulis
 
-**Graphics**: Can Toygar
+**Đồ họa**: Can Toygar
+
+**Người dịch**: Luong Hung

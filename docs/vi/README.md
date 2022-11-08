@@ -3,7 +3,7 @@ home: true
 icon: home
 title: Home
 heroImage: /images/dexalot_heroImage.png
-heroText: Dexalot Vietnam
+heroText: Trung tâm kiến ​​thức Dexalot
 tagline: Ngôi nhà dành cho các nhà phát triển! ✨
 footer: true
 

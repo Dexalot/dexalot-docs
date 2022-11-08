@@ -31,7 +31,6 @@ c. (Nhập **tên mạng**, **URL RPC mới**, **ID chuỗi**, **Biểu tượng
 
 ## Cách bắt đầu giao dịch
 
-
 Bây giờ bạn đã cài đặt MetaMask và liên kết tài khoản của mình với Dexalot thành công, hãy tìm hiểu cách chuyển tiền từ Avalanche sang MetaMask để bắt đầu giao dịch.
 
 ---

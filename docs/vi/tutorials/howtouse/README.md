@@ -2,98 +2,104 @@
 editLink: true
 ---
 
-# The Dexalot-Subnet
+# Mạng con Dexalot
 
-**an introduction — How to Use**
+# Phần giới thiệu - Cách sử dụng
 
 ![Subnetlogo](/images/howtouse/Subnetlogo.png)
 
-The new Dexalot Subnet is now ready for you to test and try out!
+Mạng con Dexalot mới hiện đã sẵn sàng để bạn test và dùng thử!
 
-After months [of building and testing](https://medium.com/dexalot/the-dexalot-subnet-96b2a05cb435) everyone can join in and enjoy the beta version of the first DeFi CLOB (central limit order book) on Avalanche.
+Sau nhiều tháng [xây dựng và thử nghiệm](https://medium.com/dexalot/th%E1%BB%AD-nghi%E1%BB%87m-c%C3%B4ng-khai-dexalot-subnet-b6b364f2af60), giờ đây mọi người đều có thể tham gia và thưởng thức phiên bản beta của DeFi CLOB (sổ đặt hàng giới hạn trung tâm) đầu tiên trên Avalanche.
 
-This Avalanche Subnet is [a dual-chain application](https://medium.com/dexalot/the-dexalot-subnet-96b2a05cb435) containing both a Mainnet and a Subnet. By executing trades with the Dexalot token ALOT on the Dexalot Subnet, transaction gas fees are kept amazingly low. Navigate [here](https://app.dexalot-test.com/trade) and you are good to go.
+Mạng con Avalanche [này là một ứng dụng chuỗi kép](https://medium.com/dexalot/the-dexalot-subnet-6f361c001b09) chứa cả Mainnet và Subnet. Bằng cách thực hiện các giao dịch với token Dexalot ALOT trên Dexalot Subnet, phí gas giao dịch được giữ ở mức thấp đáng kinh ngạc. Điều hướng [đến đây](https://app.dexalot-test.com/trade) và bạn đã sẵn sàng.
 
-Here is an Introduction to Dexalot’s new Subnet Beta application.
+Đây là phần Giới thiệu về ứng dụng Subnet Beta mới của Dexalot.
 
 <YouTube id="vRvaswPuMNg" />
 
-## The Dashboard
-The website dashboard is similar to what you are already familiar with. Connect your wallet (Core, Metamask, and WalletConnect) just as you have done before. If you need a refresher, watch [these tutorials](https://medium.com/dexalot/tagged/dexalot-tutorial) and learn the [basics](https://medium.com/dexalot/learn-the-basics-e893a62261a3).
+## Bảng điều khiển
 
-Next to the wallet connect button is a drop-down menu for switching between the Mainnet and the Subnet. Since this is an application on the Avalanche test network you see “Fuji” listed as the Mainnet.
+Trang tổng quan của trang web tương tự như những gì bạn đã quen thuộc. Kết nối ví của bạn (Core, Metamask và WalletConnect) giống như cách bạn đã làm trước đây. Nếu bạn cần hướng dẫn thêm, hãy xem [những hướng dẫn này](https://medium.com/dexalot/tagged/dexalot-tutorial) và [tìm hiểu những kiến ​​thức cơ bản](https://medium.com/dexalot/learn-the-basics-e893a62261a3) .
+
+* Bên cạnh nút kết nối ví là một menu thả xuống để chuyển đổi giữa Mainnet và Subnet. Vì đây là một ứng dụng trên mạng thử nghiệm Avalanche nên bạn thấy “Fuji” được liệt kê là Mainnet.
 
 ![connect](/images/howtouse/connect.png)
 
-The subnet [uses $ALOT, the Dexalot token, to pay for gas](https://medium.com/dexalot/the-dexalot-subnet-96b2a05cb435) and these funds are held for you in a “gas” tank on the Subnet. You can add or remove gas at any time.
+* {Mạng con sử dụng $ALOT, mã thông báo Dexalot, để thanh toán gas](https://medium.com/dexalot/the-dexalot-subnet-6f361c001b09) và các khoản tiền này được giữ cho bạn trong một bình “gas” trên Mạng con. Bạn có thể thêm hoặc bớt gas bất cứ lúc nào.
 
 ![subnetgasttank](/images/howtouse/subnetgastank.png)
 
-The Dashboard contains all of the elements you have come to expect.
+Trang tổng quan chứa tất cả các yếu tố mà bạn mong đợi.
 
 ![dashboard](/images/howtouse/dashboard.png)
 
-* **Trade pairs** — on the far left side. Simply click on the pair you are interested in trading with and the order book will update.
+* **Các cặp giao dịch** ở- ở phía ngoài cùng bên trái. Chỉ cần nhấp vào cặp bạn muốn giao dịch và sổ lệnh sẽ cập nhật.
 
-* **Order book** — to the right of the trade pairs’ section.
+* **Sổ lệnh** - ở bên phải của phần cặp giao dịch.
 
-* **Trade History** — in the center top of the page, with a more detailed time-stamped list located on the far right.
+* **Lịch sử giao dịch** - ở giữa đầu trang, với danh sách thời gian chi tiết hơn nằm ở ngoài cùng bên phải.
 
-* **Trade, Orders, Portfolio, and Transfers Tabs** — in the center bottom of the page where most of the action takes place. To review all of these sections and tabs and what they contain please take the Product Tour located in the Help menu drop-down.
+* **Các tab Giao dịch, Đơn đặt hàng, Danh mục đầu tư và Chuyển khoản** - ở giữa cuối trang, nơi hầu hết các hành động diễn ra. Để xem lại tất cả các phần và tab này cùng những gì chúng chứa, vui lòng thực hiện Tham quan Sản phẩm trong menu Trợ giúp thả xuống.
 
 ![producttour](/images/howtouse/producttour.png)
 
-## How to Trade
-Obtain test AVAX from the [Avalanche faucet](https://faucet.avax.network/) by entering your wallet address and then deposit them to your portfolio.
-Click on the Portfolio tab and at the right of the Avax token line… you will see a three-dot menu from which you can select “Deposit to Subnet”; enter an amount and confirm your transaction with your wallet.
+## Làm thế nào để giao dịch
+
+Bạn có thể lấy AVAX thử nghiệm từ [Avalanche faucet](https://faucet.avax.network/) bằng cách nhập địa chỉ ví của bạn và sau đó gửi chúng vào danh mục đầu tư của bạn.
+
+Nhấp vào tab Danh mục đầu tư ở bên phải dòng mã thông báo Avax… bạn sẽ thấy menu ba chấm và từ đó bạn có thể chọn “Gửi tiền vào mạng con”; nhập số tiền và xác nhận giao dịch bằng ví của bạn.
 
 ![subnetdeposit](/images/howtouse/subnetdeposit.png)
 
-Now before you can start trading you need to connect to the Subnet.
+Bây giờ trước khi bạn có thể bắt đầu giao dịch, bạn cần kết nối với Mạng con.
 
-To do that click on the drop-down next to the wallet connect button and select - Dexalot-Subnet.
+* Để làm điều đó, hãy nhấp vào menu thả xuống bên cạnh nút kết nối ví và chọn - Dexalot-Subnet.
 
 ![networkswitch](/images/howtouse/networkswitch.png)
 
-Since $ALOT is used as the gas token you have the option of adding or removing ALOT from your gas tank — the place designed to pay your gas fees associated with your transactions.
-
-You are now in the Dexalot-Subnet so when you click on the three-dot menu next to the token of your choice you have a few different options including to withdraw your token amounts back to your wallet in the Mainnet.
+Bây giờ bạn đang ở trong Dexalot-Subnet nên khi bạn nhấp vào menu ba chấm bên cạnh mã thông báo bạn chọn, bạn có một số tùy chọn khác nhau bao gồm rút số token về ví của bạn trong Mainnet.
 
 ![withdraw](/images/howtouse/withdraw.png)
 
-## New Features
+Vì $ALOT được sử dụng làm mã thông báo gas nên bạn có tùy chọn thêm hoặc bớt ALOT khỏi bình gas của mình — nơi được thiết kế để thanh toán phí gas liên quan đến các giao dịch của bạn.
 
-A new option “Send in Subnet” permits you to send tokens to any address of your choosing directly from within the Dexalot-Subnet.
+## Các tính năng mới
 
-Another feature is the addition of new trade types available in the Trade tab.
+Một tùy chọn mới “Gửi trong Mạng con” cho phép bạn gửi token đến bất kỳ địa chỉ nào bạn chọn trực tiếp từ bên trong Dexalot-Subnet.
+
+Một tính năng khác là bổ sung các loại giao dịch mới có sẵn trong tab Giao dịch.
 
 ![tradetypes](/images/howtouse/tradetypes.png)
 
-Click on the Trade Tab and hover over any type to obtain more information.
-So … go ahead and use the test AVAX you obtained to make a trade with either ALOT or USDC. You simply enter the price you would like on the left buy-side, an amount above the minimum noted in red at the bottom of the text boxes. Click buy and confirm the transaction in your wallet and own your trade.
+Nhấp vào Tab Giao dịch và di chuột qua bất kỳ loại nào để có thêm thông tin.
+
+Vậy nên,… hãy tiếp tục sử dụng AVAX thử nghiệm mà bạn có được để thực hiện giao dịch với ALOT hoặc USDC. Bạn chỉ cần nhập giá bạn muốn ở bên trái mua, một số tiền cao hơn mức tối thiểu được ghi chú bằng màu đỏ ở cuối hộp văn bản. Nhấp vào mua và xác nhận giao dịch trong ví của bạn và sở hữu giao dịch của bạn.
 
 ![trade](/images/howtouse/trade.png)
 
-Yet another new feature is the ability to replace your order.
+Tuy nhiên, có một tính năng mới khác đó là thay thế đơn đặt hàng của bạn.
 
-If you have an order in the order book, you can replace it by clicking on the three-dot menu next to your order in the Orders tab you want to replace. So if you had placed a buy order that was not immediately filled you may use this new feature to change your order type, amount, or price and convert the order into one that is immediately marketable.
+Nếu bạn có đơn hàng trong sổ đặt hàng, bạn có thể thay thế bằng cách nhấp vào menu ba chấm bên cạnh đơn hàng của bạn trong tab đơn hàng bạn muốn thay thế. Vì vậy, nếu bạn đã đặt một lệnh mua chưa được thực hiện ngay lập tức, bạn có thể sử dụng tính năng mới này để thay đổi loại đơn đặt hàng, số lượng hoặc giá cả của mình và chuyển đổi đơn đặt hàng thành một đơn đặt hàng có thể bán được ngay lập tức.
 
 ![cancel](/images/howtouse/cancel.png)
 
-The transfers tab now also has more information available to you, including where your action occurred, the type of bridge you used, and the gas fees that resulted from your transaction.
+Tab chuyển tiền hiện cũng có thêm thông tin có sẵn cho bạn, bao gồm nơi hành động của bạn xảy ra, loại bridge bạn đã sử dụng và phí gas phát sinh từ giao dịch của bạn.
 
 ![transferstab](/images/howtouse/transferstab.png)
 
-Dexalot is looking to complete thorough testing of the Dexalot-Subnet and we are thankful to everyone for providing crucial feedback. You too can help improve the Subnet by simply following the steps outlined above and report back any comments, observations or issues encountered. You can read a detailed guide to testing the Dexalot-Subnet [here](https://medium.com/dexalot/the-dexalot-subnet-public-testing-4bea8bc80521). You may send your test results to [support@dexalot.com](support@dexalot.com ) or simply chat with moderators on Dexalot Discord.
+Dexalot đang tìm cách hoàn tất quá trình kiểm tra kỹ lưỡng Dexalot-Subnet và chúng tôi rất cảm ơn mọi người đã cung cấp những phản hồi quan trọng. Bạn cũng có thể giúp cải thiện Mạng con bằng cách đơn giản làm theo các bước được nêu ở trên và báo cáo lại bất kỳ nhận xét, quan sát hoặc vấn đề nào gặp phải. Bạn có thể đọc hướng dẫn chi tiết để kiểm tra Dexalot-Subnet [tại đây](https://medium.com/dexalot/th%E1%BB%AD-nghi%E1%BB%87m-c%C3%B4ng-khai-dexalot-subnet-b6b364f2af60) . Bạn có thể gửi kết quả kiểm tra của mình tới [support@dexalot.com](support@dexalot.com) hoặc chỉ cần trò chuyện với người kiểm duyệt trên Dexalot Discord.
 
-**Thanks for being a part of this exciting development of Web 3.0, DeFi and the growth of the Avalanche ecosystem with Dexalot. Welcome aboard.**
+**Cảm ơn bạn đã là một phần của sự phát triển thú vị này của Web 3.0, DeFi và sự phát triển của hệ sinh thái Avalanche với Dexalot. Chào mừng bạn lên tàu.**
 
 ![typesbanner](/images/howtouse/typesbanner.png)
 
 ---
 
-**Author**: Brad McFall
+**Biên kịch**: Brad McFall
 
-**Editor**: Dan Marcoulis
+**Biên tập viên**: Dan Marcoulis
 
-**Graphics**: Can Toygar
+**Đồ họa**: Can Toygar
+
+**Người dịch**: Luong Hung

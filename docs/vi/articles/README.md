@@ -2,7 +2,7 @@
 title: Bài viết
 icon: book-reader
 prev: /vi/
-next: /vi/articles/dip
+next: /vi/articles/cup
 editLink: true
 ---
 

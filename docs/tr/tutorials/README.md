@@ -1,11 +1,11 @@
 ---
 title: Öğretici Içerikler
 icon: mortar-board
-prev: /vi/
-next: /vi/tutorials/howtouse
+prev: /tr/
+next: /tr/tutorials/howtouse
 editLink: true
 ---
 
-Bu klasör Dexalot takımı tarafından hazırlanmış makaleleri içerir. Bu adım adım kılavuzlarla okuyup, izleyip dexalot hakkında bilgi sahibi olabilirsiniz. Ek kulavuzlara buradan ulaşabilirsiniz:
+Bu klasörde Dexalot ekibi tarafından hazırlanmış içerikler yer almaktadır. Dexalot hakkında daha fazla bilgi sahibi olmak için, bu içerikleri inceleyebilirsiniz. Daha fazla içeriğe ulaşmak için şurayı ziyaret edebilirsiniz.
 
 [https://medium.com/dexalot/tagged/dexalot-tutorial](https://medium.com/dexalot/tagged/dexalot-tutorial)

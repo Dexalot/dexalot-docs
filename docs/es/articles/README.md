@@ -2,7 +2,7 @@
 title: Artículos
 icon: book-reader
 prev: /es/
-next: /es/articles/dip
+next: /es/articles/cup
 editLink: true
 ---
 

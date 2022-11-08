@@ -2,7 +2,7 @@
 title: Articles
 icon: book-reader
 prev: /
-next: /articles/litepaper
+next: /articles/cup
 editLink: true
 ---
 

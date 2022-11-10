@@ -5,4 +5,4 @@ next: /legal/License.md
 ---
 # Yasal Bilgiler
 
-Hukuki kısım için İngilizce sayfalara başvurun.
+Yasal bilgiler için lütfen İngilizce sayfayı ziyaret ediniz.

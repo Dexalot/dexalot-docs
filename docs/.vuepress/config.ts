@@ -16,7 +16,7 @@ export default defineUserConfig({
       description: "El hogar del contenido técnico"
     },
     "/vi/": {
-      lang: "vi-VI",
+      lang: "vi-VN",
       title: "Dexalot | Docs",
       description: "Trang chủ cho nội dung kỹ thuật"
     },

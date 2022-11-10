@@ -5,7 +5,7 @@ export const trSidebarConfig = sidebar({
     {
       text: "Makaleler",
       icon: "book-reader",
-      collapsable: true,
+      collapsible: true,
       link: "/tr/articles",
       prefix: "/tr/articles/",
       children: [
@@ -35,7 +35,7 @@ export const trSidebarConfig = sidebar({
     {
       text: "Öğretici Içerikler",
       icon: "mortar-board",
-      collapsable: true,
+      collapsible: true,
       link: "/tr/tutorials",
       prefix: "/tr/tutorials/",
       children: [
@@ -62,7 +62,7 @@ export const trSidebarConfig = sidebar({
       icon: "gavel",
       link: "/tr/legal",
       prefix: "/trlegal/",
-      collapsable: true,
+      collapsible: true,
     },
 
     {

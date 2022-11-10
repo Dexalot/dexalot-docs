@@ -3,7 +3,8 @@ editLink: true
 ---
 
 # The Dexalot Trading Cup
-## #Trade2TheSubnet
+
+## Trade2TheSubnet
 
 ![cup_1](/images/cup/cup_1.png)
 

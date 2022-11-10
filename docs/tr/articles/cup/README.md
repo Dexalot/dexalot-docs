@@ -3,7 +3,8 @@ editLink: true
 ---
 
 # Dexalot Ticaret Kupası
-## #Trade2TheSubnet
+
+## Trade2TheSubnet
 
 ![cup_1](/images/cup/cup_1tr.png)
 

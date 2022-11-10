@@ -3,7 +3,8 @@ editLink: true
 ---
 
 # Cuộc thi giao dịch: Dexalot Trading Cup
-## #Trade2TheSubnet
+
+## Trade2TheSubnet
 
 ![cup_1](/images/cup/cup_1vi.png)
 
@@ -41,9 +42,9 @@ Subnet gần đến rồi! Cho dù bạn đã tham gia #Stake2TheSubnet hay là 
 * Giới thiệu bản thân đến với [The Dexalot Subnet](https://medium.com/dexalot/m%E1%BA%A1ng-con-dexalot-6220b961e4ff).
 * Xem Giới thiệu về Subnet [với Hướng dẫn Ethan](https://youtu.be/vRvaswPuMNg).
 * Nhận 2 ALOT giả cho gas từ [Avalanche Faucet](https://faucet.avax.network/)
-    - Chọn Mạng — Fuji (C-Chain)
-    - Chọn token — Dexalot Token(ALOT)
-    - Thêm địa chỉ của bạn và yêu cầu 2 ALOT giả
+  * Chọn Mạng — Fuji (C-Chain)
+  * Chọn token — Dexalot Token(ALOT)
+  * Thêm địa chỉ của bạn và yêu cầu 2 ALOT giả
 * Tìm hiểu cách gửi ALOT giả vào Subnet.
 * Tìm hiểu cách chuyển từ Mainnet sang Subnet.
 * Tìm hiểu cách thêm ALOT giả vào gas của bạn.

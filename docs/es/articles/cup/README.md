@@ -1,5 +1,6 @@
 # Dexalot Trading Cup
-## #Trade2TheSubnet
+
+## Trade2TheSubnet
 
 ![cup_1es](/images/cup/cup_1es.png)
 

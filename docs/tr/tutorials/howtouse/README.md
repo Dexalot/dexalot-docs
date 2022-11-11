@@ -18,7 +18,7 @@ Bu Avalanche Subnet’i, hem Ana Ağ’ı hem de Subneti içeren [çift zincirli
 
 <YouTube id="vRvaswPuMNg" />
 
-## Gösterge Paneli(Dashboard)
+## Gösterge Paneli (Dashboard)
 
 Web sitesi paneli, zaten aşina olduğunuza benzer. Cüzdanınızı (Core, Metamask ve WalletConnect) daha önce yaptığınız gibi bağlayın. Bilgilerinizi tazelemeye ihtiyacınız varsa, bu [eğiticileri](https://medium.com/dexalot/tagged/dexalot-tutorial) izleyip ve [temel bilgileri](https://medium.com/dexalot/learn-the-basics-e893a62261a3) öğrebilirsiniz.
 
@@ -34,7 +34,7 @@ Web sitesi paneli, zaten aşina olduğunuza benzer. Cüzdanınızı (Core, Metam
 
 ![dashboard](/images/howtouse/dashboard.png)
 
-* **Trade pairs(Coin çiftleri)**: en sol tarafta. İşlem yapmak istediğiniz pair’e tıklamanız yeterlidir, emir defteri güncellenecektir.
+* **Trade pairs (Coin çiftleri)**: en sol tarafta. İşlem yapmak istediğiniz pair’e tıklamanız yeterlidir, emir defteri güncellenecektir.
 
 * **Emir defteri**: Coin çiftlerinin bölümünün sağında bulunur.
 
@@ -44,7 +44,7 @@ Web sitesi paneli, zaten aşina olduğunuza benzer. Cüzdanınızı (Core, Metam
 
 ![producttour](/images/howtouse/producttour.png)
 
-## Trade nasıl yapılır :
+## Trade nasıl yapılır
 
 * Avalanche [faucet’den](https://faucet.avax.network/) (test musluğu) cüzdan adresinizi yazarak test tokenları alıp ardından tokenlarınızı subnet’e depozit edebilirsiniz.
 
@@ -88,7 +88,7 @@ Transferler sekmesinde, eyleminizin nerede gerçekleştiği, kullandığınız k
 
 ![transferstab](/images/howtouse/transferstab.png)
 
-Dexalot, Dexalot-Subnet’inin kapsamlı bir şekilde testini tamamlamak istiyor ve önemli geri bildirimler sağladığı için herkese teşekkür ediyoruz. Siz de, yukarıda özetlenen adımları takip ederek ve herhangi bir yorum, gözlem veya karşılaşılan sorunları rapor ederek Subnet’i iyileştirmeye yardımcı olabilirsiniz.[Dexalot-Subnet’i test etmek için ayrıntılı bir kılavuzu buradan okuyabilirsiniz.](https://medium.com/dexalot/the-dexalot-subnet-public-testing-4bea8bc80521) Test sonuçlarınızı [support@dexalot.com](support@dexalot.com ) adresine gönderebilir veya Dexalot Discord üzerinden moderatörlerle sohbet edebilirsiniz.
+Dexalot, Dexalot-Subnet’inin kapsamlı bir şekilde testini tamamlamak istiyor ve önemli geri bildirimler sağladığı için herkese teşekkür ediyoruz. Siz de, yukarıda özetlenen adımları takip ederek ve herhangi bir yorum, gözlem veya karşılaşılan sorunları rapor ederek Subnet’i iyileştirmeye yardımcı olabilirsiniz. [Dexalot-Subnet’i test etmek için ayrıntılı bir kılavuzu buradan okuyabilirsiniz.](https://medium.com/dexalot/the-dexalot-subnet-public-testing-4bea8bc80521) Test sonuçlarınızı [support@dexalot.com](support@dexalot.com ) adresine gönderebilir veya Dexalot Discord üzerinden moderatörlerle sohbet edebilirsiniz.
 
 **Web 3.0, DeFi’nin bu heyecan verici gelişiminin ve Dexalot ile Avalanche ekosisteminin büyümesinin bir parçası olduğunuz için teşekkür ederiz. Gemiye Hoşgeldiniz.**
 

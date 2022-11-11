@@ -24,20 +24,19 @@
     "build": "vuepress build docs"
   },
   "dependencies": {
-    "@vuepress/plugin-search": "2.0.0-beta.51",
-    "vuepress": "2.0.0-beta.51",
-    "vuepress-plugin-components": "2.0.0-beta.109",
-    "vuepress-theme-hope": "2.0.0-beta.109"
+    "@vuepress/plugin-search": "2.0.0-beta.53",
+    "vuepress": "2.0.0-beta.53",
+    "vuepress-plugin-components": "2.0.0-beta.122",
+    "vuepress-theme-hope": "2.0.0-beta.122"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "5.40.0",
-    "@typescript-eslint/parser": "5.40.0",
-    "eslint": "8.25.0",
+    "@typescript-eslint/eslint-plugin": "5.42.1",
+    "@typescript-eslint/parser": "5.42.1",
+    "eslint": "8.27.0",
     "prettier": "2.7.1",
-    "prettier-plugin-solidity": "1.0.0-beta.24",
     "rimraf": "3.0.2",
-    "ts-node": "8.10.2",
-    "typechain": "^8.1.0",
+    "ts-node": "10.9.1",
+    "typechain": "8.1.1",
     "typescript": "4.8.4"
   }
 }

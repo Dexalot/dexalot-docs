@@ -34,9 +34,8 @@ At the end of each month, your final monthly score will be compared to the total
 
 ##  Calculations
 
-User Score = (E^ 0.15) x (O^ 0.80) x (A^ 0.05)
-
-Monthly Rewards = (200,000 $ALOT x User Score)/Aggregate User Scores
+* User Score = (E^ 0.15) x (O^ 0.80) x (A^ 0.05)
+* Monthly Rewards = (200,000 $ALOT x User Score)/Aggregate User Scores
 
 ## How to monitor your rewards
 
@@ -44,10 +43,10 @@ You can track your monthly score on our website along with top-ranked users and 
 
 ##  Additional Information
 
-Washed trades will not count towards monthly scores.
-Volatility (standard deviation) of each trading pair is calculated periodically.
-Only open orders within two standard deviations of the mid-price will be considered for Orderbook Contribution (O).
-Eligible assets for DIP at launch: AVAX, BTC, ETH and ALOT.
+* Wash trades will not count towards monthly scores.
+* Volatility (standard deviation) of each trading pair is calculated periodically.
+* Only open orders within two standard deviations of the mid-price will be considered for Orderbook Contribution (O).
+* Eligible assets for DIP at launch: AVAX, BTC, ETH and ALOT.
 
 ---
 

@@ -5,7 +5,7 @@ export const viSidebarConfig = sidebar({
     {
       text: "Bài viết",
       icon: "book-reader",
-      collapsable: true,
+      collapsible: true,
       link: "/vi/articles",
       prefix: "/vi/articles/",
       children: [
@@ -35,7 +35,7 @@ export const viSidebarConfig = sidebar({
     {
       text: "Hướng dẫn",
       icon: "mortar-board",
-      collapsable: true,
+      collapsible: true,
       link: "/vi/tutorials",
       prefix: "/vi/tutorials/",
       children: [
@@ -67,7 +67,7 @@ export const viSidebarConfig = sidebar({
       icon: "gavel",
       link: "/vi/legal",
       prefix: "/vilegal/",
-      collapsable: true,
+      collapsible: true,
     },
 
     {

@@ -123,5 +123,5 @@ via the RESTAPI nor WS.
 ## Docs
 
 * [Rest Api](/apiv2/RestApi.md)
-* [Websocket](/apiv2/Websocket.md)
 * [Contracts](/apiv2/Contracts.md)
+* [Websocket](/apiv2/Websocket.md)

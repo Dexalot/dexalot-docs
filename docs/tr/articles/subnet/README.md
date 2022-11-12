@@ -17,7 +17,7 @@ Yeni Dexalot, hem Avalanche C-Chain (Mainnet) hem de Dexalot Subnet (Subnet) üz
 
 Yeni mimariyle, Ana Ağdan para yatırmanız, Subnet’te işlem yapmanız ve yine Subnet’ten çekmeniz gerekecek. Bunu bu şekilde yapmanın avantajı, Subnet’te işlemler gerçekleşirken varlıkların kaynak zinciri asla terk etmemesidir.
 
-Bu iki blok zinciri arasında geçiş yapmak için, tanıdık Dexalot panosundaki(dashboard) cüzdan bağlantı düğmesinin hemen yanında bulunan açılır menüden seçim yapmanız yeterlidir.
+Bu iki blok zinciri arasında geçiş yapmak için, tanıdık Dexalot panosundaki (dashboard) cüzdan bağlantı düğmesinin hemen yanında bulunan açılır menüden seçim yapmanız yeterlidir.
 
 ![chainswitch](/images/subnet/chainswitch.png)
 ![mainsub](/images/subnet/mainsub.png)
@@ -28,10 +28,10 @@ Frontend uygulaması, halihazırda yürürlükte olan tek zincirli uygulamaya be
 
 Yeni çift zincir mimarisi, Dexalot’un daha zorlu işlemleri Subnet’e yüklemesine olanak tanır ve hızı artırırken gaz maliyetini düşürür. Dexalot’un yeni mimarisine, aynı anda Mainnet ve Subnet haberdar olacak şekilde yükseltilmiş olan frontend aracılığıyla erişilir. Ayrıca, ayrı bir köprüleme arayüzü yoktur. Tüm köprü işlevleri, size sorunsuz bir kullanıcı deneyimi sağlamak için Dexalot’un Mainnet akıllı sözleşmeler portföyüne (PortfolioMain) ve Subnet portföyüne (PortfolioSub) entegre edilmiştir. LayerZero başlangıçta tek köprü sağlayıcısı olacak ve gerektiğinde gelecekte daha fazla köprü eklenebilir. Bu yaklaşım, Dexalot’un birden fazla köprüye ölçeklenmesine (tek hata noktalarından kaynaklanan riski daha da azaltmak için) ve Avalanche dışındaki zincirlerdeki varlıkların Dexalot Subnet’inde takas edilebilir olmasına olanak tanır.
 
-### 1.Aşama
+### 1. Aşama
 Geçişin ilk aşaması 14 Temmuz 2022'de başladı. Fuij testnet ağı, çoklu zincir uygulamasının ilk adımı olan aynı veritabanı şemasını kullanan birden fazla blok zincirini desteklemek için kısa bir süre kapatıldı. Kullaniciya gosterilen veriler, blockchain uzerinde gerceklesen olaylarinin drop copy’sinin cogaltıldığı verilerle oluşturulup sunuluyor(bknz. Litepaper).Bu aşamada, birden fazla blok zinciriyle etkileşime girebilen okuyucular ve yazarlar ile yeni bir backend’e başarıyla dağıtıldı.
 
-### 2.Aşama
+### 2. Aşama
 Ağustos ayının ilk haftasında, Subnet ortamının test için etkinleştirilmesi amacıyla Ana Ağ kapatıldı. Mevcut Mainnet 4 akıllı sözleşme ile çalışmaktadır ve bu sistem 10+ akıllı sözleşmeyi içerecek şekilde güncellenmiştir. Bu geliştirme ortamı, Avalanche Fuji test ağında konuşlandırıldı ve dahili testlerden geçiyor.
 
 Trade akışı:
@@ -39,7 +39,7 @@ Trade akışı:
 * Cüzdanını bağla
 * Mainnetten tokenlarını depozit et
 * Subnette trade yap
-* Subnetten geri çek(Withdraw)
+* Subnetten geri çek (Withdraw)
 
 ## Temel Kavramlar ve Farklılıklar
 

@@ -5,7 +5,7 @@ export const enSidebarConfig = sidebar({
     {
       text: "Articles",
       icon: "book-reader",
-      collapsable: true,
+      collapsible: true,
       link: "articles",
       prefix: "articles/",
       children: [
@@ -40,7 +40,7 @@ export const enSidebarConfig = sidebar({
     {
       text: "Tutorials",
       icon: "mortar-board",
-      collapsable: true,
+      collapsible: true,
       link: "tutorials",
       prefix: "tutorials/",
       children: [
@@ -69,14 +69,14 @@ export const enSidebarConfig = sidebar({
     {
       text: "Smart Contracts",
       icon: "code",
-      collapsable: true,
+      collapsible: true,
       link: "contracts",
       prefix: "contracts/",
       children: [
         {
           text: "Main Contracts",
           icon: "file-code",
-          collapsable: true,
+          collapsible: true,
           children: [
             "Exchange",
             "ExchangeMain",
@@ -98,7 +98,7 @@ export const enSidebarConfig = sidebar({
           text: "Libraries",
           icon: "file-code",
           prefix: "library/",
-          collapsable: true,
+          collapsible: true,
           children: [
             "Bytes32LinkedListLibrary",
             "RBTLibrary",
@@ -110,7 +110,7 @@ export const enSidebarConfig = sidebar({
           text: "Interfaces",
           icon: "file-code",
           prefix: "interfaces/",
-          collapsable: true,
+          collapsible: true,
           children: [
             "IGasStation",
             "IPortfolio",
@@ -121,7 +121,7 @@ export const enSidebarConfig = sidebar({
             {
               text: "LayerZero",
               prefix: "layerZero/",
-              collapsable: true,
+              collapsible: true,
               children: [
                 "ILayerZeroEndpoint",
                 "ILayerZeroReceiver",
@@ -135,7 +135,7 @@ export const enSidebarConfig = sidebar({
           text: "Bridge Apps",
           icon: "file-code",
           prefix: "bridgeApps/",
-          collapsable: true,
+          collapsible: true,
           children: [
             "LzApp"
           ],
@@ -145,7 +145,7 @@ export const enSidebarConfig = sidebar({
           text: "Auxiliary Contracts",
           icon: "file-code",
           prefix: "token/",
-          collapsable: true,
+          collapsible: true,
           children: [
             "Airdrop",
             "DexalotToken",
@@ -164,7 +164,7 @@ export const enSidebarConfig = sidebar({
       icon: "link",
       prefix: "apiv2/",
       link: "apiv2",
-      collapsable: true,
+      collapsible: true,
       children: [
         {
           text: "RestApi",
@@ -185,7 +185,7 @@ export const enSidebarConfig = sidebar({
       text: "Legal",
       icon: "gavel",
       prefix: "legal/",
-      collapsable: true,
+      collapsible: true,
       children: [
         {
           text: "License",

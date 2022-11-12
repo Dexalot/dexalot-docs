@@ -5,7 +5,7 @@ export const esSidebarConfig = sidebar({
     {
       text: "Artículos",
       icon: "book-reader",
-      collapsable: true,
+      collapsible: true,
       link: "/es/articles",
       prefix: "/es/articles/",
       children: [
@@ -35,7 +35,7 @@ export const esSidebarConfig = sidebar({
     {
       text: "Tutoriales",
       icon: "mortar-board",
-      collapsable: true,
+      collapsible: true,
       link: "/es/tutorials",
       prefix: "/es/tutorials/",
       children: [
@@ -62,7 +62,7 @@ export const esSidebarConfig = sidebar({
       icon: "gavel",
       link: "/es/legal",
       prefix: "/eslegal/",
-      collapsable: true,
+      collapsible: true,
     },
 
     {

@@ -25,6 +25,11 @@ export default defineUserConfig({
       title: "Dexalot | Docs",
       description: "Geliştiriciler için bir merkez"
     },
+    "/zh/": {
+      lang: "zh-Zh",
+      title: "Dexalot | Docs",
+      description: "The home for technical content"
+    },
   },
 
   plugins: [

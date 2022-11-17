@@ -48,6 +48,9 @@ export default defineUserConfig({
         '/tr/': {
           placeholder: 'Ara',
         },
+        '/zh/': {
+          placeholder: 'search',
+        },
       }
     }),
     commentPlugin({

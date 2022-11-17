@@ -11,6 +11,7 @@ import {
   esSidebarConfig,
   viSidebarConfig,
   trSidebarConfig,
+  zhSidebarConfig,
 } from "./sidebar/index";
 
 export default hopeTheme({
@@ -53,7 +54,7 @@ export default hopeTheme({
 
     "/zh/": {
       navbar: zhNavbarConfig,
-      sidebar: esSidebarConfig,
+      sidebar: zhSidebarConfig,
     },
   },
 

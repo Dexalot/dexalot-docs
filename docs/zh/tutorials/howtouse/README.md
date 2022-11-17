@@ -43,18 +43,24 @@ editLink: true
 
 ## 如何交易
 
-* 从Avalanche Faucet获取测试 AVAX ，输入您的钱包地址，然后将它们存入您的投资组合(Portfolio)。
+* 从[Avalanche Faucet](https://faucet.avax.network/)获取测试 AVAX ，输入您的钱包地址，然后将它们存入您的投资组合(Portfolio)。
+
+![subnetdeposit](/images/howtouse/subnetdeposit.png)
 
 * 单击“Portfolio”（投资组合）选项卡，在 Avax 代币行的右侧……您将看到竖着的三个点菜单，点击三个点，您可以从中选择“Deposit to Subnet”（存到子网）；输入金额并使用您的钱包确认交易。
 
-
+![networkswitch](/images/howtouse/networkswitch.png)
 
 现在，在开始交易之前，您需要连接到子网。
 
-因此，请单击钱包连接按钮旁边的下拉菜单，然后选择 — Dexalot-Subnet。
+* 因此，请单击钱包连接按钮旁边的下拉菜单，然后选择 — Dexalot-Subnet。
 
 现在您已在 Dexalot 子网中，当单击所选代币旁边的三点菜单时，有几个不同的选项，包括提取您的代币到主网中的钱包。
 
+
+![withdraw](/images/howtouse/withdraw.png)
+
+## New Features
 
 由于 $ALOT被用作 gas 费，您可以选择从您的Tank中添加或移除 $ALOT — — 该功能旨在支付与交易相关的 gas 费用。
 
@@ -62,21 +68,30 @@ editLink: true
 
 另一个功能是在交易选项卡中选择新的交易类型。
 
+![tradetypes](/images/howtouse/tradetypes.png)
 
-单击“Trade”（交易选项卡）并将鼠标悬停在任何类型上，你可以获取更多信息。
-继续使用您获得的测试 $AVAX， $ALOT 或 $USDC 进行交易。只需在左侧买方输入想要的价格（需高于下方红色标注的最低价格），然后点击购买并确认您钱包中的交易，交易就完成了。
+* 单击“Trade”（交易选项卡）并将鼠标悬停在任何类型上，你可以获取更多信息。
+* 继续使用您获得的测试 $AVAX， $ALOT 或 $USDC 进行交易。只需在左侧买方输入想要的价格（需高于下方红色标注的最低价格），然后点击购买并确认您钱包中的交易，交易就完成了。
+
+![trade](/images/howtouse/trade.png)
 
 另一个新功能是替换您的订单。
 
 如果您在订单簿中有订单，您可以通过单击要替换的订单选项卡中订单旁边的三点菜单来替换它。因此，如果您下了未立即成交的买单，可以使用此新功能更改您的订单类型、数量或价格，并将订单转换为可立即销售的订单。
 
+![cancel](/images/howtouse/cancel.png)
 
 “Transfers”（转账记录）现在还为您提供了更多信息，包括您操作发生的位置、使用的桥接类型以及交易产生的gas费。
 
+![transferstab](/images/howtouse/transferstab.png)
 
 Dexalot 正对 Dexalot 子网进行全面测试，我们感谢大家提供反馈。您也可以通过简单地执行上述步骤并告诉我们观察到的任何问题来帮助改进子网。您可以在此处阅读测试 Dexalot 子网的详细指南，并将您的测试结果发送到support@dexalot.com，或者在 Dexalot Discord 上与版主聊天。
 
 感谢您与 Dexalot 一起参与 Web 3.0、DeFi 和 Avalanche 生态系统的这一激动人心的发展！
+
+![typesbanner](/images/howtouse/typesbanner.png)
+
+---
 
 
 作者: Brad McFall

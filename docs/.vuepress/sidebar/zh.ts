@@ -48,7 +48,7 @@ export const zhSidebarConfig = sidebar({
     },
 
     {
-      text: "Legal",
+      text: " 法律",
       icon: "gavel",
       link: "/zh/legal",
       prefix: "/zhlegal/",

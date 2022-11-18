@@ -49,7 +49,7 @@ export default defineUserConfig({
           placeholder: 'Ara',
         },
         '/zh/': {
-          placeholder: 'search',
+          placeholder: '搜索',
         },
       }
     }),

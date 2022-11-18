@@ -3,24 +3,24 @@ import { sidebar } from "vuepress-theme-hope";
 export const zhSidebarConfig = sidebar({
   "/zh/": [
     {
-      text: "Artículos",
+      text: "文章",
       icon: "book-reader",
       collapsible: true,
       link: "/zh/articles",
       prefix: "/zh/articles/",
       children: [
         {
-          text: "Dexalot Trading Cup",
+          text: "Dexalot交易杯大赛",
           icon: "book-open",
           link: "cup"
         },
         {
-          text: "Incentivos de Dexalot",
+          text: "Dexalot 奖励计划",
           icon: "book-open",
           link: "dip"
         },
         {
-          text: "La Dexalot Subnet",
+          text: "Dexalot子网",
           icon: "book-open",
           link: "subnet"
         },
@@ -33,24 +33,24 @@ export const zhSidebarConfig = sidebar({
     },
 
     {
-      text: "Tutoriales",
+      text: "教程",
       icon: "mortar-board",
       collapsible: true,
       link: "/zh/tutorials",
       prefix: "/zh/tutorials/",
       children: [
         {
-          text: "Introducción a la Dexalot Subnet",
+          text: "Dexalot子网介绍",
           icon: "play",
           link: "howtouse"
         },
         {
-          text: "Testing de la Dexalot-Subnet",
+          text: "Dexalot子网测试",
           icon: "play",
           link: "howtotest"
         },
         {
-          text: "Instalación de MetaMask",
+          text: "如何安装Metamask",
           icon: "play",
           link: "metamaskuse"
         },

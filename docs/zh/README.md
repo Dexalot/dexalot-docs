@@ -3,23 +3,23 @@ home: true
 icon: home
 title: Home
 heroImage: /images/dexalot_heroImage.png
-heroText: Dexalot Centro de Conocimiento
-tagline: El hogar de los programadores! ✨
+heroText: Dexalot 知识中心
+tagline: 开发者之家! ✨
 footer: true
 
 actions:
-  - text: Empezar 💡
+  - text: 开始 💡
     link: articles
     type: primary
 
 features:
-  - title: Artículos
+  - title: 文章
     icon: book-reader
-    details: "Aprende los conceptos, antecedentes y visión"
+    details: "了解概念、背景和愿景"
     link: articles
 
-  - title: Tutoriales
+  - title: 教程
     icon: mortar-board
-    details: "Lea, mire y aprenda a usar Dexalot"
+    details: "阅读、观看并学习如何使用Dexalot"
     link: tutorials
 ---

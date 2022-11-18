@@ -1,11 +1,11 @@
 ---
-title: Articles
+title: 文章
 icon: book-reader
 prev: /
-next: /articles/dip
+next: /articles/cup
 editLink: true
 ---
 
-This folder contains articles authored by the Dexalot team.  Learn the concepts background and vision from a variety of articles.  Additional articles can be found on
+这个文件夹包含Dexalot团队撰写的文章。从各种文章中了解概念背景和愿景。其他文章可以在以下网站找到：https://medium.com/dexalot/tagged/dexalot-translations
 
 [https://medium.com/dexalot/tagged/dexalot-translations](https://medium.com/dexalot/tagged/dexalot-translations)

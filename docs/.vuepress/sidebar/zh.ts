@@ -23,11 +23,6 @@ export const zhSidebarConfig = sidebar({
           text: "Dexalot子网",
           icon: "book-open",
           link: "subnet"
-        },
-        {
-          text: "Dexalot Discovery",
-          icon: "book-open",
-          link: "discovery"
         }
       ]
     },
@@ -49,11 +44,6 @@ export const zhSidebarConfig = sidebar({
           icon: "play",
           link: "howtotest"
         },
-        {
-          text: "如何安装Metamask",
-          icon: "play",
-          link: "metamaskuse"
-        },
       ]
     },
 
@@ -66,13 +56,13 @@ export const zhSidebarConfig = sidebar({
     },
 
     {
-      text: "Contacto",
+      text: "联系我们",
       icon: "envelope",
       link: "/zh/Contact"
     },
 
     {
-      text: "Sobre",
+      text: "关于我们",
       icon: "circle-info",
       link: "/zh/About"
     }

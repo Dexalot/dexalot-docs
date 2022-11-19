@@ -1,8 +1,8 @@
 ---
 title: 教程
 icon: mortar-board
-prev: /
-next: /tutorials/howtouse
+prev: /zh/
+next: /zh/tutorials/howtouse
 editLink: true
 ---
 

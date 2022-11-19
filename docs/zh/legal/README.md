@@ -5,4 +5,4 @@ next: /legal/License.md
 ---
 # 法律
 
-Please consult the English pages for the legal section.
+请查阅英文页面的法律相关内容

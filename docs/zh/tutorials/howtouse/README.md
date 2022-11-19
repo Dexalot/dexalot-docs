@@ -60,7 +60,7 @@ editLink: true
 
 ![withdraw](/images/howtouse/withdraw.png)
 
-## New Features
+## 新功能
 
 由于 $ALOT被用作 gas 费，您可以选择从您的Tank中添加或移除 $ALOT — — 该功能旨在支付与交易相关的 gas 费用。
 
@@ -94,10 +94,10 @@ Dexalot 正对 Dexalot 子网进行全面测试，我们感谢大家提供反馈
 ---
 
 
-作者: Brad McFall
+**作者**: Brad McFall
 
-编辑: Dan Marcoulis
+**编辑**: Dan Marcoulis
 
-图片: Can Toygar
+**图片**: Can Toygar
 
-翻译: THAM
+**翻译**: THAM

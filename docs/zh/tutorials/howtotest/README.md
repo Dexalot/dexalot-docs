@@ -43,18 +43,21 @@ Dexalot 开发人员将尽可能多地修正错误和解决可用性问题，您
 * 和以前一样，主网钱包持有主网中的所有资产，资产需要存入主网后进行交易。所有桥接功能都会集成到存款和取款操作中。
 * 子网钱包仅支持 $ALOT，用于支付gas费。这就是为什么子网钱包也被称为“Gas Tank”的原因。
 
+![submaintank](/images/howtotest/submaintank.png)
 
+* “Add Gas”将 $ALOT 从PortfolioSub 转移到子网钱包。
+* “Remove Gas”将 $ALOT 从子网钱包转移到 PortfolioSub。
 
-“Add Gas”将 $ALOT 从PortfolioSub 转移到子网钱包。
-“Remove Gas”将 $ALOT 从子网钱包转移到 PortfolioSub。
+![addrmgas](/images/howtotest/addrmgas.png)
 
-从主网钱包或子网钱包（“Gas Tank”）转移到 PortfolioSub 中的 $ALOT 可用于交易或提款。
-PortfolioSub 跟踪用户资产的总余额和可用余额，而无需在子网中创建任何 ERC20。这些余额根据使用存款、取款和交易功能情况而更新。
-由于子网中没有 ERC20 代币，当连接到子网时，在 Core 或 MetaMask 等钱包中只能看到 $ALOT 余额（“Gas Tank”余额）。
-所有交易都是在连接到子网时完成的。
-只有连接到子网时才能提取资产。提款会从 PortfolioSub 中减去金额并从 PortfolioMain 中解锁相同金额，随后将提款的资产转移到您的主网钱包中，所有这些都在一次交易中完成。
-未来将通过为不同的链部署多个 PortfolioMain 合约来接入更多的桥。
-测试任务列表
+* 从主网钱包或子网钱包（“Gas Tank”）转移到 PortfolioSub 中的 $ALOT 可用于交易或提款。
+* PortfolioSub 跟踪用户资产的总余额和可用余额，而无需在子网中创建任何 ERC20。这些余额根据使用存款、取款和交易功能情况而更新。
+* 由于子网中没有 ERC20 代币，当连接到子网时，在 Core 或 MetaMask 等钱包中只能看到 $ALOT 余额（“Gas Tank”余额）。
+* 所有交易都是在连接到子网时完成的。
+* 只有连接到子网时才能提取资产。提款会从 PortfolioSub 中减去金额并从 PortfolioMain 中解锁相同金额，随后将提款的资产转移到您的主网钱包中，所有这些都在一次交易中完成。
+* 未来将通过为不同的链部署多个 PortfolioMain 合约来接入更多的桥。
+
+## 测试任务列表
 
 在测试过程中请注意以下几点：
 
@@ -62,25 +65,32 @@ PortfolioSub 跟踪用户资产的总余额和可用余额，而无需在子网�
 
 2.将存款或取款提交到链上之前，由于涉及通过桥接的消息传输，需要创建 6–12 个区块。由于 Fuji 上的活跃度相对较高，因此在子网上会进行一定的限速。根据子网活跃度，转账操作可能会延迟。如果资金在 1 小时后仍未交付，请通知开发团队，因为桥可能被阻塞。
 
-至少把以下三种资产从主网存入子网（为方便起见，下面包含子网所支持的Fuji资产地址）：
-AVAX（原生）
-ALOT (0x9983F755Bbd60d1886CbfE103c98C272AA0F03d6)
+* 至少把以下三种资产从主网存入子网（为方便起见，下面包含子网所支持的Fuji资产地址）：
+* AVAX（原生）
+* ALOT (0x9983F755Bbd60d1886CbfE103c98C272AA0F03d6)
+
 和以下一种：
 
-以太币 (0x16F3e7B8327F2cA3f49Efbb1510d5842F7d4a68C)
-SER (0xf52602253474ddaF6111133ADc1F7C3d28A30ABd)
-USDC (0x68B773B8C10F2ACE8aC51980A1548B6B48a2eC54)
-USDT.e (0x2B62a6c0C750250034e328547Aa38830bd768a18)
-切换到子网并为您的每项资产输入至少 4 个挂单(Maker Order)（2 个卖单和 2 个买单）。
-对每种资产至少使用一次“Replace Order” (替换订单)以更改订单的某个参数。
-使用新的“Send in Subnet”(子网内发送)功能将资金发送到您拥有的另一个帐户。
-在另一个账户中，为您的每项资产输入至少 1 个吃单(Taker Order)。
-将您的资产都放回主网。
+1. 以太币 (0x16F3e7B8327F2cA3f49Efbb1510d5842F7d4a68C)
+2. SER (0xf52602253474ddaF6111133ADc1F7C3d28A30ABd)
+3. USDC (0x68B773B8C10F2ACE8aC51980A1548B6B48a2eC54)
+4. USDT.e (0x2B62a6c0C750250034e328547Aa38830bd768a18)
+* 切换到子网并为您的每项资产输入至少 4 个挂单(Maker Order)（2 个卖单和 2 个买单）。
+* 对每种资产至少使用一次“Replace Order” (替换订单)以更改订单的某个参数。
+* 使用新的“Send in Subnet”(子网内发送)功能将资金发送到您拥有的另一个帐户。
+* 在另一个账户中，为您的每项资产输入至少 1 个吃单(Taker Order)。
+* 将您的资产都放回主网。
 
-测试时需要考虑到特殊情况，我们希望你可以尝试多种方式。最好在测试中可以发现问题，及时解决！作者: Brad McFall
+![willtest](/images/howtotest/dextrbarttest.png)
 
-编辑: Dan Marcoulis
+**测试时需要考虑到特殊情况，我们希望你可以尝试多种方式。最好在测试中可以发现问题，及时解决！**
 
-图片: Can Toygar
+---
 
-翻译: THAM
+**作者**: Brad McFall
+
+**编辑**: Dan Marcoulis
+
+**图片**: Can Toygar
+
+**翻译**: THAM

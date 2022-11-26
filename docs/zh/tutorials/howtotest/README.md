@@ -7,6 +7,7 @@ editLink: true
 ![Dextr](/images/howtotest/dextrcomp.png)
 
 — 欢迎来到 Dexalot 子网 —
+
 我们很高兴向大家展示 Dexalot 子网并进行公开测试。Dexalot 开发团队花了几个月持续编写智能合约代码，将 Dexalot 主网迁移到了 Dexalot 子网。希望您能帮助我们使 Dexalot 子网变得更好，同时也非常感谢社区一路以来对我们的支持，并帮助我们进入 Dexalot 开发的下一个阶段。
 
 子网本质上就像您熟悉的主网一样，您只需连接并使用即可。

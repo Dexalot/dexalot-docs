@@ -45,15 +45,15 @@ editLink: true
 
 * 从[Avalanche Faucet](https://faucet.avax.network/)获取测试 AVAX ，输入您的钱包地址，然后将它们存入您的投资组合(Portfolio)。
 
-![subnetdeposit](/images/howtouse/subnetdeposit.png)
-
 * 单击“Portfolio”（投资组合）选项卡，在 Avax 代币行的右侧……您将看到竖着的三个点菜单，点击三个点，您可以从中选择“Deposit to Subnet”（存到子网）；输入金额并使用您的钱包确认交易。
 
-![networkswitch](/images/howtouse/networkswitch.png)
+![subnetdeposit](/images/howtouse/subnetdeposit.png)
 
 现在，在开始交易之前，您需要连接到子网。
 
 * 因此，请单击钱包连接按钮旁边的下拉菜单，然后选择 — Dexalot-Subnet。
+
+![networkswitch](/images/howtouse/networkswitch.png)
 
 现在您已在 Dexalot 子网中，当单击所选代币旁边的三点菜单时，有几个不同的选项，包括提取您的代币到主网中的钱包。
 

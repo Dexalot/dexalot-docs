@@ -4,12 +4,14 @@ import {
   esNavbarConfig,
   viNavbarConfig,
   trNavbarConfig,
+  zhNavbarConfig,
 } from "./navbar/index";
 import {
   enSidebarConfig,
   esSidebarConfig,
   viSidebarConfig,
   trSidebarConfig,
+  zhSidebarConfig,
 } from "./sidebar/index";
 
 export default hopeTheme({
@@ -50,6 +52,10 @@ export default hopeTheme({
       sidebar: trSidebarConfig,
     },
 
+    "/zh/": {
+      navbar: zhNavbarConfig,
+      sidebar: zhSidebarConfig,
+    },
   },
 
   plugins: {

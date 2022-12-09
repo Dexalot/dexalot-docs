@@ -63,21 +63,6 @@ Initializer for upgradeable contract.
 function initialize() public
 ```
 
-#### removeFirstOrder
-
-Removes the first order from the order book
-
-```solidity:no-line-numbers
-function removeFirstOrder(bytes32 _orderBookID, uint256 _price) public
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _orderBookID | bytes32 | Order book ID |
-| _price | uint256 | Price |
-
 ### External
 
 #### setTradePairs
@@ -118,7 +103,7 @@ function addToOrderbooks(bytes32 _orderBookID, enum ITradePairs.Side _side) exte
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _orderBookID | bytes32 | . |
+| _orderBookID | bytes32 | Order Book ID assigned by the tradePairs based on the tradepair symbol |
 | _side | enum ITradePairs.Side | BuyBook or SellBook |
 
 #### bestPrice
@@ -161,6 +146,30 @@ function getTopOfTheBook(bytes32 _orderBookID) external view returns (uint256 pr
 | ---- | ---- | ----------- |
 | price | uint256 | Best Bid or Best ASK |
 | orderId | bytes32 | Order Id of the Best Bid or Best ASK |
+
+#### getBottomOfTheBook
+
+Returns the OrderId of the Worst Bid or Worst ASK depending on the OrderBook side
+
+**Dev notes:** \
+Called by TradePairs UnsolicitedCancel
+
+```solidity:no-line-numbers
+function getBottomOfTheBook(bytes32 _orderBookID) external view returns (uint256 price, bytes32 orderId)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _orderBookID | bytes32 | Order book ID |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| price | uint256 | Worst Bid or Worst ASK |
+| orderId | bytes32 | Order Id of the Worst Bid or Worst ASK |
 
 #### isNotCrossedBook
 
@@ -286,7 +295,7 @@ Used for getting head of the linked list of orders at a price
 will give the Same result as this function
 
 ```solidity:no-line-numbers
-function getHead(bytes32 _orderBookID, uint256 price) external view returns (bytes32 head)
+function getHead(bytes32 _orderBookID, uint256 _price) external view returns (bytes32 head)
 ```
 
 ##### Arguments
@@ -294,7 +303,7 @@ function getHead(bytes32 _orderBookID, uint256 price) external view returns (byt
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _orderBookID | bytes32 | Order book ID |
-| price | uint256 | Price |
+| _price | uint256 | Price |
 
 ##### Return values
 
@@ -473,6 +482,21 @@ function orderListExists(bytes32 _orderBookID, uint256 _price) external view ret
 | ---- | ---- | ----------- |
 | [0] | bool | bool  True if exists |
 
+#### removeFirstOrder
+
+Removes the first order from the order book called by Auction Process
+
+```solidity:no-line-numbers
+function removeFirstOrder(bytes32 _orderBookID, uint256 _price) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _orderBookID | bytes32 | Order book ID |
+| _price | uint256 | Price |
+
 ### Private
 
 #### root
@@ -572,4 +596,19 @@ function prev(bytes32 _orderBookID, uint256 _price) private view returns (uint25
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | price | uint256 | Price previous to the price |
+
+#### removeFirstOrderPrivate
+
+Removes the first order from the order book
+
+```solidity:no-line-numbers
+function removeFirstOrderPrivate(bytes32 _orderBookID, uint256 _price) private
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _orderBookID | bytes32 | Order book ID |
+| _price | uint256 | Price |
 

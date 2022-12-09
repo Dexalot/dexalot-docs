@@ -25,7 +25,7 @@ headerDepth: 4
 | _startPortfolioDeposits | uint256 |
 | _period | uint256 |
 | _revocable | bool |
-| _portfolio | contract IPortfolio |
+| _portfolio | contract IPortfolioMain |
 | _totalSupplyBeforeRevoke | uint256 |
 | _firstReleasePercentage | uint256 |
 | _releasedPercentage | mapping(address &#x3D;&gt; uint256) |

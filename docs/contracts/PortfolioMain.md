@@ -19,6 +19,14 @@ ExchangeMain needs to have DEFAULT_ADMIN_ROLE on PortfolioMain.
 | VERSION | bytes32 |
 | bridgeFeeCollected | mapping(bytes32 &#x3D;&gt; uint256) |
 | tokenMap | mapping(bytes32 &#x3D;&gt; contract IERC20Upgradeable) |
+| trustedContracts | mapping(address &#x3D;&gt; bool) |
+| trustedContractToIntegrator | mapping(address &#x3D;&gt; string) |
+
+### Internal
+
+| Name | Type |
+| --- | --- |
+| bannedAccounts | contract IBannedAccounts |
 
 ## Methods
 
@@ -41,6 +49,25 @@ function initialize(bytes32 _native, uint32 _chainId) public
 | ---- | ---- | ----------- |
 | _native | bytes32 | Native token of the network. AVAX in mainnet, ALOT in subnet. |
 | _chainId | uint32 |  |
+
+#### removeToken
+
+Removes the given token from the portfolio
+
+**Dev notes:** \
+Only callable by admin and portfolio should be paused. Makes sure there are no
+in-flight deposit/withdraw messages
+
+```solidity:no-line-numbers
+function removeToken(bytes32 _symbol, uint32) public virtual
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _symbol | bytes32 | Symbol of the token |
+|  | uint32 |  |
 
 ### External
 
@@ -92,6 +119,101 @@ function depositToken(address _from, bytes32 _symbol, uint256 _quantity, enum IP
 | _quantity | uint256 | Amount of token to deposit |
 | _bridge | enum IPortfolioBridge.BridgeProvider | Enum for bridge type |
 
+#### getMinDepositAmount
+
+Minimum Transaction Amount in deposits
+
+**Dev notes:** \
+The user has to have at least 1.9 as much for bridge fee (if set) + any potential gas token swap
+For ALOT this will be 1.9 by default, so we are allowing 2 ALOT to be deposited easily
+
+```solidity:no-line-numbers
+function getMinDepositAmount(bytes32 _symbol) external view returns (uint256)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _symbol | bytes32 | Symbol of the token |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | uint256 | uint256  Minimum DepositAmount |
+
+#### getMinDepositAmounts
+
+List of Minimum Deposit Amounts
+
+**Dev notes:** \
+The user has to have at least 1.9 as much for bridge fee (if set) + any potential gas token swap
+
+```solidity:no-line-numbers
+function getMinDepositAmounts() external view returns (bytes32[], uint256[])
+```
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | bytes32[] | bytes32[]  tokens uint256[] amounts  . |
+| [1] | uint256[] |  |
+
+#### addTrustedContract
+
+Adds the given contract to trusted contracts in order to provide excluded functionality
+
+**Dev notes:** \
+Only callable by admin
+
+```solidity:no-line-numbers
+function addTrustedContract(address _contract, string _organization) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _contract | address | Address of the contract to be added |
+| _organization | string | Organization of the contract to be added |
+
+#### isTrustedContract
+
+```solidity:no-line-numbers
+function isTrustedContract(address _contract) external view returns (bool)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _contract | address | Address of the contract |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | bool | bool  True if the contract is trusted |
+
+#### removeTrustedContract
+
+Removes the given contract from trusted contracts
+
+**Dev notes:** \
+Only callable by admin
+
+```solidity:no-line-numbers
+function removeTrustedContract(address _contract) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _contract | address | Address of the contract to be removed |
+
 #### depositTokenFromContract
 
 Allows deposits from trusted contracts
@@ -112,13 +234,39 @@ function depositTokenFromContract(address _from, bytes32 _symbol, uint256 _quant
 | _symbol | bytes32 | Symbol of the token |
 | _quantity | uint256 | Amount of token to deposit |
 
+#### setBannedAccounts
+
+Sets banned accounts contract address
+
+```solidity:no-line-numbers
+function setBannedAccounts(address _address) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _address | address | address of the banned accounts contract |
+
+#### getBannedAccounts
+
+```solidity:no-line-numbers
+function getBannedAccounts() external view returns (contract IBannedAccounts)
+```
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | contract IBannedAccounts | IBannedAccounts  banned accounts contract |
+
 #### processXFerPayload
 
 Processes the message coming from the bridge
 
 **Dev notes:** \
-Only process WITHDRAW messages as it is the only message that can be sent to the portfolio main
-Even when the contract is paused, this method is allowed for the messages that
+Only process WITHDRAW or RECOVERFUNDS messages as it is the only messages that can be sent to the
+portfolio main. Even when the contract is paused, this method is allowed for the messages that
 are in flight to complete properly. Pause for upgrade, then wait to make sure no messages are in
 flight then upgrade
 
@@ -134,24 +282,6 @@ function processXFerPayload(address _trader, bytes32 _symbol, uint256 _quantity,
 | _symbol | bytes32 | Symbol of the token in form of _symbol + chainId |
 | _quantity | uint256 | Amount of token to be withdrawn |
 | _transaction | enum IPortfolio.Tx | Transaction type |
-
-#### lzRecoverPayload
-
-Recovers the stucked message from the LZ bridge, returns the funds to the depositor/withdrawer
-
-**Dev notes:** \
-Only call this just before calling force resume receive function for the LZ bridge. \
-Only the DEFAULT_ADMIN can call this function.
-
-```solidity:no-line-numbers
-function lzRecoverPayload(bytes _payload) external
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _payload | bytes | Payload of the message |
 
 #### collectBridgeFees
 
@@ -183,99 +313,69 @@ Collect fees to pay for the bridge as native token
 function collectNativeBridgeFees() external
 ```
 
-#### updateTransferFeeRate
-
-**Dev notes:** \
-Only valid for the subnet. Implemented with an empty block here.
-
-```solidity:no-line-numbers
-function updateTransferFeeRate(uint256 _rate, enum IPortfolio.Tx _rateType) external
-```
-
-#### setAuctionMode
-
-**Dev notes:** \
-Only valid for the subnet. Implemented with an empty block here.
-
-```solidity:no-line-numbers
-function setAuctionMode(bytes32 _symbol, enum ITradePairs.AuctionMode _mode) external
-```
-
-#### withdrawNative
-
-**Dev notes:** \
-Only valid for the subnet. Implemented with an empty block here.
-
-```solidity:no-line-numbers
-function withdrawNative(address payable _to, uint256 _quantity) external
-```
-
-#### withdrawToken
-
-**Dev notes:** \
-Only valid for the subnet. Implemented with an empty block here.
-
-```solidity:no-line-numbers
-function withdrawToken(address _to, bytes32 _symbol, uint256 _quantity, enum IPortfolioBridge.BridgeProvider) external
-```
-
-#### adjustAvailable
-
-**Dev notes:** \
-Only valid for the subnet. Implemented with an empty block here.
-
-```solidity:no-line-numbers
-function adjustAvailable(enum IPortfolio.Tx _transaction, address _trader, bytes32 _symbol, uint256 _amount) external
-```
-
-#### addExecution
-
-**Dev notes:** \
-Only valid for the subnet. Implemented with an empty block here.
-
-```solidity:no-line-numbers
-function addExecution(enum ITradePairs.Side _makerSide, address _makerAddr, address _takerAddr, bytes32 _baseSymbol, bytes32 _quoteSymbol, uint256 _baseAmount, uint256 _quoteAmount, uint256 _makerfeeCharged, uint256 _takerfeeCharged) external
-```
-
 ### Internal
 
-#### addIERC20
+#### addTokenInternal
 
-Add IERC20 token to the tokenMap. Only in the mainnet
-
-```solidity:no-line-numbers
-function addIERC20(bytes32 _symbol, address _tokenaddress, uint32 _srcChainId, uint8 _decimals, enum ITradePairs.AuctionMode) internal
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _symbol | bytes32 | symbol of the token |
-| _tokenaddress | address | address of the token |
-| _srcChainId | uint32 |  |
-| _decimals | uint8 | decimals of the token |
-|  | enum ITradePairs.AuctionMode |  |
-
-#### removeIERC20
-
-Remove IERC20 token from the tokenMap
+Internal function that implements the token addition
 
 **Dev notes:** \
-tokenMap balance for the symbol should be 0 before it can be removed.
-                Make sure that there are no in-flight withdraw messages coming from the subnet
+Unlike in the subnet it doesn't add the token to the PortfolioBridgeMain as it is redundant
+Sample Token List in PortfolioMain: \
+Symbol, SymbolId, Decimals, address, auction mode (43114: Avalache C-ChainId) \
+ALOT ALOT43114 18 0x5FbDB2315678afecb367f032d93F642f64180aa3 0 (Avalanche ALOT) \
+AVAX AVAX43114 18 0x0000000000000000000000000000000000000000 0 (Avalanche Native AVAX) \
+BTC.b BTC.b43114 8 0x59b670e9fA9D0A427751Af201D676719a970857b 0 \
+DEG DEG43114 18 0x99bbA657f2BbC93c02D617f8bA121cB8Fc104Acf 2 \
+LOST LOST43114 18 0x162A433068F51e18b7d13932F27e66a3f99E6890 0 \
+SLIME SLIME43114 18 0x2B0d36FACD61B71CC05ab8F3D2355ec3631C0dd5 0 \
+USDC USDC43114 6 0xD5ac451B0c50B9476107823Af206eD814a2e2580 0 \
+USDt USDt43114 6 0x38a024C0b412B9d1db8BC398140D00F5Af3093D4 0 \
 
 ```solidity:no-line-numbers
-function removeIERC20(bytes32 _symbol) internal
+function addTokenInternal(bytes32 _symbol, address _tokenAddress, uint32 _srcChainId, uint8 _decimals, enum ITradePairs.AuctionMode, uint256 _fee, uint256 _gasSwapRatio) internal
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _symbol | bytes32 | symbol of the token |
+| _symbol | bytes32 | Symbol of the token |
+| _tokenAddress | address | Address of the token |
+| _srcChainId | uint32 | Source Chain id |
+| _decimals | uint8 | Decimals of the token |
+|  | enum ITradePairs.AuctionMode |  |
+| _fee | uint256 | Bridge Fee |
+| _gasSwapRatio | uint256 | Amount of token to swap per ALOT |
+
+#### setBridgeParamInternal
+
+Sets the bridge provider fee & gasSwapRatio per ALOT for the given token and usedForGasSwap flag
+
+**Dev notes:** \
+Called by PortfolioSub.initialize() as well as setBridgeParam()
+We can never set a token gasSwapRatio to 0 in the mainnet
+
+```solidity:no-line-numbers
+function setBridgeParamInternal(bytes32 _symbol, uint256 _fee, uint256 _gasSwapRatio, bool) internal
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _symbol | bytes32 | Symbol of the token |
+| _fee | uint256 | Fee to be set |
+| _gasSwapRatio | uint256 | Amount of token to swap per ALOT. Used to control min deposit amount in the mainnet Because we want users to deposit more than whats going to be swapped out for them to end up a portion of their token in their subnet portfolio after the swap. gasSwapRatio will be updated daily with an offchain app with the current market pricesexcept for ALOT which is always 1 to 1. Daily update is sufficient as it is multiplied by 1.9 to calculate the min deposit Amount. _usedForGasSwap  not used in the mainnet |
+|  | bool |  |
 
 ### Private
+
+#### deposit
+
+```solidity:no-line-numbers
+function deposit(address _from, bytes32 _symbol, uint256 _quantity, enum IPortfolioBridge.BridgeProvider _bridge) private
+```
 
 #### emitPortfolioEvent
 

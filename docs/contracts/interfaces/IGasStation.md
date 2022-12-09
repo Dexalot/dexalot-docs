@@ -19,7 +19,7 @@ function gasAmount() external view returns (uint256)
 #### requestGas
 
 ```solidity:no-line-numbers
-function requestGas(address _to) external
+function requestGas(address _to, uint256 _amount) external
 ```
 
 #### pause

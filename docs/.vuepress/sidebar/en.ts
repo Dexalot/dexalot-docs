@@ -90,6 +90,7 @@ export const enSidebarConfig = sidebar({
             "PortfolioBridgeSub",
             "PortfolioMinter",
             "GasStation",
+            "BannedAccounts",
             "DexalotSubnetBalances"
           ],
         },
@@ -112,12 +113,16 @@ export const enSidebarConfig = sidebar({
           prefix: "interfaces/",
           collapsible: true,
           children: [
-            "IGasStation",
             "IPortfolio",
-            "IPortfolioBridge",
-            "IPortfolioMinter",
+            "IPortfolioMain",
+            "IPortfolioSub",
             "ITradePairs",
-            "NativeMinterInterface",
+            "IPortfolioBridge",
+            "IPortfolioBridgeSub",
+            "IPortfolioMinter",
+            "IGasStation",
+            "IBannedAccounts",
+            "INativeMinter",
             {
               text: "LayerZero",
               prefix: "layerZero/",

@@ -43,10 +43,12 @@ event GasRequested(address to, uint256 amount)
 Initializer for upgradeable contract.
 
 **Dev notes:** \
-Grant admin and pauser role to the sender. Grant swapper role to swapper (portfolio) contract
+Grant admin and pauser role to the sender. Grant swapper role to swapper (portfolio) contract.
+0.1 ALOT gas is hardcoded at initialization to be distrubuted to the users which is enough for roughly
+25 orders + 25 cancels
 
 ```solidity:no-line-numbers
-function initialize(address _swapper, uint256 _gasAmount) public
+function initialize(address _swapper) public
 ```
 
 ##### Arguments
@@ -54,7 +56,6 @@ function initialize(address _swapper, uint256 _gasAmount) public
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _swapper | address | Address of the swapper contract (PortfolioSub in our case) |
-| _gasAmount | uint256 | Amount of gas to be distrubuted to the users |
 
 ### External
 
@@ -99,13 +100,13 @@ function setGasAmount(uint256 _gasAmount) external
 
 #### requestGas
 
-Swapper contract will request gas after depositing bridge fee to our EOA
+Swapper contract will request gas after depositing equal amount of token transferred to our EOA
 
 **Dev notes:** \
 Only swapper (Portfolio Sub) can request gas
 
 ```solidity:no-line-numbers
-function requestGas(address _to) external
+function requestGas(address _to, uint256 _amount) external
 ```
 
 ##### Arguments
@@ -113,6 +114,7 @@ function requestGas(address _to) external
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _to | address | Address of the user to receive gas |
+| _amount | uint256 | Amount of Gas requested |
 
 #### withdrawNative
 

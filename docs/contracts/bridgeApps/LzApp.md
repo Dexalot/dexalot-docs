@@ -4,10 +4,13 @@ headerDepth: 4
 
 # LzApp
 
-**Generic Layer Zero Application Implementation**
+**Abstract Layer Zero contract**
+
+It is extended by the PortfolioBridge contract for Dexalot specific implementation
 
 **Dev notes:** \
-https://github.com/LayerZero-Labs/solidity-examples/blob/main/contracts/lzApp/LzApp.sol
+This doesn&#x27;t support multi mainnet Chain as many functions depend on lzRemoteChainId
+Remove lzRemoteChainId and adjust the functions for multichain support.
 
 ## Variables
 
@@ -23,17 +26,9 @@ https://github.com/LayerZero-Labs/solidity-examples/blob/main/contracts/lzApp/Lz
 | Name | Type |
 | --- | --- |
 | lzEndpoint | contract ILayerZeroEndpoint |
-| lzOutNonce | uint64 |
-| lzInNonce | uint64 |
 | lzRemoteChainId | uint16 |
 
 ## Events
-
-### LzSetTrustedRemote
-
-```solidity:no-line-numbers
-event LzSetTrustedRemote(uint16 remoteChainId, bytes path)
-```
 
 ### LzSetTrustedRemoteAddress
 
@@ -169,25 +164,6 @@ function setReceiveVersion(uint16 _version) external
 | ---- | ---- | ----------- |
 | _version | uint16 | Version to set |
 
-#### setLZTrustedRemote
-
-Set the trusted path for the cross-chain communication
-
-**Dev notes:** \
-`_path` is 40 bytes data with the remote contract address concatenated with
-the local contract address via `abi.encodePacked(sourceAddress, localAddress)`
-
-```solidity:no-line-numbers
-function setLZTrustedRemote(uint16 _srcChainId, bytes _path) external
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _srcChainId | uint16 | Source(Remote) chain id |
-| _path | bytes | Remote contract address concatenated with the local contract address |
-
 #### setLZTrustedRemoteAddress
 
 Sets trusted remote address for the cross-chain communication
@@ -208,11 +184,19 @@ function setLZTrustedRemoteAddress(uint16 _srcChainId, bytes _srcAddress) extern
 
 #### forceResumeReceive
 
-Force resumes the stucked bridge
+Force resumes the stuck bridge by destroying the message blocking it.
 
 **Dev notes:** \
-This action is destructive! Please use it only if you know what you are doing.
-Only admin can call this function. \
+This action is destructive! If retryPayload doesn't work this can be used as a last resort
+Do not use this function directly. Use portfolioBridge.lzDestroyAndRecoverFunds() instead
+If this function is used directly, destroyed message's funds are processed in the originating chain
+properly but they will not be processed in the target chain at all. The funds in storedPayload destroyed
+have to be manually provided to the originator of the message.
+For example, if the message is destroyed using this function directly
+If sending from mainnet to subnet. Funds deposited/locked in the mainnet but they won't show in the subnet
+If sending from subnet to mainnet. Funds are withdrawn from the subnet but they won't be deposited into
+the user's wallet in the mainnet
+Left here in case lzDestroyAndRecoverFunds can't be used
 `_srcAddress` is 40 bytes data with the remote contract address concatenated with
 the local contract address via `abi.encodePacked(sourceAddress, localAddress)`
 
@@ -229,10 +213,11 @@ function forceResumeReceive(uint16 _srcChainId, bytes _srcAddress) external virt
 
 #### retryPayload
 
-Retries the stucked message in the bridge, if any
+Retries the stuck message in the bridge, if any
 
 **Dev notes:** \
-Only admin can call this function \
+Only DEFAULT_ADMIN_ROLE can call this function
+Reverts if there is no storedPayload in the bridge or the supplied payload doesn't match the storedPayload
 `_srcAddress` is 40 bytes data with the remote contract address concatenated with
 the local contract address via `abi.encodePacked(sourceAddress, localAddress)`
 
@@ -291,43 +276,17 @@ function hasStoredPayload(uint16 _srcChainId, bytes _srcAddress) external view r
 | ---- | ---- | ----------- |
 | [0] | bool | bool  True if the bridge has stored payload, means it is stuck |
 
-#### getInboundNonce
+#### hasStoredPayload
 
 ```solidity:no-line-numbers
-function getInboundNonce(uint16 _srcChainId, bytes _srcAddress) external view returns (uint64)
+function hasStoredPayload() external view returns (bool)
 ```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _srcChainId | uint16 | Source chain id |
-| _srcAddress | bytes | Source contract address |
 
 ##### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| [0] | uint64 | uint64  Inbound nonce |
-
-#### getOutboundNonce
-
-```solidity:no-line-numbers
-function getOutboundNonce(uint16 _dstChainId, address _srcAddress) external view returns (uint64)
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _dstChainId | uint16 | Destination chain id |
-| _srcAddress | address | Source contract address |
-
-##### Return values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | uint64 | uint64  Outbound nonce |
+| [0] | bool | bool  True if the bridge has stored payload, means it is stuck |
 
 #### isLZTrustedRemote
 
@@ -395,3 +354,34 @@ function lzEstimateFees(bytes _payload) internal view returns (uint256 messageFe
 | ---- | ---- | ----------- |
 | messageFee | uint256 | Message fee |
 | adapterParams | bytes | Adapter parameters |
+
+#### getInboundNonce
+
+**Dev notes:** \
+Inbound nonce assigned by LZ
+
+```solidity:no-line-numbers
+function getInboundNonce() internal view returns (uint64)
+```
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | uint64 | uint64  Inbound nonce |
+
+#### getOutboundNonce
+
+**Dev notes:** \
+Outbound nonce assigned by LZ
+
+```solidity:no-line-numbers
+function getOutboundNonce() internal view returns (uint64)
+```
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | uint64 | uint64  Outbound nonce |
+

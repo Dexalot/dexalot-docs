@@ -48,6 +48,7 @@ struct TradePair {
   uint8 allowedSlippagePercent;
   bool addOrderPaused;
   bool pairPaused;
+  bool postOnly;
 }
 ```
 
@@ -224,6 +225,12 @@ function pauseTradePair(bytes32 _tradePairId, bool _pairPause) external
 function pauseAddOrder(bytes32 _tradePairId, bool _allowAddOrder) external
 ```
 
+#### postOnly
+
+```solidity:no-line-numbers
+function postOnly(bytes32 _tradePairId, bool _postOnly) external
+```
+
 #### addTradePair
 
 ```solidity:no-line-numbers
@@ -392,12 +399,6 @@ function getAuctionData(bytes32 _tradePairId) external view returns (uint8, uint
 function unsolicitedCancel(bytes32 _tradePairId, bool _isBuyBook, uint8 _maxCount) external
 ```
 
-#### getQuoteAmount
-
-```solidity:no-line-numbers
-function getQuoteAmount(bytes32 _tradePairId, uint256 _price, uint256 _quantity) external view returns (uint256)
-```
-
 #### getBookId
 
 ```solidity:no-line-numbers
@@ -408,5 +409,11 @@ function getBookId(bytes32 _tradePairId, enum ITradePairs.Side _side) external v
 
 ```solidity:no-line-numbers
 function matchAuctionOrder(bytes32 _takerOrderId, uint8 _maxCount) external returns (uint256)
+```
+
+#### getOrderRemainingQuantity
+
+```solidity:no-line-numbers
+function getOrderRemainingQuantity(bytes32 _orderId) external view returns (uint256)
 ```
 

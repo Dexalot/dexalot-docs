@@ -44,46 +44,46 @@ struct BalanceTree {
 Initialize the upgradeable contract.
 
 ```solidity:no-line-numbers
-function initialize(address writer) public
+function initialize(address _writer) public
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| writer | address | Address of the eoa that is allowed to update the merkle root. |
+| _writer | address | Address of the eoa that is allowed to update the merkle root. |
 
 #### setBalances
 
 Set the merkle root of the balance merkle tree.
 
 ```solidity:no-line-numbers
-function setBalances(bytes32 asset, bytes32 root, string ipfsLink, uint256 timestamp) public
+function setBalances(bytes32 _asset, bytes32 _root, string _ipfsLink, uint256 _timestamp) public
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| asset | bytes32 | Asset for which the merkle root is set. |
-| root | bytes32 | Merkle root of the balance merkle tree. |
-| ipfsLink | string | IPFS link to the merkle tree. |
-| timestamp | uint256 | Timestamp of the construction. |
+| _asset | bytes32 | Asset for which the merkle root is set. |
+| _root | bytes32 | Merkle root of the balance merkle tree. |
+| _ipfsLink | string | IPFS link to the merkle tree. |
+| _timestamp | uint256 | Timestamp of the construction. |
 
 #### setBatchBalances
 
 Set the merkle roots of the balance merkle trees.
 
 ```solidity:no-line-numbers
-function setBatchBalances(bytes32[] assets, bytes32[] roots, string[] ipfsLinks, uint256 timestamp) public
+function setBatchBalances(bytes32[] _assets, bytes32[] _roots, string[] _ipfsLinks, uint256 _timestamp) public
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| assets | bytes32[] | Assets for which the merkle roots are set. |
-| roots | bytes32[] | Merkle roots of the balance merkle trees. |
-| ipfsLinks | string[] | IPFS links to the merkle trees. |
-| timestamp | uint256 | Timestamp of the construction. |
+| _assets | bytes32[] | Assets for which the merkle roots are set. |
+| _roots | bytes32[] | Merkle roots of the balance merkle trees. |
+| _ipfsLinks | string[] | IPFS links to the merkle trees. |
+| _timestamp | uint256 | Timestamp of the construction. |
 

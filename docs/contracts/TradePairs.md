@@ -19,7 +19,6 @@ TradePairs should have EXECUTOR_ROLE on OrderBooks.
 
 | Name | Type |
 | --- | --- |
-| ON_BEHALFOF_ROLE | bytes32 |
 | TENK | uint256 |
 | VERSION | bytes32 |
 
@@ -36,7 +35,7 @@ TradePairs should have EXECUTOR_ROLE on OrderBooks.
 | idCounter | uint256 |
 | orderMap | mapping(bytes32 &#x3D;&gt; struct ITradePairs.Order) |
 | orderBooks | contract OrderBooks |
-| portfolio | contract IPortfolio |
+| portfolio | contract IPortfolioSub |
 | tradePairsArray | bytes32[] |
 | tradePairMap | mapping(bytes32 &#x3D;&gt; struct ITradePairs.TradePair) |
 
@@ -82,48 +81,6 @@ function pauseTradePair(bytes32 _tradePairId, bool _pause) public
 | _tradePairId | bytes32 | id of the trading pair |
 | _pause | bool | true to pause, false to unpause |
 
-#### getOrder
-
-Returns order details given the order id
-
-```solidity:no-line-numbers
-function getOrder(bytes32 _orderId) public view returns (struct ITradePairs.Order)
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _orderId | bytes32 | order id assigned by the contract |
-
-##### Return values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | struct ITradePairs.Order | Order  Order Struct |
-
-#### getQuoteAmount
-
-Returns the quote amount for a given price and quantity
-
-```solidity:no-line-numbers
-function getQuoteAmount(bytes32 _tradePairId, uint256 _price, uint256 _quantity) public view returns (uint256)
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _tradePairId | bytes32 | id of the trading pair |
-| _price | uint256 | price |
-| _quantity | uint256 | quantity |
-
-##### Return values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | uint256 | uint256  quote amount |
-
 ### External
 
 #### addTradePair
@@ -156,10 +113,10 @@ function addTradePair(bytes32 _tradePairId, bytes32 _baseSymbol, uint8 _baseDeci
 
 #### getTradePairs
 
-Gets a list of the trade Pairs
+Gets a list of the trade pairs
 
 **Dev notes:** \
-All pairs are returned. Even the delisted ones.
+All pairs are returned. Even the delisted ones
 
 ```solidity:no-line-numbers
 function getTradePairs() external view returns (bytes32[])
@@ -169,7 +126,27 @@ function getTradePairs() external view returns (bytes32[])
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| [0] | bytes32[] | bytes32[]  Array of trade Pairs . |
+| [0] | bytes32[] | bytes32[]  Array of trade pairs |
+
+#### getTradePair
+
+Returns the correspoding TradePair struct for the trade pair id.
+
+```solidity:no-line-numbers
+function getTradePair(bytes32 _tradePairId) external view returns (struct ITradePairs.TradePair)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _tradePairId | bytes32 | id of the trading pair |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | struct ITradePairs.TradePair | TradePair  Trade pair data structure |
 
 #### getBookId
 
@@ -224,6 +201,24 @@ function pauseAddOrder(bytes32 _tradePairId, bool _pause) external
 | ---- | ---- | ----------- |
 | _tradePairId | bytes32 | id of the trading pair |
 | _pause | bool | true to pause, false to unpause |
+
+#### postOnly
+
+Sets the TradePair in test mode. Only Limit Post Only orders accepted. No matching.
+
+**Dev notes:** \
+Can only be called by DEFAULT_ADMIN.
+
+```solidity:no-line-numbers
+function postOnly(bytes32 _tradePairId, bool _postOnly) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _tradePairId | bytes32 | id of the trading pair |
+| _postOnly | bool | true to allow PostOnly orders, false to allow all types |
 
 #### setAuctionMode
 
@@ -678,6 +673,46 @@ function getNBook(bytes32 _tradePairId, enum ITradePairs.Side _side, uint256 _nP
 | [2] | uint256 | uint256  Last Price processed. 0 if no more price point left |
 | [3] | bytes32 | bytes32  Last Order id processed. "" if no more orders left |
 
+#### getOrder
+
+Returns order details given the order id
+
+```solidity:no-line-numbers
+function getOrder(bytes32 _orderId) external view returns (struct ITradePairs.Order)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _orderId | bytes32 | order id assigned by the contract |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | struct ITradePairs.Order | Order  Order Struct |
+
+#### getOrderRemainingQuantity
+
+Returns order remaining quantity given the order id
+
+```solidity:no-line-numbers
+function getOrderRemainingQuantity(bytes32 _orderId) external view returns (uint256)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _orderId | bytes32 | order id assigned by the contract |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | uint256 | remaining quantity of the order |
+
 #### getOrderByClientOrderId
 
 Returns order details given the trader and the clientOrderId
@@ -774,7 +809,12 @@ function matchAuctionOrder(bytes32 _takerOrderId, uint8 _maxCount) external retu
 Admin Function to cancel orders in the orderbook when delisting a trade pair
 
 **Dev notes:** \
-Will cancel orders even when TradePair is paused
+TradePair needs to be paused. No orders can be entered/canceled by users in this state
+The admin can not pick and choose a particular order. He can only pick the number of orders to cancel and
+the order book to cancel them from. It always start canceling/clearing the orderbook from the bottom of the
+book where orders are way off-market. This way, this function's admin powers are much more limited,
+as it will have to cancel a lot of orders before it reaches the orders that are financially viable to
+manipulate and one side of the entire orderbook would be almost empty by then
 
 ```solidity:no-line-numbers
 function unsolicitedCancel(bytes32 _tradePairId, bool _isBuyBook, uint8 _maxCount) external
@@ -901,6 +941,28 @@ function getNextId() private returns (uint256)
 | ---- | ---- | ----------- |
 | [0] | uint256 | uint256  id |
 
+#### getQuoteAmount
+
+Returns the quote amount for a given price and quantity
+
+```solidity:no-line-numbers
+function getQuoteAmount(bytes32 _tradePairId, uint256 _price, uint256 _quantity) private view returns (uint256)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _tradePairId | bytes32 | id of the trading pair |
+| _price | uint256 | price |
+| _quantity | uint256 | quantity |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | uint256 | uint256  quote amount |
+
 #### emitStatusUpdate
 
 Emits a given order's latest state
@@ -925,12 +987,12 @@ partial fills at different prices \
 ```solidity
 status  Order Status  {
          NEW,
-         REJECTED, -- not used
+         REJECTED, -- For future use
          PARTIAL,
          FILLED,
          CANCELED,
-         EXPIRED, -- not used
-         KILLED -- not used
+         EXPIRED, -- For future use
+         KILLED -- For future use
       }
 ```
 *quantityfilled*  cumulative quantity filled \
@@ -1043,7 +1105,7 @@ if decimals, order types and clientOrderId are supplied properly \
 reference. It must be unique per traderaddress.
 
 ```solidity:no-line-numbers
-function addOrderChecks(address _trader, bytes32 _clientOrderId, bytes32 _tradePairId, uint256 _quantity, enum ITradePairs.Type1 _type1) private view
+function addOrderChecks(address _trader, bytes32 _clientOrderId, bytes32 _tradePairId, uint256 _quantity, enum ITradePairs.Type1 _type1, enum ITradePairs.Type2 _type2) private view
 ```
 
 ##### Arguments
@@ -1055,6 +1117,24 @@ function addOrderChecks(address _trader, bytes32 _clientOrderId, bytes32 _tradeP
 | _tradePairId | bytes32 | id of the trading pair |
 | _quantity | uint256 | quantity |
 | _type1 | enum ITradePairs.Type1 | Type1 : MARKET,LIMIT etc |
+| _type2 | enum ITradePairs.Type2 |  |
+
+#### removeClosedOrder
+
+Removes closed order from the mapping
+
+**Dev notes:** \
+Consumes gas but imperative to keep blockchain's active state lean.
+
+```solidity:no-line-numbers
+function removeClosedOrder(bytes32 _orderId) private
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _orderId | bytes32 | order id to remove |
 
 #### addLimitOrder
 
@@ -1102,6 +1182,12 @@ Also handles matching auction orders.
 
 **Dev notes:** \
 IF BUY order, it will try to match with an order in the SELL OrderBook and vice versa
+A taker order that is entered can match with multiple maker orders that are waiting in the orderbook.
+This function may run out of gas not because of the single taker order but because of the number of
+maker orders that are matching with it. This variable is ESSENTIAL for tradepairs in AUCTION_MODE== MATCHING
+because we are guaranteed to run into such situations where a single large SELL order (quantity 1000)
+is potentially matched with multiple small BUY orders (1000 orders with quantity 1) , creating 1000 matches
+which will run out of gas.
 
 ```solidity:no-line-numbers
 function matchOrder(bytes32 _takerOrderId, uint8 _maxCount) private returns (uint256)
@@ -1125,7 +1211,7 @@ function matchOrder(bytes32 _takerOrderId, uint8 _maxCount) private returns (uin
 Cancels an order and makes the locked amount available in the porftolio
 
 ```solidity:no-line-numbers
-function doOrderCancel(bytes32 _orderId) private
+function doOrderCancel(bytes32 _orderId, bool _removeClosedOrder) private
 ```
 
 ##### Arguments
@@ -1133,4 +1219,5 @@ function doOrderCancel(bytes32 _orderId) private
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _orderId | bytes32 | order id to cancel |
+| _removeClosedOrder | bool | bool to remove the order from mapping if CLOSED true by default but false when called by cancelReplaceOrder function |
 

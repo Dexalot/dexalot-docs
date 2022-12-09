@@ -92,6 +92,20 @@ function setOrderBooks(address _orderbooks) external
 | ---- | ---- | ----------- |
 | _orderbooks | address | Address of the OrderBooks contract |
 
+#### getOrderBooks
+
+Gest the address of the OrderBooks contract
+
+```solidity:no-line-numbers
+function getOrderBooks() external view returns (address)
+```
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | address | address  Address of the OrderBooks contract |
+
 #### setTradePairs
 
 Sets trade pairs contract
@@ -194,14 +208,14 @@ function setAuctionMode(bytes32 _tradePairId, bytes32 _baseSymbol, enum ITradePa
 Update maker and taker fee rates for execution
 
 ```solidity:no-line-numbers
-function updateRate(bytes32 _tradePair, uint8 _rate, enum ITradePairs.RateType _rateType) external
+function updateRate(bytes32 _tradePairId, uint8 _rate, enum ITradePairs.RateType _rateType) external
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _tradePair | bytes32 | id of the trading pair |
+| _tradePairId | bytes32 | id of the trading pair |
 | _rate | uint8 | fee rate |
 | _rateType | enum ITradePairs.RateType | rate type, maker or taker |
 
@@ -307,8 +321,21 @@ function getMaxTradeAmount(bytes32 _tradePairId) external view returns (uint256)
 Matches auction orders once the auction is closed and auction price is set
 
 **Dev notes:** \
-Takes the top of the book sell order, (bestAsk), and matches it with the buy orders sequantially.
+Takes the top of the book sell order(bestAsk), and matches it with the buy orders sequantially.
 An auction mode can safely be changed to AUCTIONMODE.OFF only when this function returns false.
+High Level Auction Logic
+Auction Token & An auction pair(Base is the auction) gets added with AUCTION_MODE==PAUSED
+Nobody can enter orders on this pair, and nobody can transfer/withdraw their auction token
+when AUCTION_MODE != OFF
+Auction starts with AUCTION_MODE==ON. Participants can enter any buy or sell orders at any price
+The order books will not match any orders and it will stay crossed
+An off-chain app calculates the match price and quantities and dissamiates this infromation in
+real time for participant to adjust their orders accordingly.
+When the predetermined auction end time is reached AUCTION_MODE is set to CLOSING. This is the
+Randomized Closing Sequence as explained in ExchangeMain.flipCoin()
+When auction is closed, the AUCTION_MODE is set to MATCHING.
+The auction price is set from the off-chain app. At this point no actions are allowed on this trade pair:
+no new orders, cancels, cancel-replaces, deposits, withdraws or transfers until all matching is done.
 
 ```solidity:no-line-numbers
 function matchAuctionOrders(bytes32 _tradePairId, uint8 _maxCount) external returns (bool)

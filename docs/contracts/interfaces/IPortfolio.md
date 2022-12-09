@@ -8,6 +8,15 @@ headerDepth: 4
 
 ## Struct Types
 
+### BridgeParams
+
+```solidity
+struct BridgeParams {
+  uint256 fee;
+  uint256 gasSwapRatio;
+  bool usedForGasSwap;
+}
+```
 ### XFER
 
 ```solidity
@@ -46,7 +55,7 @@ enum Tx {
   DECREASEAVAIL,
   IXFERSENT,
   IXFERREC,
-  RECOVER
+  RECOVERFUNDS
 }
 ```
 
@@ -80,88 +89,22 @@ function unpause() external
 function pauseDeposit(bool _pause) external
 ```
 
-#### updateTransferFeeRate
-
-```solidity:no-line-numbers
-function updateTransferFeeRate(uint256 _rate, enum IPortfolio.Tx _rateType) external
-```
-
 #### addToken
 
 ```solidity:no-line-numbers
-function addToken(bytes32 _symbol, address _tokenaddress, uint32 _srcChainId, uint8 _decimals, enum ITradePairs.AuctionMode _mode) external
+function addToken(bytes32 _symbol, address _tokenaddress, uint32 _srcChainId, uint8 _decimals, enum ITradePairs.AuctionMode _mode, uint256 _fee, uint256 _gasSwapRatio) external
 ```
 
 #### removeToken
 
 ```solidity:no-line-numbers
-function removeToken(bytes32 _symbol) external
-```
-
-#### adjustAvailable
-
-```solidity:no-line-numbers
-function adjustAvailable(enum IPortfolio.Tx _transaction, address _trader, bytes32 _symbol, uint256 _amount) external
-```
-
-#### addExecution
-
-```solidity:no-line-numbers
-function addExecution(enum ITradePairs.Side _makerSide, address _makerAddr, address _taker, bytes32 _baseSymbol, bytes32 _quoteSymbol, uint256 _baseAmount, uint256 _quoteAmount, uint256 _makerfeeCharged, uint256 _takerfeeCharged) external
+function removeToken(bytes32 _symbol, uint32 _srcChainId) external
 ```
 
 #### depositNative
 
 ```solidity:no-line-numbers
 function depositNative(address payable _from, enum IPortfolioBridge.BridgeProvider _bridge) external payable
-```
-
-#### withdrawNative
-
-```solidity:no-line-numbers
-function withdrawNative(address payable _to, uint256 _quantity) external
-```
-
-#### depositToken
-
-```solidity:no-line-numbers
-function depositToken(address _from, bytes32 _symbol, uint256 _quantity, enum IPortfolioBridge.BridgeProvider _bridge) external
-```
-
-#### withdrawToken
-
-```solidity:no-line-numbers
-function withdrawToken(address _to, bytes32 _symbol, uint256 _quantity, enum IPortfolioBridge.BridgeProvider _bridge) external
-```
-
-#### depositTokenFromContract
-
-```solidity:no-line-numbers
-function depositTokenFromContract(address _from, bytes32 _symbol, uint256 _quantity) external
-```
-
-#### addTrustedContract
-
-```solidity:no-line-numbers
-function addTrustedContract(address _contract, string _organization) external
-```
-
-#### isTrustedContract
-
-```solidity:no-line-numbers
-function isTrustedContract(address _contract) external view returns (bool)
-```
-
-#### removeTrustedContract
-
-```solidity:no-line-numbers
-function removeTrustedContract(address _contract) external
-```
-
-#### setAuctionMode
-
-```solidity:no-line-numbers
-function setAuctionMode(bytes32 _symbol, enum ITradePairs.AuctionMode _mode) external
 ```
 
 #### processXFerPayload
@@ -188,15 +131,9 @@ function getChainId() external view returns (uint32)
 function getTokenDetails(bytes32 _symbol) external view returns (struct IPortfolio.TokenDetails)
 ```
 
-#### lzForceResumeReceive
+#### getTokenDetailsById
 
 ```solidity:no-line-numbers
-function lzForceResumeReceive(uint16 _srcChainId, bytes _srcAddress) external
-```
-
-#### lzRetryPayload
-
-```solidity:no-line-numbers
-function lzRetryPayload(uint16 _srcChainId, bytes _srcAddress, bytes _payload) external
+function getTokenDetailsById(bytes32 _symbolId) external view returns (struct IPortfolio.TokenDetails)
 ```
 

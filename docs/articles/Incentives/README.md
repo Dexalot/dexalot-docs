@@ -29,7 +29,7 @@ Dexalot’s subnet release candidate is entering production in just over a month
 
 ## Staker Trading Fee Rewards:
 
-* Reward distribution is open to both Option 1 and Option 2 participants in #Stake2theSubnet([#Stake2theSubnet](https://medium.com/dexalot/dexalot-stake-to-the-subnet-d3cc72ccad12)), who staked for at least two continuous months.
+* Reward distribution is open to both Option 1 and Option 2 participants in [#Stake2theSubnet](https://medium.com/dexalot/dexalot-stake-to-the-subnet-d3cc72ccad12), who staked for at least two continuous months.
 * Distribution begins after $100k in trading fee revenue value is aggregated.
 * Option 1 stakers share 25% of the fee revenue.
 * Option 2 stakers share 8% of the fee revenue.

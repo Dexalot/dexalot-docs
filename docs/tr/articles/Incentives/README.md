@@ -29,7 +29,7 @@ Dexalot’un subnet sürüm adayı, bir aydan biraz uzun bir süre içinde devre
 
 ## Stakerlar için Trade ücreti ödülleri:
 
-* Ödül dağıtımı,([#Stake2theSubnet'te](https://medium.com/dexalot/dexalot-stake-to-the-subnet-5269756824d1)) en az iki ay boyunca stake yapan hem opsiyon 1 hem de opsiyon 2 katılımcılarına açıktır.
+* Ödül dağıtımı,[#Stake2theSubnet'te](https://medium.com/dexalot/dexalot-stake-to-the-subnet-5269756824d1) en az iki ay boyunca stake yapan hem opsiyon 1 hem de opsiyon 2 katılımcılarına açıktır.
 * Dağıtım, 100.000 $’lık işlem ücreti geliri toplandıktan sonra başlayacak.
 * Opsiyon 1 staker’ları işlem ücreti gelirinin %25'ini paylaşacak.
 * Opsiyon 2 stake edenler, ücret gelirinin %8'ini paylaşacak.

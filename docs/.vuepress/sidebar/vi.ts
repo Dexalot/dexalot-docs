@@ -29,6 +29,11 @@ export const viSidebarConfig = sidebar({
           icon: "book-open",
           link: "discovery"
         },
+        {
+          text: "Dexalot khởi chạy chương trình khuyến khích Subnet Staking",
+          icon: "book-open",
+          link: "Incentives"
+        }
       ]
     },
 

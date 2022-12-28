@@ -43,6 +43,6 @@ function setAuctionMode(bytes32 _symbol, enum ITradePairs.AuctionMode _mode) ext
 #### autoFill
 
 ```solidity:no-line-numbers
-function autoFill(bytes32 _symbol) external
+function autoFill(address _trader, bytes32 _symbol) external
 ```
 

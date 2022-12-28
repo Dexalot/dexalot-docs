@@ -11,7 +11,7 @@ Receives messages from mainnet for deposits and sends withdraw requests to mainn
 
 **Dev notes:** \
 Allows only the native token to be withdrawn and deposited from/to the subnet wallet. Any other
-token has to be deposited via PortfoliMain deposit functions that sends a message via the bridge.
+token has to be deposited via PortfolioMain deposit functions that sends a message via the bridge.
 When the bridge&#x27;s message receive event emitted PortfolioBridgeSub invokes processXFerPayload \
 All tokens including ALOT (native) can be withdrawn to mainnet using withdrawToken that will
 send the holdings back to the user&#x27;s wallet in the mainnet. \
@@ -19,7 +19,7 @@ TradePairs needs to have EXECUTOR_ROLE on PortfolioSub contract. \
 If a trader deposits a token and has 0 ALOT in his subnet wallet, this contract will make a call
 to GasStation to deposit a small amount of ALOT to the user&#x27;s wallet to be used for gas.
 In return, It will deduct a tiny amount of the token transferred. This feature is called AutoFill
-and it aims shield the clients from gas Token managment in the subnet.
+and it aims shield the clients from gas Token management in the subnet.
 It is suffice to set usedForGasSwap&#x3D;false for all tokens to disable autofill using tokens. ALOT can and
 will always be used for this purpose.
 
@@ -171,9 +171,9 @@ function getBalance(address _owner, bytes32 _symbol) external view returns (uint
 Function for TradePairs to transfer tokens between addresses as a result of an execution
 
 **Dev notes:** \
-WHEN Increasing in addExectuion the amount is applied to both total and available
+WHEN Increasing in addExecution the amount is applied to both total and available
 (so SafeIncrease can be used) as opposed to
-WHEN Decreasing in addExectuion the amount is only applied to total. (SafeDecrease
+WHEN Decreasing in addExecution the amount is only applied to total. (SafeDecrease
 can NOT be used, so we have safeDecreaseTotal instead)
 i.e. (USDT 100 Total, 50 Available after we send a BUY order of 10 avax at 5$.
 Partial Exec 5 at $5. Total goes down to 75. Available stays at 50)
@@ -229,13 +229,14 @@ Only called by TradePairs from doCancelOrder. Cancels makes tokens available.
 doCancelOrder is a good place to auto Fill Gas Tank with newly available funds.
 
 ```solidity:no-line-numbers
-function autoFill(bytes32 _symbol) external
+function autoFill(address _trader, bytes32 _symbol) external
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
+| _trader | address | Address of the trader |
 | _symbol | bytes32 | Symbol to be used in exchange of Gas Token. ALOT or any other |
 
 #### depositNative
@@ -326,7 +327,7 @@ function transferToken(address _to, bytes32 _symbol, uint256 _quantity) external
 
 #### withdrawFees
 
-Withdraws collected fees from the feeAdress or treasury to the mainnet
+Withdraws collected fees from the feeAddress or treasury to the mainnet
 
 **Dev notes:** \
 Only admin can call this function
@@ -442,7 +443,7 @@ Native symbol is also added as a token with 0 address. \
 PortfolioSub keeps track of total deposited tokens in tokenTotals for sanity checks against mainnet.
 It has no ERC20 Contracts hence, it overwrites the addresses with address(0). \
 It also adds the token to the PortfolioBridgeSub with the proper sourceChainid
-Tokens in PorfolioSub has ZeroAddress but PortfolioBridge has the proper address from each chain
+Tokens in PortfolioSub has ZeroAddress but PortfolioBridge has the proper address from each chain
 Sample Token List in PortfolioSub: \
 Symbol, SymbolId, Decimals, address, auction mode (432204: Dexalot Subnet ChainId) \
 ALOT ALOT432204 18 0x0000000000000000000000000000000000000000 0 \
@@ -508,7 +509,7 @@ Allow only when the traders total ALOT holdings < gasAmount
 Minimal use of require statements, and lots of if checks to avoid blocking the bridge as it is
 also called by processXFerPayload \
 Users will always have some ALOT deposited to their gasTank if they start from the mainnet with any token
-Hence it is not possible to have a porfolioSub holding without gas in the GasTank
+Hence it is not possible to have a portfolioSub holding without gas in the GasTank
 In other words: if assets[_trader][_symbol].available > 0 then _trader.balance will be > 0 \
 Same in the scenario when person A sends tokens to person B who has no gas in his gasTank
 using transferToken in the subnet because autoFillPrivate is also called
@@ -532,7 +533,7 @@ function autoFillPrivate(address _trader, bytes32 _symbol, enum IPortfolio.Tx _t
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| tankFull | bool | Tranders Gas Tank status |
+| tankFull | bool | Trader's Gas Tank status |
 
 #### safeIncrease
 

@@ -148,7 +148,7 @@ function floor(uint256 _a, uint256 _m) internal pure returns (uint256)
 
 #### min
 
-Returns the minuimum of the two uint256 arguments
+Returns the minimum of the two uint256 arguments
 
 ```solidity:no-line-numbers
 function min(uint256 _a, uint256 _b) internal pure returns (uint256)

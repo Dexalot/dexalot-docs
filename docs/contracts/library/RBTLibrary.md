@@ -15,7 +15,7 @@ For more details please refer to the Github repo
 [BokkyPooBahsRedBlackTreeLibrary](https://github.com/bokkypoobah/BokkyPooBahsRedBlackTreeLibrary).
 The library was modified with code optimization as per a PR submitted by user nremond.
 The variable names for function arguments are updated to start with an underscore char.
-Documenention has been added.
+Documentation has been added.
 
 ## Struct Types
 

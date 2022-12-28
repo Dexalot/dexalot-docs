@@ -30,7 +30,7 @@ We need to raise the XChainXFerMessage before xfer.symbol is mapped in processPa
 incoming and the outgoing xfer messages always contain the symbolId rather than symbol. \
 getXFerMessage is called by lzDestroyAndRecoverFunds to handle a stuck message from the LZ bridge,
 and to return the funds to the depositor/withdrawer. Hence, getXFerMessage maps the symbolId to symbol.
-Use multiple inheritence to add additional bridge implementations in the future. Currently LzApp only.
+Use multiple inheritance to add additional bridge implementations in the future. Currently LzApp only.
 
 ## Variables
 
@@ -108,7 +108,7 @@ Wrapper for revoking roles
 
 **Dev notes:** \
 Only admin can revoke role. BRIDGE_ADMIN_ROLE will remove additional roles to the parent contract(s)
-Currenly LZ_BRIDGE_ADMIN_ROLE is removed from the LzApp
+Currently LZ_BRIDGE_ADMIN_ROLE is removed from the LzApp
 
 ```solidity:no-line-numbers
 function revokeRole(bytes32 _role, address _address) public
@@ -242,12 +242,26 @@ function setGasForDestinationLzReceive(uint256 _gas) external
 | ---- | ---- | ----------- |
 | _gas | uint256 | Gas for destination chain |
 
+#### getTokenList
+
+List of the tokens in the portfolioBridge
+
+```solidity:no-line-numbers
+function getTokenList() external view virtual returns (bytes32[])
+```
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | bytes32[] | bytes32[]  Array of symbols of the tokens |
+
 #### getXFerMessage
 
 Unpacks XFER message from the payload and replaces the symbol with the local symbol
 
 **Dev notes:** \
-It is called by lzDestroyAndRecoverFunds to handle a stucked message
+It is called by lzDestroyAndRecoverFunds to handle a stuck message
 
 ```solidity:no-line-numbers
 function getXFerMessage(bytes _payload) external view returns (address, bytes32, uint256)
@@ -305,16 +319,17 @@ function lzRetryPayload(bytes _payload) external
 
 #### lzDestroyAndRecoverFunds
 
-This is a destructive, last resort option, Always try lzRetryPayload first.
+This is a destructive, secondary option. Always try lzRetryPayload first.
+if this function still fails call LzApp.forceResumeReceive directly with DEFAULT_ADMIN_ROLE as the last resort
 Destroys the message that is blocking the bridge and calls portfolio.processXFerPayload
 Effectively completing the message trajectory from originating chain to the target chain.
-if sucessfull, the funds are processed at the target chain. If not no funds are recovered and
+if successful, the funds are processed at the target chain. If not no funds are recovered and
 the bridge is still in blocked status and additional messages are queued behind.
 
 **Dev notes:** \
-Only recover/process message if forceResumeReceive() succesfully completes.
+Only recover/process message if forceResumeReceive() successfully completes.
 Only the BRIDGE_ADMIN_ROLE can call this function.
-If there is no storedpaylod (stuck message), this function will revert, _payload parameter will be ignored and
+If there is no storedpayload (stuck message), this function will revert, _payload parameter will be ignored and
 will not be processed. If this function keeps failing due to an error condition after the forceResumeReceive call
 then forceResumeReceive(uint16 _srcChainId, bytes calldata _srcAddress) has to be called directly with
 DEFAULT_ADMIN_ROLE and the funds will have to be recovered manually
@@ -399,7 +414,7 @@ Returns the symbolId used in the mainnet given the srcChainId
 It uses PortfolioMain's token list to get the symbolId,
 On the other hand, PortfolioBridgeSub uses its internal list & the defaultTargetChain
 When sending from Mainnet to Subnet we send out the symbolId of the sourceChain. USDC => USDC1337
-When receiving messages back it expects the same symbolId if USDC1337 sent, USDC1337 to recieve
+When receiving messages back it expects the same symbolId if USDC1337 sent, USDC1337 to receive
 Because the subnet needs to know about different ids from different mainnets.
 
 ```solidity:no-line-numbers
@@ -470,16 +485,16 @@ function sendXChainMessageInternal(enum IPortfolioBridge.BridgeProvider _bridge,
 | _bridge | enum IPortfolioBridge.BridgeProvider | Bridge to send message to |
 | _xfer | struct IPortfolio.XFER | XFER message to send |
 
-#### checkTreshholds
+#### checkTresholds
 
-Overriden by PortfolioBridgeSub
+Overridden by PortfolioBridgeSub
 
 **Dev notes:** \
 Tresholds are not checked in the Mainnet neither for Incoming nor outgoing messages.
 But they are checked in the subnet for both.
 
 ```solidity:no-line-numbers
-function checkTreshholds(struct IPortfolio.XFER) internal virtual returns (bool)
+function checkTresholds(struct IPortfolio.XFER) internal virtual returns (bool)
 ```
 
 ##### Return values
@@ -565,7 +580,7 @@ function unpackMessage(bytes _data) private pure returns (enum IPortfolioBridge.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _xchainMsgType | enum IPortfolioBridge.XChainMsgType | XChainMsgType. Currenly only XChainMsgType.XFER possible |
+| _xchainMsgType | enum IPortfolioBridge.XChainMsgType | XChainMsgType. Currently only XChainMsgType.XFER possible |
 | msgdata | bytes | Still encoded message data. XFER in our case. Other message types not supported yet. |
 
 #### unpackXFerMessage

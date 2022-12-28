@@ -44,7 +44,7 @@ Initializer for upgradeable contract.
 
 **Dev notes:** \
 Grant admin and pauser role to the sender. Grant swapper role to swapper (portfolio) contract.
-0.1 ALOT gas is hardcoded at initialization to be distrubuted to the users which is enough for roughly
+0.1 ALOT gas is hardcoded at initialization to be distributed to the users which is enough for roughly
 25 orders + 25 cancels
 
 ```solidity:no-line-numbers

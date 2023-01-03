@@ -38,6 +38,11 @@ export const enSidebarConfig = sidebar({
           text: "Dexalot Subnet Staking Incentives Launch",
           icon: "book-open",
           link: "Incentives"
+        },
+        {
+          text: "Dexalot's Sample Bot",
+          icon: "book-open",
+          link: "samplebot"
         }
       ]
     },

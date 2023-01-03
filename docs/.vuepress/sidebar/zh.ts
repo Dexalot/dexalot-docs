@@ -27,7 +27,12 @@ export const zhSidebarConfig = sidebar({
         {
           text: "Dexalot子网质押奖励计划开启",
           icon: "book-open",
-          link: "Incentives"
+          link: "incentives"
+        },
+        {
+          text: "Dexalot 的Sample Bot说明示例",
+          icon: "book-open",
+          link: "samplebot"
         }
       ]
     },

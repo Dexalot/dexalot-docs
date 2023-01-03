@@ -32,7 +32,12 @@ export const esSidebarConfig = sidebar({
           {
             text: "Lanzamiento del Programa de Incentivo de Staking en la Dexalot Subnet",
             icon: "book-open",
-            link: "Incentives"
+            link: "incentives"
+          },
+          {
+            text: "Sample Bot de Dexalot",
+            icon: "book-open",
+            link: "samplebot"
           }
 
       ]

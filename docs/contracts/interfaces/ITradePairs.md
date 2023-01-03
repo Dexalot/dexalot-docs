@@ -234,7 +234,13 @@ function postOnly(bytes32 _tradePairId, bool _postOnly) external
 #### addTradePair
 
 ```solidity:no-line-numbers
-function addTradePair(bytes32 _tradePairId, bytes32 _baseSymbol, uint8 _baseDecimals, uint8 _baseDisplayDecimals, bytes32 _quoteSymbol, uint8 _quoteDecimals, uint8 _quoteDisplayDecimals, uint256 _minTradeAmount, uint256 _maxTradeAmount, enum ITradePairs.AuctionMode _mode) external
+function addTradePair(bytes32 _tradePairId, bytes32 _baseSymbol, uint8 _baseDisplayDecimals, bytes32 _quoteSymbol, uint8 _quoteDisplayDecimals, uint256 _minTradeAmount, uint256 _maxTradeAmount, enum ITradePairs.AuctionMode _mode) external
+```
+
+#### removeTradePair
+
+```solidity:no-line-numbers
+function removeTradePair(bytes32 _tradePairId) external
 ```
 
 #### getTradePairs
@@ -249,22 +255,10 @@ function getTradePairs() external view returns (bytes32[])
 function setMinTradeAmount(bytes32 _tradePairId, uint256 _minTradeAmount) external
 ```
 
-#### getMinTradeAmount
-
-```solidity:no-line-numbers
-function getMinTradeAmount(bytes32 _tradePairId) external view returns (uint256)
-```
-
 #### setMaxTradeAmount
 
 ```solidity:no-line-numbers
 function setMaxTradeAmount(bytes32 _tradePairId, uint256 _maxTradeAmount) external
-```
-
-#### getMaxTradeAmount
-
-```solidity:no-line-numbers
-function getMaxTradeAmount(bytes32 _tradePairId) external view returns (uint256)
 ```
 
 #### addOrderType
@@ -285,22 +279,10 @@ function removeOrderType(bytes32 _tradePairId, enum ITradePairs.Type1 _type) ext
 function setDisplayDecimals(bytes32 _tradePairId, uint8 _displayDecimals, bool _isBase) external
 ```
 
-#### getDisplayDecimals
+#### getTradePair
 
 ```solidity:no-line-numbers
-function getDisplayDecimals(bytes32 _tradePairId, bool _isBase) external view returns (uint8)
-```
-
-#### getDecimals
-
-```solidity:no-line-numbers
-function getDecimals(bytes32 _tradePairId, bool _isBase) external view returns (uint8)
-```
-
-#### getSymbol
-
-```solidity:no-line-numbers
-function getSymbol(bytes32 _tradePairId, bool _isBase) external view returns (bytes32)
+function getTradePair(bytes32 _tradePairId) external view returns (struct ITradePairs.TradePair)
 ```
 
 #### updateRate
@@ -309,28 +291,10 @@ function getSymbol(bytes32 _tradePairId, bool _isBase) external view returns (by
 function updateRate(bytes32 _tradePairId, uint8 _rate, enum ITradePairs.RateType _rateType) external
 ```
 
-#### getMakerRate
-
-```solidity:no-line-numbers
-function getMakerRate(bytes32 _tradePairId) external view returns (uint8)
-```
-
-#### getTakerRate
-
-```solidity:no-line-numbers
-function getTakerRate(bytes32 _tradePairId) external view returns (uint8)
-```
-
 #### setAllowedSlippagePercent
 
 ```solidity:no-line-numbers
 function setAllowedSlippagePercent(bytes32 _tradePairId, uint8 _allowedSlippagePercent) external
-```
-
-#### getAllowedSlippagePercent
-
-```solidity:no-line-numbers
-function getAllowedSlippagePercent(bytes32 _tradePairId) external view returns (uint8)
 ```
 
 #### getNBook
@@ -387,16 +351,10 @@ function setAuctionMode(bytes32 _tradePairId, enum ITradePairs.AuctionMode _mode
 function setAuctionPrice(bytes32 _tradePairId, uint256 _price) external
 ```
 
-#### getAuctionData
-
-```solidity:no-line-numbers
-function getAuctionData(bytes32 _tradePairId) external view returns (uint8, uint256)
-```
-
 #### unsolicitedCancel
 
 ```solidity:no-line-numbers
-function unsolicitedCancel(bytes32 _tradePairId, bool _isBuyBook, uint8 _maxCount) external
+function unsolicitedCancel(bytes32 _tradePairId, bool _isBuyBook, uint256 _maxCount) external
 ```
 
 #### getBookId
@@ -408,7 +366,7 @@ function getBookId(bytes32 _tradePairId, enum ITradePairs.Side _side) external v
 #### matchAuctionOrder
 
 ```solidity:no-line-numbers
-function matchAuctionOrder(bytes32 _takerOrderId, uint8 _maxCount) external returns (uint256)
+function matchAuctionOrder(bytes32 _takerOrderId, uint256 _maxNbrOfFills) external returns (uint256)
 ```
 
 #### getOrderRemainingQuantity

@@ -21,6 +21,7 @@ TradePairs should have EXECUTOR_ROLE on OrderBooks.
 | --- | --- |
 | TENK | uint256 |
 | VERSION | bytes32 |
+| maxNbrOfFills | uint256 |
 
 ### Private
 
@@ -89,11 +90,10 @@ Adds a new TradePair
 
 **Dev notes:** \
 Only DEFAULT_ADMIN or ExchangeSub can call this function which has this role.
-ExhangeSub makes sure that the symbols are added to the portfolio with the
-correct addresses first.
+Both the base and quote symbols must exist in the PortfolioSub otherwise it will revert.
 
 ```solidity:no-line-numbers
-function addTradePair(bytes32 _tradePairId, bytes32 _baseSymbol, uint8 _baseDecimals, uint8 _baseDisplayDecimals, bytes32 _quoteSymbol, uint8 _quoteDecimals, uint8 _quoteDisplayDecimals, uint256 _minTradeAmount, uint256 _maxTradeAmount, enum ITradePairs.AuctionMode _mode) external
+function addTradePair(bytes32 _tradePairId, bytes32 _baseSymbol, uint8 _baseDisplayDecimals, bytes32 _quoteSymbol, uint8 _quoteDisplayDecimals, uint256 _minTradeAmount, uint256 _maxTradeAmount, enum ITradePairs.AuctionMode _mode) external
 ```
 
 ##### Arguments
@@ -102,14 +102,30 @@ function addTradePair(bytes32 _tradePairId, bytes32 _baseSymbol, uint8 _baseDeci
 | ---- | ---- | ----------- |
 | _tradePairId | bytes32 | id of the trading pair |
 | _baseSymbol | bytes32 | symbol of the base asset |
-| _baseDecimals | uint8 | evm decimals of the base asset |
 | _baseDisplayDecimals | uint8 | display decimals of the base Asset. Quantity increment |
 | _quoteSymbol | bytes32 | symbol of the quote asset |
-| _quoteDecimals | uint8 | evm decimals of the quote asset |
 | _quoteDisplayDecimals | uint8 | display decimals of the quote Asset. Price increment |
 | _minTradeAmount | uint256 | minimum trade amount |
 | _maxTradeAmount | uint256 | maximum trade amount |
 | _mode | enum ITradePairs.AuctionMode | Auction Mode of the auction token. Auction token is always the BASE asset. |
+
+#### removeTradePair
+
+Removes the trade pair
+
+**Dev notes:** \
+Orderbook needs to be empty to be able to remove the tradepair.
+Will be used mostly if a tradepair is added by mistake and needs to be removed.
+
+```solidity:no-line-numbers
+function removeTradePair(bytes32 _tradePairId) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _tradePairId | bytes32 | id of the trading pair |
 
 #### getTradePairs
 
@@ -238,6 +254,24 @@ function setAuctionMode(bytes32 _tradePairId, enum ITradePairs.AuctionMode _mode
 | _tradePairId | bytes32 | id of the trading pair |
 | _mode | enum ITradePairs.AuctionMode | Auction Mode |
 
+#### setMaxNbrOfFills
+
+Maximum Number of Executions an order can have before it gets a cancel for the remainder
+
+**Dev notes:** \
+This is to protect the matchOrder loop from running out of gas during the normal
+trading operations
+
+```solidity:no-line-numbers
+function setMaxNbrOfFills(uint256 _maxNbrOfFills) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _maxNbrOfFills | uint256 | Max number of executions an order can have in a single block |
+
 #### setAuctionPrice
 
 Sets the auction price
@@ -257,27 +291,6 @@ function setAuctionPrice(bytes32 _tradePairId, uint256 _price) external
 | ---- | ---- | ----------- |
 | _tradePairId | bytes32 | id of the trading pair |
 | _price | uint256 | price of the auction |
-
-#### getAuctionData
-
-Returns the auction mode and the auction price of a specific Trade Pair
-
-```solidity:no-line-numbers
-function getAuctionData(bytes32 _tradePairId) external view returns (uint8 mode, uint256 price)
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _tradePairId | bytes32 | id of the trading pair |
-
-##### Return values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| mode | uint8 | auction mode |
-| price | uint256 | auction price |
 
 #### tradePairExists
 
@@ -318,30 +331,6 @@ function setMinTradeAmount(bytes32 _tradePairId, uint256 _minTradeAmount) extern
 | _tradePairId | bytes32 | id of the trading pair |
 | _minTradeAmount | uint256 | minimum trade amount in terms of quote asset |
 
-#### getMinTradeAmount
-
-Returns the minimum trade amount allowed for a specific Trade Pair
-
-**Dev notes:** \
-The min trade amount needs to satisfy
-`getQuoteAmount(_price, _quantity, _tradePairId) >= _minTradeAmount`
-
-```solidity:no-line-numbers
-function getMinTradeAmount(bytes32 _tradePairId) external view returns (uint256)
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _tradePairId | bytes32 | id of the trading pair |
-
-##### Return values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | uint256 | uint256  minimum trade amount in terms of quote asset |
-
 #### setMaxTradeAmount
 
 Sets the maximum trade amount allowed for a specific Trade Pair
@@ -360,30 +349,6 @@ function setMaxTradeAmount(bytes32 _tradePairId, uint256 _maxTradeAmount) extern
 | ---- | ---- | ----------- |
 | _tradePairId | bytes32 | id of the trading pair |
 | _maxTradeAmount | uint256 | maximum trade amount in terms of quote asset |
-
-#### getMaxTradeAmount
-
-Returns the maximum trade amount allowed for a specific Trade Pair
-
-**Dev notes:** \
-The max trade amount needs to satisfy
-`getQuoteAmount(_price, _quantity, _tradePairId) <= _maxTradeAmount`
-
-```solidity:no-line-numbers
-function getMaxTradeAmount(bytes32 _tradePairId) external view returns (uint256)
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _tradePairId | bytes32 | id of the trading pair |
-
-##### Return values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | uint256 | uint256  maximum trade amount in terms of quote asset |
 
 #### addOrderType
 
@@ -465,77 +430,6 @@ function setDisplayDecimals(bytes32 _tradePairId, uint8 _displayDecimals, bool _
 | _displayDecimals | uint8 | display decimal |
 | _isBase | bool | true/false |
 
-#### getDisplayDecimals
-
-Returns the display decimals of the base or the quote asset in a tradePair
-
-**Dev notes:** \
-Display decimals can also be referred as
-`Quantity Increment if _isBase==true` or `PriceIncrement if _isBase==false`
-
-```solidity:no-line-numbers
-function getDisplayDecimals(bytes32 _tradePairId, bool _isBase) external view returns (uint8)
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _tradePairId | bytes32 | id of the trading pair |
-| _isBase | bool | true/false |
-
-##### Return values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | uint8 | uint8  display decimal |
-
-#### getDecimals
-
-Returns the evm decimals of the base or the quote symbol in a tradePair
-
-**Dev notes:** \
-The decimals is identical to decimals value from ERC20 contract of the symbol.
-It is 18 for ALOT and AVAX.
-
-```solidity:no-line-numbers
-function getDecimals(bytes32 _tradePairId, bool _isBase) external view returns (uint8)
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _tradePairId | bytes32 | id of the trading pair |
-| _isBase | bool | true/false |
-
-##### Return values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | uint8 | uint8  evm decimal |
-
-#### getSymbol
-
-Returns the base or quote symbol
-
-```solidity:no-line-numbers
-function getSymbol(bytes32 _tradePairId, bool _isBase) external view returns (bytes32)
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _tradePairId | bytes32 | id of the trading pair |
-| _isBase | bool | true/false |
-
-##### Return values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bytes32 | bytes32  symbol in bytes32 |
-
 #### updateRate
 
 Sets the Maker or the Taker Rate
@@ -554,46 +448,6 @@ function updateRate(bytes32 _tradePairId, uint8 _rate, enum ITradePairs.RateType
 | _tradePairId | bytes32 | id of the trading pair |
 | _rate | uint8 | Percent Rate `(_rate/100)% = _rate/10000: _rate=10 => 0.10%` |
 | _rateType | enum ITradePairs.RateType | Rate Type, 0 maker or 1 taker |
-
-#### getMakerRate
-
-Returns Maker Rate (Commission)
-
-```solidity:no-line-numbers
-function getMakerRate(bytes32 _tradePairId) external view returns (uint8)
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _tradePairId | bytes32 | id of the trading pair |
-
-##### Return values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | uint8 | uint8  maker Rate |
-
-#### getTakerRate
-
-Returns Taker Rate (Commission)
-
-```solidity:no-line-numbers
-function getTakerRate(bytes32 _tradePairId) external view returns (uint8)
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _tradePairId | bytes32 | id of the trading pair |
-
-##### Return values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | uint8 | uint8  taker Rate |
 
 #### setAllowedSlippagePercent
 
@@ -614,26 +468,6 @@ function setAllowedSlippagePercent(bytes32 _tradePairId, uint8 _allowedSlippageP
 | ---- | ---- | ----------- |
 | _tradePairId | bytes32 | id of the trading pair |
 | _allowedSlippagePercent | uint8 | allowed slippage percent=20 (Default = 20 : 20% = 20/100) |
-
-#### getAllowedSlippagePercent
-
-Allowed slippage percent for market orders, before the market order gets an unsolicited cancel.
-
-```solidity:no-line-numbers
-function getAllowedSlippagePercent(bytes32 _tradePairId) external view returns (uint8)
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _tradePairId | bytes32 | id of the trading pair |
-
-##### Return values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | uint8 | uint8  slippage percent |
 
 #### getNBook
 
@@ -734,6 +568,32 @@ function getOrderByClientOrderId(address _trader, bytes32 _clientOrderId) extern
 | ---- | ---- | ----------- |
 | [0] | struct ITradePairs.Order | Order  Order Struct |
 
+#### addLimitOrderList
+
+To send multiple Limit Orders at one time to help Market Makers
+
+**Dev notes:** \
+Make sure that each array is ordered properly. if a single order in the list reverts
+the entire list is reverted. Potential reverts due to FOK. Safe to use with IOC
+if PO, it will ignore the PO orders that gets a fill, and will process the remaining orders in the list
+Or it will revert the entire list. Controlled by _revertOnPO below
+
+```solidity:no-line-numbers
+function addLimitOrderList(bytes32 _tradePairId, bytes32[] _clientOrderIds, uint256[] _prices, uint256[] _quantities, enum ITradePairs.Side[] _sides, enum ITradePairs.Type2[] _type2s, bool _revertOnPO) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _tradePairId | bytes32 | id of the trading pair |
+| _clientOrderIds | bytes32[] | Array of unique id provided by the owner of the orders |
+| _prices | uint256[] | Array of prices |
+| _quantities | uint256[] | Array of quantities |
+| _sides | enum ITradePairs.Side[] | Array of sides |
+| _type2s | enum ITradePairs.Type2[] | Array of SubTypes |
+| _revertOnPO | bool | false : It will ignore the PO order that is in the list if it gets fill true : The entire list will revert if one of the PO orders gets a fill |
+
 #### addOrder
 
 Frontend Entry function to call to add an order
@@ -749,18 +609,18 @@ in extreme cases. This is a function of the blockchain and will typically happen
 price is around 100 gwei (3-4 times of the minimum gas price) and your transaction maximum gas is set
 to be 50 gwei(normal level). Your transaction will wait in the mempool until the blockchain gas price
 goes back to normal levels. \
-    `_clientoOderId` is sent by the owner of an order and it is returned in responses for
+    `_clientOrderId` is sent by the owner of an order and it is returned in responses for
 reference. It must be unique per traderaddress. \
-    Price for market Orders are set to 0 internally (type1=0). Valid price decimals (baseDisplayDecimals)
-and evm decimals can be obtained by calling `getDisplayDecimals` and `getDecimals`, respectively. \
+    Price for market Orders are set to 0 internally (type1=0). Valid price decimals and evm decimals
+can be obtained by calling `getTradePair(..)` and accessing baseDisplayDecimals and baseDecimals respectively. \
     Valid quantity decimals (quoteDisplayDecimals) and evm decimals can be obtained by calling
-`getDisplayDecimals` and `getDecimals`, respectively. \
+`getTradePair(..)` and accessing quoteDisplayDecimals and quoteDecimals respectively. \
     The default for type2 (Order SubType) is 0 equivalent to GTC. \
 Here are the other SubTypes: \
 0 = GTC : Good Till Cancel \
 1 = FOK : FIll or Kill (Will fill entirely or will revert with "T-FOKF-01") \
-2 = IOC : Immedidate or Cancel  (Will fill partially or fully, will get status=CANCELED if filled partially) \
-3 = PO : Post Only (Will either go in the orderbook or revert with "T-T2PO-01" if it has a potential match)
+2 = IOC : Immediate or Cancel  (Will fill partially or fully, will get status=CANCELED if filled partially) \
+3 = PO  : Post Only (Will either go in the orderbook or revert with "T-T2PO-01" if it has a potential match)
 
 ```solidity:no-line-numbers
 function addOrder(address _trader, bytes32 _clientOrderId, bytes32 _tradePairId, uint256 _price, uint256 _quantity, enum ITradePairs.Side _side, enum ITradePairs.Type1 _type1, enum ITradePairs.Type2 _type2) external
@@ -777,7 +637,7 @@ function addOrder(address _trader, bytes32 _clientOrderId, bytes32 _tradePairId,
 | _quantity | uint256 | quantity of the order |
 | _side | enum ITradePairs.Side | enum ITradePairs.Side  Side of the order 0 BUY, 1 SELL |
 | _type1 | enum ITradePairs.Type1 | enum ITradePairs.Type1 Type of the order. 0 MARKET , 1 LIMIT (STOP and STOPLIMIT NOT Supported) |
-| _type2 | enum ITradePairs.Type2 | enum ITradePairs.Type2 SubType of the order |
+| _type2 | enum ITradePairs.Type2 | enum ITradePairs.Type2 SubType of the order _revertOnPO is defaulted to true. It will revert if PO order gets fill |
 
 #### matchAuctionOrder
 
@@ -788,7 +648,7 @@ Requires `DEFAULT_ADMIN_ROLE`, also called by `ExchangeSub.matchAuctionOrders` t
 requires `AUCTION_ADMIN_ROLE`.
 
 ```solidity:no-line-numbers
-function matchAuctionOrder(bytes32 _takerOrderId, uint8 _maxCount) external returns (uint256)
+function matchAuctionOrder(bytes32 _takerOrderId, uint256 _maxNbrOfFills) external returns (uint256)
 ```
 
 ##### Arguments
@@ -796,7 +656,7 @@ function matchAuctionOrder(bytes32 _takerOrderId, uint8 _maxCount) external retu
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _takerOrderId | bytes32 | Taker Order id |
-| _maxCount | uint8 | controls max number of fills an order can get at a time to avoid running out of gas |
+| _maxNbrOfFills | uint256 | controls max number of fills an order can get at a time to avoid running out of gas |
 
 ##### Return values
 
@@ -817,7 +677,7 @@ as it will have to cancel a lot of orders before it reaches the orders that are 
 manipulate and one side of the entire orderbook would be almost empty by then
 
 ```solidity:no-line-numbers
-function unsolicitedCancel(bytes32 _tradePairId, bool _isBuyBook, uint8 _maxCount) external
+function unsolicitedCancel(bytes32 _tradePairId, bool _isBuyBook, uint256 _maxCount) external
 ```
 
 ##### Arguments
@@ -826,7 +686,7 @@ function unsolicitedCancel(bytes32 _tradePairId, bool _isBuyBook, uint8 _maxCoun
 | ---- | ---- | ----------- |
 | _tradePairId | bytes32 | id of the trading pair |
 | _isBuyBook | bool | true if buy Orderbook |
-| _maxCount | uint8 | controls max number of orders to cancel at a time to avoid running out of gas |
+| _maxCount | uint256 | controls max number of orders to cancel at a time to avoid running out of gas |
 
 #### cancelReplaceOrder
 
@@ -837,6 +697,8 @@ Only the quantity and the price of the order can be changed. All the other order
 fields are copied from the canceled order to the new order.
 The time priority of the original order is lost.
 Canceled order's locked quantity is made available for the new order within this tx
+This function will technically accept the same clientOrderId as the previous because when the previous order
+is cancelled it is removed from the mapping and the previous clientOrderId is now available. Not recommended!
 
 ```solidity:no-line-numbers
 function cancelReplaceOrder(bytes32 _orderId, bytes32 _clientOrderId, uint256 _price, uint256 _quantity) external
@@ -847,7 +709,7 @@ function cancelReplaceOrder(bytes32 _orderId, bytes32 _clientOrderId, uint256 _p
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _orderId | bytes32 | order id to cancel |
-| _clientOrderId | bytes32 | clinent order id of the new order |
+| _clientOrderId | bytes32 | client order id of the new order |
 | _price | uint256 | price of the new order |
 | _quantity | uint256 | quantity of the new order |
 
@@ -894,6 +756,25 @@ fallback() external
 ```
 
 ### Private
+
+#### checkMirrorPair
+
+Checks to see if a mirror pair exists
+
+**Dev notes:** \
+Checks to see if USDC/AVAX exists when trying to add AVAX/USDC
+Mirror pairs are not allowed to avoid confusion from a user perspective.
+
+```solidity:no-line-numbers
+function checkMirrorPair(bytes32 _baseSymbol, bytes32 _quoteSymbol) private view
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _baseSymbol | bytes32 | base Symbol of the pair to be added |
+| _quoteSymbol | bytes32 | quote Symbol of the pair to be added |
 
 #### setAuctionModePrivate
 
@@ -1094,31 +975,6 @@ function emitExecuted(uint256 _price, uint256 _quantity, bytes32 _makerOrderId, 
 | _mlastFee | uint256 | fee paid by maker |
 | _tlastFee | uint256 | fee paid by taker |
 
-#### addOrderChecks
-
-Checks if order can be entered without any issues
-
-**Dev notes:** \
-Checks if tradePair or addOrder is paused as well as
-if decimals, order types and clientOrderId are supplied properly \
-    clientorderid is sent by the owner of an order and it is returned in responses for
-reference. It must be unique per traderaddress.
-
-```solidity:no-line-numbers
-function addOrderChecks(address _trader, bytes32 _clientOrderId, bytes32 _tradePairId, uint256 _quantity, enum ITradePairs.Type1 _type1, enum ITradePairs.Type2 _type2) private view
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _trader | address | trader address |
-| _clientOrderId | bytes32 | unique id provided by the owner of an order |
-| _tradePairId | bytes32 | id of the trading pair |
-| _quantity | uint256 | quantity |
-| _type1 | enum ITradePairs.Type1 | Type1 : MARKET,LIMIT etc |
-| _type2 | enum ITradePairs.Type2 |  |
-
 #### removeClosedOrder
 
 Removes closed order from the mapping
@@ -1136,43 +992,55 @@ function removeClosedOrder(bytes32 _orderId) private
 | ---- | ---- | ----------- |
 | _orderId | bytes32 | order id to remove |
 
-#### addLimitOrder
+#### addOrderChecks
 
-Private function. Adds a LIMIT Order. See #addOrder.
+Checks if order can be entered without any issues
+
+**Dev notes:** \
+Checks if tradePair or addOrder is paused as well as
+if decimals, order types and clientOrderId are supplied properly \
+    clientorderid is sent by the owner of an order and it is returned in responses for
+reference. It must be unique per traderaddress.
 
 ```solidity:no-line-numbers
-function addLimitOrder(address _trader, bytes32 _clientOrderId, bytes32 _tradePairId, uint256 _price, uint256 _quantity, enum ITradePairs.Side _side, enum ITradePairs.Type2 _type2) private
+function addOrderChecks(address _trader, bytes32 _clientOrderId, bytes32 _tradePairId, uint256 _price, uint256 _quantity, enum ITradePairs.Side _side, enum ITradePairs.Type1 _type1, enum ITradePairs.Type2 _type2, bool _revertOnPO) private view returns (uint256 priceMarket, bool ignorePoOrder)
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _trader | address | See #addOrder |
-| _clientOrderId | bytes32 | See #addOrder |
-| _tradePairId | bytes32 | See #addOrder |
-| _price | uint256 | See #addOrder |
-| _quantity | uint256 | See #addOrder |
-| _side | enum ITradePairs.Side | See #addOrder |
-| _type2 | enum ITradePairs.Type2 | See #addOrder |
+| _trader | address | trader address |
+| _clientOrderId | bytes32 | unique id provided by the owner of an order |
+| _tradePairId | bytes32 | id of the trading pair |
+| _price | uint256 |  |
+| _quantity | uint256 | quantity |
+| _side | enum ITradePairs.Side | enum ITradePairs.Side  Side of the order 0 BUY, 1 SELL |
+| _type1 | enum ITradePairs.Type1 | Type1 : MARKET,LIMIT etc |
+| _type2 | enum ITradePairs.Type2 | enum ITradePairs.Type2 SubType of the order |
+| _revertOnPO | bool | bool to revert or ignore type2=PO orders. Default=false (Revert), (Revert/ignore) when sent from addLimitOrderList |
 
-#### addMarketOrder
+#### addOrderPrivate
 
-Private function. Adds a MARKET Order. See #addOrder.
+See addOrder
 
 ```solidity:no-line-numbers
-function addMarketOrder(address _trader, bytes32 _clientOrderId, bytes32 _tradePairId, uint256 _quantity, enum ITradePairs.Side _side) private
+function addOrderPrivate(address _trader, bytes32 _clientOrderId, bytes32 _tradePairId, uint256 _price, uint256 _quantity, enum ITradePairs.Side _side, enum ITradePairs.Type1 _type1, enum ITradePairs.Type2 _type2, bool _revertOnPO) private
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _trader | address | See #addOrder |
-| _clientOrderId | bytes32 | See #addOrder |
-| _tradePairId | bytes32 | See #addOrder |
-| _quantity | uint256 | See #addOrder |
-| _side | enum ITradePairs.Side | See #addOrder |
+| _trader | address |  |
+| _clientOrderId | bytes32 |  |
+| _tradePairId | bytes32 |  |
+| _price | uint256 |  |
+| _quantity | uint256 |  |
+| _side | enum ITradePairs.Side |  |
+| _type1 | enum ITradePairs.Type1 |  |
+| _type2 | enum ITradePairs.Type2 |  |
+| _revertOnPO | bool | bool to revert or ignore type2=PO  Default= Revert on single orders, Can set it to true/false from addLimitOrderList |
 
 #### matchOrder
 
@@ -1190,7 +1058,7 @@ is potentially matched with multiple small BUY orders (1000 orders with quantity
 which will run out of gas.
 
 ```solidity:no-line-numbers
-function matchOrder(bytes32 _takerOrderId, uint8 _maxCount) private returns (uint256)
+function matchOrder(bytes32 _takerOrderId, uint256 _maxNbrOfFills) private returns (uint256)
 ```
 
 ##### Arguments
@@ -1198,7 +1066,7 @@ function matchOrder(bytes32 _takerOrderId, uint8 _maxCount) private returns (uin
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _takerOrderId | bytes32 | Taker Order id |
-| _maxCount | uint8 | Max number of fills an order can get at a time to avoid running out of gas (Defaults 255). |
+| _maxNbrOfFills | uint256 | Max number of fills an order can get at a time to avoid running out of gas (Defaults to maxNbrOfFills=100). |
 
 ##### Return values
 
@@ -1208,16 +1076,15 @@ function matchOrder(bytes32 _takerOrderId, uint8 _maxCount) private returns (uin
 
 #### doOrderCancel
 
-Cancels an order and makes the locked amount available in the porftolio
+Cancels an order and makes the locked amount available in the portfolio
 
 ```solidity:no-line-numbers
-function doOrderCancel(bytes32 _orderId, bool _removeClosedOrder) private
+function doOrderCancel(bytes32 _orderId) private
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _orderId | bytes32 | order id to cancel |
-| _removeClosedOrder | bool | bool to remove the order from mapping if CLOSED true by default but false when called by cancelReplaceOrder function |
+| _orderId | bytes32 | order id to cancel true by default but false when called by cancelReplaceOrder function |
 

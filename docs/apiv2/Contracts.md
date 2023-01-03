@@ -566,7 +566,14 @@ returns (
 
 Returns orderbook (buy or sell) for the given tradepair
 
-Note: Although this is a view function, it will run out of gas in case
+```
+@return uint256[] Prices array
+@return uint256[] Quantities array
+@return uint256 Last Price processed. 0 if no more price points left
+@return bytes32 Last Order id processed. "" if no more orders left
+```
+
+Note: Although this is a view function and do not cost any gas for the invocation, your call may get "run out of gas" exception in case
 you try to get the entire order book with a lot of orders. That's why it
 has nPrice and nOrder parameters for pagination, i.e.
 

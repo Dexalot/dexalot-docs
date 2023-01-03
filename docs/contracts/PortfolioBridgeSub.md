@@ -17,7 +17,7 @@ PortfolioBridgeSub always maps the symbol that it receives into a subnet symbol 
 expects. i.e USDC43114 is mapped to USDC. Similarly USDC1 can also be mapped to USDC. This way liquidity can
 be combined and traded together in a multichain implementation.
 When sending back to the target chain, it maps it back to the expected symbol by the target chain,
-i.e USDC to USDC1 if sent back to Ethereum, USDC43114 if sent to Avalache. \
+i.e USDC to USDC1 if sent back to Ethereum, USDC43114 if sent to Avalanche. \
 Symbol mapping happens in packXferMessage on the way out. packXferMessage calls getTokenId that has
 different implementations in PortfolioBridgeMain &amp; PortfolioBridgeSub. On the receival, the symbol mapping
 will happen in different functions, either in processPayload or in getXFerMessage.
@@ -99,16 +99,16 @@ function VERSION() public pure returns (bytes32)
 
 #### addToken
 
-Adds the given token to the portfolioBridge. PortfolioBrigeSub the list will be bigger as they could
+Adds the given token to the portfolioBridge. PortfolioBridgeSub the list will be bigger as they could
 be from different mainnet chains
 
 **Dev notes:** \
 `addToken` is only callable by admin or from Portfolio when a new subnet symbol is added for the
 first time. The same subnet symbol but different symbolId are required when adding a token to
-PortfolioBrigeSub. \
+PortfolioBridgeSub. \
 Sample Token List in PortfolioBridgeSub: (BTC & ALOT Listed twice with 2 different chain ids) \
 Native symbol is also added as a token with 0 address \
-Symbol, SymbolId, Decimals, address, auction mode (432204: Dexalot Subnet ChainId, 43114: Avalache C-ChainId) \
+Symbol, SymbolId, Decimals, address, auction mode (432204: Dexalot Subnet ChainId, 43114: Avalanche C-ChainId) \
 ALOT ALOT432204 18 0x0000000000000000000000000000000000000000 0 (Native ALOT) \
 ALOT ALOT43114 18 0x5FbDB2315678afecb367f032d93F642f64180aa3 0 (Avalanche ALOT) \
 AVAX AVAX43114 18 0x0000000000000000000000000000000000000000 0 (Avalanche Native AVAX) \
@@ -122,7 +122,7 @@ USDt USDt43114 6 0x38a024C0b412B9d1db8BC398140D00F5Af3093D4 0 \
 WETH.e WETH.e43114 18 0x02b0B4EFd909240FCB2Eb5FAe060dC60D112E3a4 0 \
 Note:
 ALOT from the Avalanche Mainnet (Line 2 in the list) will be added with a direct function call
-to PortfolioBridgeSub.addToken as a part of the deployment script. All other tokens have be 
+to PortfolioBridgeSub.addToken as a part of the deployment script. All other tokens have be
 added via PortfolioSub.addToken which also calls the same PortfolioBridgeSub function. \
 Similarly, ALOT from the Avalanche Mainnet can only be removed by PortfolioBridgeSub.removeToken
 if it was added by mistake. All other tokens should be removed with PortfolioSub.removeToken.
@@ -203,7 +203,7 @@ function setDefaultTargetChain(uint32 _chainId) external
 
 #### getTokenList
 
-Frontend function to get all the tokens in the portfolio
+List of the tokens in the portfolioBridge
 
 ```solidity:no-line-numbers
 function getTokenList() external view returns (bytes32[])
@@ -376,7 +376,7 @@ function getSymbolForId(bytes32 _id) internal view returns (bytes32)
 | ---- | ---- | ----------- |
 | [0] | bytes32 | bytes32  symbolId |
 
-#### checkTreshholds
+#### checkTresholds
 
 Checks the volume and thresholds to delay or execute immediately
 
@@ -387,7 +387,7 @@ Not bridge specific! Delayed messages will be processed by the defaultBridge
 symbolId has already been mapped to symbol for the portfolio to properly process it
 
 ```solidity:no-line-numbers
-function checkTreshholds(struct IPortfolio.XFER _xfer) internal returns (bool)
+function checkTresholds(struct IPortfolio.XFER _xfer) internal returns (bool)
 ```
 
 ##### Arguments

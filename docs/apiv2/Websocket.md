@@ -49,6 +49,7 @@ subscribe() {
     const msg: any = {
         data: this.name,
         pair: this.name,
+        decimal: 3,
         type: SUBSCRTIPTION.subscribe,
     }
 
@@ -64,6 +65,12 @@ subscribe() {
 }
 ```
 
+Example pair subscribe message:
+```json
+{"data":"ALOT/USDC","pair":"ALOT/USDC","type":"subscribe","decimal":3}
+```
+
+Sample code unsubscribe:
 ```ts
 unsubscribe() {
     const acct = store.state.activeAccount
@@ -106,6 +113,15 @@ chartSubscribe(charttype: string) {
 
     socket.send(JSON.stringify(msg))
 }
+```
+Example Chart Subscribe Message:
+```json
+{"data":"ALOT/USDC","pair":"ALOT/USDC","chart":"D1","type":"chartsubscribe"}
+```
+
+Possible "chart" values are as follows:
+```
+ "M5", "M15",  "M30",  "H1"  "H4",  "D1"
 ```
 
 ```ts

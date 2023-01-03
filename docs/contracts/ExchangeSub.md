@@ -47,7 +47,7 @@ event AuctionMatchFinished(bytes32 pair)
 
 #### pauseTrading
 
-Un(pause) trading functionality. Affects both addorder and cancelorder funcs.
+Un(pause) trading functionality. Affects both addorder and cancelorder functions.
 
 ```solidity:no-line-numbers
 function pauseTrading(bool _tradingPause) public
@@ -63,7 +63,7 @@ function pauseTrading(bool _tradingPause) public
 
 #### pauseForUpgrade
 
-(Un)pauses portoflioSub and portfolioBridgeSub and TradePairs contracts for upgrade
+(Un)pauses portfolioSub and portfolioBridgeSub and TradePairs contracts for upgrade
 
 ```solidity:no-line-numbers
 function pauseForUpgrade(bool _pause) external
@@ -134,7 +134,7 @@ function getTradePairsAddr() external view returns (contract ITradePairs)
 
 #### pauseTradePair
 
-Un(pause) trading functionality for a trade pair. Affects both addorder and cancelorder funcs.
+Un(pause) trading functionality for a trade pair. Affects both addorder and cancelorder functions.
 
 ```solidity:no-line-numbers
 function pauseTradePair(bytes32 _tradePairId, bool _tradePairPause) external
@@ -321,7 +321,7 @@ function getMaxTradeAmount(bytes32 _tradePairId) external view returns (uint256)
 Matches auction orders once the auction is closed and auction price is set
 
 **Dev notes:** \
-Takes the top of the book sell order(bestAsk), and matches it with the buy orders sequantially.
+Takes the top of the book sell order(bestAsk), and matches it with the buy orders sequentially.
 An auction mode can safely be changed to AUCTIONMODE.OFF only when this function returns false.
 High Level Auction Logic
 Auction Token & An auction pair(Base is the auction) gets added with AUCTION_MODE==PAUSED
@@ -329,7 +329,7 @@ Nobody can enter orders on this pair, and nobody can transfer/withdraw their auc
 when AUCTION_MODE != OFF
 Auction starts with AUCTION_MODE==ON. Participants can enter any buy or sell orders at any price
 The order books will not match any orders and it will stay crossed
-An off-chain app calculates the match price and quantities and dissamiates this infromation in
+An off-chain app calculates the match price and quantities and disseminates this information in
 real time for participant to adjust their orders accordingly.
 When the predetermined auction end time is reached AUCTION_MODE is set to CLOSING. This is the
 Randomized Closing Sequence as explained in ExchangeMain.flipCoin()
@@ -338,7 +338,7 @@ The auction price is set from the off-chain app. At this point no actions are al
 no new orders, cancels, cancel-replaces, deposits, withdraws or transfers until all matching is done.
 
 ```solidity:no-line-numbers
-function matchAuctionOrders(bytes32 _tradePairId, uint8 _maxCount) external returns (bool)
+function matchAuctionOrders(bytes32 _tradePairId, uint256 _maxNbrOfFills) external returns (bool)
 ```
 
 ##### Arguments
@@ -346,7 +346,7 @@ function matchAuctionOrders(bytes32 _tradePairId, uint8 _maxCount) external retu
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _tradePairId | bytes32 | id of the trading pair |
-| _maxCount | uint8 | controls max number of fills an order can get at a time to avoid running out of gas |
+| _maxNbrOfFills | uint256 | controls max number of fills an order can get at a time to avoid running out of gas |
 
 ##### Return values
 

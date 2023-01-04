@@ -33,6 +33,16 @@ export const enSidebarConfig = sidebar({
           text: "Litepaper",
           icon: "book-open",
           link: "litepaper"
+        },
+        {
+          text: "Dexalot Subnet Staking Incentives Launch",
+          icon: "book-open",
+          link: "Incentives"
+        },
+        {
+          text: "Dexalot's Sample Bot",
+          icon: "book-open",
+          link: "samplebot"
         }
       ]
     },
@@ -90,8 +100,7 @@ export const enSidebarConfig = sidebar({
             "PortfolioBridgeSub",
             "PortfolioMinter",
             "GasStation",
-            "BannedAccounts",
-            "DexalotSubnetBalances"
+            "BannedAccounts"
           ],
         },
 

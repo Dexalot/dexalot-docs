@@ -102,7 +102,7 @@ Checks if the order is cancelable.
 
 **Dev notes:** \
 For an order _quantityFilled < _quantity and its status should be PARTIAL or NEW
-                to be eligable for cancelation
+                to be eligible for cancelation
 
 ```solidity:no-line-numbers
 function canCancel(uint256 _quantity, uint256 _quantityFilled, enum ITradePairs.Status _orderStatus) internal pure returns (bool)
@@ -148,7 +148,7 @@ function floor(uint256 _a, uint256 _m) internal pure returns (uint256)
 
 #### min
 
-Returns the minuimum of the two uint256 arguments
+Returns the minimum of the two uint256 arguments
 
 ```solidity:no-line-numbers
 function min(uint256 _a, uint256 _b) internal pure returns (uint256)

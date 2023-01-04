@@ -12,7 +12,7 @@ interacting with the underlying Red-Black-Tree.
 **Dev notes:** \
 For each trade pair two order books are added to orderBookMap: buyBook and sellBook.
 The naming convention for the order books is as follows: TRADEPAIRNAME-BUYBOOK and TRADEPAIRNAME-SELLBOOK.
-For trade pair AVAX/USDT the order books are AVAX/USDT-BUYBOOK amd AVAX/USDT-SELLBOOK.
+For trade pair AVAX/USDT the order books are AVAX/USDT-BUYBOOK and AVAX/USDT-SELLBOOK.
 TradePairs should have EXECUTOR_ROLE in OrderBooks.
 
 ## Struct Types

@@ -28,7 +28,18 @@ export const esSidebarConfig = sidebar({
           text: "Dexalot Discovery",
           icon: "book-open",
           link: "discovery"
-        }
+        },
+          {
+            text: "Lanzamiento del Programa de Incentivo de Staking en la Dexalot Subnet",
+            icon: "book-open",
+            link: "incentives"
+          },
+          {
+            text: "Sample Bot de Dexalot",
+            icon: "book-open",
+            link: "samplebot"
+          }
+
       ]
     },
 

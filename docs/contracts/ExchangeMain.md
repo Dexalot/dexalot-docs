@@ -57,7 +57,7 @@ function isHead() public view returns (uint80 r, int256 p, bool o)
 
 #### pauseForUpgrade
 
-(Un)pauses portoflioMain and portfolioBridgeMain for upgrade
+(Un)pauses portfolioMain and portfolioBridgeMain for upgrade
 
 ```solidity:no-line-numbers
 function pauseForUpgrade(bool _pause) external

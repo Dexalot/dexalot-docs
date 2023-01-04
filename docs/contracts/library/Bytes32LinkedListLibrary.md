@@ -6,7 +6,7 @@ headerDepth: 4
 
 **Circular FIFO LinkedList library for bytes32 values.**
 
-Provides functionality for implementing data indexing using a circlular linked list of bytes32 values.
+Provides functionality for implementing data indexing using a circular linked list of bytes32 values.
 
 **Dev notes:** \
 The original library was forked by Modular.network from
@@ -16,7 +16,7 @@ into the Modular-Network ethereum-libraries repo at
 It has been updated to add additional functionality and be more compatible with solidity 0.4.18
 coding patterns.
 It has been further updated by Dexalot team to handle a FIFO LinkedList of bytes32 values and be more
-compatible with solidity 0.8.x. Documenention has also been modified to align with project&#x27;s style guide.
+compatible with solidity 0.8.x. Documentation has also been modified to align with project&#x27;s style guide.
 
 ## Struct Types
 
@@ -177,7 +177,7 @@ function remove(struct Bytes32LinkedListLibrary.LinkedList self, bytes32 _node) 
 #### push
 
 **Dev notes:** \
-Pushes an enrty to the head of the linked list
+Pushes an entry to the head of the linked list
 
 ```solidity:no-line-numbers
 function push(struct Bytes32LinkedListLibrary.LinkedList self, bytes32 _node, bool _direction) internal

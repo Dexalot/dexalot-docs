@@ -17,7 +17,7 @@ Because of this novel architecture, a subnet wallet can only house ALOT token an
 else. That&#x27;s why the subnet wallet is referred to as the “Gas Tank”. All assets will be
 handled inside the PortfolioSub smart contract in the subnet.
 PortfolioBridge and PortfolioBridgeSub are bridge aggregators in charge of sending/receiving messages
-via generic messaging using ative bridge transports.
+via generic messaging using active bridge transports.
 
 **Dev notes:** \
 This contract contains shared logic for PortfolioMain and PortfolioSub.

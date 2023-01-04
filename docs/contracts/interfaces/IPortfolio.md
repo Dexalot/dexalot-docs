@@ -55,7 +55,10 @@ enum Tx {
   DECREASEAVAIL,
   IXFERSENT,
   IXFERREC,
-  RECOVERFUNDS
+  RECOVERFUNDS,
+  ADDGAS,
+  REMOVEGAS,
+  AUTOFILL
 }
 ```
 
@@ -135,5 +138,11 @@ function getTokenDetails(bytes32 _symbol) external view returns (struct IPortfol
 
 ```solidity:no-line-numbers
 function getTokenDetailsById(bytes32 _symbolId) external view returns (struct IPortfolio.TokenDetails)
+```
+
+#### getTokenList
+
+```solidity:no-line-numbers
+function getTokenList() external view returns (bytes32[])
 ```
 

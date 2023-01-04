@@ -241,7 +241,8 @@ function autoFill(address _trader, bytes32 _symbol) external
 
 #### depositNative
 
-This function is only used to deposit native ALOT from the subnet wallet
+This function is only used to deposit native ALOT from the subnet wallet to
+the portfolio. Also referred as RemoveGas
 
 ```solidity:no-line-numbers
 function depositNative(address payable _from, enum IPortfolioBridge.BridgeProvider) external payable
@@ -256,7 +257,8 @@ function depositNative(address payable _from, enum IPortfolioBridge.BridgeProvid
 
 #### withdrawNative
 
-This function is used to withdraw only native ALOT to the subnet wallet
+This function is used to withdraw only native ALOT from the portfolio
+into the subnet wallet. Also referred as AddGas
 
 **Dev notes:** \
 This function decreases ALOT balance of the user and calls the PortfolioMinter to mint the native ALOT
@@ -619,16 +621,17 @@ function transferToken(address _from, address _to, bytes32 _symbol, uint256 _qua
 
 #### safeTransferFee
 
-Transfers the fees collected to the fee address
+Transfers the fees collected to the fee or treasury address
 
 ```solidity:no-line-numbers
-function safeTransferFee(bytes32 _symbol, uint256 _feeCharged) private
+function safeTransferFee(address _to, bytes32 _symbol, uint256 _feeCharged) private
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
+| _to | address | fee or treasury address |
 | _symbol | bytes32 | Symbol of the token |
 | _feeCharged | uint256 | Fee charged for the transaction |
 

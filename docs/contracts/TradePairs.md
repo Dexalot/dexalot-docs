@@ -146,7 +146,7 @@ function getTradePairs() external view returns (bytes32[])
 
 #### getTradePair
 
-Returns the correspoding TradePair struct for the trade pair id.
+Returns the corresponding TradePair struct for the trade pair id.
 
 ```solidity:no-line-numbers
 function getTradePair(bytes32 _tradePairId) external view returns (struct ITradePairs.TradePair)

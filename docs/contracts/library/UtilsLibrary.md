@@ -102,7 +102,7 @@ Checks if the order is cancelable.
 
 **Dev notes:** \
 For an order _quantityFilled < _quantity and its status should be PARTIAL or NEW
-                to be eligable for cancelation
+                to be eligible for cancelation
 
 ```solidity:no-line-numbers
 function canCancel(uint256 _quantity, uint256 _quantityFilled, enum ITradePairs.Status _orderStatus) internal pure returns (bool)

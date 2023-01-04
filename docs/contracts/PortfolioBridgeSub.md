@@ -49,16 +49,10 @@ incoming and the outgoing xfer messages always contain the symbolId rather than 
 
 ## Events
 
-### DelayedTransferAdded
+### DelayedTransfer
 
 ```solidity:no-line-numbers
-event DelayedTransferAdded(bytes32 id)
-```
-
-### DelayedTransferExecuted
-
-```solidity:no-line-numbers
-event DelayedTransferExecuted(bytes32 id, struct IPortfolio.XFER xfer)
+event DelayedTransfer(string action, bytes32 id, struct IPortfolio.XFER xfer)
 ```
 
 ### DelayPeriodUpdated

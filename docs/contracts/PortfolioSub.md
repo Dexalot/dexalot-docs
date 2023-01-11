@@ -130,7 +130,7 @@ function setFeeAddress(address _feeAddress) external
 Set auction mode for a token
 
 **Dev notes:** \
-Only callable by the default admin
+Only callable by the default admin or TradePairs
 
 ```solidity:no-line-numbers
 function setAuctionMode(bytes32 _symbol, enum ITradePairs.AuctionMode _mode) external
@@ -536,6 +536,21 @@ function autoFillPrivate(address _trader, bytes32 _symbol, enum IPortfolio.Tx _t
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | tankFull | bool | Trader's Gas Tank status |
+
+#### withdrawNativePrivate
+
+See withdrawNative
+
+```solidity:no-line-numbers
+function withdrawNativePrivate(address _to, uint256 _quantity) private
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _to | address | Address of the withdrawer |
+| _quantity | uint256 | Amount of the native ALOT to withdraw |
 
 #### safeIncrease
 

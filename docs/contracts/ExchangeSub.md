@@ -192,7 +192,7 @@ function addTradePair(bytes32 _tradePairId, bytes32 _baseSymbol, uint8 _baseDisp
 Sets auction mode for a trading pair and its basetoken in the PortfolioSUb.
 
 ```solidity:no-line-numbers
-function setAuctionMode(bytes32 _tradePairId, bytes32 _baseSymbol, enum ITradePairs.AuctionMode _mode) external
+function setAuctionMode(bytes32 _tradePairId, enum ITradePairs.AuctionMode _mode) external
 ```
 
 ##### Arguments
@@ -200,7 +200,6 @@ function setAuctionMode(bytes32 _tradePairId, bytes32 _baseSymbol, enum ITradePa
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _tradePairId | bytes32 | id of the trading pair |
-| _baseSymbol | bytes32 | symbol of the base token |
 | _mode | enum ITradePairs.AuctionMode | auction mode |
 
 #### updateRate

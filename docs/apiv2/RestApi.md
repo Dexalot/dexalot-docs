@@ -7,15 +7,23 @@ editLink: true
 
 ## Rest API
 
+All api requests should contain the "x-apikey" header. Please reach out to Dexalot Team for your api key
+
+An example request would look like:
+```bash
+curl --location --request GET 'https://api.dexalot.com/privapi/trading/tokens' \
+--header 'x-apikey: [yourkey]'
+```
+
 ### Server Urls
 
 **TestNet**:
 
-[api.dexalot-test.com/api/](https://api.dexalot-test.com/api/)
+[api.dexalot-test.com/privapi/](https://api.dexalot-test.com/privapi/)
 
 **Mainnet**:
 
-[api.dexalot.com/api/](https://api.dexalot-test.com/api/)
+[api.dexalot.com/privapi/](https://api.dexalot.com/privapi/)
 **(part of the functionality listed on this doc is not supported yet in
 production and will only be available with the subnet deployment )**
 
@@ -35,7 +43,7 @@ to a single parentenv.
 
 #### Sample Request
 
-https://api.dexalot-test.com/api/trading/environments
+https://api.dexalot-test.com/privapi/trading/environments
 
 #### Sample Response
 
@@ -73,7 +81,7 @@ deployments.
 
 #### Sample Request
 
-https://api.dexalot-test.com/api/trading/tokens
+https://api.dexalot-test.com/privapi/trading/tokens
 
 #### Sample Response
 
@@ -155,7 +163,7 @@ always show the mainnet token addresses for consistency)
 
 #### Sample Request
 
-https://api.dexalot-test.com/api/trading/pairs
+https://api.dexalot-test.com/privapi/trading/pairs
 
 #### Sample Response
 
@@ -205,7 +213,7 @@ Returns the deployment details of the Dexalot contracts including their abi
 
 #### Sample Request
 
-https://api.dexalot-test.com/api/trading/deployment/params?contracttype=Exchange&returnabi=true&env=fuji-multi-subnet
+https://api.dexalot-test.com/privapi/trading/deployment/params?contracttype=Exchange&returnabi=true&env=fuji-multi-subnet
 
 #### Sample Response
 
@@ -251,7 +259,7 @@ Section
 
 #### Sample Request
 
-https://api.dexalot-test.com/api/trading/openorders/params?traderaddress=0x55c66320CEB54Ad680ffae12e6A09603cbA0db70&pair=AVAX/USDC
+https://api.dexalot-test.com/privapi/trading/openorders/params?traderaddress=0x55c66320CEB54Ad680ffae12e6A09603cbA0db70&pair=AVAX/USDC
 
 #### Sample Response
 
@@ -303,11 +311,11 @@ used, returns only filled transactions (trades) . Maximum 90 days and/or
 
 #### Sample Requests
 
-https://api.dexalot-test.com/api/trading/traderhistory/params?traderaddress=0x55c66320CEB54Ad680ffae12e6A09603cbA0db70
+https://api.dexalot-test.com/privapi/trading/traderhistory/params?traderaddress=0x55c66320CEB54Ad680ffae12e6A09603cbA0db70
 
-https://api.dexalot-test.com/api/trading/traderhistory/params?traderaddress=0x55c66320CEB54Ad680ffae12e6A09603cbA0db70&onlyfills
+https://api.dexalot-test.com/privapi/trading/traderhistory/params?traderaddress=0x55c66320CEB54Ad680ffae12e6A09603cbA0db70&onlyfills
 
-https://api.dexalot-test.com/api/trading/traderhistory/params?traderaddress=0x55c66320CEB54Ad680ffae12e6A09603cbA0db70&periodfrom=2022-08-02T00:00:00.000Z&periodto=2022-08-11T00:00:00.000Z
+https://api.dexalot-test.com/privapi/trading/traderhistory/params?traderaddress=0x55c66320CEB54Ad680ffae12e6A09603cbA0db70&periodfrom=2022-08-02T00:00:00.000Z&periodto=2022-08-11T00:00:00.000Z
 
 #### Sample Response
 
@@ -345,7 +353,7 @@ This endpoint will return all of the revert reason codes with descriptions
 
 #### Sample Request
 
-https://api.dexalot-test.com/api/trading/errorcodes
+https://api.dexalot-test.com/privapi/trading/errorcodes
 
 #### Sample Response
 
@@ -364,7 +372,7 @@ https://api.dexalot-test.com/api/trading/errorcodes
 
 ### Get Websocket Token
 
-POST /auth/getwstoken
+GET /auth/getwstoken
 
 #### Description
 
@@ -374,10 +382,9 @@ query data. (See: Websocket Interface section for details)
 
 #### Sample
 
-```json
-post data: {
-    "api_key" : [api_key]
-}
+```bash
+curl --location --request GET 'https://api.dexalot.com/privapi/auth/getwstoken' \
+--header 'x-apikey: [yourkey]'
 ```
 
 #### Sample response

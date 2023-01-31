@@ -12,7 +12,7 @@ Testnet: [wss://api.dexalot-test.com](https://api.dexalot-test.com/api/)
 
 Mainnet: [wss://api.dexalot.com](https://api.dexalot-test.com/api/) (Behind CORS)
 
-A token authorization will be required around Sep 2nd, 2022.
+A token authorization is required to establish a websocket connection.
 
 In order to create a web socket connection:
 

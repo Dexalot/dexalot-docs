@@ -82,7 +82,8 @@ enum Status {
   FILLED,
   CANCELED,
   EXPIRED,
-  KILLED
+  KILLED,
+  CANCEL_REJECT
 }
 ```
 ### RateType
@@ -139,7 +140,7 @@ fee is paid in ALOT, if Sell ALOT/AVAX , fee is paid in AVAX \
 **Note**: The execution price will always be equal or better than the Order price.
 
 ```solidity:no-line-numbers
-event OrderStatusChanged(uint8 version, address traderaddress, bytes32 pair, bytes32 orderId, bytes32 clientOrderId, uint256 price, uint256 totalamount, uint256 quantity, enum ITradePairs.Side side, enum ITradePairs.Type1 type1, enum ITradePairs.Type2 type2, enum ITradePairs.Status status, uint256 quantityfilled, uint256 totalfee)
+event OrderStatusChanged(uint8 version, address traderaddress, bytes32 pair, bytes32 orderId, bytes32 clientOrderId, uint256 price, uint256 totalamount, uint256 quantity, enum ITradePairs.Side side, enum ITradePairs.Type1 type1, enum ITradePairs.Type2 type2, enum ITradePairs.Status status, uint256 quantityfilled, uint256 totalfee, bytes32 code)
 ```
 
 ##### Arguments
@@ -160,6 +161,7 @@ event OrderStatusChanged(uint8 version, address traderaddress, bytes32 pair, byt
 | status | enum ITradePairs.Status | Order Status See #Status |
 | quantityfilled | uint256 | cumulative quantity filled |
 | totalfee | uint256 | cumulative fee paid for the order |
+| code | bytes32 | reason when order has REJECT or CANCEL_REJECT status |
 ### Executed
 
 Emits the Executed/Trade Event showing
@@ -327,10 +329,10 @@ function addOrder(address _trader, bytes32 _clientOrderId, bytes32 _tradePairId,
 function cancelOrder(bytes32 _orderId) external
 ```
 
-#### cancelAllOrders
+#### cancelOrderList
 
 ```solidity:no-line-numbers
-function cancelAllOrders(bytes32[] _orderIds) external
+function cancelOrderList(bytes32[] _orderIds) external
 ```
 
 #### cancelReplaceOrder

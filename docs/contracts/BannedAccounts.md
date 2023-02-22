@@ -31,6 +31,14 @@ struct BannedAccount {
 | VERSION | bytes32 |
 | bannedAccounts | mapping(address &#x3D;&gt; struct BannedAccounts.BannedAccount) |
 
+## Events
+
+### BanStatusChanged
+
+```solidity:no-line-numbers
+event BanStatusChanged(address account, enum IBannedAccounts.BanReason reason, bool banned)
+```
+
 ## Methods
 
 ### Public

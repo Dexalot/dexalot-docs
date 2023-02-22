@@ -34,18 +34,6 @@ struct AssetEntry {
 }
 ```
 
-## Enum Types
-
-### AssetType
-
-```solidity
-enum AssetType {
-  NATIVE,
-  ERC20,
-  NONE
-}
-```
-
 ## Variables
 
 ### Public
@@ -148,7 +136,7 @@ function setAuctionMode(bytes32 _symbol, enum ITradePairs.AuctionMode _mode) ext
 Frontend function to show traders total and available balance for a token
 
 ```solidity:no-line-numbers
-function getBalance(address _owner, bytes32 _symbol) external view returns (uint256 total, uint256 available, enum PortfolioSub.AssetType assetType)
+function getBalance(address _owner, bytes32 _symbol) external view returns (uint256 total, uint256 available, enum IPortfolioSub.AssetType assetType)
 ```
 
 ##### Arguments
@@ -164,7 +152,7 @@ function getBalance(address _owner, bytes32 _symbol) external view returns (uint
 | ---- | ---- | ----------- |
 | total | uint256 | Total balance of the trader |
 | available | uint256 | Available balance of the trader |
-| assetType | enum PortfolioSub.AssetType | Type of the token |
+| assetType | enum IPortfolioSub.AssetType | Type of the token |
 
 #### addExecution
 

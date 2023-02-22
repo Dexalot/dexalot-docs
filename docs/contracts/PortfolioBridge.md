@@ -213,6 +213,26 @@ function setPortfolio(address _portfolio) external
 | ---- | ---- | ----------- |
 | _portfolio | address | Portfolio address |
 
+#### setBridgeParam
+
+Sets the bridge provider fee & gasSwapRatio per ALOT for the given token and usedForGasSwap flag
+
+**Dev notes:** \
+External function to be called by BRIDGE_ADMIN_ROLE
+
+```solidity:no-line-numbers
+function setBridgeParam(bytes32 _symbol, uint256 _fee, uint256 _gasSwapRatio, bool _usedForGasSwap) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _symbol | bytes32 | Symbol of the token |
+| _fee | uint256 | Fee to be set |
+| _gasSwapRatio | uint256 | Amount of token to swap per ALOT. Always set it to equivalent of 1 ALOT. |
+| _usedForGasSwap | bool | bool to control the list of tokens that can be used for gas swap. Mostly majors |
+
 #### getPortfolio
 
 ```solidity:no-line-numbers

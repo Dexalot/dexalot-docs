@@ -146,3 +146,9 @@ function getTokenDetailsById(bytes32 _symbolId) external view returns (struct IP
 function getTokenList() external view returns (bytes32[])
 ```
 
+#### setBridgeParam
+
+```solidity:no-line-numbers
+function setBridgeParam(bytes32 _symbol, uint256 _fee, uint256 _gasSwapRatio, bool _usedForGasSwap) external
+```
+

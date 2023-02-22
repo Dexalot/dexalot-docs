@@ -11,7 +11,7 @@ potential other tokens to traders based on their trading activity. Token rewards
 trader are calculated off-chain and finalized at month&#x27;s end. To validate, we sign a
 message containing the trader address, ids and amounts of reward tokens earned to date.
 This signature is input to the claim function to verify and allow traders to withdraw
-their earned Dexalot Incentive Program (DIP) rewards.
+their earned Dexalot Incentive Program (DIP) rewards to the PortfolioSubnet contract.
 
 ## Variables
 
@@ -22,12 +22,13 @@ their earned Dexalot Incentive Program (DIP) rewards.
 | VERSION | bytes32 |
 | allTokens | uint32 |
 | claimedRewards | mapping(address &#x3D;&gt; mapping(uint32 &#x3D;&gt; uint128)) |
-| tokens | mapping(uint32 &#x3D;&gt; contract IERC20Upgradeable) |
+| tokens | mapping(uint32 &#x3D;&gt; bytes32) |
 
 ### Private
 
 | Name | Type |
 | --- | --- |
+| _portfolio | contract IPortfolioSub |
 | _signer | address |
 
 ## Events
@@ -41,7 +42,19 @@ event Claimed(address claimer, uint32 tokenIds, uint128[] amounts, uint256 times
 ### AddRewardToken
 
 ```solidity:no-line-numbers
-event AddRewardToken(contract IERC20Upgradeable token, uint32 tokenId, uint256 timestamp)
+event AddRewardToken(bytes32 symbol, uint32 tokenId, uint256 timestamp)
+```
+
+### DepositGas
+
+```solidity:no-line-numbers
+event DepositGas(address from, uint256 quantity, uint256 timestamp)
+```
+
+### WithdrawGas
+
+```solidity:no-line-numbers
+event WithdrawGas(address to, uint256 quantity, uint256 timestamp)
 ```
 
 ## Methods
@@ -56,21 +69,22 @@ Initializer of the IncentiveDistributor
 Adds ALOT token as the first reward token and defines the signer of claim messages.
 
 ```solidity:no-line-numbers
-function initialize(contract IERC20Upgradeable _alotToken, address __signer) public
+function initialize(bytes32 _alotSymbol, address __signer, address __portfolio) public
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _alotToken | contract IERC20Upgradeable | The address of the ALOT token |
+| _alotSymbol | bytes32 | The symbol of the ALOT token |
 | __signer | address | The public address of the signer of claim messages |
+| __portfolio | address | The address of the portfolio sub contract |
 
 ### External
 
 #### claim
 
-Claim DIP token rewards for a given trader
+Claim DIP token rewards for a given trader in their portfolio
 
 ```solidity:no-line-numbers
 function claim(uint128[] _amounts, uint32 _tokenIds, bytes _signature) external
@@ -89,14 +103,14 @@ function claim(uint128[] _amounts, uint32 _tokenIds, bytes _signature) external
 Add new claimable reward token
 
 ```solidity:no-line-numbers
-function addRewardToken(contract IERC20Upgradeable _rewardToken) external
+function addRewardToken(bytes32 _symbol) external
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _rewardToken | contract IERC20Upgradeable | The address of the new reward token |
+| _symbol | bytes32 | The symbol of the new reward token |
 
 #### retrieveRewardToken
 
@@ -119,6 +133,28 @@ Retrieve all reward tokens when DIP ends
 ```solidity:no-line-numbers
 function retrieveAllRewardTokens() external
 ```
+
+#### receive
+
+Receive native ALOT, ensures auto gas tank fill logic holds
+
+```solidity:no-line-numbers
+receive() external payable
+```
+
+#### withdrawGas
+
+Withdraw ALOT from IncentiveDistributor gas tank to owner
+
+```solidity:no-line-numbers
+function withdrawGas(uint256 amount) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| amount | uint256 | The amount of ALOT to withdraw to owner |
 
 #### pause
 

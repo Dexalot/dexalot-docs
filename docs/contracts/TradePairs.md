@@ -570,16 +570,23 @@ function getOrderByClientOrderId(address _trader, bytes32 _clientOrderId) extern
 
 #### addLimitOrderList
 
-To send multiple Limit Orders at one time to help Market Makers
+To send multiple Limit Orders in a single transaction designed specifically for Market Makers
 
 **Dev notes:** \
 Make sure that each array is ordered properly. if a single order in the list reverts
-the entire list is reverted. Potential reverts due to FOK. Safe to use with IOC
-if PO, it will ignore the PO orders that gets a fill, and will process the remaining orders in the list
-Or it will revert the entire list. Controlled by _revertOnPO below
+the entire list is reverted. This function will only revert if it fails pair level checks, which are
+tradePair.pairPaused or tradePair.addOrderPaused \
+It can potentially revert if type2= FOK is used. Safe to use with IOC. \
+For the rest of the order level check failures, It will reject those orders by emitting
+OrderStatusChanged event with "status" = Status.REJECTED and "code" = rejectReason
+The event will have your clientOrderId, but no orderId will be assigned to the order as it will not be
+added to the blockchain. \
+Order rejects will only be raised if called from this function. Single orders entered using addOrder
+function will revert as before for backward compatibility. \
+See addOrderChecks function. Every line that starts with  return (0, rejectReason) will be rejected.
 
 ```solidity:no-line-numbers
-function addLimitOrderList(bytes32 _tradePairId, bytes32[] _clientOrderIds, uint256[] _prices, uint256[] _quantities, enum ITradePairs.Side[] _sides, enum ITradePairs.Type2[] _type2s, bool _revertOnPO) external
+function addLimitOrderList(bytes32 _tradePairId, bytes32[] _clientOrderIds, uint256[] _prices, uint256[] _quantities, enum ITradePairs.Side[] _sides, enum ITradePairs.Type2[] _type2s) external
 ```
 
 ##### Arguments
@@ -592,7 +599,6 @@ function addLimitOrderList(bytes32 _tradePairId, bytes32[] _clientOrderIds, uint
 | _quantities | uint256[] | Array of quantities |
 | _sides | enum ITradePairs.Side[] | Array of sides |
 | _type2s | enum ITradePairs.Type2[] | Array of SubTypes |
-| _revertOnPO | bool | false : It will ignore the PO order that is in the list if it gets fill true : The entire list will revert if one of the PO orders gets a fill |
 
 #### addOrder
 
@@ -637,7 +643,7 @@ function addOrder(address _trader, bytes32 _clientOrderId, bytes32 _tradePairId,
 | _quantity | uint256 | quantity of the order |
 | _side | enum ITradePairs.Side | enum ITradePairs.Side  Side of the order 0 BUY, 1 SELL |
 | _type1 | enum ITradePairs.Type1 | enum ITradePairs.Type1 Type of the order. 0 MARKET , 1 LIMIT (STOP and STOPLIMIT NOT Supported) |
-| _type2 | enum ITradePairs.Type2 | enum ITradePairs.Type2 SubType of the order _revertOnPO is defaulted to true. It will revert if PO order gets fill |
+| _type2 | enum ITradePairs.Type2 | enum ITradePairs.Type2 SubType of the order |
 
 #### matchAuctionOrder
 
@@ -719,6 +725,8 @@ Cancels an order given the order id supplied
 
 **Dev notes:** \
 Will revert with "T-OAEX-01" if order is already filled or canceled
+if order doesn't exist in can be canceled because FILLED & CANCELED orders are removed.
+The remaining status are NEW & PARTIAL which are ok to cancel
 
 ```solidity:no-line-numbers
 function cancelOrder(bytes32 _orderId) external
@@ -730,17 +738,23 @@ function cancelOrder(bytes32 _orderId) external
 | ---- | ---- | ----------- |
 | _orderId | bytes32 | order id to cancel |
 
-#### cancelAllOrders
+#### cancelOrderList
 
-Cancels all the orders given the array of order ids supplied
+Cancels all the orders in the array of order ids supplied
 
 **Dev notes:** \
 This function may run out of gas if a trader is trying to cancel too many orders
-Call with Maximum 20 orders at a time
-Will skip orders that are already canceled/filled and continue canceling the remaining ones in the list
+Call with Maximum ~50 orders at a time for a block size of 30M
+Will emit OrderStatusChanged "status" = CANCEL_REJECT, "code"= "T-OAEX-01" for orders that are already
+canceled/filled while continuing to cancel the remaining open orders in the list. \
+Because the closed orders are already removed from the blockchain, all values in the OrderStatusChanged
+event except "orderId", "status" and "code" fields will be empty/default values. This includes the indexed fields
+"traderaddress" and "pair" which you may use as filters for your event listeners. Hence you should process the
+transaction log rather than relying on your event listeners if you need to capture CANCEL_REJECT messages and
+filtering your events using those 2 indexed fields.
 
 ```solidity:no-line-numbers
-function cancelAllOrders(bytes32[] _orderIds) external
+function cancelOrderList(bytes32[] _orderIds) external
 ```
 
 ##### Arguments
@@ -868,18 +882,20 @@ partial fills at different prices \
 ```solidity
 status  Order Status  {
          NEW,
-         REJECTED, -- For future use
+         REJECTED,
          PARTIAL,
          FILLED,
          CANCELED,
          EXPIRED, -- For future use
          KILLED -- For future use
+         CANCEL_REJECT – Cancel Request Rejected with reason code
       }
 ```
 *quantityfilled*  cumulative quantity filled \
 *totalfee* cumulative fee paid for the order (total fee is always in terms of
 received(incoming) currency. ie. if Buy ALOT/AVAX, fee is paid in ALOT, if Sell
 ALOT/AVAX , fee is paid in AVAX \
+*code*  reason when order has REJECT or CANCEL_REJECT status, empty otherwise \
 Note: Order price can be different than the execution price.
 
 ```solidity:no-line-numbers
@@ -909,7 +925,7 @@ function handleExecution(bytes32 _orderId, uint256 _price, uint256 _quantity, ui
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _orderId | bytes32 | order id to update |
-| _price | uint256 | execution price ( Can be different than order price) |
+| _price | uint256 | execution price (Can be better than or equal to order price) |
 | _quantity | uint256 | execution quantity |
 | _rate | uint8 | maker or taker rate |
 
@@ -1003,7 +1019,7 @@ if decimals, order types and clientOrderId are supplied properly \
 reference. It must be unique per traderaddress.
 
 ```solidity:no-line-numbers
-function addOrderChecks(address _trader, bytes32 _clientOrderId, bytes32 _tradePairId, uint256 _price, uint256 _quantity, enum ITradePairs.Side _side, enum ITradePairs.Type1 _type1, enum ITradePairs.Type2 _type2, bool _revertOnPO) private view returns (uint256 priceMarket, bool ignorePoOrder)
+function addOrderChecks(address _trader, bytes32 _clientOrderId, bytes32 _tradePairId, uint256 _price, uint256 _quantity, enum ITradePairs.Side _side, enum ITradePairs.Type1 _type1, enum ITradePairs.Type2 _type2) private view returns (uint256, bytes32)
 ```
 
 ##### Arguments
@@ -1018,14 +1034,13 @@ function addOrderChecks(address _trader, bytes32 _clientOrderId, bytes32 _tradeP
 | _side | enum ITradePairs.Side | enum ITradePairs.Side  Side of the order 0 BUY, 1 SELL |
 | _type1 | enum ITradePairs.Type1 | Type1 : MARKET,LIMIT etc |
 | _type2 | enum ITradePairs.Type2 | enum ITradePairs.Type2 SubType of the order |
-| _revertOnPO | bool | bool to revert or ignore type2=PO orders. Default=false (Revert), (Revert/ignore) when sent from addLimitOrderList |
 
 #### addOrderPrivate
 
 See addOrder
 
 ```solidity:no-line-numbers
-function addOrderPrivate(address _trader, bytes32 _clientOrderId, bytes32 _tradePairId, uint256 _price, uint256 _quantity, enum ITradePairs.Side _side, enum ITradePairs.Type1 _type1, enum ITradePairs.Type2 _type2, bool _revertOnPO) private
+function addOrderPrivate(address _trader, bytes32 _clientOrderId, bytes32 _tradePairId, uint256 _price, uint256 _quantity, enum ITradePairs.Side _side, enum ITradePairs.Type1 _type1, enum ITradePairs.Type2 _type2, bool _singleOrder) private
 ```
 
 ##### Arguments
@@ -1040,7 +1055,7 @@ function addOrderPrivate(address _trader, bytes32 _clientOrderId, bytes32 _trade
 | _side | enum ITradePairs.Side |  |
 | _type1 | enum ITradePairs.Type1 |  |
 | _type2 | enum ITradePairs.Type2 |  |
-| _revertOnPO | bool | bool to revert or ignore type2=PO  Default= Revert on single orders, Can set it to true/false from addLimitOrderList |
+| _singleOrder | bool | bool indicating whether it is a singleOrder or a part of listOrder if true, it is called from addOrder function, it will revert with the a rejectReason. \ if false, it is called from addLimitOrderList function. it rejects the order by emitting OrderStatusChange with "status" = REJECTED and "code" = rejectReason instead of reverting. |
 
 #### matchOrder
 

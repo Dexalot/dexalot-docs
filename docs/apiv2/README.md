@@ -64,6 +64,17 @@ function</td>
     </ul>
 </td>
 </tr>
+<tr>
+<td>v2.6</td>
+<td>2023-02-22</td>
+<td>
+    <ul>
+        <li>Addition of signed endpoints: </li>
+        <li>Added "quoteCumulative" which shows the cumulative quote amount</li>
+        <li>Added "quoteTotal" which shows quote asset orderbook line total</li>
+    </ul>
+</td>
+</tr>
 </table>
 
 ## Architecture

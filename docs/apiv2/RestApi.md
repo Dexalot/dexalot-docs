@@ -5,7 +5,7 @@ next: Contracts
 editLink: true
 ---
 
-## Rest API
+# Rest API
 
 All api requests should contain the "x-apikey" header. Please reach out to Dexalot Team for your api key
 
@@ -15,7 +15,7 @@ curl --location --request GET 'https://api.dexalot.com/privapi/trading/tokens' \
 --header 'x-apikey: [yourkey]'
 ```
 
-### Server Urls
+## Server Urls
 
 **TestNet**:
 
@@ -24,12 +24,12 @@ curl --location --request GET 'https://api.dexalot.com/privapi/trading/tokens' \
 **Mainnet**:
 
 [api.dexalot.com/privapi/](https://api.dexalot.com/privapi/)
-**(part of the functionality listed on this doc is not supported yet in
-production and will only be available with the subnet deployment )**
 
 **Dexalot Contracts**:
 
 [github.com/Dexalot/contracts/tree/main/contracts](https://github.com/Dexalot/contracts/tree/main/contracts)
+
+## Common Endpoints
 
 ### Get Environments
 
@@ -197,8 +197,6 @@ https://api.dexalot-test.com/privapi/trading/pairs
 
 GET /trading/deployment/params?contracttype=contract_type&returnabi=true&env=sub-env
 
-*Note: the previous trading/deploymentabi endpoint has been retired*
-
 #### Description
 
 Returns the deployment details of the Dexalot contracts including their abi
@@ -232,113 +230,6 @@ https://api.dexalot-test.com/privapi/trading/deployment/params?contracttype=Exch
         "status": "deployed",
         "action": null,
         "abi": null
-    }
-]
-```
-
-### Get Open Orders
-
-GET /trading/openorders/params?traderaddress=' + wallet + '&pair=' + strPair
-
-#### Description
-
-Returns an array of all currently open orders for the given trade pair
-and address. The open orders are retrieved from our postgres database
-for speed. Hence there could be some delays between the order’s
-blockchain state and Dexalot db state. Always check the latest status of
-your orders with the tradePairs contract call
-`TradePairs.getOrder(bytes32 _orderId)` below in the Contract Invocation
-Section
-
-#### Query Parameters
-
-| **Field Name** | **Sample Value**                           |
-|----------------|--------------------------------------------|
-| traderaddress  | 0x55c66320CEB54Ad680ffae12e6A09603cbA0db70 |
-| pair           | AVAX/USDC                                  |
-
-#### Sample Request
-
-https://api.dexalot-test.com/privapi/trading/openorders/params?traderaddress=0x55c66320CEB54Ad680ffae12e6A09603cbA0db70&pair=AVAX/USDC
-
-#### Sample Response
-
-```json
-{
-    "count": 1,
-    "rows": [
-        {
-            "env": "fuji-multi-subnet",
-            "id": "0x0000000000000000000000000000000000000000000000000000000062efccbb",
-            "traderaddress": "0x55c66320ceb54ad680ffae12e6a09603cba0db70",
-            "clientordid": "0xdf906c8a90da234e24c19275fdf512e91c3ad970c28820fd882e6ccf9da40608",
-            "tx": "0x38c720ffd81157a269c564b37c322e2536ef8ab209028250586c27af62e50c3f",
-            "pair": "AVAX/USDC",
-            "type": 1,
-            "type2": 0,
-            "side": 0,
-            "price": "25.000000000000000000",
-            "quantity": "7.000000000000000000",
-            "totalamount": "0.000000000000000000",
-            "status": 0,
-            "ts": "2022-08-10T18:57:50.000Z",
-            "quantityfilled": "0.000000000000000000",
-            "totalfee": "0.000000000000000000",
-            "update_ts": "2022-08-10T18:57:50.000Z"
-        }
-    ]
-}
-```
-
-###  Get Trader history
-
-GET trading/traderhistory/params?traderaddress=&periodfrom=&periodto=&onlyfills
-
-#### Description
-
-Returns full trading history for the given address. If onlyfills is
-used, returns only filled transactions (trades) . Maximum 90 days and/or
-500 records returned.
-
-#### Query Parameters
-
-| **Field Name**                                   | **Sample Value**                                      |
-|--------------------------------------------------|-------------------------------------------------------|
-| traderaddress                                    | 101                                                   |
-| periodfrom (optional, default : from 7 days ago) | 2022-03-02T00:00:00.000Z                              |
-| periodto (optional, default : current_time)      | 2022-04-11T00:00:00.000Z                              |
-| onlyfills (optional, default: all txs)           | do not include if you want all transactions returned. |
-
-#### Sample Requests
-
-https://api.dexalot-test.com/privapi/trading/traderhistory/params?traderaddress=0x55c66320CEB54Ad680ffae12e6A09603cbA0db70
-
-https://api.dexalot-test.com/privapi/trading/traderhistory/params?traderaddress=0x55c66320CEB54Ad680ffae12e6A09603cbA0db70&onlyfills
-
-https://api.dexalot-test.com/privapi/trading/traderhistory/params?traderaddress=0x55c66320CEB54Ad680ffae12e6A09603cbA0db70&periodfrom=2022-08-02T00:00:00.000Z&periodto=2022-08-11T00:00:00.000Z
-
-#### Sample Response
-
-```json
-[
-    {
-        "traderaddress": "0x55c66320CEB54Ad680ffae12e6A09603cbA0db70",
-        "id": "0x0000000000000000000000000000000000000000000000000000000062efccb5",
-        "tx": "0x1ddcced430085902734bee4da8609c57e55203cdd3bffb088d07439394d8614c",
-        "pair": "ETH/USDC",
-        "side": 0,
-        "type": "FILLED",
-        "blocknumber": "122926",
-        "gasused": 433461,
-        "gasprice": "2.5",
-        "gasinnative": "0.0010836525",
-        "execid": 1659882678,
-        "execquantity": "2",
-        "execprice": "19",
-        "fee": "0.004",
-        "feetype": "T",
-        "feeunit": "ETH",
-        "ts": "2022-08-09T20:11:41.000Z"
     }
 ]
 ```
@@ -392,5 +283,178 @@ curl --location --request GET 'https://api.dexalot.com/privapi/auth/getwstoken' 
 ```json
 {
     "token": "5fd5e09c-f5c0-491b-91b3-4240d38901d3"
+}
+```
+
+## Signed Endpoints
+
+The following endpoints are used to fetch data for a specific trading address. Such as getting orders or balances of an address. In order to perform these requests you will have to provide a signature to prove you own the address being queried.
+
+You have to sign "dexalot" message and provide the signature in x-signature header along with your Signed Endpoint requests.
+
+***Example:*** Generating the signature using [ethers](https://docs.ethers.org/v5/api/signer/#Signer) library:
+
+```typescript
+    const wallet = new ethers.Wallet(PRIV_KEY);
+    const signature = await wallet.signMessage("dexalot");
+
+    // Set your request header like below
+    // e.g. 0xAf67D600efb58d189d6129BC17AEc6319Ff5af8f:YOURSIGNATURE
+    req.headers["x-signature"] = `${PUBLIC_KEY}:${signature}`
+
+    // Verify your signature (might be needed when testing)
+    const publicKey = ethers.utils.verifyMessage("dexalot", signature);
+```
+
+***Note:*** Please keep in mind that the orders are retrieved from our database
+for speed. Hence there could be some delays between the order’s
+blockchain state and Dexalot db state. Always check the latest status of
+your orders with the tradePairs contract call
+`TradePairs.getOrder(bytes32 _orderId)` in the Contract Invocation
+Section
+
+### Get Order Details
+
+GET /signed/order/{ORDER_ID}
+
+#### Description
+
+Returns details for the given order id
+
+#### Parameters
+
+| **Field Name**  | **Required** | **Description** |  **Sample Value** |
+|-----------------|--------------|-----------------|-------------------|
+| OrderId         | Y | The Order Id returned from the blockchain when your order is created. |   0x0000000000000000000000000000000000000000000000000000000063c14ca3 |
+
+#### Sample Request
+
+https://api.dexalot-test.com/privapi/signed/order/0x0000000000000000000000000000000000000000000000000000000063c14ca3
+
+#### Sample Response
+
+```json
+{
+    "id": "0x0000000000000000000000000000000000000000000000000000000063c14ca3",
+    "tx": "0x4fb0d865c73258ab365cda2252b5e6f3a23612c66659338a04a8b58d9a03e442",
+    "tradePair": "AVAX/USDC",
+    "type1": "LIMIT",
+    "type2": "GTC",
+    "side": "BUY",
+    "price": "20.000000000000000000",
+    "quantity": "1.000000000000000000",
+    "totalAmount": "20.000000000000000000",
+    "status": "FILLED",
+    "quantityFilled": "1.000000000000000000",
+    "totalFee": "0.001000000000000000",
+    "timestamp": "2023-02-19T14:14:00.000Z",
+    "updateTs": "2023-02-21T19:45:49.000Z"
+}
+```
+
+### Get Orders
+
+GET /signed/orders
+
+#### Description
+
+All orders belonging to the trader signature can be fetched using this endpoint
+
+#### Query Parameters
+
+| **Field Name**    | **Required**  | **Description** | **Sample Value**  |
+|-------------------|-------------- |-----------------|--|
+| pair | N | Trading Pair code | AVAX/USDC |
+| category | N | Order Category 0: Open, 1: Closed (with fills), 2: Closed (no fills), 3: All Orders | 3 |
+| periodfrom | N | If provided limits where the time period starts | 2023-02-22T18:20:02.000Z |
+| periodto | N | If provided limits where the time period ends | 2023-02-22T18:40:02.000Z |
+| itemsperpage | N | Max number of records to return in the response | 50 |
+| pageno | N | Requested page number (paged by "itemsperpage" records) | 1 |
+
+#### Sample Request
+
+```
+https://api.dexalot-dev.com/privapi/signed/orders?pair=ALOT/USDC&category=3
+```
+```
+https://api.dexalot-dev.com/privapi/signed/orders?periodfrom=2023-02-22T18%3A20%3A02.000Z&periodto=2023-02-22T18%3A40%3A02.000Z&itemsperpage=1000&pageno=1&pair=ALOT/USDC&category=0
+```
+
+#### Sample Response
+
+```json
+{
+    "count": 1,
+    "rows": [
+        {
+            "env": "dev-fuji-subnet",
+            "id": "0x0000000000000000000000000000000000000000000000000000000063c14cb7",
+            "traderaddress": "0xbe1d1d12f676080f6d2e739b01f242f2145c00b0",
+            "clientordid": "0x4a04a533471a445e67894073fcb4342d07ee2b2170156ca745b111da641f121b",
+            "tx": "0x878ee1f5f20252886e83412f55e37169f5935e4f607a5e7cf5cd17c7c9d39332",
+            "pair": "ALOT/USDC",
+            "type": 1,
+            "type2": 0,
+            "side": 0,
+            "price": "0.990000000000000000",
+            "quantity": "100.000000000000000000",
+            "totalamount": "0.000000000000000000",
+            "status": 0,
+            "ts": "2023-02-22T18:29:02.000Z",
+            "quantityfilled": "0.000000000000000000",
+            "totalfee": "0.000000000000000000",
+            "update_ts": "2023-02-22T18:29:02.000Z"
+        }
+    ]
+}
+```
+
+### Get Open Orders
+
+GET /signed/openorders
+
+#### Description
+
+This endpoint returns an array of all currently open orders for the given trade pair
+for signers trader address.
+
+#### Query Parameters
+
+| **Field Name**    | **Required**  | **Sample Value**  |
+|-------------------|-------------- |-------------------|
+| pair              | N             |   AVAX/USDC       |
+| itemsperpage      | N             |   100             |
+| pageno            | N             |   1               |
+
+#### Sample Request
+
+https://api.dexalot-test.com/privapi/signed/openorders?pair=AVAX/USDC&itemsperpage=100&pageno=1
+
+#### Sample Response
+
+```json
+{
+    "count": 1,
+    "rows": [
+        {
+            "env": "fuji-multi-subnet",
+            "id": "0x0000000000000000000000000000000000000000000000000000000062efccbb",
+            "traderaddress": "0x55c66320ceb54ad680ffae12e6a09603cba0db70",
+            "clientordid": "0xdf906c8a90da234e24c19275fdf512e91c3ad970c28820fd882e6ccf9da40608",
+            "tx": "0x38c720ffd81157a269c564b37c322e2536ef8ab209028250586c27af62e50c3f",
+            "pair": "AVAX/USDC",
+            "type": 1,
+            "type2": 0,
+            "side": 0,
+            "price": "25.000000000000000000",
+            "quantity": "7.000000000000000000",
+            "totalamount": "0.000000000000000000",
+            "status": 0,
+            "ts": "2022-08-10T18:57:50.000Z",
+            "quantityfilled": "0.000000000000000000",
+            "totalfee": "0.000000000000000000",
+            "update_ts": "2022-08-10T18:57:50.000Z"
+        }
+    ]
 }
 ```

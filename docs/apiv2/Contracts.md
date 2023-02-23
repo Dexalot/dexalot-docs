@@ -928,14 +928,13 @@ async getRevertReason(error: any) {
             `${this.instanceName} getRevertReason: error.transaction is undefined`
         );
     } else {
-        //https://gist.github.com/gluk64/fdea559472d957f1138ed93bcbc6f78a
+        // https://gist.github.com/gluk64/fdea559472d957f1138ed93bcbc6f78a
         let code = await provider.call(
             error.transaction, error.blockNumber
             || error.receipt.blockNumber
         );
         reason = ethers.utils.toUtf8String("0x" + code.substr(138));
-        var i = reason.indexOf("0"); // delete all null characters after the
-        string
+        var i = reason.indexOf("0"); // delete all null characters after the string
         if (i>-1) {
             return reason.substring(0, i);
         }

@@ -105,7 +105,9 @@ milliseconds slower. In other words, Dexalot’s backend does exactly what
 your application would do on its own: Reading the order book from the
 chain and publishing it over the websocket. Similarly, any information
 received from the REST API is a drop-copy of a transaction that has
-already been confirmed on the blockchain.
+already been confirmed on the blockchain.  Please refer to contracts
+documentation [here](/contracts) for interacting with the blockchain
+directly.
 
 Needless to say, Dexalot does not require nor take custody of your
 private keys. Hence deposit/withdrawal or any trade functions can only

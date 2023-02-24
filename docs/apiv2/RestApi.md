@@ -203,11 +203,11 @@ Returns the deployment details of the Dexalot contracts including their abi
 
 #### Query Parameters
 
-| **Field Name**       | **Sample Value**                                 |
-|----------------------|--------------------------------------------------|
-| contracttype         | \[Exchange, Portfolio, TradePairs, Orderbooks…\] |
-| returnabi (optional) | true/false                                       |
-| env (optional)       | Filters by env (e.g. fuji-multi-subnet)          |
+| **Field Name**        | **Required** | **Sample Value**                      |
+|---------------------- |--------------|------------------------------------   |
+| contracttype          | Y | \[Exchange, Portfolio, TradePairs, Orderbooks…\] |
+| returnabi             | N | true/false                                       |
+| env                   | N | Filters by env (e.g. fuji-multi-subnet)          |
 
 #### Sample Request
 
@@ -269,7 +269,7 @@ GET /auth/getwstoken
 
 Get Websocket Token endpoint will provide a temporary token which can be
 used to open a websocket connection to our servers in order to listen or
-query data. (See: Websocket Interface section for details)
+query data. This token will expire in 60 seconds. (See: Websocket Interface section for details)
 
 #### Sample
 
@@ -315,7 +315,7 @@ Section
 
 ### Get Order Details
 
-GET /signed/order/{ORDER_ID}
+GET /signed/orders/{ORDER_ID}
 
 #### Description
 
@@ -329,7 +329,7 @@ Returns details for the given order id
 
 #### Sample Request
 
-https://api.dexalot-test.com/privapi/signed/order/0x0000000000000000000000000000000000000000000000000000000063c14ca3
+https://api.dexalot-test.com/privapi/signed/orders/0x0000000000000000000000000000000000000000000000000000000063c14ca3
 
 #### Sample Response
 
@@ -371,13 +371,18 @@ All orders belonging to the trader signature can be fetched using this endpoint
 | itemsperpage | N | Max number of records to return in the response | 50 |
 | pageno | N | Requested page number (paged by "itemsperpage" records) | 1 |
 
-#### Sample Request
-
+#### Sample Requests
+To get open orders:
 ```
-https://api.dexalot-dev.com/privapi/signed/orders?pair=ALOT/USDC&category=3
+https://api.dexalot-test.com/privapi/signed/orders?pair=AVAX/USDC&category=0
 ```
+To get all of your orders with paging support:
 ```
-https://api.dexalot-dev.com/privapi/signed/orders?periodfrom=2023-02-22T18%3A20%3A02.000Z&periodto=2023-02-22T18%3A40%3A02.000Z&itemsperpage=1000&pageno=1&pair=ALOT/USDC&category=0
+https://api.dexalot-test.com/privapi/signed/orders?pair=ALOT/USDC&category=3&itemsperpage=100&pageno=1
+```
+More complex example:
+```
+https://api.dexalot-test.com/privapi/signed/orders?periodfrom=2023-02-22T18:20:02.000Z&periodto=2023-02-22T18:40:02.000Z&itemsperpage=1000&pageno=1&pair=ALOT/USDC&category=0
 ```
 
 #### Sample Response
@@ -409,26 +414,123 @@ https://api.dexalot-dev.com/privapi/signed/orders?periodfrom=2023-02-22T18%3A20%
 }
 ```
 
-### Get Open Orders
+###  Get Trader history
 
-GET /signed/openorders
+GET trading/traderhistory/params?traderaddress=&periodfrom=&periodto=&onlyfills
 
 #### Description
 
-This endpoint returns an array of all currently open orders for the given trade pair
-for signers trader address.
+Returns full trading history for the given address. If onlyfills is
+used, returns only filled transactions (trades) . Maximum 90 days and/or
+500 records returned.
 
 #### Query Parameters
 
-| **Field Name**    | **Required**  | **Sample Value**  |
-|-------------------|-------------- |-------------------|
-| pair              | N             |   AVAX/USDC       |
-| itemsperpage      | N             |   100             |
-| pageno            | N             |   1               |
+| **Field Name**| **Required** | **Sample Value**   |
+|---------------|-----------------------------------|-------------------------------------------------------|
+| periodfrom (default : from 7 days ago) | N | 2022-03-02T00:00:00.000Z                              |
+| periodto (default : current_time)| N      | 2022-04-11T00:00:00.000Z                              |
+| onlyfills (default: all txs)  |N         | do not include if you want all transactions returned. |
+
+#### Sample Requests
+
+```
+https://api.dexalot-test.com/privapi/trading/traderhistory/params?traderaddress=0x55c66320CEB54Ad680ffae12e6A09603cbA0db70
+```
+```
+https://api.dexalot-test.com/privapi/trading/traderhistory/params?traderaddress=0x55c66320CEB54Ad680ffae12e6A09603cbA0db70&onlyfills
+```
+```
+https://api.dexalot-test.com/privapi/trading/traderhistory/params?traderaddress=0x55c66320CEB54Ad680ffae12e6A09603cbA0db70&periodfrom=2022-08-02T00:00:00.000Z&periodto=2022-08-11T00:00:00.000Z
+```
+#### Sample Response
+
+```json
+[
+    {
+        "traderaddress": "0x55c66320CEB54Ad680ffae12e6A09603cbA0db70",
+        "id": "0x0000000000000000000000000000000000000000000000000000000062efccb5",
+        "tx": "0x1ddcced430085902734bee4da8609c57e55203cdd3bffb088d07439394d8614c",
+        "pair": "ETH/USDC",
+        "side": 0,
+        "type": "FILLED",
+        "blocknumber": "122926",
+        "gasused": 433461,
+        "gasprice": "2.5",
+        "gasinnative": "0.0010836525",
+        "execid": 1659882678,
+        "execquantity": "2",
+        "execprice": "19",
+        "fee": "0.004",
+        "feetype": "T",
+        "feeunit": "ETH",
+        "ts": "2022-08-09T20:11:41.000Z"
+    }
+]
+```
+
+### Get Order Execution Details
+
+GET /signed/executions/{ORDER_ID}
+
+#### Description
+
+Returns execution details for the given order id
+
+#### Parameters
+
+| **Field Name**  | **Required** | **Description** |  **Sample Value** |
+|-----------------|--------------|-----------------|-------------------|
+| OrderId         | Y | The Order Id returned from the blockchain when your order is created. |   0x0000000000000000000000000000000000000000000000000000000063c14ca3 |
 
 #### Sample Request
 
-https://api.dexalot-test.com/privapi/signed/openorders?pair=AVAX/USDC&itemsperpage=100&pageno=1
+https://api.dexalot-test.com/privapi/signed/executions/0x0000000000000000000000000000000000000000000000000000000063c14ca3
+
+#### Sample Response
+
+```json
+[
+    {
+        "env": "dev-fuji-subnet",
+        "execid": 1673612524,
+        "type": "T",
+        "orderid": "0x0000000000000000000000000000000000000000000000000000000063c14ceb",
+        "traderaddress": "0xce96e120420dc73394491ab941d3bc6168d6c93e",
+        "tx": "0x32502abc0280f69e1b90fff684f5fc6b79a6be00a674b94bc50165e74b260a1b",
+        "pair": "ALOT/USDC",
+        "side": 1,
+        "quantity": "20.000000000000000000",
+        "price": "2.905800000000000000",
+        "fee": "0.116200000000000000",
+        "feeunit": "USDC",
+        "ts": "2023-02-24T07:54:09.000Z"
+    }
+]
+```
+
+### Get Transfers
+
+GET /signed/transfers
+
+#### Description
+
+Returns transfer details of the trader
+
+#### Parameters
+
+| **Field Name**  | **Required** | **Description** |  **Sample Value** |
+|-----------------|--------------|-----------------|-------------------|
+| symbol         | N | Symbol to query for transfers | ALOT |
+| periodfrom | N | 2022-03-02T00:00:00.000Z |
+| periodto | N | 2022-04-11T00:00:00.000Z |
+| itemsperpage | N | Max number of records to return in the response | 50 |
+| pageno | N | Requested page number | 1 |
+
+
+#### Sample Request
+
+https://api.dexalot-test.com/privapi/signed/executions/0x0000000000000000000000000000000000000000000000000000000063c14ca3
 
 #### Sample Response
 
@@ -437,23 +539,19 @@ https://api.dexalot-test.com/privapi/signed/openorders?pair=AVAX/USDC&itemsperpa
     "count": 1,
     "rows": [
         {
-            "env": "fuji-multi-subnet",
-            "id": "0x0000000000000000000000000000000000000000000000000000000062efccbb",
-            "traderaddress": "0x55c66320ceb54ad680ffae12e6a09603cba0db70",
-            "clientordid": "0xdf906c8a90da234e24c19275fdf512e91c3ad970c28820fd882e6ccf9da40608",
-            "tx": "0x38c720ffd81157a269c564b37c322e2536ef8ab209028250586c27af62e50c3f",
-            "pair": "AVAX/USDC",
-            "type": 1,
-            "type2": 0,
-            "side": 0,
-            "price": "25.000000000000000000",
-            "quantity": "7.000000000000000000",
-            "totalamount": "0.000000000000000000",
-            "status": 0,
-            "ts": "2022-08-10T18:57:50.000Z",
-            "quantityfilled": "0.000000000000000000",
-            "totalfee": "0.000000000000000000",
-            "update_ts": "2022-08-10T18:57:50.000Z"
+            "env": "subnet",
+            "bridge": -1,
+            "action_type": 9,
+            "nonce": -1,
+            "tx": "0x1bdedaa4b071670859a320cf22704311b6ef083f90676ff5a96f6b1325d8cc22",
+            "traderaddress": "0xce96e120420dc73394491ab941d3bc6168d6c93e",
+            "type": 9,
+            "symbol": "ALOT",
+            "quantity": "990",
+            "fee": "0",
+            "gasused": 120920,
+            "gasprice": "6.5",
+            "ts": "2023-02-24T07:53:11.000Z"
         }
     ]
 }

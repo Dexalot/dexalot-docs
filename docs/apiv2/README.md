@@ -69,9 +69,7 @@ function</td>
 <td>2023-02-22</td>
 <td>
     <ul>
-        <li>Addition of signed endpoints: </li>
-        <li>Added "quoteCumulative" which shows the cumulative quote amount</li>
-        <li>Added "quoteTotal" which shows quote asset orderbook line total</li>
+        <li>Addition of signed endpoints: orders, traderhistory, executions, transfers, portfoliobalance, transactions</li>
     </ul>
 </td>
 </tr>

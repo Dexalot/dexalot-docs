@@ -305,6 +305,7 @@ You have to sign "dexalot" message and provide the signature in x-signature head
     // Verify your signature (might be needed when testing)
     const publicKey = ethers.utils.verifyMessage("dexalot", signature);
 ```
+You may also use https://etherscan.io/verifiedSignatures to generate the signature and provide it to your bots as a configuration.
 
 After generating the signature a typical signed endpoint request would look like:
 ```bash
@@ -364,7 +365,7 @@ GET /signed/orders
 
 #### Description
 
-All orders belonging to the trader signature can be fetched using this endpoint
+All orders belonging to the trader signature can be fetched using this endpoint. If period parameters are not provided this endpoint will default to last 30 days.
 
 #### Query Parameters
 
@@ -435,8 +436,7 @@ used, returns only filled transactions (trades) . Maximum 90 days and/or
 | **Field Name**| **Required** | **Sample Value**   |
 |---------------|-----------------------------------|-------------------------------------------------------|
 | periodfrom (default : from 7 days ago) | N | 2022-03-02T00:00:00.000Z                              |
-| periodto (default : current_time)| N      | 2022-04-11T00:00:00.000Z                              |
-| onlyfills (default: all txs)  |N         | do not include if you want all transactions returned. |
+| periodto (default : current_time)| N      | 2022-04-11T00:00:00.000Z                               |
 
 #### Sample Requests
 
@@ -522,7 +522,7 @@ GET /signed/transfers
 
 #### Description
 
-Returns transfer details of the trader
+Returns transfer details of the trader. If period parameters are not provided defaults to last 7 days.
 
 #### Parameters
 

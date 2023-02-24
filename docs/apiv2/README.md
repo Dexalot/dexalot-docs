@@ -70,6 +70,7 @@ function</td>
 <td>
     <ul>
         <li>Addition of signed endpoints: orders, traderhistory, executions, transfers, portfoliobalance, transactions</li>
+        <li>Removed onlyfills parameter from signed traderhistory endpoint</li>
     </ul>
 </td>
 </tr>

@@ -306,6 +306,12 @@ You have to sign "dexalot" message and provide the signature in x-signature head
     const publicKey = ethers.utils.verifyMessage("dexalot", signature);
 ```
 
+After generating the signature a typical signed endpoint request would look like:
+```bash
+curl --location 'https://api.dexalot-test.com/privapi/signed/portfoliobalance' \
+--header 'x-signature: {0xTraderAddress}:{SignatureHash}' \
+--header 'x-apikey: {DexalotApiKey}'
+```
 ***Note:*** Please keep in mind that the orders are retrieved from our database
 for speed. Hence there could be some delays between the order’s
 blockchain state and Dexalot db state. Always check the latest status of

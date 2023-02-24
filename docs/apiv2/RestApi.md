@@ -416,7 +416,7 @@ https://api.dexalot-test.com/privapi/signed/orders?periodfrom=2023-02-22T18:20:0
 
 ###  Get Trader history
 
-GET trading/traderhistory/params?traderaddress=&periodfrom=&periodto=&onlyfills
+GET signed/traderhistory
 
 #### Description
 
@@ -435,13 +435,13 @@ used, returns only filled transactions (trades) . Maximum 90 days and/or
 #### Sample Requests
 
 ```
-https://api.dexalot-test.com/privapi/trading/traderhistory/params?traderaddress=0x55c66320CEB54Ad680ffae12e6A09603cbA0db70
+https://api.dexalot-test.com/privapi/signed/traderhistory?traderaddress=0x55c66320CEB54Ad680ffae12e6A09603cbA0db70
 ```
 ```
-https://api.dexalot-test.com/privapi/trading/traderhistory/params?traderaddress=0x55c66320CEB54Ad680ffae12e6A09603cbA0db70&onlyfills
+https://api.dexalot-test.com/privapi/signed/traderhistory?traderaddress=0x55c66320CEB54Ad680ffae12e6A09603cbA0db70&onlyfills
 ```
 ```
-https://api.dexalot-test.com/privapi/trading/traderhistory/params?traderaddress=0x55c66320CEB54Ad680ffae12e6A09603cbA0db70&periodfrom=2022-08-02T00:00:00.000Z&periodto=2022-08-11T00:00:00.000Z
+https://api.dexalot-test.com/privapi/signed/traderhistory?traderaddress=0x55c66320CEB54Ad680ffae12e6A09603cbA0db70&periodfrom=2022-08-02T00:00:00.000Z&periodto=2022-08-11T00:00:00.000Z
 ```
 #### Sample Response
 
@@ -471,7 +471,7 @@ https://api.dexalot-test.com/privapi/trading/traderhistory/params?traderaddress=
 
 ### Get Order Execution Details
 
-GET /signed/executions/{ORDER_ID}
+GET /signed/executions
 
 #### Description
 
@@ -481,11 +481,12 @@ Returns execution details for the given order id
 
 | **Field Name**  | **Required** | **Description** |  **Sample Value** |
 |-----------------|--------------|-----------------|-------------------|
-| OrderId         | Y | The Order Id returned from the blockchain when your order is created. |   0x0000000000000000000000000000000000000000000000000000000063c14ca3 |
+| orderid         | Y | The Order Id returned from the blockchain when your order is created. |   0x0000000000000000000000000000000000000000000000000000000063c14ca3 |
 
 #### Sample Request
-
-https://api.dexalot-test.com/privapi/signed/executions/0x0000000000000000000000000000000000000000000000000000000063c14ca3
+```
+https://api.dexalot-test.com/privapi/signed/executions?orderid=0x0000000000000000000000000000000000000000000000000000000063c14ca3
+```
 
 #### Sample Response
 
@@ -529,8 +530,9 @@ Returns transfer details of the trader
 
 
 #### Sample Request
-
-https://api.dexalot-test.com/privapi/signed/executions/0x0000000000000000000000000000000000000000000000000000000063c14ca3
+```
+https://api.dexalot-test.com/privapi/signed/transfers?symbol=ALOT
+```
 
 #### Sample Response
 
@@ -555,4 +557,124 @@ https://api.dexalot-test.com/privapi/signed/executions/0x00000000000000000000000
         }
     ]
 }
+```
+
+### Get Portfolio Balance
+
+GET /signed/portfoliobalance
+
+#### Description
+
+Retrieves portfolio balances
+
+#### Parameters
+
+| **Field Name**  | **Required** | **Description** |  **Sample Value** |
+|-----------------|--------------|-----------------|-------------------|
+| symbol         | N | Symbol to query for balance check | ALOT |
+
+
+#### Sample Request
+
+```
+https://api.dexalot-test.com/privapi/signed/portfoliobalance?symbol=ALOT
+```
+#### Sample Response
+
+```json
+[
+    {
+        "traderaddress": "0xce96e120420dc73394491ab941d3bc6168d6c93e",
+        "symbol": "ALOT",
+        "trades": "-20",
+        "xfers": "990",
+        "fee": "0",
+        "currentbal": "970"
+    }
+]
+```
+
+### Get Order Transactions
+
+GET /signed/transactions
+
+#### Description
+
+Retrieves transactions related to the given order id
+
+#### Parameters
+
+| **Field Name**  | **Required** | **Description** |  **Sample Value** |
+|-----------------|--------------|-----------------|-------------------|
+| orderid         | Y | Order id | 0x0000000000000000000000000000000000000000000000000000000063c14ceb |
+
+
+#### Sample Request
+
+```
+https://api.dexalot-test.com/privapi/signed/transactions?orderid=0x0000000000000000000000000000000000000000000000000000000063c14ceb
+```
+
+#### Sample Response
+
+```json
+[
+    {
+        "tx": "0x32502abc0280f69e1b90fff684f5fc6b79a6be00a674b94bc50165e74b260a1b",
+        "type": "FILLED",
+        "blocknumber": "909334",
+        "gasused": 592205,
+        "gasprice": "6.500000000",
+        "execid": 1673612524,
+        "execquantity": "20",
+        "execprice": "2.9058",
+        "fee": "0.1162",
+        "feetype": "T",
+        "feeunit": "USDC",
+        "ts": "2023-02-24T07:54:09.000Z"
+    }
+]
+```
+
+### Get Transaction Details
+
+GET /signed/transactions/{TRANSACTION_ID}
+
+#### Description
+
+Retrieves transaction details for a given transaction id
+
+#### Parameters
+
+| **Field Name**  | **Required** | **Description** |  **Sample Value** |
+|-----------------|--------------|-----------------|-------------------|
+| {TRANSACTION_ID} | Y | Transaction id | 0x32502abc0280f69e1b90fff684f5fc6b79a6be00a674b94bc50165e74b260a1b |
+
+
+#### Sample Request
+
+```
+https://api.dexalot-test.com/privapi/signed/transactions/0x32502abc0280f69e1b90fff684f5fc6b79a6be00a674b94bc50165e74b260a1b
+```
+
+#### Sample Response
+
+```json
+[
+    {
+        "env": "dev-fuji-subnet",
+        "tx": "0x32502abc0280f69e1b90fff684f5fc6b79a6be00a674b94bc50165e74b260a1b",
+        "parentid": "0x0000000000000000000000000000000000000000000000000000000063c14ceb",
+        "type": "FILLED",
+        "blockhash": "0x3c898dd891bab6692863ec487aca53235893c906000f293c8b77718f69adc6e8",
+        "blocknumber": "909334",
+        "fromaddress": "0xce96e120420dc73394491ab941d3bc6168d6c93e",
+        "toaddress": "0x4dda0c0c6bf330911ae5dd53d24b8f319e6f6a76",
+        "gasused": 592205,
+        "gasprice": "6.500000000",
+        "cumulativegasused": 592205,
+        "status": true,
+        "ts": "2023-02-24T07:54:09.000Z"
+    }
+]
 ```

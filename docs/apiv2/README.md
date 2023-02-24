@@ -64,6 +64,16 @@ function</td>
     </ul>
 </td>
 </tr>
+<tr>
+<td>v2.6</td>
+<td>2023-02-22</td>
+<td>
+    <ul>
+        <li>Addition of signed endpoints: orders, traderhistory, executions, transfers, portfoliobalance, transactions</li>
+        <li>Removed onlyfills parameter from signed traderhistory endpoint</li>
+    </ul>
+</td>
+</tr>
 </table>
 
 ## Architecture

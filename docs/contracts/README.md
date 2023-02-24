@@ -49,8 +49,9 @@ BannedAccounts:<br />
 - gas optimization (++i) where possible
 </td>
 </tr>
-<tr>
 </table>
+
+## Introduction
 
 The new Dexalot is a dual-chain application existing on both the Avalanche C-Chain (Mainnet) and Dexalot Subnet (Subnet). The Mainnet and Subnet communicate by generic message passing with the use of high-end bridge technologies. Previously, trading on Dexalot meant that all of your actions were sent to a single blockchain, but that’s changing in a big way. Dexalot’s new architecture allows for interaction between multiple blockchains from its frontend, instead of just one. This is not only more efficient but also paves the way for future innovations. The image below shows the trading workflow on Dexalot before and after subnet.
 

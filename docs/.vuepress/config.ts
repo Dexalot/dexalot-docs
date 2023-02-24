@@ -26,7 +26,7 @@ export default defineUserConfig({
       description: "Geliştiriciler için bir merkez"
     },
     "/zh/": {
-      lang: "zh-Zh",
+      lang: "zh-CN",
       title: "Dexalot | Docs",
       description: "The home for technical content"
     },

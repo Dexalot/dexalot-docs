@@ -174,7 +174,14 @@ export const enSidebarConfig = sidebar({
             "TokenVestingCloneable",
             "TokenVestingCloneFactory"
           ],
-        }
+        },
+
+        {
+          text: "Error Codes",
+          icon: "file-code",
+          link: "Errors"
+        },
+
       ]  // children under Smart Contracts end
     },  // Smart Contracts end
 

@@ -6,6 +6,18 @@ headerDepth: 4
 
 **Interface of PortfolioSub**
 
+## Enum Types
+
+### AssetType
+
+```solidity
+enum AssetType {
+  NATIVE,
+  ERC20,
+  NONE
+}
+```
+
 ## Methods
 
 ### External
@@ -20,6 +32,18 @@ function adjustAvailable(enum IPortfolio.Tx _transaction, address _trader, bytes
 
 ```solidity:no-line-numbers
 function addExecution(enum ITradePairs.Side _makerSide, address _makerAddr, address _taker, bytes32 _baseSymbol, bytes32 _quoteSymbol, uint256 _baseAmount, uint256 _quoteAmount, uint256 _makerfeeCharged, uint256 _takerfeeCharged) external
+```
+
+#### transferToken
+
+```solidity:no-line-numbers
+function transferToken(address _to, bytes32 _symbol, uint256 _quantity) external
+```
+
+#### getBalance
+
+```solidity:no-line-numbers
+function getBalance(address _owner, bytes32 _symbol) external view returns (uint256 total, uint256 available, enum IPortfolioSub.AssetType assetType)
 ```
 
 #### withdrawNative

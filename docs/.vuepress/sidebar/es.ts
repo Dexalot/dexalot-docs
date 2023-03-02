@@ -43,6 +43,7 @@ export const esSidebarConfig = sidebar({
           icon: "book-open",
           link: "layerzero"
         }
+          }
 
       ]
     },

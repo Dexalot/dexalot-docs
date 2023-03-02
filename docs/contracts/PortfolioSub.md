@@ -34,18 +34,6 @@ struct AssetEntry {
 }
 ```
 
-## Enum Types
-
-### AssetType
-
-```solidity
-enum AssetType {
-  NATIVE,
-  ERC20,
-  NONE
-}
-```
-
 ## Variables
 
 ### Public
@@ -130,7 +118,7 @@ function setFeeAddress(address _feeAddress) external
 Set auction mode for a token
 
 **Dev notes:** \
-Only callable by the default admin
+Only callable by the default admin or TradePairs
 
 ```solidity:no-line-numbers
 function setAuctionMode(bytes32 _symbol, enum ITradePairs.AuctionMode _mode) external
@@ -148,7 +136,7 @@ function setAuctionMode(bytes32 _symbol, enum ITradePairs.AuctionMode _mode) ext
 Frontend function to show traders total and available balance for a token
 
 ```solidity:no-line-numbers
-function getBalance(address _owner, bytes32 _symbol) external view returns (uint256 total, uint256 available, enum PortfolioSub.AssetType assetType)
+function getBalance(address _owner, bytes32 _symbol) external view returns (uint256 total, uint256 available, enum IPortfolioSub.AssetType assetType)
 ```
 
 ##### Arguments
@@ -164,7 +152,7 @@ function getBalance(address _owner, bytes32 _symbol) external view returns (uint
 | ---- | ---- | ----------- |
 | total | uint256 | Total balance of the trader |
 | available | uint256 | Available balance of the trader |
-| assetType | enum PortfolioSub.AssetType | Type of the token |
+| assetType | enum IPortfolioSub.AssetType | Type of the token |
 
 #### addExecution
 
@@ -241,7 +229,8 @@ function autoFill(address _trader, bytes32 _symbol) external
 
 #### depositNative
 
-This function is only used to deposit native ALOT from the subnet wallet
+This function is only used to deposit native ALOT from the subnet wallet to
+the portfolio. Also referred as RemoveGas
 
 ```solidity:no-line-numbers
 function depositNative(address payable _from, enum IPortfolioBridge.BridgeProvider) external payable
@@ -256,7 +245,8 @@ function depositNative(address payable _from, enum IPortfolioBridge.BridgeProvid
 
 #### withdrawNative
 
-This function is used to withdraw only native ALOT to the subnet wallet
+This function is used to withdraw only native ALOT from the portfolio
+into the subnet wallet. Also referred as AddGas
 
 **Dev notes:** \
 This function decreases ALOT balance of the user and calls the PortfolioMinter to mint the native ALOT
@@ -535,6 +525,21 @@ function autoFillPrivate(address _trader, bytes32 _symbol, enum IPortfolio.Tx _t
 | ---- | ---- | ----------- |
 | tankFull | bool | Trader's Gas Tank status |
 
+#### withdrawNativePrivate
+
+See withdrawNative
+
+```solidity:no-line-numbers
+function withdrawNativePrivate(address _to, uint256 _quantity) private
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _to | address | Address of the withdrawer |
+| _quantity | uint256 | Amount of the native ALOT to withdraw |
+
 #### safeIncrease
 
 Increases the balance of the user
@@ -619,16 +624,17 @@ function transferToken(address _from, address _to, bytes32 _symbol, uint256 _qua
 
 #### safeTransferFee
 
-Transfers the fees collected to the fee address
+Transfers the fees collected to the fee or treasury address
 
 ```solidity:no-line-numbers
-function safeTransferFee(bytes32 _symbol, uint256 _feeCharged) private
+function safeTransferFee(address _to, bytes32 _symbol, uint256 _feeCharged) private
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
+| _to | address | fee or treasury address |
 | _symbol | bytes32 | Symbol of the token |
 | _feeCharged | uint256 | Fee charged for the transaction |
 

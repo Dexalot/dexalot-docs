@@ -44,7 +44,8 @@ export const enSidebarConfig = sidebar({
           icon: "book-open",
           link: "samplebot"
         },
-        {text: "Dexalot x LayerZero",
+        {
+          text: "Dexalot x LayerZero",
           icon: "book-open",
           link: "layerzero"
         }

@@ -33,6 +33,10 @@ export const zhSidebarConfig = sidebar({
           text: "Dexalot 的Sample Bot说明示例",
           icon: "book-open",
           link: "samplebot"
+        },
+        {text: "Dexalot x LayerZero",
+          icon: "book-open",
+          link: "layerzero"
         }
       ]
     },

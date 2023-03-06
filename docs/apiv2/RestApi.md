@@ -7,13 +7,11 @@ editLink: true
 
 # Rest API
 
-All api requests should contain the "x-apikey" header. Please reach out to Dexalot Team for your api key
+Dexalot REST Api serves:
+*  **Common Endpoints**: Provides data related to the exchange, such as environemnts, tokens, deployment details etc.
+*  **Signed Endpoints**: Signed endpoints provides trader specific data such as orders, balances, transfers of a specific address. These endpoints will require you to prove that you are the owner of the queried address by sending a signature in your requests.
+*  **Authorized Endpoints**: Authorized endpoints require an api key to perform any queries. Currently only used for establishing websocket connections.
 
-An example request would look like:
-```bash
-curl --location --request GET 'https://api.dexalot.com/privapi/trading/tokens' \
---header 'x-apikey: [yourkey]'
-```
 
 ## Server Urls
 
@@ -44,6 +42,11 @@ to a single parentenv.
 #### Sample Request
 
 https://api.dexalot-test.com/privapi/trading/environments
+
+
+```bash
+curl --location 'https://api.dexalot-test.com/privapi/trading/environments'
+```
 
 #### Sample Response
 
@@ -82,6 +85,10 @@ deployments.
 #### Sample Request
 
 https://api.dexalot-test.com/privapi/trading/tokens
+
+```bash
+curl --location 'https://api.dexalot-test.com/privapi/trading/tokens'
+```
 
 #### Sample Response
 
@@ -165,6 +172,9 @@ always show the mainnet token addresses for consistency)
 
 https://api.dexalot-test.com/privapi/trading/pairs
 
+```bash
+curl --location 'https://api.dexalot-test.com/privapi/trading/pairs'
+```
 #### Sample Response
 
 ```json
@@ -195,7 +205,7 @@ https://api.dexalot-test.com/privapi/trading/pairs
 
 ### Get Deployment (Contract Addresses and ABI)
 
-GET /trading/deployment/params?contracttype=contract_type&returnabi=true&env=sub-env
+GET /trading/deployment?contracttype=contract_type&returnabi=true&env=sub-env
 
 #### Description
 
@@ -212,6 +222,10 @@ Returns the deployment details of the Dexalot contracts including their abi
 #### Sample Request
 
 https://api.dexalot-test.com/privapi/trading/deployment/params?contracttype=Exchange&returnabi=true&env=fuji-multi-subnet
+
+```bash
+curl --location 'https://api.dexalot-test.com/privapi/trading/deployment?env=fuji-multi-subnet&returnabi=true&contracttype=TradePairs'
+```
 
 #### Sample Response
 
@@ -246,6 +260,10 @@ This endpoint will return all of the revert reason codes with descriptions
 
 https://api.dexalot-test.com/privapi/trading/errorcodes
 
+```bash
+curl --location 'https://api.dexalot-test.com/privapi/trading/errorcodes'
+```
+
 #### Sample Response
 
 ```json
@@ -260,6 +278,10 @@ https://api.dexalot-test.com/privapi/trading/errorcodes
     }
 }
 ```
+
+## Authorized Endpoints:
+
+Requests to the authorized endpoints should contain the "x-apikey" header. Please reach out to Dexalot Team for your api key. Currently only used for getting a temp token before establishing a websocket connection.
 
 ### Get Websocket Token
 
@@ -292,7 +314,7 @@ The following endpoints are used to fetch data for a specific trading address. S
 
 You have to sign "dexalot" message and provide the signature in x-signature header along with your Signed Endpoint requests.
 
-***Example:*** Generating the signature using [ethers](https://docs.ethers.org/v5/api/signer/#Signer) library:
+***Typescript/Javascript Example:*** Generating the signature using [ethers](https://docs.ethers.org/v5/api/signer/#Signer) library:
 
 ```typescript
     const wallet = new ethers.Wallet(PRIV_KEY);
@@ -305,13 +327,22 @@ You have to sign "dexalot" message and provide the signature in x-signature head
     // Verify your signature (might be needed when testing)
     const publicKey = ethers.utils.verifyMessage("dexalot", signature);
 ```
+
+***Python Example:***
+
+```python
+    account = Account.from_key(private_key=PRIVATE_KEY)
+    message = encode_defunct(text="dexalot")
+    signed_message = account.sign_message(signable_message=message)
+    headers = {"x-signature": f"{account.address}:{signed_message.signature.hex()}}
+    resp = await client.get(request_url, headers=headers)
+```
 You may also use https://etherscan.io/verifiedSignatures to generate the signature and provide it to your bots as a configuration.
 
 After generating the signature a typical signed endpoint request would look like:
 ```bash
 curl --location 'https://api.dexalot-test.com/privapi/signed/portfoliobalance' \
---header 'x-signature: {0xTraderAddress}:{SignatureHash}' \
---header 'x-apikey: {DexalotApiKey}'
+--header 'x-signature: {0xTraderAddress}:{SignatureHash}'
 ```
 ***Note:*** Please keep in mind that the orders are retrieved from our database
 for speed. Hence there could be some delays between the order’s
@@ -337,6 +368,11 @@ Returns details for the given order id
 #### Sample Request
 
 https://api.dexalot-test.com/privapi/signed/orders/0x0000000000000000000000000000000000000000000000000000000063c14ca3
+
+```bash
+curl --location 'https://api.dexalot-test.com/privapi/signed/orders/0x00000000000000000000000000000000000000000000000000000000639a2994' \
+--header 'x-signature: [ADDRESS:SIGNATURE]'
+```
 
 #### Sample Response
 
@@ -431,6 +467,8 @@ Returns full trading history for the given address. If onlyfills is
 used, returns only filled transactions (trades) . Maximum 90 days and/or
 500 records returned.
 
+**Warning**: This endpoint is intended to be used for reporting purposes only. If you want to check only the latest state of your orders please try /orders endpoint.
+
 #### Query Parameters
 
 | **Field Name**| **Required** | **Sample Value**   |
@@ -441,13 +479,16 @@ used, returns only filled transactions (trades) . Maximum 90 days and/or
 #### Sample Requests
 
 ```
-https://api.dexalot-test.com/privapi/signed/traderhistory?traderaddress=0x55c66320CEB54Ad680ffae12e6A09603cbA0db70
+https://api.dexalot-test.com/privapi/signed/traderhistory
 ```
+
 ```
-https://api.dexalot-test.com/privapi/signed/traderhistory?traderaddress=0x55c66320CEB54Ad680ffae12e6A09603cbA0db70&onlyfills
+https://api.dexalot-test.com/privapi/signed/traderhistory?periodfrom=2022-08-02T00:00:00.000Z&periodto=2022-08-11T00:00:00.000Z
 ```
-```
-https://api.dexalot-test.com/privapi/signed/traderhistory?traderaddress=0x55c66320CEB54Ad680ffae12e6A09603cbA0db70&periodfrom=2022-08-02T00:00:00.000Z&periodto=2022-08-11T00:00:00.000Z
+
+```bash
+curl --location 'https://api.dexalot-test.com/privapi/signed/traderhistory?periodfrom=2023-01-01T18%3A20%3A02.000Z&periodto=2023-03-01T18%3A40%3A02.000Z' \
+--header 'x-signature: [ADDRESS:SIGNATURE]'
 ```
 #### Sample Response
 
@@ -494,6 +535,10 @@ Returns execution details for the given order id
 https://api.dexalot-test.com/privapi/signed/executions?orderid=0x0000000000000000000000000000000000000000000000000000000063c14ca3
 ```
 
+```bash
+curl --location 'https://api.dexalot-test.com/privapi/signed/executions?orderid=0x00000000000000000000000000000000000000000000000000000000639a2994' \
+--header 'x-signature: [ADDRESS:SIGNATURE]'
+```
 #### Sample Response
 
 ```json
@@ -538,6 +583,11 @@ Returns transfer details of the trader. If period parameters are not provided de
 #### Sample Request
 ```
 https://api.dexalot-test.com/privapi/signed/transfers?symbol=ALOT
+```
+
+```bash
+curl --location 'https://api.dexalot-test.com/privapi/signed/transfers?symbol=ALOT' \
+--header 'x-signature: [ADDRESS:SIGNATURE]'
 ```
 
 #### Sample Response
@@ -585,6 +635,11 @@ Retrieves portfolio balances
 ```
 https://api.dexalot-test.com/privapi/signed/portfoliobalance?symbol=ALOT
 ```
+
+```bash
+curl --location 'https://api.dexalot-test.com/privapi/signed/portfoliobalance?symbol=ALOT' \
+--header 'x-signature: [ADDRESS:SIGNATURE]'
+```
 #### Sample Response
 
 ```json
@@ -621,6 +676,10 @@ Retrieves transactions related to the given order id
 https://api.dexalot-test.com/privapi/signed/transactions?orderid=0x0000000000000000000000000000000000000000000000000000000063c14ceb
 ```
 
+```bash
+curl --location 'https://api.dexalot-test.com/privapi/signed/transactions?orderid=0x00000000000000000000000000000000000000000000000000000000639a2994' \
+--header 'x-signature: [ADDRESS:SIGNATURE]'
+```
 #### Sample Response
 
 ```json
@@ -663,6 +722,10 @@ Retrieves transaction details for a given transaction id
 https://api.dexalot-test.com/privapi/signed/transactions/0x32502abc0280f69e1b90fff684f5fc6b79a6be00a674b94bc50165e74b260a1b
 ```
 
+```bash
+curl --location 'https://api.dexalot-test.com/privapi/signed/transactions/0xc1a611644f431fec8c41b083c02cdcbb0803ee8848804c27acbb47fc9ef2ad82' \
+--header 'x-signature: [ADDRESS:SIGNATURE]'
+```
 #### Sample Response
 
 ```json

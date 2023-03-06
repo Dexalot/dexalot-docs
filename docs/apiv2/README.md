@@ -74,6 +74,16 @@ function</td>
     </ul>
 </td>
 </tr>
+<tr>
+<td>v2.7</td>
+<td>2023-03-06</td>
+<td>
+    <ul>
+        <li>Remove api-key restrictions from all endpoints except auth/getwstoken (temp ws token)</li>
+        <li>Added curl examples for requests, added Python example for signing.</li>
+    </ul>
+</td>
+</tr>
 </table>
 
 ## Architecture

@@ -43,12 +43,13 @@ the subnet.
 ```ts
 static OrderStatus: any = {
     "0": "NEW",
-    "1": "REJECTED", // not used
+    "1": "REJECTED", // may only be from addLimitOrderList
     "2": "PARTIAL",
     "3": "FILLED",
     "4": "CANCELED",
     "5": "EXPIRED",  // not used
-    "6": "KILLED"
+    "6": "KILLED",
+    "7": "CANCEL_REJECT", // may only be from cancelOrderList
 }
 ```
 
@@ -68,9 +69,9 @@ static OrderType1 = {
 
 ```ts
 static OrderType2 = {
-    "0": "GTC"   // Good Till Cancel,
+    "0": "GTC"   // Good Till Cancel, may or may not get a fill, the remaining amount goes in the orderbook
     "1": "FOK"   // Fill or Kill - requires immediate full fill or reverts
-    "2": "IOC"   // Immediate or Cancel - gets any fills & then canceled Remaining will not go in the orderbook
+    "2": "IOC"   // Immediate or Cancel - gets 0 or more fills & then the remaining amount is canceled. it will not go in the orderbook
     "3": "PO"    // Post Only - Requires to go in the orderbook without any fills or reverts
  }
 ```
@@ -103,7 +104,8 @@ static BridgeProvider = {
     Type2 type2,
     Status status,
     uint quantityfilled,
-    uint totalfee
+    uint totalfee,
+    bytes32 code
 );
  ```
 
@@ -198,6 +200,15 @@ of received currency. ie. if Buy ALOT/AVAX, fee is paid in ALOT, if Sell
 ALOT/AVAX, fee is paid in AVAX<br />
 Note: Order price can be different than the execution price.</td>
 </tr>
+<tr>
+<td>code</td>
+<td>bytes32</td>
+<td>Reject reason when an order has REJECT or CANCEL_REJECT status when list Order functions are called, empty otherwise. Not relevant for single orders.<br />
+The good orders will continue to process. But this will include rejectReason only when one or more order in the list is rejected as below: <br />
+addLimitOrderList:  "status" = REJECTED and "code" = rejectReason  <br />
+or cancelListOrders: "status" = CANCEL_REJECT, "code"= "T-OAEX-01"  </td>
+</tr>
+
 </thead>
 <tbody>
 </tbody>
@@ -413,7 +424,8 @@ if (orderLog){
                         _log.args.type2,
                         _log.args.status,
                         _log.args.quantityfilled,
-                        _log.args.totalfee
+                        _log.args.totalfee,
+                        _log.args.code
                     );
                 }
             }
@@ -464,7 +476,8 @@ if (orderLog){
                         _log.args.type2,
                         _log.args.status,
                         _log.args.quantityfilled,
-                        _log.args.totalfee
+                        _log.args.totalfee,
+                        _log.args.code
                     );
                 }
             }
@@ -473,10 +486,10 @@ if (orderLog){
 }
 ```
 
-##### Cancel All Orders
+##### Cancel List Orders
 
 ```solidity
-function cancelAllOrders(
+function cancelListOrders(
     bytes32[] _orderIds
 )
 ```
@@ -510,7 +523,7 @@ running out of gas</td>
 **Sample Contract Call:**
 
 ```ts
-const tx = await this.tradePair.cancelAllOrders(orderIds.slice(1,
+const tx = await this.tradePair.cancelListOrders(orderIds.slice(1,
 Math.min(20,orderIds.length-1)), options);
 
 const orderLog = await tx.wait();
@@ -533,7 +546,8 @@ if (orderLog){
                         _log.args.type2,
                         _log.args.status,
                         _log.args.quantityfilled,
-                        _log.args.totalfee
+                        _log.args.totalfee,
+                        _log.args.code
                     );
                 }
             }
@@ -928,14 +942,13 @@ async getRevertReason(error: any) {
             `${this.instanceName} getRevertReason: error.transaction is undefined`
         );
     } else {
-        //https://gist.github.com/gluk64/fdea559472d957f1138ed93bcbc6f78a
+        // https://gist.github.com/gluk64/fdea559472d957f1138ed93bcbc6f78a
         let code = await provider.call(
             error.transaction, error.blockNumber
             || error.receipt.blockNumber
         );
         reason = ethers.utils.toUtf8String("0x" + code.substr(138));
-        var i = reason.indexOf("0"); // delete all null characters after the
-        string
+        var i = reason.indexOf("0"); // delete all null characters after the string
         if (i>-1) {
             return reason.substring(0, i);
         }

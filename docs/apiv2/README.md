@@ -64,6 +64,26 @@ function</td>
     </ul>
 </td>
 </tr>
+<tr>
+<td>v2.6</td>
+<td>2023-02-22</td>
+<td>
+    <ul>
+        <li>Addition of signed endpoints: orders, traderhistory, executions, transfers, portfoliobalance, transactions</li>
+        <li>Removed onlyfills parameter from signed traderhistory endpoint</li>
+    </ul>
+</td>
+</tr>
+<tr>
+<td>v2.7</td>
+<td>2023-03-06</td>
+<td>
+    <ul>
+        <li>Remove api-key restrictions from all endpoints except auth/getwstoken (temp ws token)</li>
+        <li>Added curl examples for requests, added Python example for signing.</li>
+    </ul>
+</td>
+</tr>
 </table>
 
 ## Architecture
@@ -105,7 +125,9 @@ milliseconds slower. In other words, Dexalot’s backend does exactly what
 your application would do on its own: Reading the order book from the
 chain and publishing it over the websocket. Similarly, any information
 received from the REST API is a drop-copy of a transaction that has
-already been confirmed on the blockchain.
+already been confirmed on the blockchain.  Please refer to contracts
+documentation [here](/contracts) for interacting with the blockchain
+directly.
 
 Needless to say, Dexalot does not require nor take custody of your
 private keys. Hence deposit/withdrawal or any trade functions can only

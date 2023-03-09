@@ -26,7 +26,7 @@ and use Dexalot frontend to perform deposit/withdraw operations manually for cro
 If your trading application has a business need to deposit/withdraw more often, then your app
 will need to integrate with the PortfolioMain contract in the mainnet as well to fully automate
 your flow.
-ExchangeSub needs to have DEFAULT_ADMIN_ROLE on this contract.
+Exchange needs to have DEFAULT_ADMIN_ROLE on this contract.
 
 ## Variables
 
@@ -238,7 +238,7 @@ function pauseDeposit(bool _pause) external
 Sets the bridge provider fee & gasSwapRatio per ALOT for the given token and usedForGasSwap flag
 
 **Dev notes:** \
-External function to be called by ADMIN
+External function to be called by DEFAULT_ADMIN_ROLE or PORTFOLIO_BRIDGE_ROLE
 
 ```solidity:no-line-numbers
 function setBridgeParam(bytes32 _symbol, uint256 _fee, uint256 _gasSwapRatio, bool _usedForGasSwap) external

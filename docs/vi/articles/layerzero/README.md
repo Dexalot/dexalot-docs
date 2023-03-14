@@ -38,8 +38,8 @@ Phương pháp tiếp cận hiện đại này cho phép Dexalot mở rộng quy
 Hãy tham gia tìm hiểu về cơ sở thông tin và kiến ​​thức ngày càng tăng giúp xây dựng thế giới Web 3 và tìm hiểu lý do tại sao Dexalot là ngôi nhà dành cho các nhà phát triển bằng cách đọc và tìm hiểu cách truy cập các chuỗi khối của nó thông qua  [Trung tâm kiến ​​thức Dexalot](https://docs.dexalot.com/vi/).
 
 ---
-**Author**: Brad McFall
+**Tác giả**: Brad McFall
 
-**Editor**: Dan Marcoulis
+**Biên tập viên**: Dan Marcoulis
 
-**Graphics**: Can Toygar
+**Đồ họa**: Can Toygar

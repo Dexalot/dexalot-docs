@@ -42,6 +42,11 @@ export const esSidebarConfig = sidebar({
           {text: "Dexalot x LayerZero",
           icon: "book-open",
           link: "layerzero"
+        },
+        {
+          text: "Asset Balance Snapshot de Dexalot",
+          icon: "book-open",
+          link: "abs"
         }
       ]
     },

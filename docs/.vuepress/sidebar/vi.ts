@@ -42,6 +42,11 @@ export const viSidebarConfig = sidebar({
         {text: "Dexalot x LayerZero",
           icon: "book-open",
           link: "layerzero"
+        },
+        {
+          text: "Ảnh chụp số dư tài sản của Dexalot",
+          icon: "book-open",
+          link: "abs"
         }
       ]
     },

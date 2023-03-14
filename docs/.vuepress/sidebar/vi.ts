@@ -47,6 +47,11 @@ export const viSidebarConfig = sidebar({
           text: "Ảnh chụp số dư tài sản của Dexalot",
           icon: "book-open",
           link: "abs"
+        },
+        {
+          text: "Hướng dẫn Dexalot Subnet",
+          icon: "book-open",
+          link: "guide"
         }
       ]
     },

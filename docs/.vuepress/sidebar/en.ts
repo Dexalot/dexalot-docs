@@ -53,6 +53,11 @@ export const enSidebarConfig = sidebar({
           text: "Asset Balance Snapshot",
           icon: "book-open",
           link: "abs"
+        },
+        {
+          text: "The Dexalot Subnet Guide",
+          icon: "book-open",
+          link: "guide"
         }
       ]
     },

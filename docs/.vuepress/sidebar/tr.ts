@@ -47,6 +47,11 @@ export const trSidebarConfig = sidebar({
           text: "Dexalot’un Asset Balance Snapshot’ı",
           icon: "book-open",
           link: "abs"
+        },
+        {
+          text: "Dexalot Subnet Rehberi",
+          icon: "book-open",
+          link: "guide"
         }
       ]
     },

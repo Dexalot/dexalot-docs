@@ -42,6 +42,11 @@ export const zhSidebarConfig = sidebar({
           text: "Dexalot资产余额快照",
           icon: "book-open",
           link: "abs"
+        },
+        {
+          text: "Dexalot子网指南",
+          icon: "book-open",
+          link: "guide"
         }
       ]
     },

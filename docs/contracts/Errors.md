@@ -248,7 +248,7 @@ R-TIEM-01: target is empty
 
 R-TIEM-02: target is empty
 
-## Request For Quote
+## MainnetRFQ
 
 RF-ALOA-01: at least one account needed in admin group
 

@@ -248,6 +248,26 @@ R-TIEM-01: target is empty
 
 R-TIEM-02: target is empty
 
+## Request For Quote
+
+RF-ALOA-01: at least one account needed in admin group
+
+RF-IMS-01: invalid msg.sender
+
+RF-IMV-01: invalid msg.value
+
+RF-IN-01: invalid nonce
+
+RF-IS-01: invalid signature
+
+RF-OCR-01: only callable by rebalancer
+
+RF-QE-01: quote expired
+
+RF-SAZ-01: set address to zero
+
+RF-TF-01: transfer failed
+
 ## Staking
 
 S-CNSZ-01: cannot stake 0

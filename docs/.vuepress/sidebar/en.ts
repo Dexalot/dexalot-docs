@@ -115,6 +115,7 @@ export const enSidebarConfig = sidebar({
             "PortfolioBridgeSub",
             "PortfolioMinter",
             "GasStation",
+            "MainnetRFQ",
             "BannedAccounts"
           ],
         },

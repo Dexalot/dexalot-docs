@@ -38,8 +38,21 @@ export const esSidebarConfig = sidebar({
             text: "Sample Bot de Dexalot",
             icon: "book-open",
             link: "samplebot"
-          }
-
+          },
+          {text: "Dexalot x LayerZero",
+          icon: "book-open",
+          link: "layerzero"
+        },
+        {
+          text: "Asset Balance Snapshot de Dexalot",
+          icon: "book-open",
+          link: "abs"
+        },
+        {
+          text: "Guia de la Subnet de Dexalot",
+          icon: "book-open",
+          link: "guide"
+        }
       ]
     },
 

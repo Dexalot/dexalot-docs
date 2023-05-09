@@ -37,12 +37,27 @@ export const enSidebarConfig = sidebar({
         {
           text: "Dexalot Subnet Staking Incentives Launch",
           icon: "book-open",
-          link: "Incentives"
+          link: "incentives"
         },
         {
           text: "Dexalot's Sample Bot",
           icon: "book-open",
           link: "samplebot"
+        },
+        {
+          text: "Dexalot x LayerZero",
+          icon: "book-open",
+          link: "layerzero"
+        },
+        {
+          text: "Asset Balance Snapshot",
+          icon: "book-open",
+          link: "abs"
+        },
+        {
+          text: "The Dexalot Subnet Guide",
+          icon: "book-open",
+          link: "guide"
         }
       ]
     },
@@ -100,6 +115,7 @@ export const enSidebarConfig = sidebar({
             "PortfolioBridgeSub",
             "PortfolioMinter",
             "GasStation",
+            "MainnetRFQ",
             "BannedAccounts"
           ],
         },

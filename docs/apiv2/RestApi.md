@@ -221,7 +221,7 @@ Returns the deployment details of the Dexalot contracts including their abi
 
 #### Sample Request
 
-https://api.dexalot-test.com/privapi/trading/deployment/params?contracttype=Exchange&returnabi=true&env=fuji-multi-subnet
+https://api.dexalot-test.com/privapi/trading/deployment?env=fuji-multi-subnet&returnabi=true&contracttype=TradePairs
 
 ```bash
 curl --location 'https://api.dexalot-test.com/privapi/trading/deployment?env=fuji-multi-subnet&returnabi=true&contracttype=TradePairs'

@@ -475,6 +475,7 @@ used, returns only filled transactions (trades) . Maximum 90 days and/or
 |---------------|-----------------------------------|-------------------------------------------------------|
 | periodfrom (default : from 7 days ago) | N | 2022-03-02T00:00:00.000Z                              |
 | periodto (default : current_time)| N      | 2022-04-11T00:00:00.000Z                               |
+| onlyfills (default: 0) | N | 0 or 1
 
 #### Sample Requests
 
@@ -484,6 +485,10 @@ https://api.dexalot-test.com/privapi/signed/traderhistory
 
 ```
 https://api.dexalot-test.com/privapi/signed/traderhistory?periodfrom=2022-08-02T00:00:00.000Z&periodto=2022-08-11T00:00:00.000Z
+```
+
+```
+https://api.dexalot-test.com/privapi/signed/traderhistory?periodfrom=2022-08-02T00:00:00.000Z&periodto=2022-08-11T00:00:00.000Z&onlyfills=1
 ```
 
 ```bash

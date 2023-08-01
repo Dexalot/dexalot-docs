@@ -757,8 +757,6 @@ GET signed/trader-fills
 Returns only filled transactions (trades) for the given address.
 Maximum 100 records returned.
 
-**Warning**: This endpoint is intended to be used for reporting purposes only. If you want to check only the latest state of your orders please try /orders endpoint.
-
 #### Query Parameters
 
 | **Field Name**| **Required** | **Sample Value**   |

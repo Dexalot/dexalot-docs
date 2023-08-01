@@ -36,7 +36,9 @@ export enum SUBSCRIPTION {
     chartsubscribe: "chartsubscribe",
     chartunsubscribe: "chartunsubscribe",
     marketSnapshotSubscribe: "marketsnapshotsubscribe",
-    marketSnapshotUnsubscribe: "marketsnapshotunsubscribe"
+    marketSnapshotUnsubscribe: "marketsnapshotunsubscribe",
+    traderEventSubscribe: "tradereventsubscribe",
+    traderEventUnsubscribe: "tradereventunsubscribe"
 }
 ```
 
@@ -69,6 +71,13 @@ Example pair subscribe message:
 ```json
 {"data":"ALOT/USDC","pair":"ALOT/USDC","type":"subscribe","decimal":3}
 ```
+
+Example trader event subscribe message :
+```json
+{"type":"tradereventsubscribe", "signature":"0xXXXXXXXXXXXXXXXXXX:0xXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"}
+```
+To generate signature you can use the sample code provided in RestApi Signed Endpoints.
+* [Rest Api](/apiv2/RestApi.md)
 
 Sample code unsubscribe:
 ```ts
@@ -153,6 +162,9 @@ export type SOCKET_DATA_TYPES =
     | 'Prices'
     | 'APP_VERSION'
     | 'auctionData'
+    | 'orderStatusUpdatEvent'
+    | 'transactionEvent'
+    | 'executionEvent'
 ```
 
 #### ChartSnapShot
@@ -270,5 +282,177 @@ export interface WsTradeHistoryData {
     quantity: string
     takerside?: number
     ts: string
+}
+```
+
+#### OrderStatusUpdateEvent (Trader Event)
+
+This is the captured order status update event based on the trader address provided in the signature.
+
+```ts
+export interface OrderStatusUpdateEvent {
+  version: number;
+  traderaddress: string;
+  pair: string;
+  orderId: string;
+  clientOrderId: string;
+  price: string;
+  totalamount: string;
+  quantity: string;
+  side: string;
+  type1: string;
+  type2: string;
+  status: string;
+  quantityfilled: string;
+  totalfee: string;
+  code: string;
+  blockTimestamp: number;
+  transactionHash: string;
+  blockNumber: number;
+  blockHash: string;
+}
+```
+
+Possible "side" values are as follows:
+```
+ "BUY", "SELL"
+```
+
+Possible "type1" values are as follows:
+```
+ "MARKET", "LIMIT", "STOP", "STOPLIMIT"
+```
+
+Possible "type2" values are as follows:
+```
+ "GTC", "FOK", "IOC", "PO"
+```
+
+Possible "status" values are as follows:
+```
+ "NEW", "REJECTED", "PARTIAL",  "FILLED", "CANCELED",  "EXPIRED", "KILLED"
+```
+
+Sample Message:
+```json
+{
+    "data": {
+        "version": 2,
+        "traderaddress": "0xe05451d9832dCc72B81c78B7FD54fbcFbE0188d2",
+        "pair": "ALOT/USDC",
+        "orderId": "0x0000000000000000000000000000000000000000000000000000000062c14ea5",
+        "clientOrderId": "0xa58c4cda60b24090351735047828ff51f50207414d4251fda901875f673dff9f",
+        "price": "0.1678",
+        "totalamount": "5.2018",
+        "quantity": "31.0",
+        "side": "BUY",
+        "type1": "LIMIT",
+        "type2": "GTC",
+        "status": "FILLED",
+        "quantityfilled": "31.0",
+        "totalfee": "0.06",
+        "code": "",
+        "blockTimestamp": 1686331589,
+        "transactionHash": "0xfae4f026245cae47da7a9c12a9043f5ac94d2b8a230d2fc21c3547149b21c494",
+        "blockNumber": 920114,
+        "blockHash": "0x1c812b9fa7138525f682c430c22d431637f8ebb09694b65e34a4bdec9583adc9"
+    },
+    "type": "orderStatusUpdateEvent"
+}
+```
+
+#### TransactionEvent (Trader Event)
+
+This is the captured transaction event based on the trader address provided in the signature.
+
+```ts
+export interface TransactionEvent {
+  transactionHash: string;
+  txType: string;
+  fromAddress: string;
+  toAddress: string;
+  tx: tx;
+  blockTimestamp: number;
+  symbol: string;
+  txFrQuantity: string;
+  txFrFee: string;
+  blockNumber: number;
+  blockHash: string;
+}
+
+export interface tx {
+  gasUsed: string;
+  effectiveGasPrice: string;
+  cumulativeGasUsed: string;
+}
+```
+
+Sample Message:
+```json
+{
+    "data": {
+        "transactionHash": "0xbac1b0aff641a71528d6aa6ec156f103141e63031007d900e3a622603852d07c",
+        "txType": "REMOVEGAS",
+        "fromAddress": "0xe05451a9882dCc72B81c78B7FD54fycFbE0188d2",
+        "toAddress": "0xE4DfB5dE6a4b606FA2E6e641a645147C4kF0720t",
+        "tx": {
+            "gasUsed": "86720",
+            "effectiveGasPrice": "11.5",
+            "cumulativeGasUsed": "86720"
+        },
+        "blockTimestamp": 1686757299,
+        "symbol": "ALOT",
+        "txFrQuantity": "1.0",
+        "txFrFee": "0.0",
+        "blockNumber": 920114,
+        "blockHash": "0x1c812b9fa7131525a682c430c22d4y1637f8ebb09694b65e34a4bdec9583adc9"
+    },
+    "type": "transactionEvent"
+}
+```
+
+#### ExecutionEvent (Trader Event)
+
+This is the captured execution event based on the trader address provided in the signature.
+
+```ts
+export interface ExecutionEvent {
+  version: number;
+  pair: string;
+  price: string;
+  quantity: string;
+  makerOrder: string;
+  takerOrder: string;
+  feeMaker: string;
+  feeTaker: string;
+  takerSide: string;
+  execId: number;
+  addressMaker: string;
+  addressTaker: string;
+  blockNumber: number;
+  blockHash: string;
+}
+```
+
+Sample Message:
+```json
+{
+    "data": {
+        "version": 1,
+        "pair": "ALOT/USDC",
+        "price": "0.1678",
+        "quantity": "31.0",
+        "makerOrder": "0x0000000000000000000000000000000000000000000000000000000063c14e1d",
+        "takerOrder": "0x0000000000000000000000000000000000000000000000000000000063c14ea5",
+        "feeMaker": "0.0052",
+        "feeTaker": "0.06",
+        "takerSide": "BUY",
+        "execId": 1673612966,
+        "addressMaker": "0x051A4F1EBFb2d57D3655581c64979FBe5dDF5C71",
+        "addressTaker": "0xe05451d9882kCc72B81c78B7FD54fbcFbE0583d2",
+        "blockNumber": 920114,
+        "blockHash": "0x1c812b9fa7138525f682c430c22d441637f8ebb0b694b65e39a4bdec9583adc9"
+    },
+    "type": "executionEvent"
 }
 ```

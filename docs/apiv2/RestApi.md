@@ -747,3 +747,65 @@ curl --location 'https://api.dexalot-test.com/privapi/signed/transactions/0xc1a6
     }
 ]
 ```
+
+###  Get Trader fills
+
+GET signed/trader-fills
+
+#### Description
+
+Returns only filled transactions (trades) for the given address.
+Maximum 100 records returned.
+
+#### Query Parameters
+
+| **Field Name**| **Required** | **Sample Value**   |
+|---------------|-----------------------------------|-------------------------------------------------------|
+| periodfrom | Y | 2022-03-02T00:00:00.000Z |
+| periodto (default : current_time)| N | 2022-04-11T00:00:00.000Z                               |
+| itemsperpage (can not be greater than 100) | N | 50 |
+| pageno | N | 1 |
+
+**Warning**: If "itemsperpage" is included in the query, pageno should be included as well.
+
+#### Sample Requests
+
+```
+https://api.dexalot-test.com/privapi/signed/trader-fills
+```
+
+```
+https://api.dexalot-test.com/privapi/signed/trader-fills?periodFrom=2023-01-01T00:00:00.000Z&periodTo=2023-07-28T00:00:00.000Z&itemsPerPage=100&pageNo=1
+```
+
+```bash
+curl --location 'https://api.dexalot-test.com/privapi/signed/trader-fills?periodFrom=2023-01-01T00%3A00%3A00.000Z&periodTo=2023-07-28T00%3A00%3A00.000Z&itemsPerPage=100&pageNo=1' \
+--header 'x-signature: [ADDRESS:SIGNATURE]'
+```
+#### Sample Response
+
+```json
+[
+    {
+        "traderaddress": "0x720b7b64f5228a73aac1419d7b4f6b8ced62db41",
+        "orderid": "0x000000000000000000000000000000000000000000000000000000006c314119",
+        "tx": "0x02a193be60e7b0480ca70d0c3cb8efe1240c6f0b5ba7ba803a9486cdb3e439ba",
+        "pair": "ALOT/USDC",
+        "side": 0,
+        "type": "T",
+        "execid": 1643211314,
+        "execquantity": "5",
+        "execprice": "1.1276",
+        "fee": "0.01",
+        "feeunit": "ALOT",
+        "ts": "2023-01-28T10:03:14.000Z"
+    }
+]
+```
+
+#### Response Enumerations
+
+| **Field Name**  | **Values** |
+|-----------------|--------------|
+| side         | 0: BUY 1: SELL |
+| type         | T: TAKER, M: MAKER |

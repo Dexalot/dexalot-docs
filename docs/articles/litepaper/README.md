@@ -137,39 +137,39 @@ With the above said, the intention is to keep this period as short as practicall
 
 #### Roadmap
 
-    Q3 2021 - Testnet Launch
-    Q4 2021 - Mainnet launch with multisig wallet
-    Q2 2022 - Transition to governance
+    Q3 2021   - Testnet Launch
+    Q4 2021   - Mainnet launch with multisig wallet
+    Q2 2022   - Transition to governance
     Q2/3 2022 - Transition to subnet
 
-    Q1 2023 - Fuji Subnet Private Testing
-            - Fuji Subnet Public Testing
-            - User Incentive Program
-            - Yield Bearing Orders
-            - Subnet Smart Contract Audit
-            - Bug Bounties
-            - Subnet Production Deployment
-    Q2 2023 - Hummingbot Integration
-            - Dexalot Scholars
-            - Twitch stream converted to Spotify podcast
-            - Cyberstella $STL Listing Partnership
-            - Retired Dexalot Legacy Application
-            - Learn&Earn with Avalanche Hub
-            - Market Orders
-            - USDt/USDC Trade Pair
-    Q3 2023 - EUROC/USDC Trade Pair
-            - Trading Precision Improvements
-            - New Portfolio Page
-            - sAVAX/AVAX
-            - Retired Staking and Dropalot Contracts
-            - X(Tweet) to Claim
+    Q1 2023   - Fuji Subnet Private Testing
+              - Fuji Subnet Public Testing
+              - User Incentive Program
+              - Yield Bearing Orders
+              - Subnet Smart Contract Audit
+              - Bug Bounties
+              - Subnet Production Deployment
+    Q2 2023   - Hummingbot Integration
+              - Dexalot Scholars
+              - Twitch stream converted to Spotify podcast
+              - Cyberstella $STL Listing Partnership
+              - Retired Dexalot Legacy Application
+              - Learn&Earn with Avalanche Hub
+              - Market Orders
+              - USDt/USDC Trade Pair
+    Q3 2023   - EUROC/USDC Trade Pair
+              - Trading Precision Improvements
+              - New Portfolio Page
+              - sAVAX/AVAX Trade Pair
+              - Retired Staking and Dropalot Contracts
+              - X(Tweet) to Claim
     Future Plans
-            - Simple Swap
-            - Aggregators
-            - Multi-Chain
-            - New UI/UX
-            - Perpetuals
-            - Mobile App
+              - Simple Swap
+              - Aggregators
+              - Multi-Chain
+              - New UI/UX
+              - Perpetuals
+              - Mobile App
 
 
 

@@ -3,7 +3,7 @@ editLink: true
 ---
 
 # Road Map
-
+[Dexalot](https://dexalot.com/)
     Q3 2021   - Testnet Launch
     Q4 2021   - Mainnet launch with multisig wallet
 
@@ -11,7 +11,7 @@ editLink: true
     Q2/3 2022 - Transition to subnet
     Q4 2022   - Trading Cup Contest
               - Subnet Staking Incentive Launch
-              - Sample Bot
+              - [SampleBot](https://medium.com/dexalot/dexalots-sample-bot-8c90408ed244)
 
     Q1 2023   - Fuji Subnet Private Testing
               - Fuji Subnet Public Testing

@@ -7,8 +7,11 @@ editLink: true
 ![RoadMap](/images/roadmap/roadmp081623.png)
 
 **Q3 2021   - Testnet Launch**
+
 **Q4 2021   - Mainnet launch with multisig wallet**
+
 **Q2 2022   - Transition to governance**
+
 **Q2/3 2022 - Transition to subnet**
 
 **Q4 2022**
@@ -34,8 +37,11 @@ editLink: true
 [Order Modifiers](https://medium.com/dexalot/the-dexalot-subnet-order-modifiers-terms-b6cc9d5abab7)
 
 Fuji Subnet Private Testing
+
 Yield Bearing Orders
+
 Subnet Smart Contract Audit
+
 Subnet Production Deployment
 
 
@@ -80,8 +86,13 @@ X(Tweet) to Claim
 **Future Plans**
 
 Simple Swap
+
 Aggregators
+
 Multi-Chain
+
 New UI/UX
+
 Perpetuals
+
 Mobile App

@@ -60,7 +60,7 @@ export const enSidebarConfig = sidebar({
           link: "guide"
         },
         {
-          text: "RoadMap",
+          text: "Roadmap",
           icon: "book-open",
           link: "roadmap"
         }

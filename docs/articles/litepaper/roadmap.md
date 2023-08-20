@@ -2,9 +2,10 @@
 editLink: true
 ---
 
-# Road Map
+# Roadmap
 
-![RoadMap](/images/roadmap/roadmapheadlk.png)
+![Roadmap](/images/roadmap/roadmapheadlk.png#gh-light-mode-only)
+![Roadmap](/images/roadmap/roadmapheaddk.png#gh-dark-mode-only)
 
 **Q3 2021**
 

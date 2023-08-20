@@ -139,7 +139,6 @@ With the above said, the intention is to keep this period as short as practicall
 
     Q3 2021   - Testnet Launch
     Q4 2021   - Mainnet launch with multisig wallet
-    Q2 2022   - Transition to governance
     Q2/3 2022 - Transition to subnet
 
 [Complete Roadmap](./roadmap.md)

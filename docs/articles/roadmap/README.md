@@ -4,13 +4,11 @@ editLink: true
 
 # Road Map
 
-![RoadMap](/images/roadmap/roadmp081623.png)
+![RoadMap](/images/roadmap/roadmapheadlk.png)
 
 **Q3 2021   - Testnet Launch**
 
 **Q4 2021   - Mainnet launch with multisig wallet**
-
-**Q2 2022   - Transition to governance**
 
 **Q2/3 2022 - Transition to subnet**
 
@@ -36,14 +34,13 @@ editLink: true
 
 [Order Modifiers](https://medium.com/dexalot/the-dexalot-subnet-order-modifiers-terms-b6cc9d5abab7)
 
+[Subnet Smart Contract Audit](https://github.com/Dexalot/contracts/tree/main/audits)
+
+[Subnet Production Deployment](https://medium.com/dexalot/the-dexalot-subnet-guide-39b71d9788ae)
+
 Fuji Subnet Private Testing
 
 Yield Bearing Orders
-
-Subnet Smart Contract Audit
-
-Subnet Production Deployment
-
 
 **Q2 2023**
 
@@ -55,28 +52,28 @@ Subnet Production Deployment
 
 [Retired Dexalot Legacy Application](https://medium.com/dexalot/dexalot-single-chain-sunset-schedule-847f47091598)
 
-[USDt/USDC Trade Pair]()
+[USDt/USDC Trade Pair](https://medium.com/dexalot/dexalot-usdt-usdc-trading-1ff7478aab67)
 
-Learn&Earn with Avalanche Hub
+[Market Orders](https://medium.com/dexalot/dexalot-market-orders-1d05d0cc1239)
 
-Market Orders
+[Twitch stream converted to Spotify podcast](https://open.spotify.com/show/16T3rS6OD81K0SQDyllXwo)
 
-Twitch stream converted to Spotify podcast
+Monthly [Twitter(X)](https://twitter.com/dexalot) Space
 
-Monthly Twitter(X) Space
+Learn&Earn with [Avalanche Hub](https://avalanche-hub.com/)
 
 Gaming stream with Avalanche Gaming via Twitch
 
 
 **Q3 2023**
 
-[EUROC/USDC Trade Pair]()
+[EUROC/USDC Trade Pair](https://medium.com/dexalot/dexalot-euroc-usdc-trading-5627508ead11)
 
-[New Portfolio Page]()
+[New Portfolio Page](https://twitter.com/dexalot/status/1678771851122843659)
 
-[sAVAX/AVAX Trade Pair]()
+[sAVAX/AVAX Trade Pair](https://medium.com/dexalot/dexalot-savax-avax-trading-799657c34a15)
 
-[Retired Staking and Dropalot Contracts]()
+[Retired Staking and Dropalot Contracts](https://medium.com/dexalot/how-to-remove-alot-from-dexalots-staking-contracts-e949260d7500)
 
 Trading Precision Improvements
 

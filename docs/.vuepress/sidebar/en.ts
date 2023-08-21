@@ -58,11 +58,6 @@ export const enSidebarConfig = sidebar({
           text: "The Dexalot Subnet Guide",
           icon: "book-open",
           link: "guide"
-        },
-        {
-          text: "Roadmap",
-          icon: "book-open",
-          link: "roadmap"
         }
       ]
     },

@@ -7,19 +7,18 @@ editLink: true
 ![Roadmap](/images/roadmap/roadmapheadlk.png#gh-light-mode-only)
 ![Roadmap](/images/roadmap/roadmapheaddk.png#gh-dark-mode-only)
 
-**Q3 2021**
-
+## Q3 2021
  Testnet Launch
 
-**Q4 2021**
+## Q4 2021
 
 Mainnet launch with multisig wallet
 
-**Q2/3 2022**
+## Q2/3 2022
 
 Transition to subnet
 
-**Q4 2022**
+## Q4 2022
 
 [Trading Cup Contest](https://medium.com/dexalot/the-dexalot-trading-cup-8eb96aa72944)
 
@@ -27,7 +26,7 @@ Transition to subnet
 
 [SampleBot](https://medium.com/dexalot/dexalots-sample-bot-8c90408ed244)
 
-**Q1 2023**
+## Q1 2023
 
 [Fuji Subnet Public Testing](https://medium.com/dexalot/the-dexalot-subnet-public-testing-4bea8bc80521)
 
@@ -49,7 +48,7 @@ Fuji Subnet Private Testing
 
 Yield Bearing Orders
 
-**Q2 2023**
+## Q2 2023
 
 [Hummingbot Integration](https://medium.com/dexalot/dexalot-hummingbot-stepping-stones-part-iv-bd907958cc45)
 
@@ -72,7 +71,7 @@ Learn&Earn with [Avalanche Hub](https://avalanche-hub.com/)
 Gaming stream with Avalanche Gaming via Twitch
 
 
-**Q3 2023**
+## Q3 2023
 
 [EUROC/USDC Trade Pair](https://medium.com/dexalot/dexalot-euroc-usdc-trading-5627508ead11)
 
@@ -87,7 +86,7 @@ Trading Precision Improvements
 X(Tweet) to Claim
 
 
-**Future Plans**
+## Future Plans
 
 Simple Swap
 
@@ -100,3 +99,5 @@ New UI/UX
 Perpetuals
 
 Mobile App
+
+# [Litepaper](./README.md)

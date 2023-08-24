@@ -137,10 +137,11 @@ With the above said, the intention is to keep this period as short as practicall
 
 #### Roadmap
 
-    Q3 2021 - Testnet Launch
-    Q4 2021 - Mainnet launch with multisig wallet
-    Q2 2022 - Transition to governance
+    Q3 2021   - Testnet Launch
+    Q4 2021   - Mainnet launch with multisig wallet
     Q2/3 2022 - Transition to subnet
+
+[Complete Roadmap](./roadmap.md)
 
 #### Fees at Launch
 There will be no fees at the launch of Dexalot. Fees may change after the launch in line with the community and governance requirements.

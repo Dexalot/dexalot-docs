@@ -16,7 +16,7 @@ editLink: true
 
 ### Twitter
 
-[Dexalot Twitter account (https://twitter.com/dexalotcom)](https://twitter.com/dexalotcom)
+[Dexalot Twitter account (https://twitter.com/dexalot)](https://twitter.com/dexalot)
 
 ### Telegram
 

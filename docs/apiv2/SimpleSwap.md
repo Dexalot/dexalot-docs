@@ -71,6 +71,7 @@ You will need the contract address and abi details when performing the contract 
 ### 3. Request Simple Quote (optional)
 
 For standard price checks Simple Quote endpoint should be used.
+This request should contain x-apikey header in order to receive special prices defined for your channel.
 
 Endpoint (GET):
 ```
@@ -83,10 +84,11 @@ https://api.dexalot.com/api/rfq/pairprice
 | amount                | Y | The amount from which the quote will be calculated from |
 | isbase                | Y | 0/1 This parameter tells the quote provider what unit the amount has. For AVAX/USDC example where AVAX is base and USDC is the quote asset. If the trader wants to get price for 100 USDC worth trade, isbase parameter should be set to 0. System will calculate corresponding AVAX amount for 100 USDC to provide the quote.
 | side                  | Y | 0/1 e.g. for AVAX/USDC pair side should be 0 to buy AVAX and 1 for selling AVAX |
+| channel               | N | Reach out to Dexalot team to register your channel (coupled with an api-key) |
 
 Example Request:
 ```bash
-curl --location 'https://api.dexalot.com/api/rfq/pairprice?pair=AVAX/USDC&amount=120&side=1&isbase=1'
+curl --location 'https://api.dexalot.com/api/rfq/pairprice?pair=AVAX/USDC&amount=120&side=1&isbase=1' --header 'x-apikey: API_KEY'
 ```
 
 Sample success response:
@@ -116,6 +118,8 @@ Sample error response:
 
 Firm Quote endpoint will return a signature which contains trade details. This signature is only valid for the given trader address and will expire after a short period of time.
 
+This request should contain x-apikey header in order to receive special prices defined for your channel.
+
 Endpoint (GET):
 ```
 https://api.dexalot.com/api/rfq/firmQuote
@@ -128,11 +132,12 @@ https://api.dexalot.com/api/rfq/firmQuote
 | isbase                | Y | 0/1 This parameter tells the quote provider what unit the amount has. For AVAX/USDC example where AVAX is base and USDC is the quote asset. If the trader wants to get price for 100 USDC worth trade, isbase parameter should be set to 0. System will calculate corresponding AVAX amount for 100 USDC to provide the quote.
 | side                  | Y | 0/1 e.g. for AVAX/USDC pair side should be 0 to buy AVAX and 1 for selling AVAX |
 | address               | Y | Trader address: 0x05A1AAC00662ADda4Aa25E1FA658f4256ed881eD |
+| swapexecutor          | N | If specified this will be the taker address. If you will execute the swap on behalf of the trader this field should be set with your executor contract address.
 | channel               | Y | Reach out to Dexalot team to register your channel (coupled with an api-key) |
 
 Example Request:
 ```bash
-curl --location 'https://api.dexalot.com/api/rfq/firmQuote?pair=AVAX%2FUSDC&amount=100&side=1&isbase=1&address=0x05A1AAC00662ADda4Aa25E1FA658f4256ed881eD&channel=dexalot'
+curl --location 'https://api.dexalot.com/api/rfq/firmQuote?pair=AVAX%2FUSDC&amount=100&side=1&isbase=1&address=0x05A1AAC00662ADda4Aa25E1FA658f4256ed881eD&channel=dexalot' --header 'x-apikey: API_KEY'
 ```
 
 Sample success response:
@@ -196,4 +201,23 @@ Trader needs to invoke the "simpleSwap" function from the MainnetRFQ contract by
         uint256 makerAmount;
         uint256 takerAmount;
     }
+```
+Example Order Struct with descriptions:
+```typescript
+const order = {
+    nonceAndMeta: "0x05A1AAC00662ADda4Aa25E1FA658f4256ed881eDf5a6f2600000000000",
+    expiry: 1693940508,
+    // destination token (USDC)
+    makerAsset: "0x68B773B8C10F2ACE8aC51980A1548B6B48a2eC54",
+    // source token (AVAX)
+    takerAsset: "0x0000000000000000000000000000000000000000",
+    // mainnetRFQ contract address
+    maker: "0x4C72Cd84BB81beD576B162A323f7842c863ab711",
+    // address of contract/trader invoking swap
+    taker: "0x05A1AAC00662ADda4Aa25E1FA658f4256ed881eD",
+    // destination amount (USDC)
+    makerAmount: "1021956420",
+    // source amount (AVAX)
+    takerAmount: "100000000000000000000"
+};
 ```

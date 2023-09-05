@@ -176,3 +176,24 @@ Sample error response:
 ```
 
 ### 5. Execute Swap
+
+Trader needs to invoke the "simpleSwap" function from the MainnetRFQ contract by passing Order and Signature data (Please check step 2 for contract details).
+
+```solidity
+    function simpleSwap(Order calldata _order, bytes calldata _signature)
+```
+
+**Order** Struct:
+```solidity
+    // firm order data structure sent to user from RFQ API
+    struct Order {
+        uint256 nonceAndMeta;
+        uint128 expiry;
+        address makerAsset;
+        address takerAsset;
+        address maker;
+        address taker;
+        uint256 makerAmount;
+        uint256 takerAmount;
+    }
+```

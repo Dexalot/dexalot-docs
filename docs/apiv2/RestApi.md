@@ -192,6 +192,7 @@ curl --location 'https://api.dexalot-test.com/privapi/trading/pairs'
         "maxtrade_amnt": "4000.000000000000000000",
         "base_evmdecimals": 18,
         "quote_evmdecimals": 18,
+        "allowswap": true,
         "auctionmode": 0,
         "auctionendtime": null,
         "status": "deployed"

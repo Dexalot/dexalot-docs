@@ -10,9 +10,9 @@ editLink: true
 
 Dexalot provides the Simple Swap flow to make trading easier for our users. Using the Simple Swap feature a user can get Firm Quotes from Dexalot Simple Swap Service. A Firm Quote is a signed trade commitment provided by Dexalot given for a specific trader address for a limited amount of time.
 
-Using this signature a user may chose to execute the trade by interacting with Dexalot MainnetRFQ contract deployed on Avalanche C-Chain whuch results in swapping the promised assets in a single contract invocation.
+Using this signature a user may choose to execute the trade by interacting with Dexalot MainnetRFQ contract deployed on Avalanche C-Chain which results in swapping the promised assets in a single contract invocation.
 
-> **Warning**: Getting a Firm Quote will allocate the liquidity to you for a specific amount of time, so in order to provide fair use of the service we are tracking Firm Qutoe requests and may blacklist the requester if we see FirmQuote requests without any executions. Firm Quote endpoint should only be used when trader intends to execute on the trade.
+> **Warning**: Getting a Firm Quote will allocate the liquidity to you for a specific amount of time, so in order to provide fair use of the service we are tracking Firm Quote requests and may blacklist the requester if there are too many FirmQuote requests without any executions. Firm Quote endpoint should only be used when trader intends to execute on the trade.
 
 ## Integration Steps
 

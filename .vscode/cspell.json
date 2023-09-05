@@ -1,0 +1,38 @@
+{
+        "language": "en",
+        "maxNumberOfProblems": 100,
+        "numSuggestions": 5,
+        "minWordLength": 3,
+        "caseSensitive": true,
+        "enabledLanguageIds": [
+            "go",
+            "javascript",
+            "markdown",
+            "plaintext",
+            "typescript",
+            "yml",
+            "solidity",
+            "vue",
+            "css",
+            "html"
+        ],
+        "enabled": true,
+        "allowCompoundWords": true,
+        "ignorePaths": [
+            "node_modules",
+            ".git"
+        ],
+        "dictionaryDefinitions": [
+            { "name": "project-terms", "path": "./dictionaries/project-terms-en.txt"}
+        ],
+        "dictionaries": [
+            "project-terms"
+        ],
+        "patterns": [
+            {
+                "name": "error-codes",
+                "pattern": "/[A-Z]{1,2}-[A-Z]{4}-[0-9]{2}/g"
+            }
+        ],
+        "ignoreRegExpList": ["error-codes"]
+}

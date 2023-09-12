@@ -126,13 +126,15 @@ This request should contain x-apikey header in order to receive special prices d
 
 For this endpoint Taker and Maker terms are defined as follows:
 Dexalot RFQ contract is always the maker and the trader is always the taker.
+For a valid quote either takerAmount (for a sell swap) or makerAmount (for a buy swap) must be provided.
 
 | **Field Name**        | **Required** | **Sample Value**                      |
 |---------------------- |--------------|------------------------------------   |
-| takerAsset            | Y | The ERC20 address of the asset Taker (The trader) is providing to the trade |
-| makerAsset            | Y | The ERC20 address of the asset Maker (Dexalot RFQ Contract) is providing to the trade |
-| takerAmount           | Y | The amount of taker asset for the trade. Should be multiplied by evm_decimals of the taker asset. e.g. for USDC evm_decimals = 6, for a 100 USD trade this number should be 100000000 |
-| userAddress               | Y | Trader address: 0x05A1AAC00662ADda4Aa25E1FA658f4256ed881eD |
+| takerAsset            | Y | The ERC20 address of the asset Taker (The trader) is providing to the trade (source token) |
+| makerAsset            | Y | The ERC20 address of the asset Maker (Dexalot RFQ Contract) is providing to the trade (destination token) |
+| takerAmount           | N | The amount of taker asset for the trade, provided for a sell swap. Should be multiplied by evm_decimals of the taker asset. e.g. for USDC evm_decimals = 6, for a 100 USD trade this number should be 100000000 |
+| makerAmount           | N | The amount of maker asset for the trade, provided for a buy swap. Should be multiplied by evm_decimals of the maker asset. e.g. for AVAX evm_decimals = 18, for a 100 AVAX trade this number should be 100000000000000000000 |
+| userAddress           | Y | Trader address: 0x05A1AAC00662ADda4Aa25E1FA658f4256ed881eD |
 
 Endpoint (POST):
 ```

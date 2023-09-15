@@ -10,9 +10,9 @@ export const viSidebarConfig = sidebar({
       prefix: "/vi/articles/",
       children: [
         {
-          text: "Dexalot Trading Cup",
+          text: "Dexalot Subnet",
           icon: "book-open",
-          link: "cup"
+          link: "subnet"
         },
         {
           text: "Chương trình khuyến khích Dexalot",
@@ -20,17 +20,12 @@ export const viSidebarConfig = sidebar({
           link: "dip"
         },
         {
-          text: "The Dexalot Subnet",
-          icon: "book-open",
-          link: "subnet"
-        },
-        {
           text: "Khám phá Dexalot",
           icon: "book-open",
           link: "discovery"
         },
         {
-          text: "Dexalot khởi chạy chương trình khuyến khích Subnet Staking",
+          text: "Cam kết khuyến khích của Dexalot",
           icon: "book-open",
           link: "incentives"
         },
@@ -47,6 +42,11 @@ export const viSidebarConfig = sidebar({
           text: "Ảnh chụp số dư tài sản của Dexalot",
           icon: "book-open",
           link: "abs"
+        },
+        {
+          text: "Dexalot Trading Cup",
+          icon: "book-open",
+          link: "cup"
         },
         {
           text: "Hướng dẫn Dexalot Subnet",

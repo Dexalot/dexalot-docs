@@ -4,7 +4,7 @@
   "license": "SEE LICENSE IN LICENSE.txt",
   "private": true,
   "engines": {
-    "node": "18.16.0"
+    "node": "16.15.1"
   },
   "scripts": {
     "lint-ts-check": "./node_modules/.bin/eslint . --ext .ts",

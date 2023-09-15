@@ -147,3 +147,4 @@ via the RESTAPI nor WS.
 * [Rest Api](/apiv2/RestApi.md)
 * [Contracts](/apiv2/Contracts.md)
 * [Websocket](/apiv2/Websocket.md)
+* [SimpleSwap](/apiv2/SimpleSwap.md)

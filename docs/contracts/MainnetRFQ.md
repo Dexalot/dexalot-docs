@@ -22,12 +22,12 @@ not properly represent the liquidity of the Dexalot subnet.
 
 ## Struct Types
 
-### Quote
+### Order
 
 ```solidity
-struct Quote {
+struct Order {
   uint256 nonceAndMeta;
-  uint256 expiry;
+  uint128 expiry;
   address makerAsset;
   address takerAsset;
   address maker;
@@ -45,12 +45,10 @@ struct Quote {
 | --- | --- |
 | REBALANCER_ADMIN_ROLE | bytes32 |
 | VERSION | bytes32 |
-| quoteMakerAmountUpdated | mapping(uint256 &#x3D;&gt; uint256) |
-| quoteExpiryUpdated | mapping(uint256 &#x3D;&gt; uint256) |
+| orderMakerAmountUpdated | mapping(uint256 &#x3D;&gt; uint256) |
+| orderExpiryUpdated | mapping(uint256 &#x3D;&gt; uint256) |
 | swapSigner | address |
 | slippageTolerance | uint256 |
-| trustedContracts | mapping(address &#x3D;&gt; bool) |
-| trustedContractToIntegrator | mapping(address &#x3D;&gt; string) |
 
 ### Internal
 
@@ -116,6 +114,29 @@ event SlippageToleranceUpdated(uint256 newSlippageTolerance)
 
 ## Methods
 
+### Public
+
+#### isValidSignature
+
+Verifies Signature in accordance of ERC1271 standard
+
+```solidity:no-line-numbers
+function isValidSignature(bytes32 _hash, bytes _signature) public view returns (bytes4)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _hash | bytes32 | Hash of order data |
+| _signature | bytes | Signature of trade parameters generated from /api/rfq/firm |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | bytes4 | bytes4   The Magic Value based on ERC1271 standard. 0x1626ba7e represents a valid signature, while 0x00000000 represents an invalid signature. |
+
 ### External
 
 #### initialize
@@ -123,9 +144,9 @@ event SlippageToleranceUpdated(uint256 newSlippageTolerance)
 initializer function for Upgradeable RFQ
 
 **Dev notes:** \
-slippageTolerance is initially set to 9700. slippageTolerance is represented in BIPs,
-therefore slippageTolerance is effectively set to 97%. This means that the price of a firm quote
-can not drop more than 3% initially.
+slippageTolerance is initially set to 9800. slippageTolerance is represented in BIPs,
+therefore slippageTolerance is effectively set to 98%. This means that the price of a firm quote
+can not drop more than 2% initially.
 
 ```solidity:no-line-numbers
 function initialize(address _swapSigner) external
@@ -137,9 +158,17 @@ function initialize(address _swapSigner) external
 | ---- | ---- | ----------- |
 | _swapSigner | address | Address of swap signer, rebalancer is also defaulted to swap signer but it can be changed later |
 
+#### receive
+
+Used to rebalance native token on rfq contract
+
+```solidity:no-line-numbers
+receive() external payable
+```
+
 #### simpleSwap
 
-Swaps two Assets, based off a predetermined swap price.
+Swaps two assets for another smart contract or EOA, based off a predetermined swap price.
 
 **Dev notes:** \
 This function can only be called after generating a firm quote from the RFQ API.
@@ -147,38 +176,38 @@ All parameters are generated from the RFQ API. Prices are determined based off o
 prices from the Dexalot subnet.
 
 ```solidity:no-line-numbers
-function simpleSwap(struct MainnetRFQ.Quote _quote, bytes _signature) external payable
+function simpleSwap(struct MainnetRFQ.Order _order, bytes _signature) external payable
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _quote | struct MainnetRFQ.Quote | Trade parameters for swap generated from /api/rfq/firm |
+| _order | struct MainnetRFQ.Order | Trade parameters for swap generated from /api/rfq/firm |
 | _signature | bytes | Signature of trade parameters generated from /api/rfq/firm |
 
-#### updateQuoteExpiry
+#### updateOrderExpiry
 
-Updates the expiry of a quote. The new expiry
+Updates the expiry of a order. The new expiry
 is the deadline a trader has to execute the swap.
 
 **Dev notes:** \
 Only rebalancer can call this function.
 
 ```solidity:no-line-numbers
-function updateQuoteExpiry(uint256 _nonceAndMeta, uint256 _newExpiry) external
+function updateOrderExpiry(uint256 _nonceAndMeta, uint256 _newExpiry) external
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _nonceAndMeta | uint256 | nonce of quote |
-| _newExpiry | uint256 | new expiry for quote |
+| _nonceAndMeta | uint256 | nonce of order |
+| _newExpiry | uint256 | new expiry for order |
 
-#### updateQuoteMakerAmount
+#### updateOrderMakerAmount
 
-Updates the makerAmount of a quote.
+Updates the makerAmount of a order.
 The new makerAmount can not be lower than the percentage
 of slippageTolerance from the previous quoted price.
 
@@ -186,20 +215,20 @@ of slippageTolerance from the previous quoted price.
 Only rebalancer can call this function.
 
 ```solidity:no-line-numbers
-function updateQuoteMakerAmount(uint256 _nonceAndMeta, uint256 _newMakerAmount, uint256 _oldMakerAmount) external
+function updateOrderMakerAmount(uint256 _nonceAndMeta, uint256 _newMakerAmount, uint256 _oldMakerAmount) external
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _nonceAndMeta | uint256 | nonce of quote |
-| _newMakerAmount | uint256 | new makerAmount for quote |
+| _nonceAndMeta | uint256 | nonce of order |
+| _newMakerAmount | uint256 | new makerAmount for order |
 | _oldMakerAmount | uint256 |  |
 
 #### setSlippageTolerance
 
-Updates the slippageTolerance for a quote update.
+Updates the slippageTolerance for a order update.
 i.e. slippageTolerance = 9700 (97%), _oldMakerAmount = 100
 _newMakerAmount must be greater than if not equal to 97
 97 = 100 * 9700 / 10000
@@ -264,6 +293,8 @@ function removeRebalancer(address _address) external virtual
 
 #### isRebalancer
 
+Checks if address has Rebalancer Admin role
+
 ```solidity:no-line-numbers
 function isRebalancer(address _address) external view returns (bool)
 ```
@@ -310,6 +341,8 @@ function removeAdmin(address _address) external virtual
 
 #### isAdmin
 
+Checks if address has Default Admin role
+
 ```solidity:no-line-numbers
 function isAdmin(address _address) external view returns (bool)
 ```
@@ -325,59 +358,6 @@ function isAdmin(address _address) external view returns (bool)
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | bool | bool    true if address has Default Admin role |
-
-#### addTrustedContract
-
-Adds the given contract to trusted contracts in order to provide excluded functionality
-
-**Dev notes:** \
-Only callable by admin
-
-```solidity:no-line-numbers
-function addTrustedContract(address _contract, string _organization) external
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _contract | address | Address of the contract to be added |
-| _organization | string | Organization of the contract to be added |
-
-#### removeTrustedContract
-
-Removes the given contract from trusted contracts
-
-**Dev notes:** \
-Only callable by admin
-
-```solidity:no-line-numbers
-function removeTrustedContract(address _contract) external
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _contract | address | Address of the contract to be removed |
-
-#### isTrustedContract
-
-```solidity:no-line-numbers
-function isTrustedContract(address _contract) external view returns (bool)
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _contract | address | Address of the contract |
-
-##### Return values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bool | bool  True if the contract is trusted |
 
 #### pause
 
@@ -437,12 +417,102 @@ function batchClaimBalance(address[] _assets, uint256[] _amounts) external
 | _assets | address[] | Array of addresses of the assets to be withdrawn |
 | _amounts | uint256[] | Array of amounts of assets to be withdrawn |
 
-#### receive
+### Private
 
-**Dev notes:** \
-Used to rebalance rfq contract
+#### _recoverSigner
+
+Helper function used to verify signature
 
 ```solidity:no-line-numbers
-receive() external payable
+function _recoverSigner(bytes32 _messageHash, bytes _signature) private pure returns (address)
 ```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _messageHash | bytes32 | Hash of order data |
+| _signature | bytes | Signature of trade parameters generated from /api/rfq/firm |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | address | signer   The address of the signer of the signature. |
+
+#### _verifyTradeNotProcessed
+
+Verifies that a transaction has not been traded already.
+
+```solidity:no-line-numbers
+function _verifyTradeNotProcessed(struct MainnetRFQ.Order _order) private
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _order | struct MainnetRFQ.Order | Trade parameters for swap generated from /api/rfq/firm |
+
+#### _calculateOrderDigest
+
+Calculates the digest of the transaction's order.
+
+**Dev notes:** \
+The digest is then used to determine the validity of the signature passed
+to a swap function.
+
+```solidity:no-line-numbers
+function _calculateOrderDigest(struct MainnetRFQ.Order _order) private view returns (bytes32)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _order | struct MainnetRFQ.Order | Trade parameters for swap generated from /api/rfq/firm |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | bytes32 | bytes32   The digest of the _order. |
+
+#### _verifyTradeParameters
+
+Checks if the trade parameters have been updated. If so,
+this function updates the parameters for the trade. Additionally, this
+function checks if the trade expiry has past.
+
+```solidity:no-line-numbers
+function _verifyTradeParameters(struct MainnetRFQ.Order _order) private view returns (uint256)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _order | struct MainnetRFQ.Order | Trade parameters for swap generated from /api/rfq/firm |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | uint256 | uint256 The proper makerAmount to use for the trade. |
+
+#### _executeSwap
+
+Handles the exchange of assets based on swap type and
+if the assets are ERC-20's or native tokens.
+
+```solidity:no-line-numbers
+function _executeSwap(struct MainnetRFQ.Order _order, uint256 _makerAmount) private
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _order | struct MainnetRFQ.Order | Trade parameters for swap generated from /api/rfq/firm |
+| _makerAmount | uint256 | the proper makerAmount for the trade |
 

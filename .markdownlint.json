@@ -1,0 +1,7 @@
+{
+    "line-length": false,
+    "no-hard-tabs": true,
+    "no-duplicate-header": false,
+    "no-emphasis-as-header": false,
+    "MD003": { "style": "consistent" }
+}

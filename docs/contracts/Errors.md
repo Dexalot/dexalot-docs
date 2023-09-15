@@ -1,3 +1,5 @@
+# Mapping of Error Codes and Messages
+
 The error messages can be retrieved programmatically using [get-revert-reason](/apiv2/Contracts.html#get-revert-reason).
 
 ## Airdrop
@@ -252,21 +254,27 @@ R-TIEM-02: target is empty
 
 RF-ALOA-01: at least one account needed in admin group
 
+RF-BCAM-01: batch claim array mismatch
+
 RF-IMS-01: invalid msg.sender
 
 RF-IMV-01: invalid msg.value
 
 RF-IN-01: invalid nonce
 
-RF-IS-01: invalid signature
+RF-IS-01: invalid order signature
 
 RF-OCR-01: only callable by rebalancer
 
-RF-QE-01: quote expired
+RF-QE-01: quote expired due to manual override
+
+RF-QE-02: quote expired due to block ts
 
 RF-SAZ-01: set address to zero
 
 RF-TF-01: transfer failed
+
+RF-TF-02: transfer failed
 
 ## Staking
 

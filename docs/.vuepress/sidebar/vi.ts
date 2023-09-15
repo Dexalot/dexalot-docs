@@ -15,14 +15,14 @@ export const viSidebarConfig = sidebar({
           link: "subnet"
         },
         {
+          text: "Hướng dẫn Dexalot Subnet",
+          icon: "book-open",
+          link: "guide"
+        },
+        {
           text: "Chương trình khuyến khích Dexalot",
           icon: "book-open",
           link: "dip"
-        },
-        {
-          text: "Khám phá Dexalot",
-          icon: "book-open",
-          link: "discovery"
         },
         {
           text: "Cam kết khuyến khích của Dexalot",
@@ -30,11 +30,7 @@ export const viSidebarConfig = sidebar({
           link: "incentives"
         },
         {
-          text: "Dexalot's Sample Bot",
-          icon: "book-open",
-          link: "samplebot"
-        },
-        {text: "Dexalot x LayerZero",
+          text: "Dexalot x LayerZero",
           icon: "book-open",
           link: "layerzero"
         },
@@ -44,14 +40,19 @@ export const viSidebarConfig = sidebar({
           link: "abs"
         },
         {
+          text: "Khám phá Dexalot",
+          icon: "book-open",
+          link: "discovery"
+        },
+        {
+          text: "Dexalot's Sample Bot",
+          icon: "book-open",
+          link: "samplebot"
+        },
+        {
           text: "Dexalot Trading Cup",
           icon: "book-open",
           link: "cup"
-        },
-        {
-          text: "Hướng dẫn Dexalot Subnet",
-          icon: "book-open",
-          link: "guide"
         }
       ]
     },

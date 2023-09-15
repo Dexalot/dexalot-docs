@@ -10,9 +10,14 @@ export const trSidebarConfig = sidebar({
       prefix: "/tr/articles/",
       children: [
         {
-          text: "Dexalot Ticaret Kupası",
+          text: "Dexalot Subnet",
           icon: "book-open",
-          link: "cup"
+          link: "subnet"
+        },
+        {
+          text: "Dexalot Subnet Rehberi",
+          icon: "book-open",
+          link: "guide"
         },
         {
           text: "Dexalot Teşvik Programı",
@@ -20,9 +25,18 @@ export const trSidebarConfig = sidebar({
           link: "dip"
         },
         {
-          text: "Dexalot Subnet",
+          text: "Dexalot Teşvik Taahhütleri",
           icon: "book-open",
-          link: "subnet"
+          link: "incentives"
+        },
+        {text: "Dexalot x LayerZero",
+        icon: "book-open",
+        link: "layerzero"
+        },
+        {
+        text: "Dexalot’un Asset Balance Snapshot’ı",
+        icon: "book-open",
+        link: "abs"
         },
         {
           text: "Dexalot Discovery",
@@ -30,28 +44,14 @@ export const trSidebarConfig = sidebar({
           link: "discovery"
         },
         {
-          text: "Dexalot Subnet Staking Teşvik Lansmanı",
-          icon: "book-open",
-          link: "incentives"
-        },
-        {
           text: "Dexalot’un Örnek Botu",
           icon: "book-open",
           link: "samplebot"
         },
-        {text: "Dexalot x LayerZero",
-          icon: "book-open",
-          link: "layerzero"
-        },
         {
-          text: "Dexalot’un Asset Balance Snapshot’ı",
+          text: "Dexalot Ticaret Kupası",
           icon: "book-open",
-          link: "abs"
-        },
-        {
-          text: "Dexalot Subnet Rehberi",
-          icon: "book-open",
-          link: "guide"
+          link: "cup"
         }
       ]
     },

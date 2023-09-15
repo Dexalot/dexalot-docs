@@ -215,6 +215,10 @@ export const enSidebarConfig = sidebar({
           text: "Websocket",
           link: "Websocket"
         },
+        {
+          text: "SimpleSwap",
+          link: "SimpleSwap"
+        },
       ]
     },
 

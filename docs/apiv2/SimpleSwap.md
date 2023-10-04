@@ -327,9 +327,27 @@ If trader is an Externally Owned Account they can sign the tx object returned by
 
 For example using ethers5:
 ```javascript
-    const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
+    const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
     const tx = await wallet.sendTransaction(firmResponse.tx);
     await tx.wait();
+```
+
+For example using web3.js:
+```javascript
+    const web3 = new Web3(provider)
+    const account = web3.eth.accounts.wallet.add(PRIVATE_KEY).get(0);
+    await web3.eth.sendTransaction({ from: account?.address, ...firmResponse.tx });
+```
+
+For example using web3.py:
+```python
+    w3 = Web3(provider)
+    account = w3.eth.account.from_key(PRIVATE_KEY);
+    tx_hash = w3.eth.send_transaction({
+        "from": account,
+        "to": firmResponse["tx"]["to"],
+        "value": firmResponse["tx"]["value"]
+    })
 ```
 
 Alternatively if the trader is a smart contract the MainnetRFQ contract can be called by the smart contract using `tx.to` as the caller, `tx.value` as the value to send and `tx.data` as the calldata.

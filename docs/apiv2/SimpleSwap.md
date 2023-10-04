@@ -85,7 +85,7 @@ Example Response:
 
 You may need the contract address and abi details when performing the contract call in the final step.
 
-### 3. Request Simple Quote (optional)
+### 3a. Request Simple Quote (optional)
 
 For standard price checks Simple Quote endpoint should be used.
 This request should contain x-apikey header in order to receive special prices defined for your channel.
@@ -130,6 +130,139 @@ Sample error response:
 }
 ```
 
+### 3b. Request Batched Quotes (optional)
+
+For aggregators that require rate fetched prices, Prices endpoint should be used.
+This request should contain x-apikey header in order to receive special prices defined for your channel.
+
+Endpoint (GET):
+```
+https://api.dexalot.com/api/rfq/prices
+```
+
+| **Field Name**        | **Required** | **Sample Value**                      |
+|---------------------- |--------------|------------------------------------   |
+| chainid               | Y | \[43114 ...\] |
+| channel               | N | Reach out to Dexalot team to register your channel (coupled with an api-key) |
+
+Example Request:
+```bash
+curl --location 'https://api.dexalot.com/api/rfq/prices?chainid=43114' --header 'x-apikey: API_KEY'
+```
+
+Response Types:
+```js
+{
+	prices: {
+		[pairName]: {
+			bids: [
+				[basePrice: string, quoteAmount: string],
+				...,
+            ],
+			asks: [
+				[basePrice: string, quoteAmount: string],
+				...,
+			]
+		},
+        ...
+    }
+}
+```
+
+Response Types:
+```json
+{
+	"prices": {
+		"AVAX/USDC": {
+			"bids": [
+				["9.778706198423064067", "0.000000"],
+				["9.778705050924842728", "9.778705"],
+				["9.778694723440850672", "97.786947"],
+            ],
+			"asks": [
+				["9.782618067277720067", "0.000000"],
+				["9.782619214775941407", "9.782619"],
+				["9.782629542259933463", "97.826295"],
+			]
+		},
+    }
+}
+```
+
+This endpoint returns a set of quotes ordered by `quoteAmount` from 0 to the maximum quote amount. To get the price of an input amount `a`, binary search through the quotes to find the two quotes at which `a` sits between. Using these quotes a weighted price can be calculated for `a`, once multiplied will result in the output amount. If `a` exceeds all quotes then return the last `quoteAmount` and `price`. This logic is illustrated in the below snippet:
+
+```js
+function calculateOrderPrice(
+  amounts: bigint[],
+  orderbook: string[][],
+  baseToken: Token,
+  quoteToken: Token,
+  side: ClobSide,
+) {
+ let result = [];
+
+ for (let i = 0; i < amounts.length; i++) {
+   let amt = amounts[i];
+   if (amt === 0n) {
+     result.push(amt);
+     continue;
+   }
+
+   let left = 0, right = orderbook.length;
+   let qty = BigInt(0);
+
+   while (left < right){
+     let mid = Math.floor((left + right)/2);
+     qty = BigInt(ethers.utils.parseUnits(orderbook[mid][1], quoteToken.decimals).toString());
+     if (side === ClobSide.ASK) {
+       const price = BigInt(ethers.utils.parseUnits(orderbook[mid][0], baseToken.decimals).toString());
+       qty = (qty * BigInt(10 ** (baseToken.decimals * 2))) / (price * BigInt(10 ** quoteToken.decimals));
+     }
+     if (qty <= amt) {
+       left = mid + 1;
+     } else {
+       right = mid;
+     }
+   }
+
+   let price, amount = BigInt(0);
+   if (left === orderbook.length) {
+     price = BigInt(ethers.utils.parseUnits(orderbook[left - 1][0], baseToken.decimals).toString());
+     amount = qty
+   } else if (amounts[i] === qty) {
+     price = BigInt(ethers.utils.parseUnits(orderbook[left][0], baseToken.decimals).toString());
+     amount = amounts[i];
+   } else {
+     const lPrice = BigInt(ethers.utils.parseUnits(orderbook[left][0], baseToken.decimals).toString());
+     const rPrice = BigInt(ethers.utils.parseUnits(orderbook[left+1][0], baseToken.decimals).toString());
+     const lQty = qty;
+     let rQty = BigInt(ethers.utils.parseUnits(orderbook[left+1][1], quoteToken.decimals).toString());
+     if (side === ClobSide.ASK) {
+       rQty = (rQty * rPrice) / BigInt(10 ** quoteToken.decimals);
+     }
+     price = lPrice + (rPrice - lPrice) * (amt - lQty) / (rQty - lQty);
+     amount = amounts[i];
+   }
+
+   if (side === ClobSide.BID) {
+     result.push((amount * BigInt(10 ** (baseToken.decimals * 2))) / (price * BigInt(10 ** quoteToken.decimals)));
+   } else {
+     result.push((price * amount * BigInt(10 ** quoteToken.decimals)) / BigInt(10 ** (baseToken.decimals * 2)));
+   }
+ }
+ return result;
+}
+
+// SELL AVAX USDC
+const outputAmounts = calculateOrderPrice(inputAmounts, resp.prices["AVAX/USDC"].bids, baseToken, quoteToken, ClobSide.ASK)
+// SELL USDC AVAX
+const outputAmounts = calculateOrderPrice(inputAmounts, resp.prices["AVAX/USDC"].asks, baseToken, quoteToken, ClobSide.BID)
+// BUY AVAX USDC
+const outputAmounts = calculateOrderPrice(inputAmounts, resp.prices["AVAX/USDC"].asks, baseToken, quoteToken, ClobSide.BID)
+// BUY USDC AVAX
+const outputAmounts = calculateOrderPrice(inputAmounts, resp.prices["AVAX/USDC"].bids, baseToken, quoteToken, ClobSide.ASK)
+```
+
 ### 4 Request Firm Quote
 > **Warning**: Frequently calling this endpoint with no executions may cause the trader to get banned.
 
@@ -157,7 +290,7 @@ https://api.dexalot.com/api/rfq/firm
 Req Body:
 ```json
 {
-    "chainId": 43114,
+    "chainid": 43114,
     "takerAsset": "0xTOKEN_ADDRESS_TAKER",
     "makerAsset": "0xTOKEN_ADDRESS_MAKER",
     "takerAmount": "200000000",

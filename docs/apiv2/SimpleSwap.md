@@ -85,7 +85,7 @@ Example Response:
 
 You may need the contract address and abi details when performing the contract call in the final step.
 
-### 3. Request Simple Quote (optional)
+### 3a. Request Simple Quote (optional)
 
 For standard price checks Simple Quote endpoint should be used.
 This request should contain x-apikey header in order to receive special prices defined for your channel.
@@ -130,6 +130,139 @@ Sample error response:
 }
 ```
 
+### 3b. Request Batched Quotes (optional)
+
+For aggregators that require rate fetched prices, Prices endpoint should be used.
+This request should contain x-apikey header in order to receive special prices defined for your channel.
+
+Endpoint (GET):
+```
+https://api.dexalot.com/api/rfq/prices
+```
+
+| **Field Name**        | **Required** | **Sample Value**                      |
+|---------------------- |--------------|------------------------------------   |
+| chainid               | Y | \[43114 ...\] |
+| channel               | N | Reach out to Dexalot team to register your channel (coupled with an api-key) |
+
+Example Request:
+```bash
+curl --location 'https://api.dexalot.com/api/rfq/prices?chainid=43114' --header 'x-apikey: API_KEY'
+```
+
+Response Types:
+```js
+{
+    prices: {
+        [pairName]: {
+            bids: [
+                [basePrice: string, quoteAmount: string],
+                ...,
+            ],
+            asks: [
+                [basePrice: string, quoteAmount: string],
+                ...,
+            ]
+        },
+        ...
+    }
+}
+```
+
+Response Types:
+```json
+{
+    "prices": {
+        "AVAX/USDC": {
+            "bids": [
+                ["9.778706198423064067", "0.000000"],
+                ["9.778705050924842728", "9.778705"],
+                ["9.778694723440850672", "97.786947"],
+            ],
+            "asks": [
+                ["9.782618067277720067", "0.000000"],
+                ["9.782619214775941407", "9.782619"],
+                ["9.782629542259933463", "97.826295"],
+            ]
+      },
+    }
+}
+```
+
+This endpoint returns a set of quotes ordered by `quoteAmount` from 0 to the maximum quote amount. To get the price of an input amount `a`, binary search through the quotes to find the two quotes at which `a` sits between. Using these quotes a weighted price can be calculated for `a`, once multiplied will result in the output amount. If `a` exceeds all quotes then return the last `quoteAmount` and `price`. This logic is illustrated for an array of amounts in the below snippet:
+
+```js
+function calculateOrderPrice(
+  amounts: bigint[],
+  orderbook: string[][],
+  baseToken: Token,
+  quoteToken: Token,
+  side: ClobSide,
+) {
+ let result = [];
+
+ for (let i = 0; i < amounts.length; i++) {
+   let amt = amounts[i];
+   if (amt === 0n) {
+     result.push(amt);
+     continue;
+   }
+
+   let left = 0, right = orderbook.length;
+   let qty = BigInt(0);
+
+   while (left < right){
+     let mid = Math.floor((left + right)/2);
+     qty = BigInt(ethers.utils.parseUnits(orderbook[mid][1], quoteToken.decimals).toString());
+     if (side === ClobSide.ASK) {
+       const price = BigInt(ethers.utils.parseUnits(orderbook[mid][0], baseToken.decimals).toString());
+       qty = (qty * BigInt(10 ** (baseToken.decimals * 2))) / (price * BigInt(10 ** quoteToken.decimals));
+     }
+     if (qty <= amt) {
+       left = mid + 1;
+     } else {
+       right = mid;
+     }
+   }
+
+   let price, amount = BigInt(0);
+   if (left === orderbook.length) {
+     price = BigInt(ethers.utils.parseUnits(orderbook[left - 1][0], baseToken.decimals).toString());
+     amount = qty
+   } else if (amounts[i] === qty) {
+     price = BigInt(ethers.utils.parseUnits(orderbook[left][0], baseToken.decimals).toString());
+     amount = amounts[i];
+   } else {
+     const lPrice = BigInt(ethers.utils.parseUnits(orderbook[left][0], baseToken.decimals).toString());
+     const rPrice = BigInt(ethers.utils.parseUnits(orderbook[left+1][0], baseToken.decimals).toString());
+     const lQty = qty;
+     let rQty = BigInt(ethers.utils.parseUnits(orderbook[left+1][1], quoteToken.decimals).toString());
+     if (side === ClobSide.ASK) {
+       rQty = (rQty * rPrice) / BigInt(10 ** quoteToken.decimals);
+     }
+     price = lPrice + (rPrice - lPrice) * (amt - lQty) / (rQty - lQty);
+     amount = amounts[i];
+   }
+
+   if (side === ClobSide.BID) {
+     result.push((amount * BigInt(10 ** (baseToken.decimals * 2))) / (price * BigInt(10 ** quoteToken.decimals)));
+   } else {
+     result.push((price * amount * BigInt(10 ** quoteToken.decimals)) / BigInt(10 ** (baseToken.decimals * 2)));
+   }
+ }
+ return result;
+}
+
+// SELL AVAX USDC
+const outputAmounts = calculateOrderPrice(inputAmounts, resp.prices["AVAX/USDC"].bids, baseToken, quoteToken, ClobSide.ASK)
+// SELL USDC AVAX
+const outputAmounts = calculateOrderPrice(inputAmounts, resp.prices["AVAX/USDC"].asks, baseToken, quoteToken, ClobSide.BID)
+// BUY AVAX USDC
+const outputAmounts = calculateOrderPrice(inputAmounts, resp.prices["AVAX/USDC"].asks, baseToken, quoteToken, ClobSide.BID)
+// BUY USDC AVAX
+const outputAmounts = calculateOrderPrice(inputAmounts, resp.prices["AVAX/USDC"].bids, baseToken, quoteToken, ClobSide.ASK)
+```
+
 ### 4 Request Firm Quote
 > **Warning**: Frequently calling this endpoint with no executions may cause the trader to get banned.
 
@@ -157,7 +290,7 @@ https://api.dexalot.com/api/rfq/firm
 Req Body:
 ```json
 {
-    "chainId": 43114,
+    "chainid": 43114,
     "takerAsset": "0xTOKEN_ADDRESS_TAKER",
     "makerAsset": "0xTOKEN_ADDRESS_MAKER",
     "takerAmount": "200000000",
@@ -183,6 +316,7 @@ Response:
         "to": "0xEed3c159F3A96aB8d41c8B9cA49EE1e5071A7cdD",
         "data": "0x6c75d6f5a6f548c01714e590c52d74f64d0d07ee795e65e512b0109d26c260000000000000000000000000000000000000000000000000000000000000000000651157e700000000000000000000000068b773b8c10f2ace8ac51980a1548b6b48a2ec54000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002071a83909798fc2a5a2f2781b0892a46d9cd1c000000000000000000000000def171fe48cf0115b1d80b88dc8eab59176fee57000000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000001d1a94a20000000000000000000000000000000000000000000000000000000000000000120000000000000000000000000000000000000000000000000000000000000004109b33c1c66e114c9ce92ffd1cfd2ba6661d1a3697011a5aeb2417c86c58b93da743b0afa869492132e0eafffdb2b070d05e644711c052ee3cd80d2847d7387ee1b00000000000000000000000000000000000000000000000000000000000000",
         "value": "0",
+        "gasLimit": 120000,
     },
 }
 ```
@@ -193,8 +327,27 @@ If trader is an Externally Owned Account they can sign the tx object returned by
 
 For example using ethers5:
 ```javascript
-    const wallet = new ethers.Wallet(process.env.PRIVATE_KEY);
-    await wallet.sendTransaction(firmResponse.tx);
+    const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
+    const tx = await wallet.sendTransaction(firmResponse.tx);
+    await tx.wait();
+```
+
+For example using web3.js:
+```javascript
+    const web3 = new Web3(provider)
+    const account = web3.eth.accounts.wallet.add(PRIVATE_KEY).get(0);
+    await web3.eth.sendTransaction({ from: account?.address, ...firmResponse.tx });
+```
+
+For example using web3.py:
+```python
+    w3 = Web3(provider)
+    account = w3.eth.account.from_key(PRIVATE_KEY);
+    tx_hash = w3.eth.send_transaction({
+        "from": account,
+        "to": firmResponse["tx"]["to"],
+        "value": firmResponse["tx"]["value"]
+    })
 ```
 
 Alternatively if the trader is a smart contract the MainnetRFQ contract can be called by the smart contract using `tx.to` as the caller, `tx.value` as the value to send and `tx.data` as the calldata.

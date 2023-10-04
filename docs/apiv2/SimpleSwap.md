@@ -153,17 +153,17 @@ curl --location 'https://api.dexalot.com/api/rfq/prices?chainid=43114' --header 
 Response Types:
 ```js
 {
-	prices: {
-		[pairName]: {
-			bids: [
-				[basePrice: string, quoteAmount: string],
-				...,
+    prices: {
+        [pairName]: {
+            bids: [
+                [basePrice: string, quoteAmount: string],
+                ...,
             ],
-			asks: [
-				[basePrice: string, quoteAmount: string],
-				...,
-			]
-		},
+            asks: [
+                [basePrice: string, quoteAmount: string],
+                ...,
+            ]
+        },
         ...
     }
 }
@@ -172,24 +172,24 @@ Response Types:
 Response Types:
 ```json
 {
-	"prices": {
-		"AVAX/USDC": {
-			"bids": [
-				["9.778706198423064067", "0.000000"],
-				["9.778705050924842728", "9.778705"],
-				["9.778694723440850672", "97.786947"],
+    "prices": {
+        "AVAX/USDC": {
+            "bids": [
+                ["9.778706198423064067", "0.000000"],
+                ["9.778705050924842728", "9.778705"],
+                ["9.778694723440850672", "97.786947"],
             ],
-			"asks": [
-				["9.782618067277720067", "0.000000"],
-				["9.782619214775941407", "9.782619"],
-				["9.782629542259933463", "97.826295"],
-			]
-		},
+            "asks": [
+                ["9.782618067277720067", "0.000000"],
+                ["9.782619214775941407", "9.782619"],
+                ["9.782629542259933463", "97.826295"],
+            ]
+      },
     }
 }
 ```
 
-This endpoint returns a set of quotes ordered by `quoteAmount` from 0 to the maximum quote amount. To get the price of an input amount `a`, binary search through the quotes to find the two quotes at which `a` sits between. Using these quotes a weighted price can be calculated for `a`, once multiplied will result in the output amount. If `a` exceeds all quotes then return the last `quoteAmount` and `price`. This logic is illustrated in the below snippet:
+This endpoint returns a set of quotes ordered by `quoteAmount` from 0 to the maximum quote amount. To get the price of an input amount `a`, binary search through the quotes to find the two quotes at which `a` sits between. Using these quotes a weighted price can be calculated for `a`, once multiplied will result in the output amount. If `a` exceeds all quotes then return the last `quoteAmount` and `price`. This logic is illustrated for an array of amounts in the below snippet:
 
 ```js
 function calculateOrderPrice(
@@ -316,6 +316,7 @@ Response:
         "to": "0xEed3c159F3A96aB8d41c8B9cA49EE1e5071A7cdD",
         "data": "0x6c75d6f5a6f548c01714e590c52d74f64d0d07ee795e65e512b0109d26c260000000000000000000000000000000000000000000000000000000000000000000651157e700000000000000000000000068b773b8c10f2ace8ac51980a1548b6b48a2ec54000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002071a83909798fc2a5a2f2781b0892a46d9cd1c000000000000000000000000def171fe48cf0115b1d80b88dc8eab59176fee57000000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000001d1a94a20000000000000000000000000000000000000000000000000000000000000000120000000000000000000000000000000000000000000000000000000000000004109b33c1c66e114c9ce92ffd1cfd2ba6661d1a3697011a5aeb2417c86c58b93da743b0afa869492132e0eafffdb2b070d05e644711c052ee3cd80d2847d7387ee1b00000000000000000000000000000000000000000000000000000000000000",
         "value": "0",
+        "gasLimit": 120000,
     },
 }
 ```

@@ -49,12 +49,13 @@ struct Order {
 | orderExpiryUpdated | mapping(uint256 &#x3D;&gt; uint256) |
 | swapSigner | address |
 | slippageTolerance | uint256 |
+| trustedContracts | mapping(address &#x3D;&gt; bool) |
 
 ### Internal
 
 | Name | Type |
 | --- | --- |
-| __gap | uint256[50] |
+| __gap | uint256[49] |
 
 ### Private
 
@@ -85,7 +86,7 @@ event AddressSet(string name, string actionName, address newAddress)
 ### SwapExecuted
 
 ```solidity:no-line-numbers
-event SwapExecuted(uint256 nonceAndMeta, address maker, address taker, address makerAsset, address takerAsset, uint256 makerAmountReceived, uint256 takerAmountReceived)
+event SwapExecuted(uint256 nonceAndMeta, address maker, address taker, address makerAsset, address takerAsset, uint256 makerAmountReceived, uint256 takerAmountReceived, address executor)
 ```
 
 ### RebalancerWithdraw
@@ -186,6 +187,28 @@ function simpleSwap(struct MainnetRFQ.Order _order, bytes _signature) external p
 | _order | struct MainnetRFQ.Order | Trade parameters for swap generated from /api/rfq/firm |
 | _signature | bytes | Signature of trade parameters generated from /api/rfq/firm |
 
+#### partialSwap
+
+Swaps two assets for another smart contract or EOA, based off a predetermined swap price.
+
+**Dev notes:** \
+This function can only be called after generating a firm quote from the RFQ API.
+All parameters are generated from the RFQ API. Prices are determined based off of trade
+prices from the Dexalot subnet. This function is used for multi hop swaps and will partially fill
+at the original quoted price.
+
+```solidity:no-line-numbers
+function partialSwap(struct MainnetRFQ.Order _order, bytes _signature, uint256 _takerAmount) external payable
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _order | struct MainnetRFQ.Order | Trade parameters for swap generated from /api/rfq/firm |
+| _signature | bytes | Signature of trade parameters generated from /api/rfq/firm |
+| _takerAmount | uint256 | Actual amount of takerAsset utilized in swap |
+
 #### updateOrderExpiry
 
 Updates the expiry of a order. The new expiry
@@ -263,102 +286,6 @@ function setSwapSigner(address _swapSigner) external
 | ---- | ---- | ----------- |
 | _swapSigner | address | Address of new swap signer |
 
-#### addRebalancer
-
-Adds Rebalancer Admin role to the address
-
-```solidity:no-line-numbers
-function addRebalancer(address _address) external virtual
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _address | address | address to add role to |
-
-#### removeRebalancer
-
-Removes Rebalancer Admin role from the address
-
-```solidity:no-line-numbers
-function removeRebalancer(address _address) external virtual
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _address | address | address to remove role from |
-
-#### isRebalancer
-
-Checks if address has Rebalancer Admin role
-
-```solidity:no-line-numbers
-function isRebalancer(address _address) external view returns (bool)
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _address | address | address to check |
-
-##### Return values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bool | bool    true if address has Rebalancer Admin role |
-
-#### addAdmin
-
-Adds Default Admin role to the address
-
-```solidity:no-line-numbers
-function addAdmin(address _address) external virtual
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _address | address | address to add role to |
-
-#### removeAdmin
-
-Removes Default Admin role from the address
-
-```solidity:no-line-numbers
-function removeAdmin(address _address) external virtual
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _address | address | address to remove role from |
-
-#### isAdmin
-
-Checks if address has Default Admin role
-
-```solidity:no-line-numbers
-function isAdmin(address _address) external view returns (bool)
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _address | address | address to check |
-
-##### Return values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bool | bool    true if address has Default Admin role |
-
 #### pause
 
 Pause contract
@@ -380,6 +307,40 @@ Only callable by admin
 ```solidity:no-line-numbers
 function unpause() external
 ```
+
+#### addTrustedContract
+
+Adds trusted contract like an Aggregator
+
+**Dev notes:** \
+Only callable by admin
+
+```solidity:no-line-numbers
+function addTrustedContract(address _contract) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _contract | address | Address of the contract to be added |
+
+#### removeTrustedContract
+
+Removes trusted contract
+
+**Dev notes:** \
+Only callable by admin
+
+```solidity:no-line-numbers
+function removeTrustedContract(address _contract) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _contract | address | Address of the contract to be removed |
 
 #### claimBalance
 
@@ -417,35 +378,110 @@ function batchClaimBalance(address[] _assets, uint256[] _amounts) external
 | _assets | address[] | Array of addresses of the assets to be withdrawn |
 | _amounts | uint256[] | Array of amounts of assets to be withdrawn |
 
-### Private
+#### addRebalancer
 
-#### _recoverSigner
-
-Helper function used to verify signature
+Adds Rebalancer Admin role to the address
 
 ```solidity:no-line-numbers
-function _recoverSigner(bytes32 _messageHash, bytes _signature) private pure returns (address)
+function addRebalancer(address _address) external virtual
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _messageHash | bytes32 | Hash of order data |
-| _signature | bytes | Signature of trade parameters generated from /api/rfq/firm |
+| _address | address | address to add role to |
+
+#### removeRebalancer
+
+Removes Rebalancer Admin role from the address
+
+```solidity:no-line-numbers
+function removeRebalancer(address _address) external virtual
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _address | address | address to remove role from |
+
+#### addAdmin
+
+Adds Default Admin role to the address
+
+```solidity:no-line-numbers
+function addAdmin(address _address) external virtual
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _address | address | address to add role to |
+
+#### removeAdmin
+
+Removes Default Admin role from the address
+
+```solidity:no-line-numbers
+function removeAdmin(address _address) external virtual
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _address | address | address to remove role from |
+
+#### isRebalancer
+
+Checks if address has Rebalancer Admin role
+
+```solidity:no-line-numbers
+function isRebalancer(address _address) external view returns (bool)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _address | address | address to check |
 
 ##### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| [0] | address | signer   The address of the signer of the signature. |
+| [0] | bool | bool    true if address has Rebalancer Admin role |
 
-#### _verifyTradeNotProcessed
+#### isAdmin
 
-Verifies that a transaction has not been traded already.
+Checks if address has Default Admin role
 
 ```solidity:no-line-numbers
-function _verifyTradeNotProcessed(struct MainnetRFQ.Order _order) private
+function isAdmin(address _address) external view returns (bool)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _address | address | address to check |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | bool | bool    true if address has Default Admin role |
+
+### Private
+
+#### _verifyOrder
+
+Verifies that an order is valid and has not been executed already.
+
+```solidity:no-line-numbers
+function _verifyOrder(struct MainnetRFQ.Order _order, bytes _signature) private returns (uint256, address)
 ```
 
 ##### Arguments
@@ -453,6 +489,32 @@ function _verifyTradeNotProcessed(struct MainnetRFQ.Order _order) private
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _order | struct MainnetRFQ.Order | Trade parameters for swap generated from /api/rfq/firm |
+| _signature | bytes | Signature of trade parameters generated from /api/rfq/firm |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | uint256 | uint256 The proper makerAmount to use for the trade. |
+| [1] | address | address The address where the funds will be transferred. It is the Aggregator address if verified by the trustedContracts which will forward the funds to the beneficiary stated in _order.taker |
+
+#### _executeSwap
+
+Handles the exchange of assets based on swap type and
+if the assets are ERC-20's or native tokens.
+
+```solidity:no-line-numbers
+function _executeSwap(struct MainnetRFQ.Order _order, uint256 _makerAmount, uint256 _takerAmount, address _takerAddress) private
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _order | struct MainnetRFQ.Order | Trade parameters for swap generated from /api/rfq/firm |
+| _makerAmount | uint256 | the proper makerAmount for the trade |
+| _takerAmount | uint256 | the proper takerAmount for the trade |
+| _takerAddress | address |  |
 
 #### _calculateOrderDigest
 
@@ -500,19 +562,24 @@ function _verifyTradeParameters(struct MainnetRFQ.Order _order) private view ret
 | ---- | ---- | ----------- |
 | [0] | uint256 | uint256 The proper makerAmount to use for the trade. |
 
-#### _executeSwap
+#### _recoverSigner
 
-Handles the exchange of assets based on swap type and
-if the assets are ERC-20's or native tokens.
+Helper function used to verify signature
 
 ```solidity:no-line-numbers
-function _executeSwap(struct MainnetRFQ.Order _order, uint256 _makerAmount) private
+function _recoverSigner(bytes32 _messageHash, bytes _signature) private pure returns (address)
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _order | struct MainnetRFQ.Order | Trade parameters for swap generated from /api/rfq/firm |
-| _makerAmount | uint256 | the proper makerAmount for the trade |
+| _messageHash | bytes32 | Hash of order data |
+| _signature | bytes | Signature of trade parameters generated from /api/rfq/firm |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | address | signer   The address of the signer of the signature. |
 

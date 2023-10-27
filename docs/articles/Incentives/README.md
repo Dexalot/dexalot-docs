@@ -4,7 +4,7 @@ editLink: true
 
 # Dexalot Subnet Staking Incentive Launch
 
-![incentives1](\images\incentives\inventives1.png)
+![incentives1](\images\incentives\incentives1.png)
 
 Dexalot’s subnet release candidate is entering production in just over a month, and we’re proud to announce the arrival of user incentives! From #CantWait4theSubnet to #Trade2theSubnet, Dexalot has offered users a new kind of incentive program. Participants have received exceptionally high APRs, and leading traders have been rewarded for perfecting their trading strategies. Dexalot continues to prioritize security and reliability while offering users new  incentive programs that are of both high value and exceptional quality. The launch of the incentives program in conjunction with the production subnet will provide users with a taste of what’s to come from Dexalot, and we’re just getting started.
 

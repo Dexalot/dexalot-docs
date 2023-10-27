@@ -4,7 +4,7 @@ editLink: true
 
 # Dexalot khởi chạy chương trình khuyến khích Subnet Staking
 
-![incentives1](\images\incentives\incentives1.png)
+![incentivescommitments](\images\incentives\incentivecommitments.png)
 
 Ứng cử viên phát hành subnet của Dexalot sẽ được đưa vào hoạt động chỉ sau hơn một tháng nữa và chúng tôi tự hào thông báo về sự xuất hiện của các ưu đãi cho người dùng! Từ #Stake2theSubnet và #Trade2theSubnet, Dexalot đã cung cấp cho người dùng một loại chương trình khuyến khích mới. Stakers đã nhận được APR đặc biệt cao và các nhà giao dịch hàng đầu đã được khen thưởng vì đã hoàn thiện các chiến lược giao dịch của họ. Dexalot tiếp tục ưu tiên bảo mật và độ tin cậy trong khi cung cấp cho người dùng các chương trình khuyến khích có giá trị cao và chất lượng vượt trội. Việc ra mắt chương trình khuyến khích kết hợp với subnet hoạt động sẽ cung cấp cho người dùng những hương vị đến từ Dexalot và chúng tôi chỉ mới bắt đầu.
 

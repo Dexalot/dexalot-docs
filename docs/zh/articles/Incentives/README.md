@@ -4,7 +4,7 @@ editLink: true
 
 # Dexalot子网激励承诺计划启动
 
-![incentives1](\images\incentives\incentives1.png)
+![incentivescommitments](\images\incentives\incentivecommitments.png)
 
 Dexalot的子网发布已经提上日程，只有一个多月了，我们很自豪地宣布用户激励计划的到来! 从#Can’tWait4theSubnet和#Trade2theSubnet开始，Dexalot为用户提供了一种新型的奖励计划。参与的用户获得了特别高的APRs，领先的交易者在不断完善其交易策略的过程中也获得了可观的奖励。Dexalot将继续把安全性和可靠性作为第一考虑要素，同时为用户提供高价值和高质量的奖励计划。与子网一起上线的奖励计划会让用户尝试到使用Dexalot的一点甜头，然而这仅仅是一个开始。
 

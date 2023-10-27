@@ -4,7 +4,7 @@ editLink: true
 
 # Lanzamiento del Programa de Incentivo de Staking en la Dexalot Subnet
 
-![incentives1](\images\incentives\incentives1.png)
+![incentivescommitments](\images\incentives\incentivescommitments.png)
 
 La versión candidadata a ser la subnet de Dexalot entrará en producción en poco más de un mes, ¡y estamos muy orgullosos de anunciar la llegada de incentivos para los usuarios! Desde #Stake2theSubnet y #Trade2theSubnet, Dexalot ha ofrecido a los usuarios un nuevo tipo de programa de incentivos. Quienes hayan efectuado staking han recibido APRs excepcionalmente altos, y los mejores traders han sido recompensados por perfeccionar sus estrategias de trading. Dexalot continúa priorizando la seguridad y la confiabilidad, mientras ofrece a los usuarios programas de incentivos de gran valor y calidad excepcional. El lanzamiento de programa de incentivos junto con la producción de la subnet proporcionará a los usuarios una muestra de lo que está por venir desde Dexalot, y recién estamos empezando.
 

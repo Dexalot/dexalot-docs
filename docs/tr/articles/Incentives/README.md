@@ -4,7 +4,7 @@ editLink: true
 
 # Dexalot Subnet Staking Teşvik Lansmanı
 
-![incentives1](\images\incentives\incentives1.png)
+![incentivecommitments](\images\incentives\incentivecommitments.png)
 
 Dexalot’un subnet sürüm adayı, bir aydan biraz uzun bir süre içinde devreye gireceğini ve kullanıcı teşviklerinin geldiğini duyurmaktan gurur duyuyoruz! #Stake2theSubnet ve #Trade2theSubnet’de Dexalot, kullanıcılara yeni bir tür teşvik programı sundu. Stake yapan kullanıcılar son derece yüksek APR’ler aldı ve önde gelen traderlar, trade stratejilerini mükemmelleştirdikleri için ödüllendirildi. Dexalot, kullanıcılara hem yüksek değere hem de olağanüstü kaliteye sahip teşvik programları sunarken güvenlik ve güvenilirliğe öncelik vermeye devam ediyor. Teşvik programının subnet ile birlikte lansmanı, kullanıcılara Dexalot’tan ne geleceğine dair fikir verecek ve biz daha yeni başlıyoruz.
 

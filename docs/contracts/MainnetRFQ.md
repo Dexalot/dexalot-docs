@@ -113,6 +113,18 @@ event ExpiryUpdated(uint256 nonceAndMeta, uint256 newExpiry)
 event SlippageToleranceUpdated(uint256 newSlippageTolerance)
 ```
 
+### AddTrustedContract
+
+```solidity:no-line-numbers
+event AddTrustedContract(address contractAddress)
+```
+
+### RemoveTrustedContract
+
+```solidity:no-line-numbers
+event RemoveTrustedContract(address contractAddress)
+```
+
 ## Methods
 
 ### Public

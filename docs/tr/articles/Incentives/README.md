@@ -2,19 +2,18 @@
 editLink: true
 ---
 
-# Dexalot Subnet Staking Teşvik Lansmanı
+# Dexalot Subnet Teşvik Lansmanı
 
 ![incentivecommitments](\images\incentives\incentivecommitments.png)
 
-Dexalot’un subnet sürüm adayı, bir aydan biraz uzun bir süre içinde devreye gireceğini ve kullanıcı teşviklerinin geldiğini duyurmaktan gurur duyuyoruz! #Stake2theSubnet ve #Trade2theSubnet’de Dexalot, kullanıcılara yeni bir tür teşvik programı sundu. Stake yapan kullanıcılar son derece yüksek APR’ler aldı ve önde gelen traderlar, trade stratejilerini mükemmelleştirdikleri için ödüllendirildi. Dexalot, kullanıcılara hem yüksek değere hem de olağanüstü kaliteye sahip teşvik programları sunarken güvenlik ve güvenilirliğe öncelik vermeye devam ediyor. Teşvik programının subnet ile birlikte lansmanı, kullanıcılara Dexalot’tan ne geleceğine dair fikir verecek ve biz daha yeni başlıyoruz.
-
+Dexalot’un subnet sürüm adayı, bir aydan biraz uzun bir süre içinde devreye gireceğini ve kullanıcı teşviklerinin geldiğini duyurmaktan gurur duyuyoruz! #CantWait4theSubnet'ten #Trade2theSubnet'e doğru Dexalot, kullanıcılarına yeni bir tür teşvik programı sundu. Katılımcılar olağanüstü yüksek APR'ler aldı ve önde gelen yatırımcılar, ticaret stratejilerini mükemmelleştirdikleri için ödüllendirildi. Dexalot, kullanıcılara hem yüksek değerde hem de olağanüstü kalitede yeni teşvik programları sunarken güvenliğe ve güvenilirliğe öncelik vermeye devam ediyor. Teşvik programının subnet ile birlikte lansmanı, Dexalot’un kullanıcılara neler sunacağına dair fikir verecek ve bu daha başlangıç.
 ---
 
 ## Önemli Notlar:
 
-* Stake yapanlar için işlem ücreti gelirleri dağıtılmaya başlayacak.
+* Option 1 ve Option 2 katılımcıları için işlem ücreti geliri dağıtımları başlıyor!
 * Dexalot teşvik programı(DIP) kullanıcı puanları portföyünüze $ALOT yatırdığınızda başlayacak.
-* #Stake2theSubnet Option 2 staker’larının gelir dağıtımına dahil edilmesi başlatıldı!
+* Option 2 katılımcılarının gelir dağıtımına dahil edilmesine başlandı!
 * Trade, izinli(permissioned) Avalanche subnet’inde güvenli bir şekilde korunur.
 
 ---
@@ -27,12 +26,12 @@ Dexalot’un subnet sürüm adayı, bir aydan biraz uzun bir süre içinde devre
 
 ---
 
-## Stakerlar için Trade ücreti ödülleri:
+## Option 1 ve Option 2 İşlem Ücreti Ödülleri:
 
-* Ödül dağıtımı,[#Stake2theSubnet'te](https://medium.com/dexalot/dexalot-stake-to-the-subnet-5269756824d1) en az iki ay boyunca stake yapan hem opsiyon 1 hem de opsiyon 2 katılımcılarına açıktır.
+* Ödül dağıtımı, en az iki ay boyunca stake yapan hem [opsiyon 1 hem de opsiyon 2](https://medium.com/dexalot/dexalot-stake-to-the-subnet-5269756824d1) katılımcılarına açıktır.
 * Dağıtım, 100.000 $’lık işlem ücreti geliri toplandıktan sonra başlayacak.
-* Opsiyon 1 staker’ları işlem ücreti gelirinin %25'ini paylaşacak.
-* Opsiyon 2 stake edenler, ücret gelirinin %8'ini paylaşacak.
+* Opsiyon 1 katılımcıları işlem ücreti gelirinin %25'ini paylaşacak.
+* Opsiyon 2 katılımcıları, ücret gelirinin %8'ini paylaşacak.
 * Bu dağıtım subnet’te yatırdığınız ALOT’ın hem miktarına hem de süresine göre ağırlandırılacaktır.
 * Toplam işlem ücreti dağılımı 5.000.000$’ı geçmeyecektir.
 * Dağıtım 1 yıla kadar devam edecek.
@@ -42,7 +41,7 @@ Dexalot’un subnet sürüm adayı, bir aydan biraz uzun bir süre içinde devre
 ## Validatörler ve Delegatörler:
 
 * Dexalot’un izinli(permissioned) subneti, şimdilik dışarıdan [validatör](https://medium.com/dexalot/dexalot-subnet-validat%C3%B6r-program%C4%B1-d5450b7f32f1) olmadan korunacaktır.
-* Ek validasyon, delegasyon ve diğer staking çözümleri, izin gerektirmeyen seçenekler geliştirilip kullanılabilir hale geldikçe entegrasyon için gözden geçirilecektir.
+* Ek validasyon, delegasyon ve diğer çözümler, izin gerektirmeyen seçenekler geliştirilip kullanılabilir hale geldikçe entegrasyon için gözden geçirilecektir.
 * Cüzdanınızı Dexalot’a bağlayarak ve ALOT yatırarak Subnet teşvik lansmanına hazır olun. ALOT resmi olarak yalnızca [Dexalot'ta](https://app.dexalot.com/trade) işlem görmektedir. [Temel bilgileri öğrenin, bu makaleleri okuyun ve öğreticileri takip edin.](https://medium.com/dexalot)
 
 ---

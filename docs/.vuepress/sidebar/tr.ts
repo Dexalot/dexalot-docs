@@ -25,7 +25,7 @@ export const trSidebarConfig = sidebar({
           link: "dip"
         },
         {
-          text: "Dexalot Teşvik Taahhütleri",
+          text: "Dexalot Subnet Teşvik Lansmanı",
           icon: "book-open",
           link: "incentives"
         },

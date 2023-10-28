@@ -2,7 +2,7 @@
 editLink: true
 ---
 
-# Dexalot Subnet TeşvikLansmanı
+# Dexalot Subnet Teşvik Lansmanı
 
 ![incentivecommitments](\images\incentives\incentivecommitments.png)
 

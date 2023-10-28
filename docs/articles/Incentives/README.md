@@ -2,7 +2,7 @@
 editLink: true
 ---
 
-# Dexalot Subnet Staking Incentive Launch
+# Dexalot Incentive Commitments
 
 ![incentivecommitments](\images\incentives\incentivecommitments.png)
 

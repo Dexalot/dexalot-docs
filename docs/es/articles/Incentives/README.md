@@ -2,7 +2,7 @@
 editLink: true
 ---
 
-# Compromisos de incentivos de Dexalo
+# Compromisos de incentivos de Dexalot
 
 ![incentivecommitments](\images\incentives\incentivecommitments.png)
 

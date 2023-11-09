@@ -175,12 +175,12 @@ Response Types:
     "prices": {
         "AVAX/USDC": {
             "bids": [
-                ["9.778706198423064067", "0.000000"],
+                ["9.778706198423064067", "1.000000"],
                 ["9.778705050924842728", "9.778705"],
                 ["9.778694723440850672", "97.786947"],
             ],
             "asks": [
-                ["9.782618067277720067", "0.000000"],
+                ["9.782618067277720067", "1.000000"],
                 ["9.782619214775941407", "9.782619"],
                 ["9.782629542259933463", "97.826295"],
             ]
@@ -189,78 +189,123 @@ Response Types:
 }
 ```
 
-This endpoint returns a set of quotes ordered by `quoteAmount` from 0 to the maximum quote amount. To get the price of an input amount `a`, binary search through the quotes to find the two quotes at which `a` sits between. Using these quotes a weighted price can be calculated for `a`, once multiplied will result in the output amount. If `a` exceeds all quotes then return the last `quoteAmount` and `price`. This logic is illustrated for an array of amounts in the below snippet:
+This endpoint returns a set of quotes ordered by `quoteAmount` with the first entry being the minimum and the last entry the maximum valid amount for quotes. For example in the above response quotes are only valid for AVAX amounts between 1 to 97.786947 inclusive.
+
+To get the price of an input amount `a`, binary search through the quotes to find the two quotes at which `a` sits between. Using these quotes a weighted price can be calculated for `a`, once multiplied will result in the output amount. If `a` exceeds all quotes then return the last `quoteAmount` and `price`. This logic is illustrated for an array of amounts in the below snippet:
 
 ```js
-function calculateOrderPrice(
+calculateOrderPrice(
   amounts: bigint[],
   orderbook: string[][],
   baseToken: Token,
   quoteToken: Token,
-  side: ClobSide,
+  isInputQuote: boolean,
 ) {
- let result = [];
+  let result = [];
 
- for (let i = 0; i < amounts.length; i++) {
-   let amt = amounts[i];
-   if (amt === 0n) {
-     result.push(amt);
-     continue;
-   }
+  for (let i = 0; i < amounts.length; i++) {
+    let amt = amounts[i];
+    if (amt === 0n) {
+      result.push(amt);
+      continue;
+    }
 
-   let left = 0, right = orderbook.length;
-   let qty = BigInt(0);
+    let left = 0,
+      right = orderbook.length;
+    let qty = BigInt(0);
 
-   while (left < right){
-     let mid = Math.floor((left + right)/2);
-     qty = BigInt(ethers.utils.parseUnits(orderbook[mid][1], quoteToken.decimals).toString());
-     if (side === ClobSide.ASK) {
-       const price = BigInt(ethers.utils.parseUnits(orderbook[mid][0], baseToken.decimals).toString());
-       qty = (qty * BigInt(10 ** (baseToken.decimals * 2))) / (price * BigInt(10 ** quoteToken.decimals));
-     }
-     if (qty <= amt) {
-       left = mid + 1;
-     } else {
-       right = mid;
-     }
-   }
+    while (left < right) {
+      let mid = Math.floor((left + right) / 2);
+      qty = BigInt(
+        ethers.utils
+          .parseUnits(orderbook[mid][1], quoteToken.decimals)
+          .toString(),
+      );
+      if (isInputQuote) {
+        const price = BigInt(
+          ethers.utils
+            .parseUnits(orderbook[mid][0], baseToken.decimals)
+            .toString(),
+        );
+        qty =
+          (qty * BigInt(10 ** (baseToken.decimals * 2))) /
+          (price * BigInt(10 ** quoteToken.decimals));
+      }
+      if (qty <= amt) {
+        left = mid + 1;
+      } else {
+        right = mid;
+      }
+    }
 
-   let price, amount = BigInt(0);
-   if (left === orderbook.length) {
-     price = BigInt(ethers.utils.parseUnits(orderbook[left - 1][0], baseToken.decimals).toString());
-     amount = qty
-   } else if (amounts[i] === qty) {
-     price = BigInt(ethers.utils.parseUnits(orderbook[left][0], baseToken.decimals).toString());
-     amount = amounts[i];
-   } else {
-     const lPrice = BigInt(ethers.utils.parseUnits(orderbook[left][0], baseToken.decimals).toString());
-     const rPrice = BigInt(ethers.utils.parseUnits(orderbook[left+1][0], baseToken.decimals).toString());
-     const lQty = qty;
-     let rQty = BigInt(ethers.utils.parseUnits(orderbook[left+1][1], quoteToken.decimals).toString());
-     if (side === ClobSide.ASK) {
-       rQty = (rQty * rPrice) / BigInt(10 ** quoteToken.decimals);
-     }
-     price = lPrice + (rPrice - lPrice) * (amt - lQty) / (rQty - lQty);
-     amount = amounts[i];
-   }
+    let price = BigInt(0),
+      amount = BigInt(0);
+    if (amounts[i] === qty) {
+      price = BigInt(
+        ethers.utils
+          .parseUnits(orderbook[left][0], baseToken.decimals)
+          .toString(),
+      );
+      amount = amounts[i];
+    } else if (left === 0) {
+      price = 0n;
+    } else if (left < orderbook.length) {
+      const lPrice = BigInt(
+        ethers.utils
+          .parseUnits(orderbook[left - 1][0], baseToken.decimals)
+          .toString(),
+      );
+      const rPrice = BigInt(
+        ethers.utils
+          .parseUnits(orderbook[left][0], baseToken.decimals)
+          .toString(),
+      );
+      let lQty = BigInt(
+        ethers.utils
+          .parseUnits(orderbook[left - 1][1], quoteToken.decimals)
+          .toString(),
+      );
+      let rQty = BigInt(
+        ethers.utils
+          .parseUnits(orderbook[left][1], quoteToken.decimals)
+          .toString(),
+      );
+      if (isInputQuote) {
+        lQty = (lQty * BigInt(10 ** (baseToken.decimals * 2))) /
+          (lPrice * BigInt(10 ** quoteToken.decimals));
+        rQty =
+          (rQty * BigInt(10 ** (baseToken.decimals * 2))) /
+          (rPrice * BigInt(10 ** quoteToken.decimals));
+      }
+      price = lPrice + ((rPrice - lPrice) * (amt - lQty)) / (rQty - lQty);
+      amount = amounts[i];
+    }
 
-   if (side === ClobSide.BID) {
-     result.push((amount * BigInt(10 ** (baseToken.decimals * 2))) / (price * BigInt(10 ** quoteToken.decimals)));
-   } else {
-     result.push((price * amount * BigInt(10 ** quoteToken.decimals)) / BigInt(10 ** (baseToken.decimals * 2)));
-   }
- }
- return result;
+    if (isInputQuote) {
+      result.push(
+        (price * amount * BigInt(10 ** quoteToken.decimals)) /
+          BigInt(10 ** (baseToken.decimals * 2)),
+      );
+    } else {
+      result.push(
+        price !== 0n // To avoid division by zero error
+          ? (amount * BigInt(10 ** (baseToken.decimals * 2))) /
+            (price * BigInt(10 ** quoteToken.decimals))
+          : 0n,
+      );
+    }
+  }
+  return result;
 }
 
-// SELL AVAX USDC
-const outputAmounts = calculateOrderPrice(inputAmounts, resp.prices["AVAX/USDC"].bids, baseToken, quoteToken, ClobSide.ASK)
-// SELL USDC AVAX
-const outputAmounts = calculateOrderPrice(inputAmounts, resp.prices["AVAX/USDC"].asks, baseToken, quoteToken, ClobSide.BID)
-// BUY AVAX USDC
-const outputAmounts = calculateOrderPrice(inputAmounts, resp.prices["AVAX/USDC"].asks, baseToken, quoteToken, ClobSide.BID)
-// BUY USDC AVAX
-const outputAmounts = calculateOrderPrice(inputAmounts, resp.prices["AVAX/USDC"].bids, baseToken, quoteToken, ClobSide.ASK)
+// SELL AVAX USDC (set AVAX amt)
+const outputAmounts = calculateOrderPrice(inputAmounts, resp.prices["AVAX/USDC"].asks, baseToken, quoteToken, false)
+// SELL USDC AVAX (set USDC amt)
+const outputAmounts = calculateOrderPrice(inputAmounts, resp.prices["AVAX/USDC"].bids, baseToken, quoteToken, true)
+// BUY AVAX USDC (set USDC amt)
+const outputAmounts = calculateOrderPrice(inputAmounts, resp.prices["AVAX/USDC"].asks, baseToken, quoteToken, true)
+// BUY USDC AVAX (set AVAX amt)
+const outputAmounts = calculateOrderPrice(inputAmounts, resp.prices["AVAX/USDC"].bids, baseToken, quoteToken, false)
 ```
 
 ### 4 Request Firm Quote
@@ -268,7 +313,7 @@ const outputAmounts = calculateOrderPrice(inputAmounts, resp.prices["AVAX/USDC"]
 
 Firm Quote endpoint will return a signature which contains trade details. This signature is only valid for the given trader address and will expire after a short period of time.
 
-This request should contain x-apikey header in order to receive special prices defined for your channel. Please reach out to Dexalot team if you are planning to integrate to our RFQ system.
+This request should contain x-apikey header in order to receive special prices defined for your channel. Please reach out to Dexalot team if you are planning to integrate to our RFQ system. If you are an aggregator please also provide your executor contract address so it can be whitelisted.
 
 For this endpoint Taker and Maker terms are defined as follows:
 Dexalot RFQ contract is always the maker and the trader is always the taker.
@@ -281,7 +326,10 @@ For a valid quote either takerAmount (for a sell swap) or makerAmount (for a buy
 | makerAsset            | Y | The ERC20 address of the asset Maker (Dexalot RFQ Contract) is providing to the trade (destination token) |
 | takerAmount           | N | The amount of taker asset for the trade, provided for a sell swap. Should be multiplied by evm_decimals of the taker asset. e.g. for USDC evm_decimals = 6, for a 100 USD trade this number should be 100000000 |
 | makerAmount           | N | The amount of maker asset for the trade, provided for a buy swap. Should be multiplied by evm_decimals of the maker asset. e.g. for AVAX evm_decimals = 18, for a 100 AVAX trade this number should be 100000000000000000000 |
-| userAddress           | Y | Trader address: 0x05A1AAC00662ADda4Aa25E1FA658f4256ed881eD |
+| userAddress           | Y | The originating user performing the swap (not the executor contract), e.g. trader address: 0x05A1AAC00662ADda4Aa25E1FA658f4256ed881eD |
+| slippage              | N | The slippage of the aggregator swap in bps, e.g. '100' for 1% |
+| partner               | N | If applicable, a string identifier for the partner executing the swap on your platform |
+
 
 Endpoint (POST):
 ```
@@ -291,10 +339,10 @@ Req Body:
 ```json
 {
     "chainid": 43114,
-    "takerAsset": "0xTOKEN_ADDRESS_TAKER",
-    "makerAsset": "0xTOKEN_ADDRESS_MAKER",
+    "takerAsset": "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
+    "makerAsset": "0x0000000000000000000000000000000000000000",
     "takerAmount": "200000000",
-    "userAddress": "0xTRADER_ADDRESS"
+    "userAddress": "0x05A1AAC00662ADda4Aa25E1FA658f4256ed881eD"
 }
 ```
 
@@ -307,7 +355,7 @@ Response:
         "makerAsset": "0x0000000000000000000000000000000000000000",
         "takerAsset": "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
         "maker": "0xEed3c159F3A96aB8d41c8B9cA49EE1e5071A7cdD",
-        "taker": "0xDEF171Fe48CF0115B1d80b88dc8eAB59176FEe57",
+        "taker": "0x05A1AAC00662ADda4Aa25E1FA658f4256ed881eD",
         "makerAmount": "21483696748316475197",
         "takerAmount": "200000000",
     },

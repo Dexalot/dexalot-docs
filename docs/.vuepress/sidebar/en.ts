@@ -10,9 +10,14 @@ export const enSidebarConfig = sidebar({
       prefix: "articles/",
       children: [
         {
-          text: "Dexalot Trading Cup",
+          text: "Dexalot Subnet",
           icon: "book-open",
-          link: "cup"
+          link: "subnet"
+        },
+        {
+          text: "The Dexalot Subnet Guide",
+          icon: "book-open",
+          link: "guide"
         },
         {
           text: "Dexalot Incentive Program",
@@ -20,9 +25,19 @@ export const enSidebarConfig = sidebar({
           link: "dip"
         },
         {
-          text: "The Dexalot Subnet",
+          text: "Dexalot Incentive Commitments",
           icon: "book-open",
-          link: "subnet"
+          link: "incentives"
+        },
+        {
+          text: "Dexalot x LayerZero",
+          icon: "book-open",
+          link: "layerzero"
+        },
+                {
+          text: "Asset Balance Snapshot",
+          icon: "book-open",
+          link: "abs"
         },
         {
           text: "Dexalot Discovery",
@@ -30,34 +45,19 @@ export const enSidebarConfig = sidebar({
           link: "discovery"
         },
         {
-          text: "Litepaper",
-          icon: "book-open",
-          link: "litepaper"
-        },
-        {
-          text: "Dexalot Subnet Staking Incentives Launch",
-          icon: "book-open",
-          link: "incentives"
-        },
-        {
           text: "Dexalot's Sample Bot",
           icon: "book-open",
           link: "samplebot"
         },
         {
-          text: "Dexalot x LayerZero",
+          text: "Dexalot Trading Cup",
           icon: "book-open",
-          link: "layerzero"
+          link: "cup"
         },
         {
-          text: "Asset Balance Snapshot",
+          text: "Litepaper",
           icon: "book-open",
-          link: "abs"
-        },
-        {
-          text: "The Dexalot Subnet Guide",
-          icon: "book-open",
-          link: "guide"
+          link: "litepaper"
         }
       ]
     },

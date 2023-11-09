@@ -10,9 +10,14 @@ export const zhSidebarConfig = sidebar({
       prefix: "/zh/articles/",
       children: [
         {
-          text: "Dexalot交易杯大赛",
+          text: "Dexalot子网",
           icon: "book-open",
-          link: "cup"
+          link: "subnet"
+        },
+        {
+          text: "Dexalot子网指南",
+          icon: "book-open",
+          link: "guide"
         },
         {
           text: "Dexalot 奖励计划",
@@ -20,21 +25,12 @@ export const zhSidebarConfig = sidebar({
           link: "dip"
         },
         {
-          text: "Dexalot子网",
-          icon: "book-open",
-          link: "subnet"
-        },
-        {
-          text: "Dexalot子网质押奖励计划开启",
+          text: "Dexalot 激励承诺",
           icon: "book-open",
           link: "incentives"
         },
         {
-          text: "Dexalot 的Sample Bot说明示例",
-          icon: "book-open",
-          link: "samplebot"
-        },
-        {text: "Dexalot x LayerZero",
+          text: "Dexalot x LayerZero",
           icon: "book-open",
           link: "layerzero"
         },
@@ -44,9 +40,14 @@ export const zhSidebarConfig = sidebar({
           link: "abs"
         },
         {
-          text: "Dexalot子网指南",
+          text: "Dexalot 的Sample Bot说明示例",
           icon: "book-open",
-          link: "guide"
+          link: "samplebot"
+        },
+        {
+          text: "Dexalot交易杯大赛",
+          icon: "book-open",
+          link: "cup"
         }
       ]
     },

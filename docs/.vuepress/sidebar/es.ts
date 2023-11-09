@@ -10,9 +10,14 @@ export const esSidebarConfig = sidebar({
       prefix: "/es/articles/",
       children: [
         {
-          text: "Dexalot Trading Cup",
+          text: "La Dexalot Subnet",
           icon: "book-open",
-          link: "cup"
+          link: "subnet"
+        },
+        {
+          text: "Guia Subnet de Dexalot",
+          icon: "book-open",
+          link: "guide"
         },
         {
           text: "Incentivos de Dexalot",
@@ -20,38 +25,33 @@ export const esSidebarConfig = sidebar({
           link: "dip"
         },
         {
-          text: "La Dexalot Subnet",
+          text: "Dexalot Incentivo Compromisos",
           icon: "book-open",
-          link: "subnet"
+          link: "incentives"
         },
+        {text: "Dexalot x LayerZero",
+        icon: "book-open",
+        link: "layerzero"
+      },
+      {
+        text: "Asset Balance Snapshot",
+        icon: "book-open",
+        link: "abs"
+      },
         {
           text: "Dexalot Discovery",
           icon: "book-open",
           link: "discovery"
         },
           {
-            text: "Lanzamiento del Programa de Incentivo de Staking en la Dexalot Subnet",
-            icon: "book-open",
-            link: "incentives"
-          },
-          {
             text: "Sample Bot de Dexalot",
             icon: "book-open",
             link: "samplebot"
           },
-          {text: "Dexalot x LayerZero",
-          icon: "book-open",
-          link: "layerzero"
-        },
         {
-          text: "Asset Balance Snapshot de Dexalot",
+          text: "Dexalot Trading Cup",
           icon: "book-open",
-          link: "abs"
-        },
-        {
-          text: "Guia de la Subnet de Dexalot",
-          icon: "book-open",
-          link: "guide"
+          link: "cup"
         }
       ]
     },

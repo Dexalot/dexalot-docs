@@ -43,7 +43,7 @@ Her ayın sonunda, ay sonundaki puanınız, o ayki tüm kullanıcıların toplam
 
 ## Hesaplamalar
 
-Kullanıcı Puanı = (E^ 0.25) x (O^ 0.70) x (A^ 0.05)
+Kullanıcı Puanı = (E^ 0.30) x (O^ 0.65) x (A^ 0.05)
 Aylık Ödüller = (200.000 $ALOT x Kullanıcı Puanı)/Tüm Kullanıcıların Toplam Puanı
 
 ## Ödüllerinizi nasıl takip edebileceksiniz

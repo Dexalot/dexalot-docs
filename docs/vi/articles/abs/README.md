@@ -4,7 +4,7 @@ editLink: true
 
 # Ảnh chụp số dư tài sản của Dexalot
 
-![abs1](\images\abs\abs1.png)
+![abs1](/images/abs/abs1.png)
 
 [Dexalot](https://dexalot.com/) là một DEX sổ lệnh trung tâm chuỗi kép, không giam giữ, được hỗ trợ bởi [công nghệ mạng con của Avalanche ](https://www.avax.network/). Giai đoạn tiếp theo trong quá trình phát triển vòng đời của Dexalot là tiếp tục phát hành kiến ​​trúc phần mềm, được tối ưu hóa cho tốc độ, sự an toàn và trải nghiệm. Việc khởi chạy mạng con của Dexalot sẽ bao gồm tính năng chụp nhanh số dư tài sản (ABS) tích hợp để tạo bằng chứng chụp nhanh bất biến về số dư tài sản của bạn.
 
@@ -29,7 +29,7 @@ Tính năng độc đáo này giúp người dùng xác minh nhanh chóng và d�
 
 <https://youtu.be/IEuRCxOJ20k>
 
-![abs2](\images\abs\abs2.png)
+![abs2](/images/abs/abs2.png)
 
 ## Sở hữu ABS của bạn:
 

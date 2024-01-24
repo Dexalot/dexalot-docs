@@ -4,7 +4,7 @@ editLink: true
 
 # Dexalot Subnet Rehberi
 
-![guide_1](\images\guide\guide_1.png)
+![guide_1](/images/guide/guide_1.png)
 
 [Dexalot](https://dexalot.com/), bir [Avalanche subnet](https://www.avalabs.org/)’i olarak kullanıma sunuldu. Avalanche C-chain’deki kullanımdan [kaldırılan tek zincirli](https://medium.com/dexalot/dexalot-tek-zincir-g%C3%BCnbat%C4%B1m%C4%B1-takvimi-49dde4d2b358) önceki uygulaması gibi, [Dexalot Subneti](https://medium.com/dexalot/dexalot-subnet-32df0d17b396)’de merkeziyetsizlikten ve şeffaflıktan ödün vermeden merkezi bir borsanın (CEX) kullanıcı deneyimini yaşatmayı amaçlıyor. Subnet, düşük işlem ücretleri ve hızlı işlem sunan, kullanıcı dostu bir merkezli limit emir defteri (CLOB)dir ve aşağıdaki trade pairlerine destek sunacak:
 
@@ -27,7 +27,7 @@ editLink: true
 - [Dexalot Teşvik Programına Başlarken](https://medium.com/dexalot/dexalot-te%C5%9Fvik-program%C4%B1-d6e22fc924b0)
 - [Dexalot’un Asset Balance Snapshot’ı](https://medium.com/dexalot/dexalots-asset-balance-snapshot-ff71856f3d76)
 
-![guide_2](\images\guide\guide_2.png)
+![guide_2](/images/guide/guide_2.png)
 
 - [Dexalot Hakkında Temel Bilgileri Öğrenin](https://medium.com/dexalot/dexalot-hakk%C4%B1nda-temel-bilgileri-%C3%B6%C4%9Frenin-908e6a37a43e)
 - [Alış ve Satış Emirleri](https://medium.com/dexalot/buy-and-sell-orders-6b3843d639bd)
@@ -37,7 +37,7 @@ editLink: true
 - [Avalanche ve MetaMask Cüzdanlarınız arasındaki transferler](https://medium.com/dexalot/transfers-between-your-avalanche-and-metamask-wallets-60f226abf3e4)
 - [Portföyünüz ve MetaMask Cüzdanınız arasındaki transferler](https://medium.com/dexalot/transfers-between-your-portfolio-and-metamask-wallet-4c6cc461c1c5)
 
-![guide_3](\images\guide\guide_3.png)
+![guide_3](/images/guide/guide_3.png)
 
 Dexalot subnet üzerinde geliştirme yapmak isteyen developerlar, Dexalot Knowledge Hub’ı okuyabilir. Herhangi bir konuda yardıma ihtiyacınız olursa [Dexalot Discord](https://discord.com/invite/dexalot) grubundan bize ulaşın. [Subnet’i deneyimleme zamanı!](https://app.dexalot.com/trade)
 

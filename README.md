@@ -68,41 +68,13 @@ yarn build
 
 * Install the node.js packages: eslint, prettier and cspell.
 
-  The individual packages are `markdownlint`, `markdownlint-cli`, `prettier`, `@typescript-eslint/eslint-plugin`, `@typescript-eslint/parser`, `eslint` and `cspell`.
+  The individual packages are `prettier`, `@typescript-eslint/eslint-plugin`, `@typescript-eslint/parser`, `eslint` and `cspell`.
 
   These tools are already in `package.json` and they will all be installed with `yarn install`.
-
-* Markdownlint settings can be reviewed in `.markdownlint.json`
 
 * Prettier settings can be reviewed in `.prettierrc` and `.prettierignore`
 
 * Eslint settings can be reviewed in `.eslintrc` and `.eslintignore`
-
-* You can check or fix files in place markdownlint. Initially run checks and AVOID automatic fixes without reviewing the check results first.
-
-  check an individual markdown file
-
-  ```sh
-  ./node_modules/.bin/markdownlint docs/articles/abs/README.md
-  ```
-
-  fix an individual markdown file
-
-  ```sh
-  ./node_modules/.bin/markdownlint --fix docs/articles/abs/README.md
-  ```
-
-  check all files with the .md extension
-
-  ```sh
-  ./node_modules/.bin/markdownlint **/*.md --ignore node_modules
-  ```
-
-  fix all files with a specific extension
-
-  ```sh
-  ./node_modules/.bin/markdownlint **/*.md --ignore node_modules --fix
-  ```
 
 * You can check or fix files in place for style with prettier. Initially run checks and AVOID automatic fixes without reviewing the check results first.
 
@@ -145,8 +117,6 @@ yarn build
       lint-js-check
       lint-ts-fix
       lint-js-fix
-      lint-md-check
-      lint-md-fix
       pretty-md-check
       pretty-md-fix
       pretty-ts-check

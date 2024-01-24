@@ -4,7 +4,7 @@ editLink: true
 
 # Dexalot’un Asset Balance Snapshot’ı
 
-![abs1](\images\abs\abs1.png)
+![abs1](/images/abs/abs1.png)
 
 [Dexalot](https://dexalot.com/), [Avalanche’ın subnet teknolojisi](https://www.avax.network/)tarafından desteklenen, çift zincirli, gözetimsiz(non-custodial) bir merkezi emir defteriyle çalışan bir DEX’tir. Dexalot’un yaşam döngüsünün gelişimindeki bir sonraki aşama, hız, güvenlik ve deneyim için optimize edilmiş yazılım mimarisinin piyasaya sürülmesiyle devam ediyor. Dexalot’un subnet lansmanı, varlık bakiyeniz için, değiştirilemez bir anlık durum görüntüsü(snapshot) kanıtı sunan, yerleşik bir varlık bakiyesi anlık görüntüsü (ABS) özelliği içerecektir.
 
@@ -29,7 +29,7 @@ Bu benzersiz özellik, Dexalot alt ağındaki varlık bilgilerini, **Merkle Tree
 
 <https://youtu.be/IEuRCxOJ20k>
 
-![abs2](\images\abs\abs2.png)
+![abs2](/images/abs/abs2.png)
 
 ## ABS’nizin sahibi olun:
 

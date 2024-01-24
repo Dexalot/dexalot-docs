@@ -368,47 +368,33 @@ This is the captured transaction event based on the trader address provided in t
 
 ```ts
 export interface TransactionEvent {
-  transactionHash: string;
-  txType: string;
-  fromAddress: string;
-  toAddress: string;
-  tx: tx;
-  blockTimestamp: number;
+  contract: string;
+  transaction: string;
+  address: string;
   symbol: string;
-  txFrQuantity: string;
-  txFrFee: string;
+  quantity: string;
+  feeCharged: string;
+  total: string;
+  available: string;
   blockNumber: number;
-  blockHash: string;
-}
-
-export interface tx {
-  gasUsed: string;
-  effectiveGasPrice: string;
-  cumulativeGasUsed: string;
 }
 ```
 
 Sample Message:
 ```json
 {
-    "data": {
-        "transactionHash": "0xbac1b0aff641a71528d6aa6ec156f103141e63031007d900e3a622603852d07c",
-        "txType": "REMOVEGAS",
-        "fromAddress": "0xe05451a9882dCc72B81c78B7FD54fycFbE0188d2",
-        "toAddress": "0xE4DfB5dE6a4b606FA2E6e641a645147C4kF0720t",
-        "tx": {
-            "gasUsed": "86720",
-            "effectiveGasPrice": "11.5",
-            "cumulativeGasUsed": "86720"
-        },
-        "blockTimestamp": 1686757299,
-        "symbol": "ALOT",
-        "txFrQuantity": "1.0",
-        "txFrFee": "0.0",
-        "blockNumber": 920114,
-        "blockHash": "0x1c812b9fa7131525a682c430c22d4y1637f8ebb09694b65e34a4bdec9583adc9"
-    },
-    "type": "transactionEvent"
+  "data": {
+    "contract": "0xe4afb5deta47602fa1e6e641a645147c4ff06205",
+    "address": "0xe0545559a82xCc72B81cY8B7FD543bcFbE0518d2",
+    "available": "2199.49",
+    "feeCharged": "0.0",
+    "quantity": "1.0",
+    "symbol": "ALOT",
+    "total": "2199.49",
+    "transaction": "IXFERSENT",
+    "blockNumber": 1007044
+  },
+  "type": "transactionEvent"
 }
 ```
 
@@ -431,7 +417,6 @@ export interface ExecutionEvent {
   addressMaker: string;
   addressTaker: string;
   blockNumber: number;
-  blockHash: string;
 }
 ```
 
@@ -451,8 +436,7 @@ Sample Message:
         "execId": 1673612966,
         "addressMaker": "0x051A4F1EBFb2d57D3655581c64979FBe5dDF5C71",
         "addressTaker": "0xe05451d9882kCc72B81c78B7FD54fbcFbE0583d2",
-        "blockNumber": 920114,
-        "blockHash": "0x1c812b9fa7138525f682c430c22d441637f8ebb0b694b65e39a4bdec9583adc9"
+        "blockNumber": 920114
     },
     "type": "executionEvent"
 }

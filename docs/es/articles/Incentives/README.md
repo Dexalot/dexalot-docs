@@ -4,7 +4,7 @@ editLink: true
 
 # Compromisos de incentivos de Dexalot
 
-![incentivecommitments](\images\incentives\incentivecommitments.png)
+![incentivecommitments](/images/incentives/incentivecommitments.png)
 
 La versión candidadata a ser la subnet de Dexalot entrará en producción en poco más de un mes, ¡y estamos muy orgullosos de anunciar la llegada de incentivos para los usuarios! Desde #Can’tWait4theSubnet y #Trade2theSubnet, Dexalot ha ofrecido a los usuarios un nuevo  tipo de programa de incentivos. Participantes hayan  han recibido APRs excepcionalmente altos, y los mejores traders han sido recompensados por perfeccionar sus estrategias de trading. Dexalot continúa priorizando la seguridad y la confiabilidad, mientras ofrece a los usuarios programas de incentivos de gran valor y calidad excepcional. El lanzamiento de programa de incentivos junto con la producción de la subnet proporcionará a los usuarios una muestra de lo que está por venir desde Dexalot, y recién estamos empezando.
 

@@ -4,7 +4,7 @@ editLink: true
 
 # Dexalot资产余额快照
 
-![abs1](\images\abs\abs1.png)
+![abs1](/images/abs/abs1.png)
 
 [Dexalot](https://dexalot.com/)是一个双链、非托管的中央订单簿DEX，由[Avalanche的子网提供技术](https://www.avax.network/). 支持。Dexalot生命周期发展的下一阶段将继续发布软件架构，对速度、安全和体验进行优化。Dexalot的子网发布将包括一个内置的资产余额快照（ABS）功能，为你的资产余额创建一个不可改变的快照证明。
 
@@ -29,7 +29,7 @@ editLink: true
 
 <https://youtu.be/IEuRCxOJ20k>
 
-![abs2](\images\abs\abs2.png)
+![abs2](/images/abs/abs2.png)
 
 ## 获取你的ABS:
 

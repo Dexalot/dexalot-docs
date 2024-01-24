@@ -38,7 +38,7 @@ Vào cuối mỗi tháng, điểm cuối cùng hàng tháng của bạn sẽ đ�
 
 ## Tính toán
 
-* Điểm người dùng = (E^ 0.25) x (O^ 0.70) x (A^ 0.05)
+* Điểm người dùng = (E^ 0.30) x (O^ 0.65) x (A^ 0.05)
 * Phần thưởng hàng tháng = (200.000 $ ALOT x Điểm người dùng) / tổng hợp điểm số người dùng
 
 ## Cách theo dõi phần thưởng của bạn

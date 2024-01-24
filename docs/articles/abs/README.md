@@ -4,7 +4,7 @@ editLink: true
 
 # Dexalot’s Asset Balance Snapshot
 
-![abs1](\images\abs\abs1.png)
+![abs1](/images/abs/abs1.png)
 
 [Dexalot](https://dexalot.com/) is a dual-chain, non-custodial central order book DEX, powered by [Avalanche’s subnet technology](https://www.avax.network/). The next stage in the development of Dexalot’s life cycle continues the release of software architecture, optimized for speed, safety and experience. Dexalot’s subnet launch will include a built-in asset balance snapshot (ABS) feature that creates an immutable snapshot proof of your asset balances.
 
@@ -29,7 +29,7 @@ Here is a short video showing you how to connect your wallet and obtain the bala
 
 <https://youtu.be/IEuRCxOJ20k>
 
-![abs2](\images\abs\abs2.png)
+![abs2](/images/abs/abs2.png)
 
 ## Own your ABS:
 

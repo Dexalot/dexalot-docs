@@ -4,7 +4,7 @@ editLink: true
 
 # The Dexalot Subnet Guide
 
-![guide_1](\images\guide\guide_1.png)
+![guide_1](/images/guide/guide_1.png)
 
 [Dexalot](https://dexalot.com/) has launched on an [Avalanche Subnet](https://www.avax.network/subnets) ! Like its [sunsetting single-chain predecessor app on the Avalanche C-Chain](https://medium.com/dexalot/dexalot-single-chain-sunset-schedule-847f47091598), the Dexalot Subnet aims to replicate the user experience of a centralized exchange (CEX) without compromising on decentralization and transparency ! The subnet is a user-friendly on-chain central limit order book (CLOB) with low transaction fees, fast transaction finality sporting upcoming support across the following trade pairs:
 
@@ -27,7 +27,7 @@ editLink: true
 - [Dexalot Incentive Program getting started](https://medium.com/dexalot/dexalot-incentive-program-c9e2844b0b18)
 - [Asset Balance Snapshot](https://medium.com/dexalot/dexalots-asset-balance-snapshot-c2995c16c004)
 
-![guide_2](\images\guide\guide_2.png)
+![guide_2](/images/guide/guide_2.png)
 
 - [Learn the Basics](https://medium.com/dexalot/learn-the-basics-e893a62261a3)
 - [Buy and Sell Orders](https://medium.com/dexalot/buy-and-sell-orders-6b3843d639bd)
@@ -37,7 +37,7 @@ editLink: true
 - [Transfers between your Avalanche and Metamask Wallets](https://medium.com/dexalot/transfers-between-your-avalanche-and-metamask-wallets-60f226abf3e4)
 - [Transfers between your Portfolio and MetaMask Wallet](https://medium.com/dexalot/transfers-between-your-portfolio-and-metamask-wallet-4c6cc461c1c5)
 
-![guide_3](\images\guide\guide_3.png)
+![guide_3](/images/guide/guide_3.png)
 
 Developers looking to build on the Dexalot Subnet can read The Dexalot Knowledge Hub. If you need any assistance with any of the things mentioned join us on [Dexalot’s Discord](http://discord.gg/dexalot). [Experience it yourself !](https://app.dexalot.com/trade)
 

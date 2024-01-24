@@ -4,7 +4,7 @@ editLink: true
 
 # Dexalot子网指南
 
-![guide_1](\images\guide\guide_1.png)
+![guide_1](/images/guide/guide_1.png)
 
 [Dexalot](https://dexalot.com/)已经在[Avalanche子网](https://www.avalabs.org/)推出了! 就像其在[Avalanche C-Chain上的单链日落](https://medium.com/dexalot/dexalot%E5%AD%90%E7%BD%91-6f3072244906)应用程序一样，Dexalot子网旨在复制中心化交易所（CEX）的用户体验，同时不影响去中心化和透明度！ 该子网是一个用户友好的链上中央限价订单簿（CLOB），具有低交易费用、快速交易的特点，即将支持以下交易对：
 
@@ -27,7 +27,7 @@ editLink: true
 - [Dexalot奖励计划启动](https://medium.com/dexalot/dexalot%E5%A5%96%E5%8A%B1%E8%AE%A1%E5%88%92-de5ad527e976)
 - [资产余额快照](https://medium.com/dexalot/dexalot%E8%B5%84%E4%BA%A7%E4%BD%99%E9%A2%9D%E5%BF%AB%E7%85%A7-df5900c6cfed)
 
-![guide_2](\images\guide\guide_2.png)
+![guide_2](/images/guide/guide_2.png)
 
 - [学习基本知识](https://medium.com/dexalot/learn-the-basics-e893a62261a3)
 - [买入和卖出订单](https://medium.com/dexalot/buy-and-sell-orders-6b3843d639bd)
@@ -37,7 +37,7 @@ editLink: true
 - [在你的Avalanche和Metamask钱包之间的转账](https://medium.com/dexalot/transfers-between-your-avalanche-and-metamask-wallets-60f226abf3e4)
 - [你的投资组合（Portfolio）和MetaMask钱包之间的转账](https://medium.com/dexalot/transfers-between-your-portfolio-and-metamask-wallet-4c6cc461c1c5)
 
-![guide_3](\images\guide\guide_3.png)
+![guide_3](/images/guide/guide_3.png)
 
 希望在Dexalot子网基础上进行开发的开发人员可以阅读Dexalot 知识中心。如果您在上述任何事情上需要任何帮助，请加入我们[Dexalot的Discord](http://discord.gg/dexalot)。[亲自体验一下吧 !](https://app.dexalot.com/trade)
 

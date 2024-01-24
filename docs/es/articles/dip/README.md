@@ -38,7 +38,7 @@ Al final de cada mes, tu puntuación final mensual será comparada con la puntua
 
 ##  Cálculos:
 
-* Puntuación del Usuario = (E^ 0.25) x (O^ 0.70) x (A^ 0.05)
+* Puntuación del Usuario = (E^ 0.30) x (O^ 0.65) x (A^ 0.05)
 * Recompensas Mensuales = (200.000 $ALOT x Puntuación de Usuarios)/Puntuación Conjunta de Usuarios
 
 ##  Cómo controlar tus recompensas:

@@ -4,15 +4,13 @@
   "license": "SEE LICENSE IN LICENSE.txt",
   "private": true,
   "engines": {
-    "node": "18.16.0"
+    "node": "16.15.1"
   },
   "scripts": {
     "lint-ts-check": "./node_modules/.bin/eslint . --ext .ts",
     "lint-ts-fix": "./node_modules/.bin/eslint . --ext .ts --fix",
     "lint-js-check": "./node_modules/.bin/eslint . --ext .js",
     "lint-js-fix": "./node_modules/.bin/eslint . --ext .js --fix",
-    "lint-md-check": "./node_modules/.bin/markdownlint **/*.md --ignore node_modules",
-    "lint-md-fix": "./node_modules/.bin/markdownlint **/*.md --ignore node_modules --fix",
     "pretty-md-check": "./node_modules/.bin/prettier --check **/*.md",
     "pretty-md-fix": "./node_modules/.bin/prettier --write **/*.md",
     "pretty-ts-check": "./node_modules/.bin/prettier --check **/*.ts",
@@ -32,8 +30,6 @@
     "@vuepress/client": "2.0.0-beta.53",
     "@vuepress/plugin-search": "2.0.0-beta.53",
     "eslint": "8.27.0",
-    "markdownlint": "0.33.0",
-    "markdownlint-cli": "0.38.0",
     "prettier": "2.7.1",
     "rimraf": "3.0.2",
     "ts-node": "10.9.1",

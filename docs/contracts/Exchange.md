@@ -260,26 +260,3 @@ function pauseForUpgrade(bool _pause) external virtual
 fallback() external
 ```
 
-#### addToken
-
-Add new token to portfolio
-
-**Dev notes:** \
-Exchange needs to be DEFAULT_ADMIN on the Portfolio
-
-```solidity:no-line-numbers
-function addToken(bytes32 _symbol, address _tokenaddress, uint32 _srcChainId, uint8 _decimals, enum ITradePairs.AuctionMode _mode, uint256 _fee, uint256 _gasSwapRatio) external
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _symbol | bytes32 | symbol of the token |
-| _tokenaddress | address | address of the token |
-| _srcChainId | uint32 | Source Chain id |
-| _decimals | uint8 | decimals of the token |
-| _mode | enum ITradePairs.AuctionMode | starting auction mode |
-| _fee | uint256 | Bridge Fee |
-| _gasSwapRatio | uint256 | Amount of token to swap per ALOT |
-

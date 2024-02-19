@@ -6,6 +6,17 @@ headerDepth: 4
 
 **Interface of PortfolioBridgeSub**
 
+## Struct Types
+
+### TokenDestinationInfo
+
+```solidity
+struct TokenDestinationInfo {
+  bytes32 symbolId;
+  uint256 bridgeFee;
+}
+```
+
 ## Methods
 
 ### External
@@ -13,42 +24,30 @@ headerDepth: 4
 #### addToken
 
 ```solidity:no-line-numbers
-function addToken(bytes32 _symbol, address _tokenaddress, uint32 _srcChainId, uint8 _decimals, enum ITradePairs.AuctionMode _mode) external
+function addToken(bytes32 _srcChainSymbol, address _tokenAddress, uint32 _srcChainId, uint8 _decimals, enum ITradePairs.AuctionMode, bytes32 _subnetSymbol, uint256 _bridgeFee) external
 ```
 
 #### removeToken
 
 ```solidity:no-line-numbers
-function removeToken(bytes32 _symbol, uint32 _srcChainId) external
+function removeToken(bytes32 _srcChainSymbol, uint32 _srcChainId, bytes32 _subnetSymbol) external returns (bool deleted)
+```
+
+#### getTokenDetails
+
+```solidity:no-line-numbers
+function getTokenDetails(bytes32 _symbolId) external view returns (struct IPortfolio.TokenDetails)
 ```
 
 #### executeDelayedTransfer
 
 ```solidity:no-line-numbers
-function executeDelayedTransfer(bytes32 _id) external
+function executeDelayedTransfer(uint16 _dstChainId, bytes32 _id) external
 ```
 
-#### setDelayThresholds
+#### setBridgeFees
 
 ```solidity:no-line-numbers
-function setDelayThresholds(bytes32[] _tokens, uint256[] _thresholds) external
-```
-
-#### setDelayPeriod
-
-```solidity:no-line-numbers
-function setDelayPeriod(uint256 _period) external
-```
-
-#### setEpochLength
-
-```solidity:no-line-numbers
-function setEpochLength(uint256 _length) external
-```
-
-#### setEpochVolumeCaps
-
-```solidity:no-line-numbers
-function setEpochVolumeCaps(bytes32[] _tokens, uint256[] _caps) external
+function setBridgeFees(uint32 _dstChainListOrgChainId, bytes32[] _tokens, uint256[] _bridgeFees) external
 ```
 

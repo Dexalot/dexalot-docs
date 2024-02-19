@@ -98,6 +98,29 @@ function getPriceFeed() external view returns (contract AggregatorV3Interface)
 | ---- | ---- | ----------- |
 | [0] | contract AggregatorV3Interface | AggregatorV3Interface  price feed contract |
 
+#### addToken
+
+Add new token to portfolio
+
+**Dev notes:** \
+Exchange needs to be DEFAULT_ADMIN on the Portfolio
+
+```solidity:no-line-numbers
+function addToken(bytes32 _symbol, address _tokenaddress, uint32 _srcChainId, uint8 _decimals, uint256 _fee, uint256 _gasSwapRatio, bool _isVirtual) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _symbol | bytes32 | symbol of the token |
+| _tokenaddress | address | address of the token |
+| _srcChainId | uint32 | Source Chain Symbol of the virtual token only. Otherwise it is overridden by the current chainid |
+| _decimals | uint8 | decimals of the token |
+| _fee | uint256 | Bridge Fee |
+| _gasSwapRatio | uint256 | Amount of token to swap per ALOT |
+| _isVirtual | bool | Token to facilitate for Cross Chain Trades |
+
 #### addTrustedContract
 
 Adds trusted contract to portfolio

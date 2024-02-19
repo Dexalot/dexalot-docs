@@ -88,6 +88,8 @@ ID-ZADDR-02: cannot initialize portfolio with zero address(0)
 
 LA-DCNT-01: destination chain is not a trusted source
 
+LA-IUMF-01: insufficient user message fee received
+
 LA-LIZA-01: endpoint cannot be zero address(0)
 
 ## Portfolio
@@ -168,6 +170,10 @@ P-TSDM-01: token symbols do not match
 
 P-TTNZ-01: tokanTotals needs to be 0
 
+P-VTNS-01: virtual token can not be deposited
+
+P-VTNS-02: virtual tokens can not be withdrawn
+
 P-WNFA-01: withdrawNative failed
 
 P-WUTH-01: withdraw under threshold
@@ -192,6 +198,12 @@ PB-CSDE-01: destination for celerSend is not allowed
 
 PB-DBCD-01: default bridge can not be disabled
 
+PB-DDCS-01: default destination is not setup. Use setTrustedRemoteAddress first
+
+PB-DDNS-01: destination not found when calling getTokenId
+
+PB-DDNS-02: destination not found when calling sendXChainMessageInternal
+
 PB-DTAE-01: delayed transfer already exists
 
 PB-DTNE-01: delayed transfer does not exist
@@ -202,11 +214,13 @@ PB-ETNS-01: erc20 token is not supported
 
 PB-FRFD-01: failed to refund
 
+PB-INVT-01: target chain does not have enough inventory to cover this withdrawal
+
+PB-INVZ-01: inventoryBySymbolId needs to be 0
+
 PB-IVEC-01: invalid endpoint caller
 
-PB-LENM-01: length mismatch in setDelayThresholds
-
-PB-LENM-02: length mismatch in setEpochVolumeCaps
+PB-LENM-01: length mismatch in array type function parameters
 
 PB-MING-01: gas can not be less than 200000 minimum gas required
 
@@ -223,6 +237,10 @@ PB-SDMP-01: symbol doesn't match Portfolio's common symbol
 PB-SINA-01: source not allowed
 
 PB-TAEX-01: token already exists
+
+PB-UFPE-01: user fee payer address does not exist
+
+PB-UFPR-01: user gas fee not necessary and refund failed
 
 PB-VCAP-01: volume exceeds cap
 
@@ -256,15 +274,23 @@ RF-ALOA-01: at least one account needed in admin group
 
 RF-BCAM-01: batch claim array mismatch
 
+RF-DTNF-01: destination token not found
+
 RF-IMS-01: invalid msg.sender
 
 RF-IMV-01: invalid msg.value
 
 RF-IN-01: invalid nonce
 
+RF-IN-02: invalid nonce on xChain destination
+
+RF-INVT-01: target chain does not have enough inventory to remove the xChainSwap from the queue
+
 RF-IS-01: invalid order signature
 
 RF-OCR-01: only callable by rebalancer
+
+RF-PTNS-01: main processXFerPayload transaction not supported
 
 RF-QE-01: quote expired due to manual override
 
@@ -275,6 +301,10 @@ RF-SAZ-01: set address to zero
 RF-TF-01: transfer failed
 
 RF-TF-02: transfer failed
+
+RF-ZADDR-01: trader address cannot be zero address(0)
+
+RF-ZETD-01: zero erc20 token quantity
 
 ## Staking
 

@@ -228,6 +228,28 @@ function getIdForToken(bytes32 _symbol, uint32 _srcChainId) internal pure return
 | ---- | ---- | ----------- |
 | id | bytes32 | the resulting symbolId |
 
+#### getQuoteAmount
+
+Returns the quote amount for a given price and quantity
+
+```solidity:no-line-numbers
+function getQuoteAmount(uint8 _baseDecimals, uint256 _price, uint256 _quantity) internal pure returns (uint256 quoteAmount)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _baseDecimals | uint8 | id of the trading pair |
+| _price | uint256 | price |
+| _quantity | uint256 | quantity |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| quoteAmount | uint256 | quote amount |
+
 #### slice
 
 Copied from Layer0 Libs

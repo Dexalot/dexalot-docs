@@ -6,11 +6,11 @@ headerDepth: 4
 
 **Abstract Layer Zero contract**
 
-It is extended by the PortfolioBridge contract for Dexalot specific implementation
+It is extended by the PortfolioBridgeMain contract for Dexalot specific implementation
 
 **Dev notes:** \
-This doesn&#x27;t support multi mainnet Chain as many functions depend on lzRemoteChainId
-Remove lzRemoteChainId and adjust the functions for multichain support.
+defaultLzRemoteChainId is the default destination chain. For PortfolioBridgeSub it is avalanche C-Chain
+For other blockchains it is Dexalot Subnet
 
 ## Variables
 
@@ -18,22 +18,22 @@ Remove lzRemoteChainId and adjust the functions for multichain support.
 
 | Name | Type |
 | --- | --- |
-| gasForDestinationLzReceive | uint256 |
 | lzTrustedRemoteLookup | mapping(uint16 &#x3D;&gt; bytes) |
+| remoteParams | mapping(uint16 &#x3D;&gt; struct ILayerZeroUserApplicationConfig.Destination) |
 
 ### Internal
 
 | Name | Type |
 | --- | --- |
+| defaultLzRemoteChainId | uint16 |
 | lzEndpoint | contract ILayerZeroEndpoint |
-| lzRemoteChainId | uint16 |
 
 ## Events
 
 ### LzSetTrustedRemoteAddress
 
 ```solidity:no-line-numbers
-event LzSetTrustedRemoteAddress(uint16 remoteChainId, bytes remoteAddress)
+event LzSetTrustedRemoteAddress(uint16 destinationLzChainId, bytes remoteAddress, uint32 chainListOrgChainId, uint256 gasForDestinationLzReceive, bool userPaysFee)
 ```
 
 ## Methods
@@ -56,18 +56,6 @@ function setLzEndPoint(address _endpoint) external
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _endpoint | address | Address of the Layer Zero Endpoint |
-
-#### getLzEndPoint
-
-```solidity:no-line-numbers
-function getLzEndPoint() external view returns (contract ILayerZeroEndpoint)
-```
-
-##### Return values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | contract ILayerZeroEndpoint | ILayerZeroEndpoint  Layer Zero Endpoint |
 
 #### lzReceive
 
@@ -164,24 +152,6 @@ function setReceiveVersion(uint16 _version) external
 | ---- | ---- | ----------- |
 | _version | uint16 | Version to set |
 
-#### setLZTrustedRemoteAddress
-
-Sets trusted remote address for the cross-chain communication
-
-**Dev notes:** \
-Allow DEFAULT_ADMIN to set it multiple times.
-
-```solidity:no-line-numbers
-function setLZTrustedRemoteAddress(uint16 _srcChainId, bytes _srcAddress) external virtual
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _srcChainId | uint16 | Source(Remote) chain id |
-| _srcAddress | bytes | Source(Remote) contract address |
-
 #### forceResumeReceive
 
 Force resumes the stuck bridge by destroying the message blocking it.
@@ -232,19 +202,31 @@ function retryPayload(uint16 _srcChainId, bytes _srcAddress, bytes _payload) ext
 | _srcAddress | bytes | Remote contract address concatenated with the local contract address |
 | _payload | bytes | Payload to retry |
 
+#### getLzEndPoint
+
+```solidity:no-line-numbers
+function getLzEndPoint() external view returns (contract ILayerZeroEndpoint)
+```
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | contract ILayerZeroEndpoint | ILayerZeroEndpoint  Layer Zero Endpoint |
+
 #### getTrustedRemoteAddress
 
 Gets the Trusted Remote Address per given chainId
 
 ```solidity:no-line-numbers
-function getTrustedRemoteAddress(uint16 _srcChainId) external view returns (bytes)
+function getTrustedRemoteAddress(uint16 _remoteChainId) external view returns (bytes)
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _srcChainId | uint16 | Source chain id |
+| _remoteChainId | uint16 | Remote chain id |
 
 ##### Return values
 
@@ -285,7 +267,7 @@ function hasStoredPayload() external view returns (bool)
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| [0] | bool | bool  True if the bridge has stored payload, means it is stuck |
+| [0] | bool | bool  True if the bridge has stored payload with its default destination, means it is stuck |
 
 #### isLZTrustedRemote
 
@@ -314,18 +296,19 @@ function isLZTrustedRemote(uint16 _srcChainId, bytes _srcAddress) external view 
 
 #### lzSend
 
-Sends message
+send a LayerZero message to the specified address at a LayerZero endpoint.
 
 ```solidity:no-line-numbers
-function lzSend(bytes _payload, address payable _refundAddress) internal virtual returns (uint256)
+function lzSend(uint16 _dstChainId, bytes _payload, address payable _refundAddress) internal virtual returns (uint256)
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _payload | bytes | Payload to send |
-| _refundAddress | address payable | Refund address |
+| _dstChainId | uint16 | the destination chain identifier |
+| _payload | bytes | a custom bytes payload to send to the destination contract |
+| _refundAddress | address payable | if the source transaction is cheaper than the amount of value passed, refund the additional amount to this address |
 
 ##### Return values
 
@@ -338,13 +321,14 @@ function lzSend(bytes _payload, address payable _refundAddress) internal virtual
 Estimates message fees
 
 ```solidity:no-line-numbers
-function lzEstimateFees(bytes _payload) internal view returns (uint256 messageFee, bytes adapterParams)
+function lzEstimateFees(uint16 _dstChainId, bytes _payload) internal view returns (uint256 messageFee, bytes adapterParams)
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
+| _dstChainId | uint16 | Target chain id |
 | _payload | bytes | Message payload |
 
 ##### Return values
@@ -357,11 +341,17 @@ function lzEstimateFees(bytes _payload) internal view returns (uint256 messageFe
 #### getInboundNonce
 
 **Dev notes:** \
-Inbound nonce assigned by LZ
+Get the inboundNonce of a lzApp from a source chain which could be EVM or non-EVM chain
 
 ```solidity:no-line-numbers
-function getInboundNonce() internal view returns (uint64)
+function getInboundNonce(uint16 _srcChainId) internal view returns (uint64)
 ```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _srcChainId | uint16 | the source chain identifier |
 
 ##### Return values
 
@@ -372,11 +362,17 @@ function getInboundNonce() internal view returns (uint64)
 #### getOutboundNonce
 
 **Dev notes:** \
-Outbound nonce assigned by LZ
+Get the outboundNonce of a lzApp for a destination chain which, consequently, is always an EVM
 
 ```solidity:no-line-numbers
-function getOutboundNonce() internal view returns (uint64)
+function getOutboundNonce(uint16 _dstChainId) internal view returns (uint64)
 ```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _dstChainId | uint16 | The destination chain identifier |
 
 ##### Return values
 

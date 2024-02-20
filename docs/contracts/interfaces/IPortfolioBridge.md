@@ -59,13 +59,13 @@ function unpause() external
 #### sendXChainMessage
 
 ```solidity:no-line-numbers
-function sendXChainMessage(enum IPortfolioBridge.BridgeProvider _bridge, struct IPortfolio.XFER _xfer) external
+function sendXChainMessage(uint32 _dstChainListOrgChainId, enum IPortfolioBridge.BridgeProvider _bridge, struct IPortfolio.XFER _xfer, address _userFeePayer) external payable returns (uint256 messageFee)
 ```
 
 #### getXFerMessage
 
 ```solidity:no-line-numbers
-function getXFerMessage(bytes _data) external view returns (address, bytes32, uint256)
+function getXFerMessage(bytes _data) external view returns (struct IPortfolio.XFER, bytes32)
 ```
 
 #### enableBridgeProvider
@@ -86,9 +86,39 @@ function isBridgeProviderEnabled(enum IPortfolioBridge.BridgeProvider _bridge) e
 function getDefaultBridgeProvider() external view returns (enum IPortfolioBridge.BridgeProvider)
 ```
 
+#### getDefaultDestinationChain
+
+```solidity:no-line-numbers
+function getDefaultDestinationChain() external view returns (uint32)
+```
+
+#### getPortfolio
+
+```solidity:no-line-numbers
+function getPortfolio() external view returns (contract IPortfolio)
+```
+
+#### getMainnetRfq
+
+```solidity:no-line-numbers
+function getMainnetRfq() external view returns (contract IMainnetRFQ)
+```
+
+#### getTokenList
+
+```solidity:no-line-numbers
+function getTokenList() external view returns (bytes32[])
+```
+
 #### VERSION
 
 ```solidity:no-line-numbers
 function VERSION() external returns (bytes32)
+```
+
+#### getBridgeFee
+
+```solidity:no-line-numbers
+function getBridgeFee(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstChainListOrgChainId, bytes32 _symbol) external view returns (uint256 bridgeFee)
 ```
 

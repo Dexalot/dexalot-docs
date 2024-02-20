@@ -88,15 +88,16 @@ function</td>
 
 ## Architecture
 
-Dexalot lives in a dual chain environment. Avalanche Mainnet
-C-Chain(mainnet) and Avalanche supported Dexalot Subnet(subnet).
-Dexalot’s contracts don’t bridge any coins or tokens between these 2
-chains, but rather lock them in the Dexalot’s PortfolioMain contract in
-the mainnet and then communicate the users’ holdings to its smart
+Dexalot is a non-custodial multi-chain CLOB Dex that spans over the
+Avalanche supported Dexalot Subnet(Subnet) and multiple host-chains (Mainnets).
+Dexalot’s contracts don’t bridge any coins or tokens between chains,
+but rather lock them in the Dexalot’s PortfolioMain contract in
+the host-chain and then communicate the users’ holdings to its smart
 contracts in the subnet for trading purposes. Dexalot is bridge
 agnostic. You will be able to deposit with one bridge and withdraw with
-another. Having said that, we are planning to have LayerZero as the sole
-bridge provider when we go live and add on more bridges in the future.
+another. Having said that, LayerZero has been the sole bridge provider
+since we went live on Feb 1st, 2023 and we plan to add more bridges such
+as AWM in the future.
 
 It is perfectly sufficient for your trading application to interface
 with only the Dexalot Subnet and use Dexalot frontend to perform
@@ -114,7 +115,7 @@ the smart contracts.
 
 If your trading application has a business need to deposit/withdraw more
 often, then your app will need to integrate with the PortfolioMain
-contract in the mainnet as well to fully automate your flow.
+contracts in the host-chains as well to fully automate your flow.
 
 WebSocket & REST API interfaces are optional and provided purely for
 convenience. Instead of directly reading from the chain, you can rely on
@@ -138,9 +139,13 @@ via the RESTAPI nor WS.
 
 ![Simplified architecture before and after subnet](/images/api/simple.png)
 
-###  Detailed
+###  Detailed Dual-Chain
 
 ![Detailed dual-chain architecture](/images/api/detailed_dark1.png)
+
+###  Multi-Chain
+
+![Host-Chains & Subnet communication](/images/api/contracts_architecture.png)
 
 ## Docs
 

@@ -16,7 +16,7 @@ More bridges can be added in the future as needed.
 Because of this novel architecture, a subnet wallet can only house ALOT token and nothing
 else. That&#x27;s why the subnet wallet is referred to as the “Gas Tank”. All assets will be
 handled inside the PortfolioSub smart contract in the subnet.
-PortfolioBridge and PortfolioBridgeSub are bridge aggregators in charge of sending/receiving messages
+PortfolioBridgeMain and PortfolioBridgeSub are bridge aggregators in charge of sending/receiving messages
 via generic messaging using active bridge transports.
 
 **Dev notes:** \
@@ -127,7 +127,7 @@ function removeToken(bytes32 _symbol, uint32 _srcChainId) public virtual
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _symbol | bytes32 | Symbol of the token |
-| _srcChainId | uint32 | Source Chain id _srcChainId  Source Chain id is always the mainnet chainid for PortfolioMain |
+| _srcChainId | uint32 | Source Chain id. It is always the mainnet chainid for PortfolioMain |
 
 ### External
 
@@ -252,31 +252,6 @@ function setBridgeParam(bytes32 _symbol, uint256 _fee, uint256 _gasSwapRatio, bo
 | _fee | uint256 | Fee to be set |
 | _gasSwapRatio | uint256 | Amount of token to swap per ALOT. Always set it to equivalent of 1 ALOT. |
 | _usedForGasSwap | bool | bool to control the list of tokens that can be used for gas swap. Mostly majors |
-
-#### addToken
-
-Adds the given token to the portfolio
-
-**Dev notes:** \
-Only callable by admin.
-We don't allow tokens with the same symbols but different addresses.
-Native symbol is also added by default with 0 address.
-
-```solidity:no-line-numbers
-function addToken(bytes32 _symbol, address _tokenAddress, uint32 _srcChainId, uint8 _decimals, enum ITradePairs.AuctionMode _mode, uint256 _fee, uint256 _gasSwapRatio) external
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _symbol | bytes32 | Symbol of the token |
-| _tokenAddress | address | Address of the token |
-| _srcChainId | uint32 | Source Chain id |
-| _decimals | uint8 | Decimals of the token |
-| _mode | enum ITradePairs.AuctionMode | Starting auction mode of the token |
-| _fee | uint256 | Bridge Fee |
-| _gasSwapRatio | uint256 | Amount of token to swap per ALOT |
 
 #### getTokenList
 
@@ -417,18 +392,14 @@ function setBridgeParamInternal(bytes32 _symbol, uint256 _fee, uint256 _gasSwapR
 Actual private function that implements the token addition
 
 ```solidity:no-line-numbers
-function addTokenInternal(bytes32 _symbol, address _tokenAddress, uint32, uint8 _decimals, enum ITradePairs.AuctionMode _mode, uint256, uint256) internal virtual
+function addTokenInternal(struct IPortfolio.TokenDetails _details, uint256, uint256) internal virtual
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _symbol | bytes32 | Symbol of the token |
-| _tokenAddress | address | Address of the token |
-|  | uint32 |  |
-| _decimals | uint8 | Decimals of the token |
-| _mode | enum ITradePairs.AuctionMode | Starting auction mode of the token  _fee  Bridge Fee (child implementation)  _gasSwapRatio  Amount of token to swap per ALOT (child implementation) |
+| _details | struct IPortfolio.TokenDetails | Token Details  _fee  Bridge Fee (child implementation)  _gasSwapRatio  Amount of token to swap per ALOT (child implementation) |
 |  | uint256 |  |
 |  | uint256 |  |
 

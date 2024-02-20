@@ -101,6 +101,6 @@ function getReceiveVersion(address _userApplication) external view returns (uint
 #### storedPayload
 
 ```solidity:no-line-numbers
-function storedPayload(uint16 _srcChainId, bytes _srcAddress) external view returns (uint64, address, bytes32)
+function storedPayload(uint16 _srcChainId, bytes _srcAddress) external view returns (uint64, address, bytes)
 ```
 

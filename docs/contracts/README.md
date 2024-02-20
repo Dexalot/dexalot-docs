@@ -19,7 +19,7 @@ The image below shows the trading workflow on Dexalot before and after subnet wh
 
 In addition this next image below shows how host-chains & the subnet communicate with each other with the March 2024 upgrade
 
-![Host-Chains & Subnet communication](/images/contracts/contracts_architecture.png)
+![Host-Chains & Subnet communication](/images/api/contracts_architecture.png)
 
 The novel multi-chain architecture allows Dexalot to unload more demanding operations to the subnet, reducing the gas cost while increasing speed. Dexalot’s contracts can be accessed through its frontend, or directly from your own code. In addition, there is no separate bridging interface. All bridge functionality is encapsulated into Dexalot’s host-chain smart contracts PortfolioMain &amp; PortfolioSub to provide a seamless user experience. LayerZero has been the sole bridge provider since the start, and more bridges or protocols such as AWM (Avalanche Warp Messaging) will be added in the future as needed. This approach will allow Dexalot to scale to multiple bridges (to further reduce risk from single point of failure) and for assets in chains other than Avalanche to be tradeable on the Dexalot Subnet.
 

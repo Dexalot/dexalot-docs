@@ -438,7 +438,7 @@ The fee is in terms of current chain's gas token.
 LZ charges based on the payload size and gas px at
 
 ```solidity:no-line-numbers
-function getBridgeFee(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstChainListOrgChainId, bytes32) external view virtual returns (uint256 bridgeFee)
+function getBridgeFee(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstChainListOrgChainId, bytes32, uint256) external view virtual returns (uint256 bridgeFee)
 ```
 
 ##### Arguments
@@ -446,8 +446,9 @@ function getBridgeFee(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstC
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _bridge | enum IPortfolioBridge.BridgeProvider | Bridge |
-| _dstChainListOrgChainId | uint32 | destination chain id           _symbol  symbol of the token, not relevant in for this function |
+| _dstChainListOrgChainId | uint32 | destination chain id           _symbol  symbol of the token, not relevant in for this function           _quantity quantity of the token, not relevant in for this function |
 |  | bytes32 |  |
+|  | uint256 |  |
 
 ##### Return values
 
@@ -577,23 +578,6 @@ Only admin can call
 ```solidity:no-line-numbers
 function refundNative() external
 ```
-
-#### refundTokens
-
-Refunds the ERC20 balance inside contract
-
-**Dev notes:** \
-Only admin can call
-
-```solidity:no-line-numbers
-function refundTokens(address[] _tokens) external
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _tokens | address[] | Array of ERC20 tokens to refund |
 
 #### receive
 

@@ -96,7 +96,7 @@ struct PendingSwap {
 
 | Name | Type |
 | --- | --- |
-| __gap | uint256[46] |
+| __gap | uint256[44] |
 
 ### Private
 

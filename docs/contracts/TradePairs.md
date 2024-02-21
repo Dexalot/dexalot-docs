@@ -764,7 +764,7 @@ For the rest of the order level check failures, It will reject those orders by e
 OrderStatusChanged event with "status" = Status.REJECTED and "code" = rejectReason
 Event though the new order is rejected, the cancel operation still holds. For example, you try to C/R list
 5 orders, the very first, Order1 gets canceled and at the time of new order entry for Order1.1, it may get rejected
-because of type2=PO and it will match an active order. Order1 is still canceled. Order1.1 gets a REJECT with
+because of type2=PO as it will match an active order. Order1 is still canceled. Order1.1 gets a REJECT with
 "T-T2PO-01". The event will have your clientOrderId, but no orderId will be assigned to the order as it will not be
 added to the blockchain. \
 Order rejects will only be raised if called from this function. Single orders entered using addOrder
@@ -779,7 +779,7 @@ function cancelReplaceList(bytes32[] _orderIds, bytes32[] _clientOrderIds, uint2
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _orderIds | bytes32[] | order ids to be replaces |
+| _orderIds | bytes32[] | order ids to be replaced |
 | _clientOrderIds | bytes32[] | Array of unique id provided by the owner of the orders that will be assigned to replaced orders |
 | _prices | uint256[] | Array of prices |
 | _quantities | uint256[] | Array of quantities |

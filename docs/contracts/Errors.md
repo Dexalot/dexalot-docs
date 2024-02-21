@@ -84,6 +84,22 @@ ID-ZADDR-01: cannot initialize signer with zero address(0)
 
 ID-ZADDR-02: cannot initialize portfolio with zero address(0)
 
+## InventoryManager
+
+IM-INVT-01: target chain does not have enough inventory to cover this withdrawal
+
+IM-INVT-02: target chain does not have enough inventory to cover this withdrawal
+
+IM-LENM-01: length mismatch in array type function parameters
+
+IM-SIAE-01: symbolId and inventory already exist
+
+IM-SMEB-01: symbols cannot be empty bytes
+
+IM-ZADDR-01: portfolio bridge sub cannot be the zero address
+
+IM-ZVFA-01: zero value for A is not permitted
+
 ## LzApp
 
 LA-DCNT-01: destination chain is not a trusted source

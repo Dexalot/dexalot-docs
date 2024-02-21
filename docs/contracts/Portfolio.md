@@ -311,6 +311,34 @@ function getTokenDetailsById(bytes32 _symbolId) external view returns (struct IP
 | ---- | ---- | ----------- |
 | [0] | struct IPortfolio.TokenDetails | TokenDetails  see getTokenDetails |
 
+#### getBridgeFee
+
+Returns the bridge fee for the given bridge provider, token,
+destination chain and quantity
+
+**Dev notes:** \
+Calls the portfolioBridge contract to get the bridge fee which
+in addition includes withdrawal fee for PortfolioSub but only bridge fee for PortfolioMain
+
+```solidity:no-line-numbers
+function getBridgeFee(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstChainListOrgChainId, bytes32 _symbol, uint256 _quantity) external view returns (uint256 bridgeFee)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _bridge | enum IPortfolioBridge.BridgeProvider | Enum value of the bridge provider |
+| _dstChainListOrgChainId | uint32 | Chain id of the destination chain |
+| _symbol | bytes32 | Symbol of the token |
+| _quantity | uint256 | Quantity of the token |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| bridgeFee | uint256 | Bridge fee |
+
 #### fallback
 
 **Dev notes:** \

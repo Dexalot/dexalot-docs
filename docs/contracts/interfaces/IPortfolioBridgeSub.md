@@ -45,6 +45,12 @@ function getTokenDetails(bytes32 _symbolId) external view returns (struct IPortf
 function executeDelayedTransfer(uint16 _dstChainId, bytes32 _id) external
 ```
 
+#### getAllBridgeFees
+
+```solidity:no-line-numbers
+function getAllBridgeFees(bytes32 _symbol, uint256 _quantity) external view returns (uint256[] bridgeFees, uint32[] chainIds)
+```
+
 #### setBridgeFees
 
 ```solidity:no-line-numbers

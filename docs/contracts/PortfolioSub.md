@@ -503,6 +503,31 @@ function setPortfolioMinter(contract IPortfolioMinter _portfolioMinter) external
 | ---- | ---- | ----------- |
 | _portfolioMinter | contract IPortfolioMinter | Portfolio minter contract to be set |
 
+#### getAllBridgeFees
+
+Returns the bridge fees for all the host chain tokens of a given subnet token
+
+**Dev notes:** \
+Calls the PortfolioBridgeSub contract to get the bridge fees
+
+```solidity:no-line-numbers
+function getAllBridgeFees(bytes32 _symbol, uint256 _quantity) external view returns (uint256[] bridgeFees, uint32[] chainIds)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _symbol | bytes32 | subnet symbol of the token |
+| _quantity | uint256 | quantity of the token to withdraw |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| bridgeFees | uint256[] | Array of bridge fees for each corresponding chainId |
+| chainIds | uint32[] | Array of chainIds for each corresponding bridgeFee |
+
 #### updateTokenDetailsAfterUpgrade
 
 Overwrites the evm initialized fields to proper values after the March 2024 upgrade.

@@ -35,13 +35,13 @@ can use the local symbol when calling portfolio methods \
 | Name | Type |
 | --- | --- |
 | delayedTransfers | contract IDelayedTransfers |
-| inventoryBySymbolId | mapping(bytes32 &#x3D;&gt; uint256) |
-| tokenDetailsMapById | mapping(bytes32 &#x3D;&gt; struct IPortfolio.TokenDetails) |
+| inventoryManager | contract IInventoryManager |
 
 ### Private
 
 | Name | Type |
 | --- | --- |
+| tokenDetailsMapById | mapping(bytes32 &#x3D;&gt; struct IPortfolio.TokenDetails) |
 | tokenInfoMapBySymbolChainId | mapping(bytes32 &#x3D;&gt; mapping(uint32 &#x3D;&gt; struct IPortfolioBridgeSub.TokenDestinationInfo)) |
 | tokenListById | struct EnumerableSetUpgradeable.Bytes32Set |
 
@@ -54,6 +54,36 @@ can use the local symbol when calling portfolio methods \
 ```solidity:no-line-numbers
 function VERSION() public pure returns (bytes32)
 ```
+
+#### getBridgeFee
+
+Returns the minimum bridgeFee calculated offChain for the targetChainId, in addition to the
+inventoryManager calculated withdrawal fee
+
+**Dev notes:** \
+This is in terms of token transferred. LZ charges us using based on the payload size and gas px at
+destination. Our offchain app monitors the gas at the destination and sets the gas using LZ based estimation
+and the Token/ALOT parity at that point. The inventoryManager calculates the withdrawal fee based on the
+quantity of the token to be withdrawn, current inventory in the receiving chain and other chains.
+
+```solidity:no-line-numbers
+function getBridgeFee(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstChainListOrgChainId, bytes32 _symbol, uint256 _quantity) public view returns (uint256 bridgeFee)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _bridge | enum IPortfolioBridge.BridgeProvider | Bridge provider to use |
+| _dstChainListOrgChainId | uint32 | destination chain id |
+| _symbol | bytes32 | subnet symbol of the token |
+| _quantity | uint256 | quantity of the token to withdraw |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| bridgeFee | uint256 | bridge fee for the destination |
 
 ### External
 
@@ -122,32 +152,27 @@ function removeToken(bytes32 _srcChainSymbol, uint32 _srcChainId, bytes32 _subne
 | _srcChainId | uint32 | Source Chain id |
 | _subnetSymbol | bytes32 | symbol of the token |
 
-#### getBridgeFee
+#### getAllBridgeFees
 
-Returns the minimum bridgeFee calculated offChain for the targetChainId.
-
-**Dev notes:** \
-This is in terms of token transferred. LZ charges us using based on the payload size and gas px at
-destination. Our offchain app monitors the gas at the destination and sets the gas using LZ based estimation
-and the Token/ALOT parity at that point.
+Returns the bridge fees for all the host chain tokens of a given subnet token
 
 ```solidity:no-line-numbers
-function getBridgeFee(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstChainListOrgChainId, bytes32 _symbol) external view returns (uint256 bridgeFee)
+function getAllBridgeFees(bytes32 _symbol, uint256 _quantity) external view returns (uint256[] bridgeFees, uint32[] chainIds)
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _bridge | enum IPortfolioBridge.BridgeProvider |  |
-| _dstChainListOrgChainId | uint32 | destination chain id |
 | _symbol | bytes32 | subnet symbol of the token |
+| _quantity | uint256 | quantity of the token to withdraw |
 
 ##### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| bridgeFee | uint256 | bridge fee for the destination |
+| bridgeFees | uint256[] | Array of bridge fees for each corresponding chainId |
+| chainIds | uint32[] | Array of chainIds for each corresponding bridgeFee |
 
 #### setBridgeFees
 
@@ -227,27 +252,6 @@ function sendXChainMessage(uint32 _dstChainListOrgChainId, enum IPortfolioBridge
 | _xfer | struct IPortfolio.XFER | XFER message to send |
 | _userFeePayer | address |  |
 
-#### setInventoryBySymbolId
-
-Sets host chains inventories for each token
-
-**Dev notes:** \
-Only admin can call this function. After the March 2024 we need to equal
-inventoryBySymbolId portfolioSub.tokenTotals as the C-Chain will still be the only
-destination from the subnet right after the upgrade. This function can be removed
-after the upgrade
-
-```solidity:no-line-numbers
-function setInventoryBySymbolId(bytes32[] _tokens, uint256[] _quantities) external
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _tokens | bytes32[] | Array of tokens in the from of SYMBOL + srcChainId |
-| _quantities | uint256[] | Array of quantities |
-
 #### renameToken
 
 Changes the mapping from one symbol to the other symbol
@@ -268,8 +272,8 @@ function renameToken(uint32 _dstChainListOrgChainId, bytes32 _fromSymbol, bytes3
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _dstChainListOrgChainId | uint32 | destination ChainListOrg chain id |
-| _fromSymbol | bytes32 | Array of tokens in the from of SYMBOL + srcChainId |
-| _toSymbol | bytes32 | Array of quantities |
+| _fromSymbol | bytes32 | Original subnet token symbol |
+| _toSymbol | bytes32 | New subnet token symbol |
 
 #### setDelayedTransfer
 
@@ -305,6 +309,12 @@ function executeDelayedTransfer(uint16 _dstChainId, bytes32 _id) external
 | ---- | ---- | ----------- |
 | _dstChainId | uint16 | lz destination chain id |
 | _id | bytes32 | Transfer ID |
+
+#### setInventoryManager
+
+```solidity:no-line-numbers
+function setInventoryManager(address _inventoryManager) external
+```
 
 ### Internal
 

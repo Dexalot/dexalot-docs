@@ -24,6 +24,9 @@ In addition this next image below shows how host-chains & the subnet communicate
 The novel multi-chain architecture allows Dexalot to unload more demanding operations to the subnet, reducing the gas cost while increasing speed. Dexalot’s contracts can be accessed through its frontend, or directly from your own code. In addition, there is no separate bridging interface. All bridge functionality is encapsulated into Dexalot’s host-chain smart contracts PortfolioMain &amp; PortfolioSub to provide a seamless user experience. LayerZero has been the sole bridge provider since the start, and more bridges or protocols such as AWM (Avalanche Warp Messaging) will be added in the future as needed. This approach will allow Dexalot to scale to multiple bridges (to further reduce risk from single point of failure) and for assets in chains other than Avalanche to be tradeable on the Dexalot Subnet.
 
 
+Dexalot also supports a novel flow where you can buy GUN token from any chain using your USDC and have your GUN token deposited directly into your wallet in the Gunzilla Subnet. Similarly, you can sell your GUN token from the Gunzilla Subnet and have your USDC deposited directly into your wallet in the chain of your choice.
+![Gun Trading Flow (Leveraging Simple Swap Flow)](/images/api/gun-ss-flow.png)
+
 ## Version History
 
 <table>

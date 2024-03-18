@@ -23,6 +23,7 @@ ExchangeMain is DEFAULT_ADMIN to PortfolioMain contract.
 
 | Name | Type |
 | --- | --- |
+| mainnetRfq | contract IMainnetRFQ |
 | priceFeed | contract AggregatorV3Interface |
 
 ## Events
@@ -36,6 +37,20 @@ event CoinFlipped(uint80 roundid, int256 price, bool outcome)
 ## Methods
 
 ### Public
+
+#### pauseMainnetRfq
+
+(Un)pause pauseMainnetRfq operations
+
+```solidity:no-line-numbers
+function pauseMainnetRfq(bool _pause) public
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _pause | bool | true to pause, false to unpause |
 
 #### isHead
 
@@ -57,7 +72,7 @@ function isHead() public view returns (uint80 r, int256 p, bool o)
 
 #### pauseForUpgrade
 
-(Un)pauses portfolioMain and portfolioBridgeMain for upgrade
+(Un)pauses portfolioMain, portfolioBridgeMain & MainnetRFQ for upgrade
 
 ```solidity:no-line-numbers
 function pauseForUpgrade(bool _pause) external
@@ -68,6 +83,36 @@ function pauseForUpgrade(bool _pause) external
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _pause | bool | true to pause, false to unpause |
+
+#### setMainnetRFQ
+
+Set MainnetRFQ address
+
+**Dev notes:** \
+Only admin can set MainnetRFQ address.
+There is a one to one relationship between MainnetRFQ and ExchangeMain.
+
+```solidity:no-line-numbers
+function setMainnetRFQ(address payable _mainnetRfq) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _mainnetRfq | address payable | MainnetRFQ address |
+
+#### getMainnetRfq
+
+```solidity:no-line-numbers
+function getMainnetRfq() external view returns (contract IMainnetRFQ)
+```
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | contract IMainnetRFQ | IMainnetRFQ  MainnetRFQ contract |
 
 #### setPriceFeed
 
@@ -97,6 +142,29 @@ function getPriceFeed() external view returns (contract AggregatorV3Interface)
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | contract AggregatorV3Interface | AggregatorV3Interface  price feed contract |
+
+#### addToken
+
+Add new token to portfolio
+
+**Dev notes:** \
+Exchange needs to be DEFAULT_ADMIN on the Portfolio
+
+```solidity:no-line-numbers
+function addToken(bytes32 _symbol, address _tokenaddress, uint32 _srcChainId, uint8 _decimals, uint256 _fee, uint256 _gasSwapRatio, bool _isVirtual) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _symbol | bytes32 | symbol of the token |
+| _tokenaddress | address | address of the token |
+| _srcChainId | uint32 | Source Chain Symbol of the virtual token only. Otherwise it is overridden by the current chainid |
+| _decimals | uint8 | decimals of the token |
+| _fee | uint256 | Bridge Fee |
+| _gasSwapRatio | uint256 | Amount of token to swap per ALOT |
+| _isVirtual | bool | Token to facilitate for Cross Chain Trades |
 
 #### addTrustedContract
 
@@ -167,6 +235,9 @@ auction end time. Our off-chain application first randomly picks the number of h
 before closing the auction. Then it calls this function at random intervals (3-10 min) until it reaches
 its target. Nobody, including us to some extent, has control over the effective auction close time.
 We chose 6th-7th digits of the Oracle provided average AVAX/USD price to avoid manipulation.
+We realize that this is only Pseudo-randomness and is derived from seemingly predictable market prices but it
+effectively serves its purpose because there are enough additional other randomness (i.e randomly picking the
+number of heads) controlled by the offchain application that is not visible to the public
 
 ```solidity:no-line-numbers
 function flipCoin() external

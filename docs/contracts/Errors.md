@@ -84,9 +84,31 @@ ID-ZADDR-01: cannot initialize signer with zero address(0)
 
 ID-ZADDR-02: cannot initialize portfolio with zero address(0)
 
+## InventoryManager
+
+IM-ATNP-01: new time for future A is not permitted
+
+IM-AVNP-01: new value for A is not permitted
+
+IM-BTNE-01: block time not elapsed for future A time and A to be updated
+
+IM-INVT-01: target chain does not have enough inventory to cover this withdrawal
+
+IM-INVT-02: target chain does not have enough inventory to cover this withdrawal
+
+IM-LENM-01: length mismatch in array type function parameters
+
+IM-SIAE-01: symbolId and inventory already exist
+
+IM-SMEB-01: symbols cannot be empty bytes
+
+IM-ZADDR-01: portfolio bridge sub cannot be the zero address
+
 ## LzApp
 
 LA-DCNT-01: destination chain is not a trusted source
+
+LA-IUMF-01: insufficient user message fee received
 
 LA-LIZA-01: endpoint cannot be zero address(0)
 
@@ -116,9 +138,9 @@ P-DOTS-01: origin and destination adressess should be different
 
 P-DUTH-01: deposit under threshold
 
-P-ETNS-01: erc20 token is not supported
+P-ETNS-01: token is not supported in the subnet
 
-P-ETNS-02: erc20 token is not supported
+P-ETNS-02: token is not supported in the host chain
 
 P-GSRO-01: gasSwapRatio needs to be > 0
 
@@ -168,6 +190,8 @@ P-TSDM-01: token symbols do not match
 
 P-TTNZ-01: tokanTotals needs to be 0
 
+P-VTNS-01: virtual token can not be deposited
+
 P-WNFA-01: withdrawNative failed
 
 P-WUTH-01: withdraw under threshold
@@ -188,9 +212,21 @@ PB-CBIZ-01: balance of this contract is 0, send gas for message fees
 
 PB-CBIZ-02: balance of this contract is 0, send gas for message fees
 
+PB-CCTR-01: CCTRADE is not a valid transaction type in the subnet
+
+PB-CCTR-02: can only send a virtual tokens with CCTRADE
+
+PB-CCTR-03: can only receive non-virtual tokens with CCTRADE
+
 PB-CSDE-01: destination for celerSend is not allowed
 
 PB-DBCD-01: default bridge can not be disabled
+
+PB-DDCS-01: default destination is not setup. Use setTrustedRemoteAddress first
+
+PB-DDNS-01: destination not found when calling getTokenId
+
+PB-DDNS-02: destination not found when calling sendXChainMessageInternal
 
 PB-DTAE-01: delayed transfer already exists
 
@@ -202,11 +238,13 @@ PB-ETNS-01: erc20 token is not supported
 
 PB-FRFD-01: failed to refund
 
+PB-INVT-01: target chain does not have enough inventory to cover this withdrawal
+
+PB-INVZ-01: inventoryBySymbolId needs to be 0
+
 PB-IVEC-01: invalid endpoint caller
 
-PB-LENM-01: length mismatch in setDelayThresholds
-
-PB-LENM-02: length mismatch in setEpochVolumeCaps
+PB-LENM-01: length mismatch in array type function parameters
 
 PB-MING-01: gas can not be less than 200000 minimum gas required
 
@@ -224,7 +262,13 @@ PB-SINA-01: source not allowed
 
 PB-TAEX-01: token already exists
 
+PB-UFPE-01: user fee payer address does not exist
+
+PB-UFPR-01: user gas fee not necessary and refund failed
+
 PB-VCAP-01: volume exceeds cap
+
+PB-VTNS-01: virtual tokens can not be withdrawn
 
 ## PortfolioMinter
 
@@ -256,15 +300,23 @@ RF-ALOA-01: at least one account needed in admin group
 
 RF-BCAM-01: batch claim array mismatch
 
+RF-DTNF-01: destination token not found
+
 RF-IMS-01: invalid msg.sender
 
 RF-IMV-01: invalid msg.value
 
 RF-IN-01: invalid nonce
 
+RF-IN-02: invalid nonce on xChain destination
+
+RF-INVT-01: target chain does not have enough inventory to remove the xChainSwap from the queue
+
 RF-IS-01: invalid order signature
 
 RF-OCR-01: only callable by rebalancer
+
+RF-PTNS-01: main processXFerPayload transaction not supported
 
 RF-QE-01: quote expired due to manual override
 
@@ -275,6 +327,10 @@ RF-SAZ-01: set address to zero
 RF-TF-01: transfer failed
 
 RF-TF-02: transfer failed
+
+RF-ZADDR-01: trader address cannot be zero address(0)
+
+RF-ZETD-01: zero erc20 token quantity
 
 ## Staking
 

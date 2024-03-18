@@ -4,8 +4,6 @@ headerDepth: 4
 
 # ITradePairs
 
-**Interface of TradePairs**
-
 ## Struct Types
 
 ### Order
@@ -218,13 +216,13 @@ function unpause() external
 #### pauseTradePair
 
 ```solidity:no-line-numbers
-function pauseTradePair(bytes32 _tradePairId, bool _pairPause) external
+function pauseTradePair(bytes32 _tradePairId, bool _tradePairPause) external
 ```
 
 #### pauseAddOrder
 
 ```solidity:no-line-numbers
-function pauseAddOrder(bytes32 _tradePairId, bool _allowAddOrder) external
+function pauseAddOrder(bytes32 _tradePairId, bool _addOrderPause) external
 ```
 
 #### postOnly
@@ -236,7 +234,7 @@ function postOnly(bytes32 _tradePairId, bool _postOnly) external
 #### addTradePair
 
 ```solidity:no-line-numbers
-function addTradePair(bytes32 _tradePairId, bytes32 _baseSymbol, uint8 _baseDisplayDecimals, bytes32 _quoteSymbol, uint8 _quoteDisplayDecimals, uint256 _minTradeAmount, uint256 _maxTradeAmount, enum ITradePairs.AuctionMode _mode) external
+function addTradePair(bytes32 _tradePairId, struct IPortfolio.TokenDetails _baseTokenDetails, uint8 _baseDisplayDecimals, struct IPortfolio.TokenDetails _quoteTokenDetails, uint8 _quoteDisplayDecimals, uint256 _minTradeAmount, uint256 _maxTradeAmount, enum ITradePairs.AuctionMode _mode) external
 ```
 
 #### removeTradePair

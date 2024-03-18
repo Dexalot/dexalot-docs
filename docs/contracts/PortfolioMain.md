@@ -35,10 +35,7 @@ ExchangeMain needs to have DEFAULT_ADMIN_ROLE on PortfolioMain.
 
 #### initialize
 
-initializer function for Upgradeable Portfolio
-
-**Dev notes:** \
-Grants admin role to msg.sender
+Initializes the PortfolioMain contract
 
 ```solidity:no-line-numbers
 function initialize(bytes32 _native, uint32 _chainId) public
@@ -48,8 +45,8 @@ function initialize(bytes32 _native, uint32 _chainId) public
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _native | bytes32 | Native token of the network. AVAX in mainnet, ALOT in subnet. |
-| _chainId | uint32 |  |
+| _native | bytes32 | Symbol of the native token |
+| _chainId | uint32 | Current chainId of the Portfolio |
 
 #### removeToken
 
@@ -71,6 +68,45 @@ function removeToken(bytes32 _symbol, uint32) public virtual
 |  | uint32 |  |
 
 ### External
+
+#### addToken
+
+Adds the given token to the portfolio
+
+**Dev notes:** \
+Only callable by admin.
+We don't allow tokens with the same symbols but different addresses.
+Native symbol is also added by default with 0 address.
+
+```solidity:no-line-numbers
+function addToken(bytes32 _symbol, address _tokenAddress, uint32 _srcChainId, uint8 _decimals, uint256 _fee, uint256 _gasSwapRatio, bool _isVirtual) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _symbol | bytes32 | Symbol of the token |
+| _tokenAddress | address | Address of the token |
+| _srcChainId | uint32 | Source Chain Symbol of the virtual token only. Otherwise it is overridden by the current chainid |
+| _decimals | uint8 | Decimals of the token |
+| _fee | uint256 | Bridge Fee |
+| _gasSwapRatio | uint256 | Amount of token to swap per ALOT |
+| _isVirtual | bool | Not an ERC20 or native. It is only used to facilitate Cross Chain Trades where the token doesn't exist |
+
+#### updateTokenDetailsAfterUpgrade
+
+Overwrites the evm initialized fields to proper values after the March 2024 upgrade.
+
+**Dev notes:** \
+We added sourceChainSymbol & isVirtual to the TokenDetails struct. We need to update
+reflect their proper values for consistency with newly added tokens in the future.
+This function can be removed after the upgrade CD
+All the current tokens in the mainnet are real tokens (non-Virtual)
+
+```solidity:no-line-numbers
+function updateTokenDetailsAfterUpgrade() external
+```
 
 #### getToken
 
@@ -283,23 +319,20 @@ function getBannedAccounts() external view returns (contract IBannedAccounts)
 Processes the message coming from the bridge
 
 **Dev notes:** \
-Only process WITHDRAW or RECOVERFUNDS messages as it is the only messages that can be sent to the
-portfolio main. Even when the contract is paused, this method is allowed for the messages that
+WITHDRAW message is the only message that can be sent to portfolioMain.
+Even when the contract is paused, this method is allowed for the messages that
 are in flight to complete properly. Pause for upgrade, then wait to make sure no messages are in
 flight then upgrade
 
 ```solidity:no-line-numbers
-function processXFerPayload(address _trader, bytes32 _symbol, uint256 _quantity, enum IPortfolio.Tx _transaction) external
+function processXFerPayload(struct IPortfolio.XFER _xfer) external
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _trader | address | Address of the trader |
-| _symbol | bytes32 | Symbol of the token in form of _symbol + chainId |
-| _quantity | uint256 | Amount of token to be withdrawn |
-| _transaction | enum IPortfolio.Tx | Transaction type |
+| _xfer | struct IPortfolio.XFER | Transfer message |
 
 #### collectBridgeFees
 
@@ -351,18 +384,14 @@ USDC USDC43114 6 0xD5ac451B0c50B9476107823Af206eD814a2e2580 0 \
 USDt USDt43114 6 0x38a024C0b412B9d1db8BC398140D00F5Af3093D4 0 \
 
 ```solidity:no-line-numbers
-function addTokenInternal(bytes32 _symbol, address _tokenAddress, uint32 _srcChainId, uint8 _decimals, enum ITradePairs.AuctionMode, uint256 _fee, uint256 _gasSwapRatio) internal
+function addTokenInternal(struct IPortfolio.TokenDetails _details, uint256 _fee, uint256 _gasSwapRatio) internal
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _symbol | bytes32 | Symbol of the token |
-| _tokenAddress | address | Address of the token |
-| _srcChainId | uint32 | Source Chain id |
-| _decimals | uint8 | Decimals of the token |
-|  | enum ITradePairs.AuctionMode |  |
+| _details | struct IPortfolio.TokenDetails | Token Details |
 | _fee | uint256 | Bridge Fee |
 | _gasSwapRatio | uint256 | Amount of token to swap per ALOT |
 

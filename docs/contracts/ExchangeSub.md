@@ -162,6 +162,30 @@ function updateAllRates(uint8 _makerRate, uint8 _takerRate) external
 | _makerRate | uint8 | maker fee rate |
 | _takerRate | uint8 | taker fee rate |
 
+#### addToken
+
+Add new token to portfolio
+
+**Dev notes:** \
+Exchange needs to be DEFAULT_ADMIN on the Portfolio
+
+```solidity:no-line-numbers
+function addToken(bytes32 _subnetSymbol, address _tokenaddress, uint32 _srcChainId, uint8 _decimals, enum ITradePairs.AuctionMode _mode, uint256 _fee, uint256 _gasSwapRatio, bytes32 _srcChainSymbol) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _subnetSymbol | bytes32 | Subnet Symbol of the token |
+| _tokenaddress | address | address of the token |
+| _srcChainId | uint32 | Source Chain id |
+| _decimals | uint8 | decimals of the token |
+| _mode | enum ITradePairs.AuctionMode | starting auction mode |
+| _fee | uint256 | Bridge Fee |
+| _gasSwapRatio | uint256 | Amount of token to swap per ALOT |
+| _srcChainSymbol | bytes32 | Source Chain Symbol of the token |
+
 #### addTradePair
 
 Adds a new trading pair to the exchange.
@@ -352,4 +376,25 @@ function matchAuctionOrders(bytes32 _tradePairId, uint256 _maxNbrOfFills) extern
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | bool | bool  true if more matches are possible. false if no more possible matches left in the orderbook. |
+
+### Private
+
+#### checkMirrorPair
+
+Checks to see if a mirror pair exists
+
+**Dev notes:** \
+Checks to see if USDC/AVAX exists when trying to add AVAX/USDC
+Mirror pairs are not allowed to avoid confusion from a user perspective.
+
+```solidity:no-line-numbers
+function checkMirrorPair(bytes32 _baseSymbol, bytes32 _quoteSymbol) private view
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _baseSymbol | bytes32 | base Symbol of the pair to be added |
+| _quoteSymbol | bytes32 | quote Symbol of the pair to be added |
 

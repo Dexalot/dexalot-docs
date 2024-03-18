@@ -31,7 +31,7 @@ function adjustAvailable(enum IPortfolio.Tx _transaction, address _trader, bytes
 #### addExecution
 
 ```solidity:no-line-numbers
-function addExecution(enum ITradePairs.Side _makerSide, address _makerAddr, address _taker, bytes32 _baseSymbol, bytes32 _quoteSymbol, uint256 _baseAmount, uint256 _quoteAmount, uint256 _makerfeeCharged, uint256 _takerfeeCharged) external
+function addExecution(bytes32 _tradePairId, struct ITradePairs.TradePair _tradePair, enum ITradePairs.Side _makerSide, address _makerAddr, address _takerAddr, uint256 _baseAmount, uint256 _quoteAmount) external returns (uint256 makerfee, uint256 takerfee)
 ```
 
 #### transferToken
@@ -55,6 +55,12 @@ function withdrawNative(address payable _to, uint256 _quantity) external
 #### withdrawToken
 
 ```solidity:no-line-numbers
+function withdrawToken(address _to, bytes32 _symbol, uint256 _quantity, enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstChainListOrgChainId) external
+```
+
+#### withdrawToken
+
+```solidity:no-line-numbers
 function withdrawToken(address _to, bytes32 _symbol, uint256 _quantity, enum IPortfolioBridge.BridgeProvider _bridge) external
 ```
 
@@ -68,5 +74,17 @@ function setAuctionMode(bytes32 _symbol, enum ITradePairs.AuctionMode _mode) ext
 
 ```solidity:no-line-numbers
 function autoFill(address _trader, bytes32 _symbol) external
+```
+
+#### addToken
+
+```solidity:no-line-numbers
+function addToken(bytes32 _srcChainSymbol, address _tokenaddress, uint32 _srcChainId, uint8 _decimals, enum ITradePairs.AuctionMode _mode, uint256 _fee, uint256 _gasSwapRatio, bytes32 _subnetSymbol) external
+```
+
+#### removeToken
+
+```solidity:no-line-numbers
+function removeToken(bytes32 _subnetSymbol, uint32 _srcChainId, bytes32 _srcChainSymbol) external
 ```
 

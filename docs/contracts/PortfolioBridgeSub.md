@@ -6,23 +6,27 @@ headerDepth: 4
 
 **PortfolioBridgeSub: Bridge aggregator and message relayer for subnet using multiple different bridges**
 
-This contracts checks volume and threshold limits for withdrawals if they are enabled
+This contracts checks volume and threshold limits for withdrawals if they are enabled in the
+DelayedTransfers Contract that implements delayedTransfers as well as volume caps per epoch per token
 
 **Dev notes:** \
-It implements delayedTransfers as well as volume caps per epoch per token
 Unlike PortfolioBridgeMain, PortfolioBridgeSub has its own internal list of tokenDetailsMapById and
-tokenDetailsMapBySymbolChainId because it has to keep track of the tokenDetails from each chain independently.
+tokenInfoMapBySymbolChainId because it has to keep track of the tokenDetails from each chain independently.
 As a result the PortfolioSub tokenDetails are quite different than the PortfolioBridgeSub tokenDetails.
-PortfolioBridgeSub always maps the symbol that it receives into a subnet symbol on receipt, that PortfolioSub
-expects. i.e USDC43114 is mapped to USDC. Similarly USDC1 can also be mapped to USDC. This way liquidity can
+PortfolioBridgeSub always maps the symbol that it receives into a subnet symbol and also attaches the source
+chainId to the source Symbol to construct a symbolId to facilitate inventory management on receipt.
+PortfolioSub expects the subnet symbol. i.e USDt is mapped to (USDT43113, USDT) as symbolId and subnet symbol
+respectively. Similarly USDTx from another chain can also be mapped to USDC. This way liquidity can
 be combined and traded together in a multichain implementation.
-When sending back to the target chain, it maps it back to the expected symbol by the target chain,
-i.e USDC to USDC1 if sent back to Ethereum, USDC43114 if sent to Avalanche. \
-Symbol mapping happens in packXferMessage on the way out. packXferMessage calls getTokenId that has
-different implementations in PortfolioBridgeMain &amp; PortfolioBridgeSub. On the receival, the symbol mapping
-will happen in different functions, either in processPayload or in getXFerMessage.
-We need to raise the XChainXFerMessage before xfer.symbol is mapped in processPayload function so the
-incoming and the outgoing xfer messages always contain the symbolId rather than symbol. \
+Similarly it keeps track of the token positions from each chain independently and it will have a different bridge
+fee depending on the available inventory at the target chain (where the token will be withdrawn).
+When sending back to the target chain, it maps the subnet symbol back to the expected symbol by the target chain,
+i.e ETH to ETH if sent back to Ethereum, ETH to WETH.e if sent to Avalanche. \
+Symbol mapping happens in sendXChainMessageInternal on the way out. sendXChainMessageInternal uses getDestChainSymbol.
+On the receival, the symbol mapping will happen in processPayload. getSymbolMappings is used where
+xfer.symbol is overridden with symbolId (sourceSymbol + sourceChainId) and also the subnet symbol is returned. \
+The XChainXFerMessage always contains the host chain&#x27;s ERC20 Symbol in xfer.symbol &amp; source Chain id in
+remoteChainId on the way in and out.
 
 ## Variables
 
@@ -30,54 +34,16 @@ incoming and the outgoing xfer messages always contain the symbolId rather than 
 
 | Name | Type |
 | --- | --- |
-| defaultTargetChainId | uint32 |
-| delayPeriod | uint256 |
-| delayedTransfers | mapping(bytes32 &#x3D;&gt; struct IPortfolio.XFER) |
-| delayThresholds | mapping(bytes32 &#x3D;&gt; uint256) |
-| epochLength | uint256 |
-| epochVolumes | mapping(bytes32 &#x3D;&gt; uint256) |
-| epochVolumeCaps | mapping(bytes32 &#x3D;&gt; uint256) |
-| lastOpTimestamps | mapping(bytes32 &#x3D;&gt; uint256) |
-| tokenDetailsMapById | mapping(bytes32 &#x3D;&gt; struct IPortfolio.TokenDetails) |
-| tokenDetailsMapBySymbolChainId | mapping(bytes32 &#x3D;&gt; mapping(uint32 &#x3D;&gt; bytes32)) |
+| delayedTransfers | contract IDelayedTransfers |
+| inventoryManager | contract IInventoryManager |
 
 ### Private
 
 | Name | Type |
 | --- | --- |
+| tokenDetailsMapById | mapping(bytes32 &#x3D;&gt; struct IPortfolio.TokenDetails) |
+| tokenInfoMapBySymbolChainId | mapping(bytes32 &#x3D;&gt; mapping(uint32 &#x3D;&gt; struct IPortfolioBridgeSub.TokenDestinationInfo)) |
 | tokenListById | struct EnumerableSetUpgradeable.Bytes32Set |
-
-## Events
-
-### DelayedTransfer
-
-```solidity:no-line-numbers
-event DelayedTransfer(string action, bytes32 id, struct IPortfolio.XFER xfer)
-```
-
-### DelayPeriodUpdated
-
-```solidity:no-line-numbers
-event DelayPeriodUpdated(uint256 period)
-```
-
-### DelayThresholdUpdated
-
-```solidity:no-line-numbers
-event DelayThresholdUpdated(bytes32 symbol, uint256 threshold)
-```
-
-### EpochLengthUpdated
-
-```solidity:no-line-numbers
-event EpochLengthUpdated(uint256 length)
-```
-
-### EpochVolumeUpdated
-
-```solidity:no-line-numbers
-event EpochVolumeUpdated(bytes32 token, uint256 cap)
-```
 
 ## Methods
 
@@ -89,16 +55,46 @@ event EpochVolumeUpdated(bytes32 token, uint256 cap)
 function VERSION() public pure returns (bytes32)
 ```
 
+#### getBridgeFee
+
+Returns the minimum bridgeFee calculated offChain for the targetChainId, in addition to the
+inventoryManager calculated withdrawal fee
+
+**Dev notes:** \
+This is in terms of token transferred. LZ charges us using based on the payload size and gas px at
+destination. Our offchain app monitors the gas at the destination and sets the gas using LZ based estimation
+and the Token/ALOT parity at that point. The inventoryManager calculates the withdrawal fee based on the
+quantity of the token to be withdrawn, current inventory in the receiving chain and other chains.
+
+```solidity:no-line-numbers
+function getBridgeFee(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstChainListOrgChainId, bytes32 _symbol, uint256 _quantity) public view returns (uint256 bridgeFee)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _bridge | enum IPortfolioBridge.BridgeProvider | Bridge provider to use |
+| _dstChainListOrgChainId | uint32 | destination chain id |
+| _symbol | bytes32 | subnet symbol of the token |
+| _quantity | uint256 | quantity of the token to withdraw |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| bridgeFee | uint256 | bridge fee for the destination |
+
 ### External
 
 #### addToken
 
-Adds the given token to the portfolioBridge. PortfolioBridgeSub the list will be bigger as they could
+Adds the given token to the PortfolioBridgeSub. PortfolioBridgeSub the list will be bigger as they could
 be from different mainnet chains
 
 **Dev notes:** \
 `addToken` is only callable by admin or from Portfolio when a new subnet symbol is added for the
-first time. The same subnet symbol but different symbolId are required when adding a token to
+first time. The same subnet symbol but a different symbolId is required when adding a token to
 PortfolioBridgeSub. \
 Sample Token List in PortfolioBridgeSub: (BTC & ALOT Listed twice with 2 different chain ids) \
 Native symbol is also added as a token with 0 address \
@@ -122,36 +118,80 @@ Similarly, ALOT from the Avalanche Mainnet can only be removed by PortfolioBridg
 if it was added by mistake. All other tokens should be removed with PortfolioSub.removeToken.
 
 ```solidity:no-line-numbers
-function addToken(bytes32 _symbol, address _tokenAddress, uint32 _srcChainId, uint8 _decimals, enum ITradePairs.AuctionMode) external
+function addToken(bytes32 _srcChainSymbol, address _tokenAddress, uint32 _srcChainId, uint8 _decimals, enum ITradePairs.AuctionMode, bytes32 _subnetSymbol, uint256 _bridgeFee) external
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _symbol | bytes32 | Symbol of the token |
+| _srcChainSymbol | bytes32 | Source Chain Symbol of the token |
 | _tokenAddress | address | Mainnet token address the symbol or zero address for AVAX |
 | _srcChainId | uint32 | Source Chain id |
-| _decimals | uint8 | Decimals of the token |
+| _decimals | uint8 | Decimals of the token param   ITradePairs.AuctionMode  irrelevant for PBridge |
 |  | enum ITradePairs.AuctionMode |  |
+| _subnetSymbol | bytes32 | Subnet Symbol of the token (Shared Symbol of the same token from different chains) |
+| _bridgeFee | uint256 | Bridge Fee |
 
 #### removeToken
 
-Remove the token from the tokenDetailsMapById and tokenDetailsMapBySymbolChainId
+Remove the token from the tokenDetailsMapById and tokenInfoMapBySymbolChainId
 
 **Dev notes:** \
 Make sure that there are no in-flight messages
 
 ```solidity:no-line-numbers
-function removeToken(bytes32 _symbol, uint32 _srcChainId) external
+function removeToken(bytes32 _srcChainSymbol, uint32 _srcChainId, bytes32 _subnetSymbol) external returns (bool deleted)
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _symbol | bytes32 | symbol of the token |
+| _srcChainSymbol | bytes32 | Source Chain Symbol of the token |
 | _srcChainId | uint32 | Source Chain id |
+| _subnetSymbol | bytes32 | symbol of the token |
+
+#### getAllBridgeFees
+
+Returns the bridge fees for all the host chain tokens of a given subnet token
+
+```solidity:no-line-numbers
+function getAllBridgeFees(bytes32 _symbol, uint256 _quantity) external view returns (uint256[] bridgeFees, uint32[] chainIds)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _symbol | bytes32 | subnet symbol of the token |
+| _quantity | uint256 | quantity of the token to withdraw |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| bridgeFees | uint256[] | Array of bridge fees for each corresponding chainId |
+| chainIds | uint32[] | Array of chainIds for each corresponding bridgeFee |
+
+#### setBridgeFees
+
+Sets the bridge fee for each token calculated offChain for the targetChainId
+
+**Dev notes:** \
+Only admin can call this function
+
+```solidity:no-line-numbers
+function setBridgeFees(uint32 _dstChainListOrgChainId, bytes32[] _tokens, uint256[] _bridgeFees) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _dstChainListOrgChainId | uint32 | destination chain id |
+| _tokens | bytes32[] | Array of Subnet Symbol |
+| _bridgeFees | uint256[] | Array of  bridge fees |
 
 #### getTokenDetails
 
@@ -178,26 +218,9 @@ function getTokenDetails(bytes32 _symbolId) external view returns (struct IPortf
 | ---- | ---- | ----------- |
 | [0] | struct IPortfolio.TokenDetails | TokenDetails decimals (Identical to mainnet), tokenAddress (Token address at the mainnet) |
 
-#### setDefaultTargetChain
-
-Sets the default target chain id. To be extended with multichain implementation
-
-**Dev notes:** \
-Only admin can call this function
-
-```solidity:no-line-numbers
-function setDefaultTargetChain(uint32 _chainId) external
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _chainId | uint32 | Default Chainid to use |
-
 #### getTokenList
 
-List of the tokens in the portfolioBridge
+List of the tokens in the PortfolioBridgeSub
 
 ```solidity:no-line-numbers
 function getTokenList() external view returns (bytes32[])
@@ -217,50 +240,57 @@ Sends XFER message to the destination chain
 This is a wrapper to check volume and threshold while withdrawing
 
 ```solidity:no-line-numbers
-function sendXChainMessage(enum IPortfolioBridge.BridgeProvider _bridge, struct IPortfolio.XFER _xfer) external
+function sendXChainMessage(uint32 _dstChainListOrgChainId, enum IPortfolioBridge.BridgeProvider _bridge, struct IPortfolio.XFER _xfer, address _userFeePayer) external payable virtual
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
+| _dstChainListOrgChainId | uint32 | destination ChainListOrg chain id |
 | _bridge | enum IPortfolioBridge.BridgeProvider | Bridge type to send over |
 | _xfer | struct IPortfolio.XFER | XFER message to send |
+| _userFeePayer | address |  |
 
-#### setDelayThresholds
+#### renameToken
 
-Sets delay thresholds for tokens
+Changes the mapping from one symbol to the other symbol
 
 **Dev notes:** \
-Only admin can call this function
+Only admin can call this function. After the March 2024 upgrade we need to rename
+3 current subnet symbols BTC.b, WETH.e and USDt to BTC, ETH, USDT to support multichain trading.
+The current inventory is completely from Avalanche C Chain which is the default destination for
+the subnet. So there is no inventory comingling until we onboard a new chain. The conversions can
+be done after the second mainnet but better to do it before for simplicity
 
 ```solidity:no-line-numbers
-function setDelayThresholds(bytes32[] _tokens, uint256[] _thresholds) external
+function renameToken(uint32 _dstChainListOrgChainId, bytes32 _fromSymbol, bytes32 _toSymbol) external
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _tokens | bytes32[] | Array of tokens |
-| _thresholds | uint256[] | Array of thresholds |
+| _dstChainListOrgChainId | uint32 | destination ChainListOrg chain id |
+| _fromSymbol | bytes32 | Original subnet token symbol |
+| _toSymbol | bytes32 | New subnet token symbol |
 
-#### setDelayPeriod
+#### setDelayedTransfer
 
-Sets delay period for delayed transfers
+Set DelayedTransfers address
 
 **Dev notes:** \
-Only admin can call this function
+Only admin can set DelayedTransfers address.
 
 ```solidity:no-line-numbers
-function setDelayPeriod(uint256 _period) external
+function setDelayedTransfer(address _delayedTransfers) external
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _period | uint256 | Delay period in seconds |
+| _delayedTransfers | address | DelayedTransfers address |
 
 #### executeDelayedTransfer
 
@@ -270,49 +300,21 @@ Executes delayed transfer if the delay period has passed
 Only admin can call this function
 
 ```solidity:no-line-numbers
-function executeDelayedTransfer(bytes32 _id) external
+function executeDelayedTransfer(uint16 _dstChainId, bytes32 _id) external
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
+| _dstChainId | uint16 | lz destination chain id |
 | _id | bytes32 | Transfer ID |
 
-#### setEpochLength
-
-Sets epoch length for volume control
-
-**Dev notes:** \
-Only admin can call this function
+#### setInventoryManager
 
 ```solidity:no-line-numbers
-function setEpochLength(uint256 _length) external
+function setInventoryManager(address _inventoryManager) external
 ```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _length | uint256 | Epoch length in seconds |
-
-#### setEpochVolumeCaps
-
-Sets volume cap for tokens
-
-**Dev notes:** \
-Only admin can call this function
-
-```solidity:no-line-numbers
-function setEpochVolumeCaps(bytes32[] _tokens, uint256[] _caps) external
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _tokens | bytes32[] | Array of tokens |
-| _caps | uint256[] | Array of caps |
 
 ### Internal
 
@@ -327,108 +329,118 @@ gets the native token details from portfolio
 function addNativeToken() internal
 ```
 
-#### getTokenId
+#### sendXChainMessageInternal
 
-Returns the symbolId used the subnet given the targetChainId
-
-**Dev notes:** \
-PortfolioBridgeSub uses its internal token list & the defaultTargetChain to resolve the mapping
-When sending from Mainnet to Subnet we send out the symbolId of the sourceChain. USDC => USDC43114
-Because the subnet needs to know about different ids from different mainnets.
-When sending messages Subnet to Mainnet, it resolves it back to the symbolId the target chain expects
+Actual internal function that implements the message sending.
 
 ```solidity:no-line-numbers
-function getTokenId(bytes32 _symbol) internal view returns (bytes32)
+function sendXChainMessageInternal(uint32 _dstChainListOrgChainId, enum IPortfolioBridge.BridgeProvider _bridge, struct IPortfolio.XFER _xfer, address _userFeePayer) internal virtual
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _symbol | bytes32 | symbol of the token |
+| _dstChainListOrgChainId | uint32 | the destination chain identifier |
+| _bridge | enum IPortfolioBridge.BridgeProvider | Bridge to send message to |
+| _xfer | struct IPortfolio.XFER | XFER message to send |
+| _userFeePayer | address | Address of the user who pays the bridge fee, zero address for PortfolioBridge |
 
-##### Return values
+#### processPayload
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bytes32 | bytes32  symbolId |
-
-#### getSymbolForId
-
-Returns the locally used symbol given the symbolId
+Processes message received from source chain via bridge in the subnet.
 
 **Dev notes:** \
-Mainnet receives the messages in the same format that it sent out, by symbolId
+if bridge is disabled or PAUSED and there are messages in flight, we still need to
+                process them when received at the destination.
+                Resolves the subnetSymbol and updates the inventory
 
 ```solidity:no-line-numbers
-function getSymbolForId(bytes32 _id) internal view returns (bytes32)
-```
-
-##### Return values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bytes32 | bytes32  symbolId |
-
-#### checkTresholds
-
-Checks the volume and thresholds to delay or execute immediately
-
-**Dev notes:** \
-This function is called both in processPayload (deposits coming from mainnet)
-as well as sendXChainMessage (withdrawals from the subnet)
-Not bridge specific! Delayed messages will be processed by the defaultBridge
-symbolId has already been mapped to symbol for the portfolio to properly process it
-
-```solidity:no-line-numbers
-function checkTresholds(struct IPortfolio.XFER _xfer) internal returns (bool)
+function processPayload(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _srcChainListOrgChainId, bytes _payload) internal
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _xfer | struct IPortfolio.XFER | XFER message |
-
-##### Return values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bool | bool  True if the transfer can be executed immediately, false if it is delayed |
+| _bridge | enum IPortfolioBridge.BridgeProvider | Bridge to receive message from |
+| _srcChainListOrgChainId | uint32 | Source chain ID |
+| _payload | bytes | Payload received |
 
 ### Private
 
-#### addDelayedTransfer
+#### getDestChainSymbol
 
-Adds transfer to delayed queue
-
-```solidity:no-line-numbers
-function addDelayedTransfer(bytes32 _id, struct IPortfolio.XFER _xfer) private
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _id | bytes32 | Transfer ID |
-| _xfer | struct IPortfolio.XFER | XFER message |
-
-#### updateVolume
-
-Updates volume for token. Used only for withdrawals from the subnet.
+Returns the target symbol & symbolId given the destination chainId
 
 **Dev notes:** \
-Does nothing if there is no cap/limit for the token
-Volume treshold check for multiple small transfers within a epoch.
+PortfolioBridgeSub uses its internal token list & the defaultTargetChain to resolve the mapping
+When sending from Mainnet to Subnet we send out the symbol of the sourceChain. BTC.b => BTC.b
+When sending messages back to mainnet we use this function to resolve the symbol.
+BTC could be resolved to BTC.b for avalanche and WBTC for Arbitrum
 
 ```solidity:no-line-numbers
-function updateVolume(bytes32 _token, uint256 _amount) private
+function getDestChainSymbol(uint32 _dstChainListOrgChainId, bytes32 _subnetSymbol) private view returns (bytes32 dstSymbol, bytes32 dstSymbolId)
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _token | bytes32 | Token symbol |
-| _amount | uint256 | Amount to add to volume |
+| _dstChainListOrgChainId | uint32 | destination chain id |
+| _subnetSymbol | bytes32 | subnet symbol of the token |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| dstSymbol | bytes32 | symbol of the target chain |
+| dstSymbolId | bytes32 | symbolId of the target chain used for inventory management |
+
+#### getSymbolMappings
+
+Returns the subnet symbol & symbolId given the chainListOrgChainId & source chain symbol
+
+**Dev notes:** \
+Mainnet receives the messages in the same format that it sent out, by its ERC20 symbol
+Subnet has its own standardized list of symbols i.e. BTC.b in the mainnet may be mapped to BTC
+in the subnet. \
+The subnet knows which chain the message is coming from and will tag the chainId to the sourceSymbol
+to keep track of the inventory coming from different mainnets.
+
+```solidity:no-line-numbers
+function getSymbolMappings(uint32 _chainListOrgChainId, bytes32 _symbol) private view returns (bytes32 subnetSymbol, bytes32 symbolId)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _chainListOrgChainId | uint32 | source/Destination chain id |
+| _symbol | bytes32 | source symbol |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| subnetSymbol | bytes32 | subnetSymbol |
+| symbolId | bytes32 | symbolId of the source/destination Chain, symbol + chainId |
+
+#### updateInventoryBySource
+
+Update the inventory by each chain only in the Subnet.
+
+**Dev notes:** \
+Inventory available per host chain. i.e. USDC may exist in both Avalanche and Arbitrum
+
+```solidity:no-line-numbers
+function updateInventoryBySource(bytes32 _subnetSymbol, struct IPortfolio.XFER _xfer) private
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _subnetSymbol | bytes32 | subnet Symbol |
+| _xfer | struct IPortfolio.XFER | Transfer Message |
 

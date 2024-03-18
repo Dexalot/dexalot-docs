@@ -42,14 +42,15 @@ the subnet.
 
 ```ts
 static OrderStatus: any = {
-    "0": "NEW",
-    "1": "REJECTED", // may only be from addLimitOrderList
-    "2": "PARTIAL",
-    "3": "FILLED",
-    "4": "CANCELED",
-    "5": "EXPIRED",  // not used
-    "6": "KILLED",
-    "7": "CANCEL_REJECT", // may only be from cancelOrderList
+    "0": "NEW", //Order is in the orderbook with no trades/executions
+    "1": "REJECTED", // Order is rejected. Currently used addLimitOrderList, cancelReplaceList to notify when an order from the list is
+     // rejected instead of reverting the entire order list
+    "2": "PARTIAL", //Order filled partially and it remains in the orderbook until FILLED/CANCELED
+    "3": "FILLED", //Order filled fully and removed from the orderbook
+    "4": "CANCELED", //Order canceled and removed from the orderbook. PARTIAL before CANCELED is allowed
+    "5": "EXPIRED",  // For future use
+    "6": "KILLED", // For future use
+    "7": "CANCEL_REJECT", // Cancel Request Rejected with reason code and may only be from cancelOrderList
 }
 ```
 
@@ -486,6 +487,137 @@ if (orderLog){
 }
 ```
 
+##### Cancel and Replace Order
+
+```solidity
+function cancelReplaceOrder(
+    bytes32 _orderId,
+    bytes32 _clientOrderId,
+    uint _price,
+    uint _quantity
+)
+```
+
+###### Description
+
+Cancels the given order and replaces it with one for the same pair with
+the given price and quantity. You can’t change the type1 or type2 of the
+original order entered. This function cancels and removes the original
+order from the orderbook and enters a new one. Hence the original
+order’s time priority will be lost.
+
+###### Inputs
+
+| **Field Name**  | **Type** | **Description**            |
+|-----------------|----------|----------------------------|
+| _orderId        | bytes32  | Id of the order to cancel/replace  |
+| _clientOrderId  | bytes32  | Client Order id of the new Order |
+| _price          | uint     | Price of the new order     |
+| _quantity       | uint     | Quantity for the new order |
+
+**Sample Contract Call:**
+
+### List Orders
+
+##### addLimitOrderList
+
+```solidity
+addLimitOrderList(
+        bytes32 _tradePairId,
+        bytes32[] calldata _clientOrderIds,
+        uint256[] calldata _prices,
+        uint256[] calldata _quantities,
+        Side[] calldata _sides,
+        Type2[] calldata _type2s)
+```
+
+###### Description
+
+To send multiple Limit Orders in a single transaction designed specifically for Market Makers
+Make sure that each array is ordered properly. if a single order in the list reverts
+the entire list is reverted. Currently this function will revert ONLY if it fails pair level checks
+, which are admin level tradePair.pairPaused or tradePair.addOrderPaused
+It can potentially revert if type2= FOK is used. Safe to use with IOC.
+For the rest of the order level check failures, It will reject those orders by emitting
+OrderStatusChanged event with "status" = Status.REJECTED and "code" = rejectReason
+The event will have your clientOrderId, but no orderId will be assigned to the order as it will not be
+added to the blockchain.
+Order rejects will only be raised if called from this function. Single orders entered using addOrder
+function will revert as before for backward compatibility.
+See addOrderChecks function. Every line that starts with  return (0, rejectReason) will be rejected.
+
+###### Inputs
+
+| **Field Name**   | **Type** | **Description**            |
+|------------------|----------|----------------------------|
+| _tradePairId     | bytes32    | Id of the trading pair  |
+| _clientOrderIds  | bytes32[]  |  Array of unique id provided by the owner of the orders                          |
+| _prices          | uint256[]     | Array of prices     |
+| _quantities      | uint256[]     | Array of quantities |
+| _sides           | enum ITradePairs.Side _side     | Array of sides |
+| _type2s          | enum ITradePairs.Type2 _type2     | Array of SubTypes |
+
+
+**Sample Contract Call:**
+
+
+
+
+##### Cancel Replace List
+
+```solidity
+    function cancelReplaceList(
+        bytes32[] calldata _orderIds,
+        bytes32[] calldata _clientOrderIds,
+        uint256[] calldata _prices,
+        uint256[] calldata _quantities)
+```
+
+###### Description
+
+To Cancel/Replace multiple Orders in a single transaction designed specifically for Market Makers
+Make sure that each array is ordered properly.
+Cancels the first order in the list and immediately enters a similar order in the same direction, then repeats it
+for the next order in the list. Only the quantity and the price of the order can be changed. All the other order
+fields are copied from the canceled order to the new order.
+CAUTION: The time priority of the original order is lost!
+Canceled order's locked quantity is made available for the new order within this tx.
+Call with Maximum ~15 orders at a time for a block size of 30M
+Will emit OrderStatusChanged "status" = CANCEL_REJECT, "code"= "T-OAEX-01" for orders that are already
+canceled/filled while continuing to cancel/replace the remaining open orders in the list.
+In this case, because the closed orders are already removed from the blockchain, all values in the OrderStatusChanged
+event except "orderId", "traderaddress", "status" and "code" fields will be empty/default values. This includes the
+indexed field "pair" which you may use as filters for your event listeners. Hence you should process the
+transaction log rather than relying on your event listeners if you need to capture CANCEL_REJECT messages and
+filtering your events using the "pair" field.
+if a single order in the list reverts the entire list is reverted. This function will only revert if it fails
+pair level checks, which are tradePair.pairPaused or tradePair.addOrderPaused
+It can potentially revert if type2= FOK is used. Safe to use with IOC.
+For the rest of the order level check failures, It will reject those orders by emitting
+OrderStatusChanged event with "status" = Status.REJECTED and "code" = rejectReason
+Event though the new order is rejected, the cancel operation still holds. For example, you try to C/R list
+5 orders, the very first, Order1 gets canceled and at the time of new order entry for Order1.1, it may get rejected
+because of type2=PO as it will match an active order. Order1 is still canceled. Order1.1 gets a REJECT with
+"T-T2PO-01". The event will have your clientOrderId, but no orderId will be assigned to the order as it will not be
+added to the blockchain.
+Order rejects will only be raised if called from this function. Single orders entered using addOrder
+function will revert as before for backward compatibility.
+See addOrderChecks function. Every line that starts with  return (0, rejectReason) will be rejected.
+
+###### Inputs
+
+| **Field Name**   | **Type** | **Description**            |
+|------------------|----------|----------------------------|
+| _orderIds        | bytes32[]    | order ids to be replaced  |
+| _clientOrderIds  | bytes32[]  |  Array of unique client ids that will be assinged to replaced orders                        |
+| _prices          | uint256[]     | Array of new prices     |
+| _quantities      | uint256[]     | Array of new quantities |
+
+
+**Sample Contract Call:**
+
+
+
 ##### Cancel List Orders
 
 ```solidity
@@ -626,35 +758,6 @@ async getBookfromChain() {
 }
 ```
 
-##### Cancel and Replace Order
-
-```solidity
-function cancelReplaceOrder(
-    bytes32 _orderId,
-    bytes32 _clientOrderId,
-    uint _price,
-    uint _quantity
-)
-```
-
-###### Description
-
-Cancels the given order and replaces it with one for the same pair with
-the given price and quantity. You can’t change the type1 or type2 of the
-original order entered. This function cancels and removes the original
-order from the orderbook and enters a new one. Hence the original
-order’s time priority will be lost.
-
-###### Inputs
-
-| **Field Name**  | **Type** | **Description**            |
-|-----------------|----------|----------------------------|
-| _orderId        | bytes32  | Id of the order to cancel  |
-| _clientOrderId  | bytes32  |                            |
-| _price          | uint     | Price of the new order     |
-| _quantity       | uint     | Quantity for the new order |
-
-**Sample Contract Call:**
 
 ### PortfolioMain (Only in Mainnet)
 
@@ -679,9 +782,9 @@ function depositNative(
 
 ##### Description
 
-Use this function to deposit your tokens/coins from your mainnet wallet.
-The amount will be locked in the PortfolioMain and then communicated to
-PortfolioSub via the selected bridge for trading purposes.
+Use this function to deposit your native coins from one of your host-chain wallet.
+The amount will be locked in the PortfolioMain of the host-chain and then
+communicated to PortfolioSub via the selected bridge for trading purposes.
 
 Inputs
 
@@ -709,9 +812,9 @@ function depositToken(
 
 ##### Description
 
-Use this function to deposit your ERC20 from your mainnet wallet. The
-amount will be locked in the PortfolioMain and then communicated to
-PortfolioSub via the selected bridge for trading purposes.
+Use this function to deposit your ERC20 from one of your host-chain wallet.
+The amount will be locked in the PortfolioMain of the host-chain and then
+communicated to PortfolioSub via the selected bridge for trading purposes.
 
 ##### Inputs
 
@@ -793,7 +896,7 @@ function depositNative(
 
 Use this function to transfer ALOT from your Portfolio to your subnet
 wallet. You need to do this to fill up gas tank to continue to perform
-transactions.
+transactions in the subnet
 
 ##### Inputs
 
@@ -843,28 +946,40 @@ function withdrawToken(
     address _to,
     bytes32 _symbol,
     uint _quantity,
-    BridgeProvider _bridge
+    BridgeProvider _bridge,
+    uint _dstChainListOrgChainId
 )
 ```
 
 ##### Description
 
-Use this function to transfer any tokens or natives (including ALOT &
-AVAX) from your subnet Portfolio to your mainnet wallet
+Use this function to transfer any tokens or natives (including ALOT,
+AVAX, ETH ) from your PortfolioSub to your host-chain wallet.
+If there is not enough inventory available at the chosen host-chain,
+the transaction will revert in the subnet and nothing will be sent to
+the host-chain. The subnet always keeps track of inventory available at
+all the connected host-chains.
 
 ##### Inputs
 
-| **Field Name** | **Type**       | **Description**                              |
-|----------------|----------------|----------------------------------------------|
-| _to            | address        | wallet address                               |
-| _symbol        | bytes32        | symbol in bytes32 (AVAX or any token symbol) |
-| _bridge        | BridgeProvider | 0 - LayerZero                                |
-
+| **Field Name**                    | **Type**       | **Description**                              |
+|-----------------------------------|----------------|----------------------------------------------|
+| _to                               | address        | wallet address                               |
+| _symbol                           | bytes32        | symbol in bytes32 (AVAX or any token symbol) |
+| _quantity                         | unit256        | quantity to withdraw to a host-chain         |
+| _bridge                           | BridgeProvider | 0 - LayerZero                                |
+| _dstChainListOrgChainId           | unit32         | host-chain chainlist.org chain id            |
 ##### Example Code
 
 ```ts
-await portfolio.withdrawToken(owner.address, USDT, Utils.toWei(withdrawal_amount));
+await portfolio.withdrawToken(owner.address, USDT, Utils.toWei(withdrawal_amount), 43114);
 ```
+
+
+
+
+
+
 
 #### Transfer Token
 

@@ -19,6 +19,7 @@ TradePairs should have EXECUTOR_ROLE on OrderBooks.
 
 | Name | Type |
 | --- | --- |
+| EXCHANGE_ROLE | bytes32 |
 | TENK | uint256 |
 | VERSION | bytes32 |
 | maxNbrOfFills | uint256 |
@@ -44,25 +45,6 @@ TradePairs should have EXECUTOR_ROLE on OrderBooks.
 
 ### Public
 
-#### initialize
-
-initializer function for Upgradeable TradePairs
-
-**Dev notes:** \
-idCounter needs to be unique for each order and execution id.
-Both the orderbooks and the portolio should be deployed before tradepairs.
-
-```solidity:no-line-numbers
-function initialize(address _orderbooks, address _portfolio) public
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _orderbooks | address | orderbooks instance |
-| _portfolio | address | portfolio instance |
-
 #### pauseTradePair
 
 Pauses a specific Trade Pair
@@ -72,7 +54,7 @@ Can only be called by DEFAULT_ADMIN.
 Public instead of external because it saves 0.184(KiB) in contract size
 
 ```solidity:no-line-numbers
-function pauseTradePair(bytes32 _tradePairId, bool _pause) public
+function pauseTradePair(bytes32 _tradePairId, bool _tradePairPause) public
 ```
 
 ##### Arguments
@@ -80,20 +62,38 @@ function pauseTradePair(bytes32 _tradePairId, bool _pause) public
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _tradePairId | bytes32 | id of the trading pair |
-| _pause | bool | true to pause, false to unpause |
+| _tradePairPause | bool | true to pause, false to unpause |
 
 ### External
+
+#### initialize
+
+initializer function for Upgradeable TradePairs
+
+**Dev notes:** \
+idCounter needs to be unique for each order and execution id.
+Both the orderbooks and the portolio should be deployed before tradepairs.
+
+```solidity:no-line-numbers
+function initialize(address _orderbooks, address _portfolio) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _orderbooks | address | orderbooks instance |
+| _portfolio | address | portfolio instance |
 
 #### addTradePair
 
 Adds a new TradePair
 
 **Dev notes:** \
-Only DEFAULT_ADMIN or ExchangeSub can call this function which has this role.
-Both the base and quote symbols must exist in the PortfolioSub otherwise it will revert.
+Should only be called by ExchangeSub which has this DEFAULT_ADMIN role.
 
 ```solidity:no-line-numbers
-function addTradePair(bytes32 _tradePairId, bytes32 _baseSymbol, uint8 _baseDisplayDecimals, bytes32 _quoteSymbol, uint8 _quoteDisplayDecimals, uint256 _minTradeAmount, uint256 _maxTradeAmount, enum ITradePairs.AuctionMode _mode) external
+function addTradePair(bytes32 _tradePairId, struct IPortfolio.TokenDetails _baseTokenDetails, uint8 _baseDisplayDecimals, struct IPortfolio.TokenDetails _quoteTokenDetails, uint8 _quoteDisplayDecimals, uint256 _minTradeAmount, uint256 _maxTradeAmount, enum ITradePairs.AuctionMode _mode) external
 ```
 
 ##### Arguments
@@ -101,9 +101,9 @@ function addTradePair(bytes32 _tradePairId, bytes32 _baseSymbol, uint8 _baseDisp
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _tradePairId | bytes32 | id of the trading pair |
-| _baseSymbol | bytes32 | symbol of the base asset |
+| _baseTokenDetails | struct IPortfolio.TokenDetails | base asset details from PortfolioSub |
 | _baseDisplayDecimals | uint8 | display decimals of the base Asset. Quantity increment |
-| _quoteSymbol | bytes32 | symbol of the quote asset |
+| _quoteTokenDetails | struct IPortfolio.TokenDetails | quote asset details from PortfolioSub |
 | _quoteDisplayDecimals | uint8 | display decimals of the quote Asset. Price increment |
 | _minTradeAmount | uint256 | minimum trade amount |
 | _maxTradeAmount | uint256 | maximum trade amount |
@@ -208,7 +208,7 @@ Pauses adding new orders to a specific Trade Pair
 Can only be called by DEFAULT_ADMIN.
 
 ```solidity:no-line-numbers
-function pauseAddOrder(bytes32 _tradePairId, bool _pause) external
+function pauseAddOrder(bytes32 _tradePairId, bool _addOrderPause) external
 ```
 
 ##### Arguments
@@ -216,7 +216,7 @@ function pauseAddOrder(bytes32 _tradePairId, bool _pause) external
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _tradePairId | bytes32 | id of the trading pair |
-| _pause | bool | true to pause, false to unpause |
+| _addOrderPause | bool | true to pause, false to unpause |
 
 #### postOnly
 
@@ -738,6 +738,52 @@ function cancelOrder(bytes32 _orderId) external
 | ---- | ---- | ----------- |
 | _orderId | bytes32 | order id to cancel |
 
+#### cancelReplaceList
+
+To Cancel/Replace multiple Orders in a single transaction designed specifically for Market Makers
+
+**Dev notes:** \
+Make sure that each array is ordered properly.
+Cancels the first order in the list and immediately enters a similar order in the same direction, then repeats it
+for the next order in the list. Only the quantity and the price of the order can be changed. All the other order
+fields are copied from the canceled order to the new order.
+CAUTION: The time priority of the original order is lost!
+Canceled order's locked quantity is made available for the new order within this tx.
+Call with Maximum ~15 orders at a time for a block size of 30M
+Will emit OrderStatusChanged "status" = CANCEL_REJECT, "code"= "T-OAEX-01" for orders that are already
+canceled/filled while continuing to cancel/replace the remaining open orders in the list. \
+In this case, because the closed orders are already removed from the blockchain, all values in the OrderStatusChanged
+event except "orderId", "traderaddress", "status" and "code" fields will be empty/default values. This includes the
+indexed field "pair" which you may use as filters for your event listeners. Hence you should process the
+transaction log rather than relying on your event listeners if you need to capture CANCEL_REJECT messages and
+filtering your events using the "pair" field.
+if a single order in the list reverts the entire list is reverted. This function will only revert if it fails
+pair level checks, which are tradePair.pairPaused or tradePair.addOrderPaused \
+It can potentially revert if type2= FOK is used. Safe to use with IOC. \
+For the rest of the order level check failures, It will reject those orders by emitting
+OrderStatusChanged event with "status" = Status.REJECTED and "code" = rejectReason
+Event though the new order is rejected, the cancel operation still holds. For example, you try to C/R list
+5 orders, the very first, Order1 gets canceled and at the time of new order entry for Order1.1, it may get rejected
+because of type2=PO as it will match an active order. Order1 is still canceled. Order1.1 gets a REJECT with
+"T-T2PO-01". The event will have your clientOrderId, but no orderId will be assigned to the order as it will not be
+added to the blockchain. \
+Order rejects will only be raised if called from this function. Single orders entered using addOrder
+function will revert as before for backward compatibility. \
+See addOrderChecks function. Every line that starts with  return (0, rejectReason) will be rejected.
+
+```solidity:no-line-numbers
+function cancelReplaceList(bytes32[] _orderIds, bytes32[] _clientOrderIds, uint256[] _prices, uint256[] _quantities) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _orderIds | bytes32[] | order ids to be replaced |
+| _clientOrderIds | bytes32[] | Array of unique id provided by the owner of the orders that will be assigned to replaced orders |
+| _prices | uint256[] | Array of prices |
+| _quantities | uint256[] | Array of quantities |
+
 #### cancelOrderList
 
 Cancels all the orders in the array of order ids supplied
@@ -748,10 +794,10 @@ Call with Maximum ~50 orders at a time for a block size of 30M
 Will emit OrderStatusChanged "status" = CANCEL_REJECT, "code"= "T-OAEX-01" for orders that are already
 canceled/filled while continuing to cancel the remaining open orders in the list. \
 Because the closed orders are already removed from the blockchain, all values in the OrderStatusChanged
-event except "orderId", "status" and "code" fields will be empty/default values. This includes the indexed fields
-"traderaddress" and "pair" which you may use as filters for your event listeners. Hence you should process the
+event except "orderId", "traderaddress", "status" and "code" fields will be empty/default values. This includes the
+indexed field "pair" which you may use as filters for your event listeners. Hence you should process the
 transaction log rather than relying on your event listeners if you need to capture CANCEL_REJECT messages and
-filtering your events using those 2 indexed fields.
+filtering your events using the "pair" field.
 
 ```solidity:no-line-numbers
 function cancelOrderList(bytes32[] _orderIds) external
@@ -770,25 +816,6 @@ fallback() external
 ```
 
 ### Private
-
-#### checkMirrorPair
-
-Checks to see if a mirror pair exists
-
-**Dev notes:** \
-Checks to see if USDC/AVAX exists when trying to add AVAX/USDC
-Mirror pairs are not allowed to avoid confusion from a user perspective.
-
-```solidity:no-line-numbers
-function checkMirrorPair(bytes32 _baseSymbol, bytes32 _quoteSymbol) private view
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _baseSymbol | bytes32 | base Symbol of the pair to be added |
-| _quoteSymbol | bytes32 | quote Symbol of the pair to be added |
 
 #### setAuctionModePrivate
 
@@ -835,28 +862,6 @@ function getNextId() private returns (uint256)
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | uint256 | uint256  id |
-
-#### getQuoteAmount
-
-Returns the quote amount for a given price and quantity
-
-```solidity:no-line-numbers
-function getQuoteAmount(bytes32 _tradePairId, uint256 _price, uint256 _quantity) private view returns (uint256)
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _tradePairId | bytes32 | id of the trading pair |
-| _price | uint256 | price |
-| _quantity | uint256 | quantity |
-
-##### Return values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | uint256 | uint256  quote amount |
 
 #### emitStatusUpdate
 
@@ -908,7 +913,7 @@ function emitStatusUpdate(bytes32 _orderId) private
 | ---- | ---- | ----------- |
 | _orderId | bytes32 | order id |
 
-#### handleExecution
+#### updateOrder
 
 Calculates the commission and updates the order state after an execution
 
@@ -917,7 +922,7 @@ Updates the `totalAmount`, `quantityFilled`, `totalFee` and the status of the or
 Commissions are rounded down based on evm and display decimals to avoid DUST
 
 ```solidity:no-line-numbers
-function handleExecution(bytes32 _orderId, uint256 _price, uint256 _quantity, uint8 _rate) private returns (uint256)
+function updateOrder(bytes32 _orderId, uint256 _quantity, uint256 _quoteAmount, uint256 _fee) private
 ```
 
 ##### Arguments
@@ -925,15 +930,9 @@ function handleExecution(bytes32 _orderId, uint256 _price, uint256 _quantity, ui
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _orderId | bytes32 | order id to update |
-| _price | uint256 | execution price (Can be better than or equal to order price) |
 | _quantity | uint256 | execution quantity |
-| _rate | uint8 | maker or taker rate |
-
-##### Return values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | uint256 | uint256  last fee charged |
+| _quoteAmount | uint256 | quote amount |
+| _fee | uint256 | fee (commission) paid for the order |
 
 #### addExecution
 

@@ -136,6 +136,12 @@ event AddressSet(string name, string actionName, address newAddress)
 event SwapExecuted(uint256 nonceAndMeta, address taker, address destTrader, uint256 destChainId, address srcAsset, address destAsset, uint256 srcAmount, uint256 destAmount)
 ```
 
+### XChainFinalized
+
+```solidity:no-line-numbers
+event XChainFinalized(uint256 nonceAndMeta, address trader, bytes32 symbol, uint256 amount, uint256 timestamp)
+```
+
 ### RebalancerWithdraw
 
 ```solidity:no-line-numbers
@@ -282,18 +288,14 @@ are in flight to complete properly. Pause for upgrade, then wait to make sure no
 flight then upgrade
 
 ```solidity:no-line-numbers
-function processXFerPayload(address _trader, bytes32 _symbol, uint256 _quantity, enum IPortfolio.Tx _transaction, bytes28 _customdata) external
+function processXFerPayload(struct IPortfolio.XFER _xfer) external
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _trader | address | Address of the trader |
-| _symbol | bytes32 | Symbol of the token |
-| _quantity | uint256 | Amount of token to be withdrawn |
-| _transaction | enum IPortfolio.Tx | Transaction type |
-| _customdata | bytes28 | Custom data, used to encode the nonce of the swap |
+| _xfer | struct IPortfolio.XFER | XFER message |
 
 #### setPortfolioBridge
 
@@ -689,10 +691,10 @@ function _executeSwapInternal(struct MainnetRFQ.SwapData _swapData, bool isNotXC
 
 Sends a cross chain message to PortfolioBridge containing the destination token amount,
 symbol and trader. Sends remaining native token as gas fee for cross chain message. Refund for
-gas fee is handled in PorfolioBridge.
+gas fee is handled in PortfolioBridge.
 
 ```solidity:no-line-numbers
-function _sendCrossChainTrade(struct MainnetRFQ.XChainSwap _order, address _to) private returns (uint256 messageFee)
+function _sendCrossChainTrade(struct MainnetRFQ.XChainSwap _order, address _to) private
 ```
 
 ##### Arguments
@@ -700,7 +702,7 @@ function _sendCrossChainTrade(struct MainnetRFQ.XChainSwap _order, address _to) 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _order | struct MainnetRFQ.XChainSwap | Trade parameters for cross chain swap generated from /api/rfq/firm |
-| _to | address | Trader address to recieve funds on destination chain |
+| _to | address | Trader address to receive funds on destination chain |
 
 #### _addToSwapQueue
 

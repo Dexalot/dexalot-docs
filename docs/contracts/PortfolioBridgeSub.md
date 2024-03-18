@@ -13,20 +13,20 @@ DelayedTransfers Contract that implements delayedTransfers as well as volume cap
 Unlike PortfolioBridgeMain, PortfolioBridgeSub has its own internal list of tokenDetailsMapById and
 tokenInfoMapBySymbolChainId because it has to keep track of the tokenDetails from each chain independently.
 As a result the PortfolioSub tokenDetails are quite different than the PortfolioBridgeSub tokenDetails.
-PortfolioBridgeSub always maps the symbol that it receives into a subnet symbol on receipt, that PortfolioSub
-expects. i.e USDC43114 is mapped to USDC. Similarly USDC1 can also be mapped to USDC. This way liquidity can
+PortfolioBridgeSub always maps the symbol that it receives into a subnet symbol and also attaches the source
+chainId to the source Symbol to construct a symbolId to facilitate inventory management on receipt.
+PortfolioSub expects the subnet symbol. i.e USDt is mapped to (USDT43113, USDT) as symbolId and subnet symbol
+respectively. Similarly USDTx from another chain can also be mapped to USDC. This way liquidity can
 be combined and traded together in a multichain implementation.
 Similarly it keeps track of the token positions from each chain independently and it will have a different bridge
 fee depending on the available inventory at the target chain (where the token will be withdrawn).
-When sending back to the target chain, it maps it back to the expected symbol by the target chain,
-i.e USDC to USDC1 if sent back to Ethereum, USDC43114 if sent to Avalanche. \
-Symbol mapping happens in packXferMessage on the way out. packXferMessage calls getTokenId that has
-different implementations in PortfolioBridgeMain &amp; PortfolioBridgeSub. On the receival, the symbol
-mapping will happen in processPayload. getSymbolForId is called by getXFerMessage and it returns the
-Xfer Message as is but also returns the reverse mapped local symbol. \
-We need to raise the XChainXFerMessage &amp; update the inventory with the symbolId so the
-incoming and the outgoing xfer messages always contain the symbolId rather than symbol and then processPayload
-can use the local symbol when calling portfolio methods \
+When sending back to the target chain, it maps the subnet symbol back to the expected symbol by the target chain,
+i.e ETH to ETH if sent back to Ethereum, ETH to WETH.e if sent to Avalanche. \
+Symbol mapping happens in sendXChainMessageInternal on the way out. sendXChainMessageInternal uses getDestChainSymbol.
+On the receival, the symbol mapping will happen in processPayload. getSymbolMappings is used where
+xfer.symbol is overridden with symbolId (sourceSymbol + sourceChainId) and also the subnet symbol is returned. \
+The XChainXFerMessage always contains the host chain&#x27;s ERC20 Symbol in xfer.symbol &amp; source Chain id in
+remoteChainId on the way in and out.
 
 ## Variables
 
@@ -128,10 +128,10 @@ function addToken(bytes32 _srcChainSymbol, address _tokenAddress, uint32 _srcCha
 | _srcChainSymbol | bytes32 | Source Chain Symbol of the token |
 | _tokenAddress | address | Mainnet token address the symbol or zero address for AVAX |
 | _srcChainId | uint32 | Source Chain id |
-| _decimals | uint8 | Decimals of the token |
+| _decimals | uint8 | Decimals of the token param   ITradePairs.AuctionMode  irrelevant for PBridge |
 |  | enum ITradePairs.AuctionMode |  |
 | _subnetSymbol | bytes32 | Subnet Symbol of the token (Shared Symbol of the same token from different chains) |
-| _bridgeFee | uint256 |  |
+| _bridgeFee | uint256 | Bridge Fee |
 
 #### removeToken
 
@@ -240,7 +240,7 @@ Sends XFER message to the destination chain
 This is a wrapper to check volume and threshold while withdrawing
 
 ```solidity:no-line-numbers
-function sendXChainMessage(uint32 _dstChainListOrgChainId, enum IPortfolioBridge.BridgeProvider _bridge, struct IPortfolio.XFER _xfer, address _userFeePayer) external payable virtual returns (uint256 messageFee)
+function sendXChainMessage(uint32 _dstChainListOrgChainId, enum IPortfolioBridge.BridgeProvider _bridge, struct IPortfolio.XFER _xfer, address _userFeePayer) external payable virtual
 ```
 
 ##### Arguments
@@ -329,18 +329,58 @@ gets the native token details from portfolio
 function addNativeToken() internal
 ```
 
-#### getTokenId
+#### sendXChainMessageInternal
 
-Returns the symbolId of the targetChainId
+Actual internal function that implements the message sending.
+
+```solidity:no-line-numbers
+function sendXChainMessageInternal(uint32 _dstChainListOrgChainId, enum IPortfolioBridge.BridgeProvider _bridge, struct IPortfolio.XFER _xfer, address _userFeePayer) internal virtual
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _dstChainListOrgChainId | uint32 | the destination chain identifier |
+| _bridge | enum IPortfolioBridge.BridgeProvider | Bridge to send message to |
+| _xfer | struct IPortfolio.XFER | XFER message to send |
+| _userFeePayer | address | Address of the user who pays the bridge fee, zero address for PortfolioBridge |
+
+#### processPayload
+
+Processes message received from source chain via bridge in the subnet.
+
+**Dev notes:** \
+if bridge is disabled or PAUSED and there are messages in flight, we still need to
+                process them when received at the destination.
+                Resolves the subnetSymbol and updates the inventory
+
+```solidity:no-line-numbers
+function processPayload(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _srcChainListOrgChainId, bytes _payload) internal
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _bridge | enum IPortfolioBridge.BridgeProvider | Bridge to receive message from |
+| _srcChainListOrgChainId | uint32 | Source chain ID |
+| _payload | bytes | Payload received |
+
+### Private
+
+#### getDestChainSymbol
+
+Returns the target symbol & symbolId given the destination chainId
 
 **Dev notes:** \
 PortfolioBridgeSub uses its internal token list & the defaultTargetChain to resolve the mapping
-When sending from Mainnet to Subnet we send out the symbolId of the sourceChain. USDC => USDC43114
-Because the subnet needs to know about different ids from different mainnets.
-When sending messages Subnet to Mainnet, it resolves it back to the symbolId the target chain expects
+When sending from Mainnet to Subnet we send out the symbol of the sourceChain. BTC.b => BTC.b
+When sending messages back to mainnet we use this function to resolve the symbol.
+BTC could be resolved to BTC.b for avalanche and WBTC for Arbitrum
 
 ```solidity:no-line-numbers
-function getTokenId(uint32 _dstChainListOrgChainId, bytes32 _symbol) internal view returns (bytes32)
+function getDestChainSymbol(uint32 _dstChainListOrgChainId, bytes32 _subnetSymbol) private view returns (bytes32 dstSymbol, bytes32 dstSymbolId)
 ```
 
 ##### Arguments
@@ -348,40 +388,59 @@ function getTokenId(uint32 _dstChainListOrgChainId, bytes32 _symbol) internal vi
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _dstChainListOrgChainId | uint32 | destination chain id |
-| _symbol | bytes32 | symbol of the token |
+| _subnetSymbol | bytes32 | subnet symbol of the token |
 
 ##### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| [0] | bytes32 | bytes32  symbolId for the destination |
+| dstSymbol | bytes32 | symbol of the target chain |
+| dstSymbolId | bytes32 | symbolId of the target chain used for inventory management |
 
-#### getSymbolForId
+#### getSymbolMappings
 
-Returns the locally used symbol given the symbolId
+Returns the subnet symbol & symbolId given the chainListOrgChainId & source chain symbol
 
 **Dev notes:** \
-Mainnet receives the messages in the same format that it sent out, by symbolId
+Mainnet receives the messages in the same format that it sent out, by its ERC20 symbol
+Subnet has its own standardized list of symbols i.e. BTC.b in the mainnet may be mapped to BTC
+in the subnet. \
+The subnet knows which chain the message is coming from and will tag the chainId to the sourceSymbol
+to keep track of the inventory coming from different mainnets.
 
 ```solidity:no-line-numbers
-function getSymbolForId(bytes32 _id) internal view returns (bytes32)
+function getSymbolMappings(uint32 _chainListOrgChainId, bytes32 _symbol) private view returns (bytes32 subnetSymbol, bytes32 symbolId)
 ```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _chainListOrgChainId | uint32 | source/Destination chain id |
+| _symbol | bytes32 | source symbol |
 
 ##### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| [0] | bytes32 | bytes32  symbolId |
+| subnetSymbol | bytes32 | subnetSymbol |
+| symbolId | bytes32 | symbolId of the source/destination Chain, symbol + chainId |
 
 #### updateInventoryBySource
 
-Overriding empty function from PortfolioBridgeMain
+Update the inventory by each chain only in the Subnet.
 
 **Dev notes:** \
-Update the inventory by each chain only in the Subnet.
 Inventory available per host chain. i.e. USDC may exist in both Avalanche and Arbitrum
 
 ```solidity:no-line-numbers
-function updateInventoryBySource(struct IPortfolio.XFER _xfer) internal
+function updateInventoryBySource(bytes32 _subnetSymbol, struct IPortfolio.XFER _xfer) private
 ```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _subnetSymbol | bytes32 | subnet Symbol |
+| _xfer | struct IPortfolio.XFER | Transfer Message |
 

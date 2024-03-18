@@ -44,17 +44,15 @@ event AddressSet(string name, string actionName, address addressAdded, bytes32 c
 
 ## Methods
 
-### Public
+### External
 
 #### initialize
 
 Initialize the upgradeable contract
 
 ```solidity:no-line-numbers
-function initialize() public
+function initialize() external
 ```
-
-### External
 
 #### addAdminAccountForRates
 

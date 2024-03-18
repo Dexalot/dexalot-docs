@@ -93,7 +93,7 @@ function unpause() external
 #### pauseDeposit
 
 ```solidity:no-line-numbers
-function pauseDeposit(bool _pause) external
+function pauseDeposit(bool _depositPause) external
 ```
 
 #### removeToken
@@ -111,7 +111,7 @@ function depositNative(address payable _from, enum IPortfolioBridge.BridgeProvid
 #### processXFerPayload
 
 ```solidity:no-line-numbers
-function processXFerPayload(address _trader, bytes32 _symbol, uint256 _quantity, enum IPortfolio.Tx _transaction) external
+function processXFerPayload(struct IPortfolio.XFER _xfer) external
 ```
 
 #### getNative

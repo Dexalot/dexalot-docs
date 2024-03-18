@@ -13,7 +13,7 @@ headerDepth: 4
 #### processXFerPayload
 
 ```solidity:no-line-numbers
-function processXFerPayload(address _trader, bytes32 _symbol, uint256 _quantity, enum IPortfolio.Tx _transaction, bytes28 _customdata) external
+function processXFerPayload(struct IPortfolio.XFER _xfer) external
 ```
 
 #### pause

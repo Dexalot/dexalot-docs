@@ -224,14 +224,14 @@ function unpause() external
 Only callable by admin
 
 ```solidity:no-line-numbers
-function pauseDeposit(bool _pause) external
+function pauseDeposit(bool _depositPause) external
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _pause | bool | True to allow, false to disallow |
+| _depositPause | bool | True to allow, false to disallow |
 
 #### setBridgeParam
 
@@ -365,17 +365,14 @@ Processes the XFER message coming from the bridge
 Overridden in the child contracts, as the logic differs.
 
 ```solidity:no-line-numbers
-function processXFerPayload(address _trader, bytes32 _symbol, uint256 _quantity, enum IPortfolio.Tx _transaction) external virtual
+function processXFerPayload(struct IPortfolio.XFER _xfer) external virtual
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _trader | address | Address of the trader |
-| _symbol | bytes32 | Symbol of the token |
-| _quantity | uint256 | Amount of the token |
-| _transaction | enum IPortfolio.Tx | Transaction type Enum |
+| _xfer | struct IPortfolio.XFER | Transfer message |
 
 #### depositNative
 

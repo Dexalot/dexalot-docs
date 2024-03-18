@@ -45,25 +45,6 @@ TradePairs should have EXECUTOR_ROLE on OrderBooks.
 
 ### Public
 
-#### initialize
-
-initializer function for Upgradeable TradePairs
-
-**Dev notes:** \
-idCounter needs to be unique for each order and execution id.
-Both the orderbooks and the portolio should be deployed before tradepairs.
-
-```solidity:no-line-numbers
-function initialize(address _orderbooks, address _portfolio) public
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _orderbooks | address | orderbooks instance |
-| _portfolio | address | portfolio instance |
-
 #### pauseTradePair
 
 Pauses a specific Trade Pair
@@ -73,7 +54,7 @@ Can only be called by DEFAULT_ADMIN.
 Public instead of external because it saves 0.184(KiB) in contract size
 
 ```solidity:no-line-numbers
-function pauseTradePair(bytes32 _tradePairId, bool _pause) public
+function pauseTradePair(bytes32 _tradePairId, bool _tradePairPause) public
 ```
 
 ##### Arguments
@@ -81,9 +62,28 @@ function pauseTradePair(bytes32 _tradePairId, bool _pause) public
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _tradePairId | bytes32 | id of the trading pair |
-| _pause | bool | true to pause, false to unpause |
+| _tradePairPause | bool | true to pause, false to unpause |
 
 ### External
+
+#### initialize
+
+initializer function for Upgradeable TradePairs
+
+**Dev notes:** \
+idCounter needs to be unique for each order and execution id.
+Both the orderbooks and the portolio should be deployed before tradepairs.
+
+```solidity:no-line-numbers
+function initialize(address _orderbooks, address _portfolio) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _orderbooks | address | orderbooks instance |
+| _portfolio | address | portfolio instance |
 
 #### addTradePair
 
@@ -208,7 +208,7 @@ Pauses adding new orders to a specific Trade Pair
 Can only be called by DEFAULT_ADMIN.
 
 ```solidity:no-line-numbers
-function pauseAddOrder(bytes32 _tradePairId, bool _pause) external
+function pauseAddOrder(bytes32 _tradePairId, bool _addOrderPause) external
 ```
 
 ##### Arguments
@@ -216,7 +216,7 @@ function pauseAddOrder(bytes32 _tradePairId, bool _pause) external
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _tradePairId | bytes32 | id of the trading pair |
-| _pause | bool | true to pause, false to unpause |
+| _addOrderPause | bool | true to pause, false to unpause |
 
 #### postOnly
 

@@ -82,8 +82,8 @@ Remove token from the tokenMap
 **Dev notes:** \
 tokenTotals for the symbol should be 0 before it can be removed
 Make sure that there are no in-flight deposit messages.
-Calling this function also removes the token from portfolioBridge. If multiple tokens in the portfolioBridgeSub shares
-the subnet symbol, the symbol is not deleted from the PortfolioSub
+Calling this function also removes the token from portfolioBridge. If multiple tokens in the
+portfolioBridgeSub shares the subnet symbol, the symbol is not deleted from the PortfolioSub
 
 ```solidity:no-line-numbers
 function removeToken(bytes32 _srcChainSymbol, uint32 _srcChainId, bytes32 _subnetSymbol) public
@@ -94,7 +94,7 @@ function removeToken(bytes32 _srcChainSymbol, uint32 _srcChainId, bytes32 _subne
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _srcChainSymbol | bytes32 | Source Chain Symbol of the token |
-| _srcChainId | uint32 | Source Chain id of the token to be removed. Used by PortfolioBridgeSub. Don't use the subnet id here Always use the chain id that the token is being removed. Otherwise it will silently fail as it can't find the token to delete in PortfolioBridgeSub |
+| _srcChainId | uint32 | Source Chain id of the token to be removed. Used by PortfolioBridgeSub. Don't use the subnet id here. Always use the chain id that the token is being removed. Otherwise it will silently fail as it can't find the token to delete in PortfolioBridgeSub |
 | _subnetSymbol | bytes32 | Subnet Symbol of the token |
 
 ### External
@@ -231,17 +231,14 @@ are in flight to complete properly.
 CAUTION: if Paused for upgrade, wait to make sure no messages are in flight, then upgrade.
 
 ```solidity:no-line-numbers
-function processXFerPayload(address _trader, bytes32 _symbol, uint256 _quantity, enum IPortfolio.Tx _transaction) external
+function processXFerPayload(struct IPortfolio.XFER _xfer) external
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _trader | address | Address of the trader |
-| _symbol | bytes32 | Symbol of the token |
-| _quantity | uint256 | Amount of the token |
-| _transaction | enum IPortfolio.Tx | Transaction type |
+| _xfer | struct IPortfolio.XFER | Transfer message |
 
 #### autoFill
 
@@ -369,23 +366,35 @@ function transferToken(address _to, bytes32 _symbol, uint256 _quantity) external
 | _symbol | bytes32 | Symbol of the token |
 | _quantity | uint256 | Amount of the token |
 
-#### withdrawFees
+#### getBalances
 
-Withdraws collected fees from the feeAddress or treasury to the mainnet
+Function to show Trader's balances for all available tokens.
 
 **Dev notes:** \
-Only admin can call this function
+If you pass pageNo == 0 it will scan all available tokens but as the tokenlist grows,
+it may eventually run out of gas. Use _pageNo in this case to get 50 tokens at a time.
+The returned arrays will be ordered to have the tokens with balances first then empty entries
+next. You can discard all the entries starting from when symbols[i] == bytes32(0)
+or total[i] == 0
 
 ```solidity:no-line-numbers
-function withdrawFees(address _from, uint8 _maxCount) external
+function getBalances(address _owner, uint256 _pageNo) external view returns (bytes32[] symbols, uint256[] total, uint256[] available)
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _from | address | address that can withdraw collected fees |
-| _maxCount | uint8 | maximum number of ERC20 tokens with a non-zero balance to process at one time |
+| _owner | address | Address of the trader |
+| _pageNo | uint256 | Page no for pagination |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| symbols | bytes32[] | Array of Symbol |
+| total | uint256[] | Array of Totals |
+| available | uint256[] | Array of availables |
 
 #### setPortfolioSubHelper
 

@@ -86,6 +86,12 @@ ID-ZADDR-02: cannot initialize portfolio with zero address(0)
 
 ## InventoryManager
 
+IM-ATNP-01: new time for future A is not permitted
+
+IM-AVNP-01: new value for A is not permitted
+
+IM-BTNE-01: block time not elapsed for future A time and A to be updated
+
 IM-INVT-01: target chain does not have enough inventory to cover this withdrawal
 
 IM-INVT-02: target chain does not have enough inventory to cover this withdrawal
@@ -97,8 +103,6 @@ IM-SIAE-01: symbolId and inventory already exist
 IM-SMEB-01: symbols cannot be empty bytes
 
 IM-ZADDR-01: portfolio bridge sub cannot be the zero address
-
-IM-ZVFA-01: zero value for A is not permitted
 
 ## LzApp
 
@@ -134,9 +138,9 @@ P-DOTS-01: origin and destination adressess should be different
 
 P-DUTH-01: deposit under threshold
 
-P-ETNS-01: erc20 token is not supported
+P-ETNS-01: token is not supported in the subnet
 
-P-ETNS-02: erc20 token is not supported
+P-ETNS-02: token is not supported in the host chain
 
 P-GSRO-01: gasSwapRatio needs to be > 0
 
@@ -188,8 +192,6 @@ P-TTNZ-01: tokanTotals needs to be 0
 
 P-VTNS-01: virtual token can not be deposited
 
-P-VTNS-02: virtual tokens can not be withdrawn
-
 P-WNFA-01: withdrawNative failed
 
 P-WUTH-01: withdraw under threshold
@@ -209,6 +211,12 @@ PB-ALOA-02: can not remove Portfolio from PORTFOLIO_ROLE, use setPortfolio inste
 PB-CBIZ-01: balance of this contract is 0, send gas for message fees
 
 PB-CBIZ-02: balance of this contract is 0, send gas for message fees
+
+PB-CCTR-01: CCTRADE is not a valid transaction type in the subnet
+
+PB-CCTR-02: can only send a virtual tokens with CCTRADE
+
+PB-CCTR-03: can only receive non-virtual tokens with CCTRADE
 
 PB-CSDE-01: destination for celerSend is not allowed
 
@@ -259,6 +267,8 @@ PB-UFPE-01: user fee payer address does not exist
 PB-UFPR-01: user gas fee not necessary and refund failed
 
 PB-VCAP-01: volume exceeds cap
+
+PB-VTNS-01: virtual tokens can not be withdrawn
 
 ## PortfolioMinter
 

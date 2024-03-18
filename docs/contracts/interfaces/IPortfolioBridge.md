@@ -59,13 +59,13 @@ function unpause() external
 #### sendXChainMessage
 
 ```solidity:no-line-numbers
-function sendXChainMessage(uint32 _dstChainListOrgChainId, enum IPortfolioBridge.BridgeProvider _bridge, struct IPortfolio.XFER _xfer, address _userFeePayer) external payable returns (uint256 messageFee)
+function sendXChainMessage(uint32 _dstChainListOrgChainId, enum IPortfolioBridge.BridgeProvider _bridge, struct IPortfolio.XFER _xfer, address _userFeePayer) external payable
 ```
 
-#### getXFerMessage
+#### unpackXFerMessage
 
 ```solidity:no-line-numbers
-function getXFerMessage(bytes _data) external view returns (struct IPortfolio.XFER, bytes32)
+function unpackXFerMessage(bytes _data) external view returns (struct IPortfolio.XFER xfer)
 ```
 
 #### enableBridgeProvider

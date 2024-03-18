@@ -28,6 +28,12 @@ For other blockchains it is Dexalot Subnet
 | defaultLzRemoteChainId | uint16 |
 | lzEndpoint | contract ILayerZeroEndpoint |
 
+### Private
+
+| Name | Type |
+| --- | --- |
+| __gap | uint256[50] |
+
 ## Events
 
 ### LzSetTrustedRemoteAddress
@@ -308,7 +314,7 @@ function lzSend(uint16 _dstChainId, bytes _payload, address payable _refundAddre
 | ---- | ---- | ----------- |
 | _dstChainId | uint16 | the destination chain identifier |
 | _payload | bytes | a custom bytes payload to send to the destination contract |
-| _refundAddress | address payable | if the source transaction is cheaper than the amount of value passed, refund the additional amount to this address |
+| _refundAddress | address payable | if the source transaction is cheaper than the amount of value passed, refund the additional amount to this address |
 
 ##### Return values
 

@@ -29,29 +29,16 @@ PortfolioSub &#x3D;&gt; PortfolioBridgeSub &#x3D;&gt; BridgeProviderA/B/n &#x3D;
 
 In addition, to be able to support cross chain trades for subnets like Gunzilla that only has their gas token
 and no ERC20 available, we introduced a new flow where you provide the counter token in an L1 and receive your GUN
-in Gunzilla network. Similarly you can sell your GUN in Gunzilla network and receive your counter token in the L1.
+in Gunzilla network. Similarly you can sell your GUN in Gunzilla network and receive your counter token in any L1.
 MainnetRFQ(Avax) &#x3D;&gt; PortfolioBridgeMain(Avax) &#x3D;&gt; BridgeProviderA/B/n &#x3D;&gt; PortfolioBridgeMain(Gun) &#x3D;&gt; MainnetRFQ(Gun) \
 Buy GUN from Avalanche with counter token USDC. USDC is kept in MainnetRFQ(Avax) and GUN is deposited to the buyer&#x27;s
 wallet via MainnetRFQ(Gun)
-MainnetRFQ(Gun) &#x3D;&gt; PortfolioBridgeMain(Gun) &#x3D;&gt; BridgeProviderA/B/n &#x3D;&gt; PortfolioBridgeMain(Avax)  &#x3D;&gt; MainnetRFQ(Avax) \
+MainnetRFQ(Gun) &#x3D;&gt; PortfolioBridgeMain(Gun) &#x3D;&gt; BridgeProviderA/B/n &#x3D;&gt; PortfolioBridgeMain(Avax) &#x3D;&gt; MainnetRFQ(Avax) \
 Sell GUN from Gunzilla with counter token USDC. GUN is kept in MainnetRFQ(Gun) and USDC is deposited to the buyer&#x27;s
 wallet via MainnetRFQ(Avax)
 The same flow can be replicated with any other L1 like Arb as well. \
-
-PortfolioBridgeMain also serves as a symbol mapper to support multichain symbol handling.
-PortfolioBridgeMain always maps the symbol as SYMBOL + portolio.srcChainId and expects the same back,
-i.e USDC43114 if USDC is from Avalanche Mainnet.
-It makes use of the PortfolioMain&#x27;s tokenDetailsMap when mapping symbol to symbolId back
-and forth as token details can not be different when in the mainnet.
-Symbol mapping happens in packXferMessage on the way out. packXferMessage calls getTokenId that has
-different implementations in PortfolioBridgeMain &amp; PortfolioBridgeSub. On the receival, the symbol
-mapping will happen in processPayload. getSymbolForId is called by getXFerMessage and it returns the
-Xfer Message as is but also returns the reverse mapped local symbol. \
-We need to raise the XChainXFerMessage &amp; update the inventory with the symbolId so the
-incoming and the outgoing xfer messages always contain the symbolId rather than symbol and then processPayload
-can use the local symbol when calling portfolio methods \
-getXFerMessage is also called by lzDestroyAndRecoverFunds to handle a stuck message from the LZ bridge,
-and to return the funds to the depositor/withdrawer.
+PortfolioBridgeMain always sends the ERC20 Symbol from its own network and expects the same back
+i.e USDt sent &amp; received in Avalanche Mainnet whereas USDT is sent &amp; received in Arbitrum.
 Use multiple inheritance to add additional bridge implementations in the future. Currently LzApp only.
 
 ## Variables
@@ -117,23 +104,6 @@ event UserPaysFeeForDestinationUpdated(enum IPortfolioBridge.BridgeProvider brid
 function VERSION() public pure virtual returns (bytes32)
 ```
 
-#### initialize
-
-Initializer for upgradeable contract.
-
-**Dev notes:** \
-Grant admin, pauser and msg_sender role to the sender. Set gas for lz. Set endpoint and enable bridge
-
-```solidity:no-line-numbers
-function initialize(address _endpoint) public
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _endpoint | address | Endpoint of the LZ bridge |
-
 #### revokeRole
 
 Wrapper for revoking roles
@@ -154,6 +124,23 @@ function revokeRole(bytes32 _role, address _address) public
 | _address | address | Address to revoke role from |
 
 ### External
+
+#### initialize
+
+Initializer for upgradeable contract.
+
+**Dev notes:** \
+Grant admin, pauser and msg_sender role to the sender. Set gas for lz. Set endpoint and enable bridge
+
+```solidity:no-line-numbers
+function initialize(address _endpoint) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _endpoint | address | Endpoint of the LZ bridge |
 
 #### pause
 
@@ -318,7 +305,7 @@ function setGasForDestination(enum IPortfolioBridge.BridgeProvider _bridge, uint
 
 #### setUserPaysFeeForDestination
 
-Set whether a user must pay the brigde fee for message delivery at the destination chain
+Set whether a user must pay the bridge fee for message delivery at the destination chain
 
 **Dev notes:** \
 Only admin can set user pays fee for destination chain
@@ -456,16 +443,15 @@ function getBridgeFee(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstC
 | ---- | ---- | ----------- |
 | bridgeFee | uint256 | bridge fee for the destination |
 
-#### getXFerMessage
+#### unpackXFerMessage
 
-Unpacks XChainMsgType & XFER message from the payload and returns the local symbol using symbolId
+Unpacks XChainMsgType & XFER message from the payload and returns the local symbol and symbolId
 
 **Dev notes:** \
-It is called by lzDestroyAndRecoverFunds to handle a stuck message & by processPaylod
 Currently only XChainMsgType.XFER possible. For more details on payload packing see packXferMessage
 
 ```solidity:no-line-numbers
-function getXFerMessage(bytes _payload) external view returns (struct IPortfolio.XFER, bytes32)
+function unpackXFerMessage(bytes _payload) external pure returns (struct IPortfolio.XFER xfer)
 ```
 
 ##### Arguments
@@ -478,8 +464,7 @@ function getXFerMessage(bytes _payload) external view returns (struct IPortfolio
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| [0] | struct IPortfolio.XFER | IPortfolio.XFER  Xfer Message |
-| [1] | bytes32 | bytes32  Local Symbol of the token |
+| xfer | struct IPortfolio.XFER | IPortfolio.XFER  Xfer Message |
 
 #### sendXChainMessage
 
@@ -489,7 +474,7 @@ Wrapper function to send message to destination chain via bridge
 Only BRIDGE_USER_ROLE can call (PortfolioMain or MainnetRFQ)
 
 ```solidity:no-line-numbers
-function sendXChainMessage(uint32 _dstChainListOrgChainId, enum IPortfolioBridge.BridgeProvider _bridge, struct IPortfolio.XFER _xfer, address _userFeePayer) external payable virtual returns (uint256 messageFee)
+function sendXChainMessage(uint32 _dstChainListOrgChainId, enum IPortfolioBridge.BridgeProvider _bridge, struct IPortfolio.XFER _xfer, address _userFeePayer) external payable virtual
 ```
 
 ##### Arguments
@@ -593,86 +578,12 @@ fallback() external payable
 
 ### Internal
 
-#### getTokenId
-
-Returns the symbolId used in the mainnet given the srcChainId
-
-**Dev notes:** \
-It uses PortfolioMain's token list to get the symbolId,
-On the other hand, PortfolioBridgeSub uses its internal list & the defaultTargetChain
-When sending from Mainnet to Subnet we send out the symbolId of the sourceChain. USDC => USDC1337
-When receiving messages back it expects the same symbolId if USDC1337 sent, USDC1337 to receive
-Because the subnet needs to know about different ids from different mainnets.
-param   _dstChainListOrgChainId lz destination chain id only relevant in the overriding function PortfolioBridgeSub
-
-```solidity:no-line-numbers
-function getTokenId(uint32, bytes32 _symbol) internal view virtual returns (bytes32)
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-|  | uint32 |  |
-| _symbol | bytes32 | symbol of the token |
-
-##### Return values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bytes32 | bytes32  symbolId |
-
-#### getSymbolForId
-
-Returns the locally used symbol given the symbolId
-
-**Dev notes:** \
-Mainnet receives the messages in the same format that it sent out, by symbolId
-
-```solidity:no-line-numbers
-function getSymbolForId(bytes32 _symbolId) internal view virtual returns (bytes32)
-```
-
-##### Return values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bytes32 | bytes32  symbolId |
-
-#### packXferMessage
-
-Maps symbol to symbolId and encodes XFER message
-
-**Dev notes:** \
-It is packed as follows:
-slot0: trader(20), nonce(8), transaction(2), XChainMsgType(2)
-slot1: symbol(32)
-slot2: quantity(32)
-slot3: customdata(28), timestamp(4)
-
-```solidity:no-line-numbers
-function packXferMessage(uint32 _dstChainListOrgChainId, struct IPortfolio.XFER _xfer) internal view returns (bytes message)
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _dstChainListOrgChainId | uint32 | the destination chain identifier |
-| _xfer | struct IPortfolio.XFER | XFER message to encode |
-
-##### Return values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| message | bytes | Encoded XFER message |
-
 #### sendXChainMessageInternal
 
 Actual internal function that implements the message sending.
 
 ```solidity:no-line-numbers
-function sendXChainMessageInternal(uint32 _dstChainListOrgChainId, enum IPortfolioBridge.BridgeProvider _bridge, struct IPortfolio.XFER _xfer, address _userFeePayer) internal returns (uint256 messageFee)
+function sendXChainMessageInternal(uint32 _dstChainListOrgChainId, enum IPortfolioBridge.BridgeProvider _bridge, struct IPortfolio.XFER _xfer, address _userFeePayer) internal virtual
 ```
 
 ##### Arguments
@@ -684,17 +595,45 @@ function sendXChainMessageInternal(uint32 _dstChainListOrgChainId, enum IPortfol
 | _xfer | struct IPortfolio.XFER | XFER message to send |
 | _userFeePayer | address | Address of the user who pays the bridge fee, zero address for PortfolioBridge |
 
-#### updateInventoryBySource
+#### processPayloadShared
 
-Overridden by PortfolioBridgeSub
+Processes message received from source chain via bridge
 
 **Dev notes:** \
-Update the inventory by each chain only in the Subnet.
-Inventory in the host chains are already known and don't need to be calculated
+Unpacks the message and updates the receival timestamp
 
 ```solidity:no-line-numbers
-function updateInventoryBySource(struct IPortfolio.XFER) internal virtual
+function processPayloadShared(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _srcChainListOrgChainId, bytes _payload) internal returns (struct IPortfolio.XFER xfer)
 ```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _bridge | enum IPortfolioBridge.BridgeProvider | Bridge to receive message from |
+| _srcChainListOrgChainId | uint32 | Source chain ID |
+| _payload | bytes | Payload received |
+
+#### processPayload
+
+Processes message received from source chain via bridge in the host chain.
+
+**Dev notes:** \
+if bridge is disabled or PAUSED and there are messages in flight, we still need to
+                process them when received at the destination.
+                Overrides in the subnet
+
+```solidity:no-line-numbers
+function processPayload(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _srcChainListOrgChainId, bytes _payload) internal virtual
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _bridge | enum IPortfolioBridge.BridgeProvider | Bridge to receive message from |
+| _srcChainListOrgChainId | uint32 | Source chain ID |
+| _payload | bytes | Payload received |
 
 #### addNativeToken
 
@@ -733,6 +672,28 @@ function incrementOutNonce(enum IPortfolioBridge.BridgeProvider _bridge, uint32 
 | ---- | ---- | ----------- |
 | nonce | uint64 | New nonce |
 
+#### validateSymbol
+
+Validates the symbol from portfolio and transaction type
+
+**Dev notes:** \
+This function is called both when sending & receiving a message.
+Deposit/ Withdraw Tx can only be done with non-virtual tokens.
+You can only send Virtual Tokens to a destination chain using CCTRADE.
+But at the destination, received token has to be non-virtual token.
+
+```solidity:no-line-numbers
+function validateSymbol(bytes32 _symbol, enum IPortfolio.Tx _transaction, enum IPortfolioBridge.Direction _direction) private view
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _symbol | bytes32 | symbol of the token |
+| _transaction | enum IPortfolio.Tx | transaction type |
+| _direction | enum IPortfolioBridge.Direction | direction of the message (SENT-0 || RECEIVED-1) |
+
 #### _lzSend
 
 Send message to destination chain via LayerZero
@@ -758,23 +719,30 @@ function _lzSend(uint16 _dstLzChainId, bytes _payload, address _userFeePayer) pr
 | ---- | ---- | ----------- |
 | [0] | uint256 | uint256  Message Fee |
 
-#### processPayload
+#### packXferMessage
 
-Processes message received from source chain via bridge
+Maps symbol to symbolId and encodes XFER message
 
 **Dev notes:** \
-if bridge is disabled or PAUSED and there are messages in flight, we still need to
-                process them when received at the destination. This also updates the receival timestamp
+It is packed as follows:
+slot0: trader(20), nonce(8), transaction(2), XChainMsgType(2)
+slot1: symbol(32)
+slot2: quantity(32)
+slot3: customdata(28), timestamp(4)
 
 ```solidity:no-line-numbers
-function processPayload(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _srcChainListOrgChainId, bytes _payload) private
+function packXferMessage(struct IPortfolio.XFER _xfer) private pure returns (bytes message)
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _bridge | enum IPortfolioBridge.BridgeProvider | Bridge to receive message from |
-| _srcChainListOrgChainId | uint32 | Source chain ID |
-| _payload | bytes | Payload received |
+| _xfer | struct IPortfolio.XFER | XFER message to encode |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| message | bytes | Encoded XFER message |
 

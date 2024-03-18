@@ -22,14 +22,48 @@ The inventory is stored by subnet symbol and symbolId. The inventory is
 | Name | Type |
 | --- | --- |
 | A | uint256 |
+| VERSION | bytes32 |
+| futureA | uint256 |
+| futureATime | uint256 |
 | portfolioBridgeSub | contract IPortfolioBridgeSub |
+| scalingFactor | mapping(bytes32 &#x3D;&gt; uint256) |
 
 ### Private
 
 | Name | Type |
 | --- | --- |
+| MIN_A | uint256 |
+| MAX_A | uint256 |
+| MIN_A_UPDATE_TIME | uint256 |
 | PORTFOLIO_BRIDGE_ROLE | bytes32 |
+| STARTING_A | uint256 |
 | inventoryBySubnetSymbol | mapping(bytes32 &#x3D;&gt; struct EnumerableMap.Bytes32ToUintMap) |
+
+## Events
+
+### ScalingFactorUpdated
+
+```solidity:no-line-numbers
+event ScalingFactorUpdated(bytes32 symbolId, uint8 scalingFactor, uint256 timestamp)
+```
+
+### FutureAUpdated
+
+```solidity:no-line-numbers
+event FutureAUpdated(uint256 futureA, uint256 futureATime, uint256 timestamp)
+```
+
+### AUpdated
+
+```solidity:no-line-numbers
+event AUpdated(uint256 A, uint256 timestamp)
+```
+
+### InventorySet
+
+```solidity:no-line-numbers
+event InventorySet(bytes32 symbol, bytes32 symbolId, uint256 quantity, uint256 timestamp)
+```
 
 ## Methods
 
@@ -63,7 +97,7 @@ function get(bytes32 _symbol, bytes32 _symbolId) public view returns (uint256 in
 Initialize the upgradeable contract
 
 ```solidity:no-line-numbers
-function initialize(address _portfolioBridgeSub, uint256 _A) external
+function initialize(address _portfolioBridgeSub) external
 ```
 
 ##### Arguments
@@ -71,7 +105,12 @@ function initialize(address _portfolioBridgeSub, uint256 _A) external
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _portfolioBridgeSub | address | Address of PortfolioBridgeSub contract |
-| _A | uint256 | A value for the invariant |
+
+#### getInventoryBySubnetSymbol
+
+```solidity:no-line-numbers
+function getInventoryBySubnetSymbol(bytes32 _symbol) external view returns (bytes32[], uint256[])
+```
 
 #### increment
 
@@ -152,22 +191,52 @@ function updatePortfolioBridgeSub(address _portfolioBridgeSub) external
 | ---- | ---- | ----------- |
 | _portfolioBridgeSub | address | Address of PortfolioBridgeSub contract |
 
-#### updateA
+#### setScalingFactor
 
-Updates the A value for the invariant
+Updates the scaling factor for a token
 
 **Dev notes:** \
 Only admin can call this function
 
 ```solidity:no-line-numbers
-function updateA(uint256 _A) external
+function setScalingFactor(bytes32 _symbolId, uint8 _scalingFactor) external
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _A | uint256 | A value for the invariant |
+| _symbolId | bytes32 | SymbolId of the token |
+| _scalingFactor | uint8 | New scaling factor |
+
+#### updateFutureA
+
+Updates the Future A value for the invariant
+
+**Dev notes:** \
+Only admin can call this function
+
+```solidity:no-line-numbers
+function updateFutureA(uint256 _A, uint256 _timePeriod) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _A | uint256 | New A value for the invariant |
+| _timePeriod | uint256 | Time period for the new A value to take effect |
+
+#### updateA
+
+Updates the A value for the invariant using futureA
+
+**Dev notes:** \
+Only admin can call this function
+
+```solidity:no-line-numbers
+function updateA() external
+```
 
 #### setInventoryBySymbolId
 
@@ -255,4 +324,26 @@ function set(bytes32 _symbol, bytes32 _symbolId, uint256 _quantity) private
 | _symbol | bytes32 | Subnet symbol of the token |
 | _symbolId | bytes32 | SymbolId of the token |
 | _quantity | uint256 | Quantity of the token |
+
+#### scaleInventory
+
+Scales the inventory of a token using its scaling factor
+
+```solidity:no-line-numbers
+function scaleInventory(bytes32 _symbolId, uint256 _inventory) private view returns (uint256, uint256)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _symbolId | bytes32 | SymbolId of the token |
+| _inventory | uint256 | Inventory to scale |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | uint256 | scaledInventory  Scaled inventory |
+| [1] | uint256 | sf  Scaling factor |
 

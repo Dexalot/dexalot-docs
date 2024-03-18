@@ -88,11 +88,11 @@ function addToken(bytes32 _symbol, address _tokenAddress, uint32 _srcChainId, ui
 | ---- | ---- | ----------- |
 | _symbol | bytes32 | Symbol of the token |
 | _tokenAddress | address | Address of the token |
-| _srcChainId | uint32 | Source Chain Symbol of the virtual token only. Otherwise it is overridden by the current chainid |
+| _srcChainId | uint32 | Source Chain Symbol of the virtual token only. Otherwise it is overridden by the current chainid |
 | _decimals | uint8 | Decimals of the token |
 | _fee | uint256 | Bridge Fee |
 | _gasSwapRatio | uint256 | Amount of token to swap per ALOT |
-| _isVirtual | bool | Not an ERC20 or native. It is only used to facilitate Cross Chain Trades where the token doesn't exist |
+| _isVirtual | bool | Not an ERC20 or native. It is only used to facilitate Cross Chain Trades where the token doesn't exist |
 
 #### updateTokenDetailsAfterUpgrade
 
@@ -325,17 +325,14 @@ are in flight to complete properly. Pause for upgrade, then wait to make sure no
 flight then upgrade
 
 ```solidity:no-line-numbers
-function processXFerPayload(address _trader, bytes32 _symbol, uint256 _quantity, enum IPortfolio.Tx _transaction) external
+function processXFerPayload(struct IPortfolio.XFER _xfer) external
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _trader | address | Address of the trader |
-| _symbol | bytes32 | Symbol of the token in form of _symbol + chainId |
-| _quantity | uint256 | Amount of token to be withdrawn |
-| _transaction | enum IPortfolio.Tx | Transaction type |
+| _xfer | struct IPortfolio.XFER | Transfer message |
 
 #### collectBridgeFees
 

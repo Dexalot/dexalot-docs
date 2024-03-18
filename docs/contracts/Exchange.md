@@ -50,63 +50,6 @@ event RoleUpdated(string name, string actionName, bytes32 updatedRole, address u
 
 ### Public
 
-#### initialize
-
-Initializer for upgradeable contract.
-
-**Dev notes:** \
-Grants admin role to the deployer.
-
-```solidity:no-line-numbers
-function initialize() public virtual
-```
-
-#### addAdmin
-
-Adds Default Admin role to the address
-
-```solidity:no-line-numbers
-function addAdmin(address _address) public virtual
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _address | address | address to add role to |
-
-#### removeAdmin
-
-Removes Default Admin role from the address
-
-```solidity:no-line-numbers
-function removeAdmin(address _address) public virtual
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _address | address | address to remove role from |
-
-#### isAdmin
-
-```solidity:no-line-numbers
-function isAdmin(address _address) public view returns (bool)
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _address | address | address to check |
-
-##### Return values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bool | bool    true if address has Default Admin role |
-
 #### pausePortfolio
 
 (Un)pause portfolio operations
@@ -167,6 +110,63 @@ function bytes32ToString(bytes32 _bytes32) public pure returns (string)
 | [0] | string | string  string representation of the bytes32 |
 
 ### External
+
+#### initialize
+
+Initializer for upgradeable contract.
+
+**Dev notes:** \
+Grants admin role to the deployer.
+
+```solidity:no-line-numbers
+function initialize() external virtual
+```
+
+#### addAdmin
+
+Adds Default Admin role to the address
+
+```solidity:no-line-numbers
+function addAdmin(address _address) external virtual
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _address | address | address to add role to |
+
+#### removeAdmin
+
+Removes Default Admin role from the address
+
+```solidity:no-line-numbers
+function removeAdmin(address _address) external virtual
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _address | address | address to remove role from |
+
+#### isAdmin
+
+```solidity:no-line-numbers
+function isAdmin(address _address) external view returns (bool)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _address | address | address to check |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | bool | bool    true if address has Default Admin role |
 
 #### addAuctionAdmin
 

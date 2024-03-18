@@ -216,13 +216,13 @@ function unpause() external
 #### pauseTradePair
 
 ```solidity:no-line-numbers
-function pauseTradePair(bytes32 _tradePairId, bool _pairPause) external
+function pauseTradePair(bytes32 _tradePairId, bool _tradePairPause) external
 ```
 
 #### pauseAddOrder
 
 ```solidity:no-line-numbers
-function pauseAddOrder(bytes32 _tradePairId, bool _allowAddOrder) external
+function pauseAddOrder(bytes32 _tradePairId, bool _addOrderPause) external
 ```
 
 #### postOnly

@@ -7,84 +7,17 @@ editLink: true
 
 ## Version History
 
-<table>
-<colgroup>
-<col style="width: 9%" />
-<col style="width: 17%" />
-<col style="width: 73%" />
-</colgroup>
-<tr>
-<th><strong>Version</strong></th>
-<th><strong>Date</strong></th>
-<th><strong>Description</strong></th>
-</tr>
-<tr>
-<td>v2.0</td>
-<td>2022-08-11</td>
-<td>initial doc</td>
-</tr>
-<tr>
-<td>v2.1</td>
-<td>2022-08-17</td>
-<td>- Added websocket authorization via getwstoken endpoint<br />
-- errorcodes endpoint for smart contract errors<br />
-- PortfolioMain contract invocations<br />
-- TradePairs CancelReplace Function<br />
-- Changed REST and WS endpoints<br />
-- Fixed a typo under get open orders REST endpoint from
-TradePairs.getOrder(symbol) to TradePairs.getOrder(bytes32 _orderId)<br />
-- LayerZero will be the only and default bridge when going live and
-other bridges will be added as needed.<br />
-</td>
-</tr>
-<tr>
-<td>v2.2</td>
-<td>2022-08-21</td>
-<td>Sample getClientOrderId</td>
-</tr>
-<tr>
-<td>v2.3</td>
-<td>2022-09-02</td>
-<td>Updated api links after app switch</td>
-</tr>
-<tr>
-<td>v2.4</td>
-<td>2022-09-25</td>
-<td>getNBuyBook getNSellBook replaced with a single getNBook
-function</td>
-</tr>
-<tr>
-<td>v2.5</td>
-<td>2022-11-07</td>
-<td>Websocket orderbook message changes:
-    <ul>
-        <li>(Breaking Change) Renamed "totals" field to "baseCumulative"</li>
-        <li>Added "quoteCumulative" which shows the cumulative quote amount</li>
-        <li>Added "quoteTotal" which shows quote asset orderbook line total</li>
-    </ul>
-</td>
-</tr>
-<tr>
-<td>v2.6</td>
-<td>2023-02-22</td>
-<td>
-    <ul>
-        <li>Addition of signed endpoints: orders, traderhistory, executions, transfers, portfoliobalance, transactions</li>
-        <li>Removed onlyfills parameter from signed traderhistory endpoint</li>
-    </ul>
-</td>
-</tr>
-<tr>
-<td>v2.7</td>
-<td>2023-03-06</td>
-<td>
-    <ul>
-        <li>Remove api-key restrictions from all endpoints except auth/getwstoken (temp ws token)</li>
-        <li>Added curl examples for requests, added Python example for signing.</li>
-    </ul>
-</td>
-</tr>
-</table>
+ Version | <div style="width:95px">Date</div> | Description |
+|---|---|---|
+| v2.0 | 2022-08-11 | initial doc |
+| v2.1 | 2022-08-17 | - Added websocket authorization via getwstoken endpoint<br>errorcodes endpoint for smart contract errors<br>- PortfolioMain contract invocations<br>TradePairs CancelReplace Function<br>- Changed REST and WS endpoints<br>Fixed a typo under get open orders REST endpoint from<br>- TradePairs.getOrder(symbol) to TradePairs.getOrder(bytes32 _orderId)<br>- LayerZero will be the only and default bridge when going live and other bridges will be added as needed.|
+| v2.2 | 2022-08-21 | Sample getClientOrderId |
+| v2.3 | 2022-09-02 | Updated api links after app switch |
+| v2.4 | 2022-09-25 | getNBuyBook getNSellBook replaced with a single getNBook function |
+| v2.5 | 2022-11-07 | Websocket orderbook message changes:<br><br>- (Breaking Change) Renamed "totals" field to "baseCumulative"<br>- Added "quoteCumulative" which shows the cumulative quote amount<br>- Added "quoteTotal" which shows quote asset orderbook line total.|
+| v2.6 | 2023-02-22 |- Addition of signed endpoints: orders, traderhistory, executions, transfers, portfoliobalance, transactions<br>- Removed onlyfills parameter from signed traderhistory endpoint|
+| v2.7 | 2023-03-06 |- Remove api-key restrictions from all endpoints except auth/getwstoken (temp ws token)<br>- Added curl examples for requests, added Python example for signing.|
+| v2.8 | 2024-03-22 |Added additional entries for new chains, affecting the following endpoints:<br>- [Get Environments](/apiv2/RestApi.md#get-environments)<br>- [Get Tokens](/apiv2/RestApi.md#get-tokens)<br>- [Get Deployment](/apiv2/RestApi.md#get-deployment-contract-addresses-and-abi)<br><br>Added executor address for [RFQ firm quote](/apiv2/SimpleSwap.md#_4-request-firm-quote).<br><br>Updated contract events for multichain, affecting the following events:<br>- [PortfolioUpdated](/contracts/interfaces/IPortfolio.html#portfolioupdated)<br>- [XChainXferMessage](/contracts/interfaces/IPortfolioBridge.html#xchainxfermessage) with new [Xfer](/contracts/interfaces/IPortfolio.html#xfer)<br>- [SwapExecuted](/contracts/MainnetRFQ.html#swapexecuted)|
 
 ## Architecture
 

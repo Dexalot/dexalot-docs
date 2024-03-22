@@ -36,7 +36,7 @@ GET /trading/environments
 #### Description
 
 Returns an array of current blockchain environments. There will always be
-2 sub-environments of types mainnet and subnet returned. They are both tied
+2 sub-environments with one subnet and multiple mainnets and subnet. They are all tied
 to a single parentenv.
 
 #### Sample Request
@@ -52,23 +52,58 @@ curl --location 'https://api.dexalot-test.com/privapi/trading/environments'
 
 ```json
 [
-    {
-        "parentenv": "fuji-multi",
-        "env": "fuji-multi-mainnet",
-        "type": "mainnet",
-        "chain_instance": "https://api.avax-test.network/ext/bc/C/rpc",
-        "chain_id": 43113,
-        "chain_name": "Avalanche Fuji C-Chain",
-        "chain_wss": "wss://api.avax-test.network/ext/bc/C/rpc",
-        "native_token_name": "Avalanche",
-        "native_token_symbol": "AVAX",
-        "lzchain_id": 10006,
-        "lzscanner_url": "https://testnet.layerzero-scan.com",
-        "explorer": "https://testnet.snowtrace.io/",
-        "token_url": "https://testnet.snowtrace.io/address/"
-    },
-
-    {...}
+	{
+		"parentenv": "fuji-multi",
+		"env": "fuji-multi-arb",
+		"type": "mainnet",
+		"chain_instance": "https://sepolia-rollup.arbitrum.io/rpc",
+		"chain_id": 421614,
+		"chain_name": "Arbitrum Sepolia",
+		"chain_display_name": "Arbitrum Sepolia",
+		"native_token_name": "Ethereum",
+		"native_token_symbol": "ETH",
+		"min_native_balance": "1",
+		"lzchain_id": 10231,
+		"lzscanner_url": "https://testnet.layerzero-scan.com",
+		"chain_wss": "wss://sepolia-rollup.arbitrum.io/ws",
+		"explorer": "https://sepolia-explorer.arbitrum.io/tx/",
+		"token_url": "https://sepolia-explorer.arbitrum.io/address/"
+	},
+	{
+		"parentenv": "fuji-multi",
+		"env": "fuji-multi-subnet",
+		"type": "subnet",
+		"chain_instance": "https://subnets.avax.network/dexalot/testnet/rpc",
+		"chain_id": 432201,
+		"chain_name": "Dexalot Fuji Subnet",
+		"chain_display_name": "Dexalot-Subnet",
+		"native_token_name": "Dexalot Token",
+		"native_token_symbol": "ALOT",
+		"min_native_balance": "1",
+		"lzchain_id": 10118,
+		"lzscanner_url": "https://testnet.layerzero-scan.com",
+		"chain_wss": "wss://subnets.avax.network/dexalot/testnet/ws",
+		"explorer": "https://testnet.snowtrace.io/tx/",
+		"token_url": "https://testnet.snowtrace.io/address/"
+	},
+	{
+		"parentenv": "fuji-multi",
+		"env": "fuji-multi-avax",
+		"type": "mainnet",
+		"chain_instance": "https://api.avax-test.network/ext/bc/C/rpc",
+		"chain_id": 43113,
+		"chain_name": "Avalanche Fuji C-Chain",
+		"chain_display_name": "Fuji",
+		"native_token_name": "Avalanche",
+		"native_token_symbol": "AVAX",
+		"min_native_balance": "1",
+		"lzchain_id": 10106,
+		"lzscanner_url": "https://testnet.layerzero-scan.com",
+		"chain_wss": "wss://api.avax-test.network/ext/bc/C/ws",
+		"explorer": "https://testnet.snowtrace.io/tx/",
+		"token_url": "https://testnet.snowtrace.io/address/"
+	},
+    { ... }
 ]
 ```
 
@@ -94,66 +129,199 @@ curl --location 'https://api.dexalot-test.com/privapi/trading/tokens'
 
 ```json
 [
-    {
-        "env": "fuji-multi-mainnet",
-        "symbol": "ALOT",
-        "name": "Dexalot Token",
-        "isnative": false,
-        "address": "0x9983F755Bbd60d1886CbfE103c98C272AA0F03d6",
-        "evmdecimals": 18,
-        "status": "deployed",
-        "auctionmode": 0
-    },
-    {
-        "env": "fuji-multi-mainnet",
-        "symbol": "AVAX",
-        "name": "AVAX",
-        "isnative": true,
-        "address": null,
-        "evmdecimals": 18,
-        "status": "deployed",
-        "auctionmode": 0
-    },
-    {
-        "env": "fuji-multi-mainnet",
-        "symbol": "ETH",
-        "name": "Mock ETH",
-        "isnative": false,
-        "address": "0x16F3e7B8327F2cA3f49Efbb1510d5842F7d4a68C",
-        "evmdecimals": 18,
-        "status": "deployed",
-        "auctionmode": 0
-    },
-    {
-        "env": "fuji-multi-mainnet",
-        "symbol": "SER",
-        "name": "GM SER",
-        "isnative": false,
-        "address": "0xf52602253474ddaF6111133ADc1F7C3d28A30ABd",
-        "evmdecimals": 18,
-        "status": "deployed",
-        "auctionmode": 0
-    },
-    {
-        "env": "fuji-multi-mainnet",
-        "symbol": "USDC",
-        "name": "Mock USDC",
-        "isnative": false,
-        "address": "0x68B773B8C10F2ACE8aC51980A1548B6B48a2eC54",
-        "evmdecimals": 6,
-        "status": "deployed",
-        "auctionmode": 0
-    },
-    {
-        "env": "fuji-multi-mainnet",
-        "symbol": "USDT.e",
-        "name": "Mock USDT.e",
-        "isnative": false,
-        "address": "0x2B62a6c0C750250034e328547Aa38830bd768a18",
-        "evmdecimals": 6,
-        "status": "deployed",
-        "auctionmode": 0
-    }
+	{
+		"env": "fuji-multi-arb",
+		"symbol": "ARB",
+		"subnet_symbol": "ARB",
+		"name": "Mock ARB",
+		"isnative": false,
+		"address": "0x196F92E9A0d9a79925BFab0E901bf76F547F699E",
+		"evmdecimals": 18,
+		"isvirtual": false,
+		"chain_id": 421614,
+		"status": "deployed",
+		"old_symbol": null,
+		"auctionmode": 0,
+		"auctionendtime": null,
+		"min_depositamnt": "0.475"
+	},
+	{
+		"env": "fuji-multi-arb",
+		"symbol": "ETH",
+		"subnet_symbol": "ETH",
+		"name": "ETH",
+		"isnative": true,
+		"address": "0x0000000000000000000000000000000000000000",
+		"evmdecimals": 18,
+		"isvirtual": false,
+		"chain_id": 421614,
+		"status": "deployed",
+		"old_symbol": null,
+		"auctionmode": 0,
+		"auctionendtime": null,
+		"min_depositamnt": "0.000209"
+	},
+	{
+		"env": "fuji-multi-arb",
+		"symbol": "USDC",
+		"subnet_symbol": "USDC",
+		"name": "Mock USDC",
+		"isnative": false,
+		"address": "0xcEA6375208Ca81BCE5Fc33B289e8c4b9DDf74523",
+		"evmdecimals": 6,
+		"isvirtual": false,
+		"chain_id": 421614,
+		"status": "deployed",
+		"old_symbol": null,
+		"auctionmode": 0,
+		"auctionendtime": null,
+		"min_depositamnt": "0.3362316"
+	},
+	{
+		"env": "fuji-multi-arb",
+		"symbol": "USDT",
+		"subnet_symbol": "USDT",
+		"name": "Mock USDT",
+		"isnative": false,
+		"address": "0x6f5aE8d697e4032B331101af7ACF6F59B5FDb430",
+		"evmdecimals": 6,
+		"isvirtual": false,
+		"chain_id": 421614,
+		"status": "deployed",
+		"old_symbol": null,
+		"auctionmode": 0,
+		"auctionendtime": null,
+		"min_depositamnt": "0.95"
+	},
+	{
+		"env": "fuji-multi-arb",
+		"symbol": "WBTC",
+		"subnet_symbol": "BTC",
+		"name": "Mock WBTC",
+		"isnative": false,
+		"address": "0xd81550dE9CC08AD7770860695a929b0759e71295",
+		"evmdecimals": 8,
+		"isvirtual": false,
+		"chain_id": 421614,
+		"status": "deployed",
+		"old_symbol": null,
+		"auctionmode": 0,
+		"auctionendtime": null,
+		"min_depositamnt": "0.000011305"
+	},
+	{
+		"env": "fuji-multi-avax",
+		"symbol": "ALOT",
+		"subnet_symbol": "ALOT",
+		"name": "ALOT",
+		"isnative": false,
+		"address": "0x9983F755Bbd60d1886CbfE103c98C272AA0F03d6",
+		"evmdecimals": 18,
+		"isvirtual": false,
+		"chain_id": 43113,
+		"status": "deployed",
+		"old_symbol": null,
+		"auctionmode": 0,
+		"auctionendtime": null,
+		"min_depositamnt": "1.9"
+	},
+	{
+		"env": "fuji-multi-avax",
+		"symbol": "AVAX",
+		"subnet_symbol": "AVAX",
+		"name": "AVAX",
+		"isnative": true,
+		"address": "0x0000000000000000000000000000000000000000",
+		"evmdecimals": 18,
+		"isvirtual": false,
+		"chain_id": 43113,
+		"status": "deployed",
+		"old_symbol": null,
+		"auctionmode": 0,
+		"auctionendtime": null,
+		"min_depositamnt": "0.0189804969014084495"
+	},
+	{
+		"env": "fuji-multi-avax",
+		"symbol": "BTC.b",
+		"subnet_symbol": "BTC",
+		"name": "BTC.b",
+		"isnative": false,
+		"address": "0x5AAD791Bafde4fC3f2B60195b8C51820087Ff6FF",
+		"evmdecimals": 8,
+		"isvirtual": false,
+		"chain_id": 43113,
+		"status": "deployed",
+		"old_symbol": "BTC.b",
+		"auctionmode": 0,
+		"auctionendtime": null,
+		"min_depositamnt": "0.000011305"
+	},
+	{
+		"env": "fuji-multi-avax",
+		"symbol": "DEG",
+		"subnet_symbol": "DEG",
+		"name": "DEG",
+		"isnative": false,
+		"address": "0xcd08B4612FB270B94c3cae7098d2DEba98156DF4",
+		"evmdecimals": 18,
+		"isvirtual": false,
+		"chain_id": 43113,
+		"status": "deployed",
+		"old_symbol": null,
+		"auctionmode": 2,
+		"auctionendtime": "2022-12-12T16:05:11.395Z",
+		"min_depositamnt": "1.9"
+	},
+	{
+		"env": "fuji-multi-avax",
+		"symbol": "USDC",
+		"subnet_symbol": "USDC",
+		"name": "USDC",
+		"isnative": false,
+		"address": "0x68B773B8C10F2ACE8aC51980A1548B6B48a2eC54",
+		"evmdecimals": 6,
+		"isvirtual": false,
+		"chain_id": 43113,
+		"status": "deployed",
+		"old_symbol": null,
+		"auctionmode": 0,
+		"auctionendtime": null,
+		"min_depositamnt": "0.3362316"
+	},
+	{
+		"env": "fuji-multi-avax",
+		"symbol": "USDt",
+		"subnet_symbol": "USDT",
+		"name": "USDt",
+		"isnative": false,
+		"address": "0x24236E8319504A663431EF23F810b6Fa723859c4",
+		"evmdecimals": 6,
+		"isvirtual": false,
+		"chain_id": 43113,
+		"status": "deployed",
+		"old_symbol": "USDt",
+		"auctionmode": 0,
+		"auctionendtime": null,
+		"min_depositamnt": "0.3362316",
+	},
+	{
+		"env": "fuji-multi-avax",
+		"symbol": "WETH.e",
+		"subnet_symbol": "ETH",
+		"name": "WETH.e",
+		"isnative": false,
+		"address": "0xc42E4b495020b87a2f2F7b4fb817F79fcF7043E2",
+		"evmdecimals": 18,
+		"isvirtual": false,
+		"chain_id": 43113,
+		"status": "deployed",
+		"old_symbol": "ETH",
+		"auctionmode": 0,
+		"auctionendtime": null,
+		"min_depositamnt": "0.0001743231124265263",
+	},
+    { ... }
 ]
 ```
 
@@ -222,30 +390,61 @@ Returns the deployment details of the Dexalot contracts including their abi
 
 #### Sample Request
 
-https://api.dexalot-test.com/privapi/trading/deployment?env=fuji-multi-subnet&returnabi=true&contracttype=TradePairs
+https://api.dexalot-test.com/privapi/trading/deployment?returnabi=true&contracttype=Portfolio
 
 ```bash
-curl --location 'https://api.dexalot-test.com/privapi/trading/deployment?env=fuji-multi-subnet&returnabi=true&contracttype=TradePairs'
+curl --location 'https://api.dexalot-test.com/privapi/trading/deployment?returnabi=true&contracttype=Portfolio'
 ```
 
 #### Sample Response
 
 ```json
 [
-    {
-        "parentenv": "fuji-multi",
-        "env": "fuji-multi-subnet",
-        "env_type": "subnet",
-        "contract_name": "ExchangeSub",
-        "contract_type": "Exchange",
-        "address": "0x93c317288E89e515a5e708C0d24867ac3bfeCA76",
-        "impl_address": "0x45c38C510a0caCC986E444c082AF1ce5248EE105",
-        "version": "2.0.0",
-        "owner": "0xbFD53904e0A0c02eFB7e76aad7FfB1F476320038",
-        "status": "deployed",
-        "action": null,
-        "abi": null
-    }
+	{
+		"parentenv": "fuji-multi",
+		"env": "fuji-multi-arb",
+		"env_type": "mainnet",
+		"contract_name": "PortfolioMain",
+		"contract_type": "Portfolio",
+		"address": "0xe1b3ECF856794ff799Eb831272bcd10d03CeA861",
+		"impl_address": "0xca04B6Ca4509032F54d6f22D28aca2b075918b26",
+		"version": "2.5.2",
+		"blocknumber": "24542746",
+		"owner": "0xbFD53904e0A0c02eFB7e76aad7FfB1F476320038",
+		"status": "deployed",
+		"action": null,
+		"abi": { ... }
+	},
+	{
+		"parentenv": "fuji-multi",
+		"env": "fuji-multi-avax",
+		"env_type": "mainnet",
+		"contract_name": "PortfolioMain",
+		"contract_type": "Portfolio",
+		"address": "0x6F5051526005987A21EF245668361342C6F1F7fa",
+		"impl_address": "0xf2FE7a2646A3AFE7aF195f053a505Ff2db0b8134",
+		"version": "2.5.2",
+		"blocknumber": "31015641",
+		"owner": "0x14248FFd6b2c57EF3De352E0DA86Fda6B8f0bbaD",
+		"status": "deployed",
+		"action": null,
+		"abi": { ... }
+	},
+	{
+		"parentenv": "fuji-multi",
+		"env": "fuji-multi-subnet",
+		"env_type": "subnet",
+		"contract_name": "PortfolioSub",
+		"contract_type": "Portfolio",
+		"address": "0xb54859290619630212D4BBAba47066BEE9654076",
+		"impl_address": "0x6672e6dD3b434c7d41d6C51aD182c4F093FE97A5",
+		"version": "2.5.2",
+		"blocknumber": "1342695",
+		"owner": "0xbFD53904e0A0c02eFB7e76aad7FfB1F476320038",
+		"status": "deployed",
+		"action": null,
+		"abi": { ... }
+	}
 ]
 ```
 

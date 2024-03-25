@@ -47,7 +47,10 @@ event AuctionMatchFinished(bytes32 pair)
 
 #### pauseTrading
 
-Un(pause) trading functionality. Affects both addorder and cancelorder functions.
+Un(pause) all trading functionality for all pairs
+
+**Dev notes:** \
+No new orders or cancellations allowed
 
 ```solidity:no-line-numbers
 function pauseTrading(bool _tradingPause) public
@@ -134,7 +137,10 @@ function getTradePairsAddr() external view returns (contract ITradePairs)
 
 #### pauseTradePair
 
-Un(pause) trading functionality for a trade pair. Affects both addorder and cancelorder functions.
+Un(pause) all trading functionality for a trade pair. Affects both addorder and cancelorder functions.
+
+**Dev notes:** \
+No new orders or cancellations allowed for the given pair
 
 ```solidity:no-line-numbers
 function pauseTradePair(bytes32 _tradePairId, bool _tradePairPause) external

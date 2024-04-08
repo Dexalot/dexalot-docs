@@ -58,6 +58,11 @@ export const enSidebarConfig = sidebar({
           text: "Litepaper",
           icon: "book-open",
           link: "litepaper"
+        },
+        {
+          text: "Token Conversion",
+          icon: "book-open",
+          link: "tokenconversion"
         }
       ]
     },

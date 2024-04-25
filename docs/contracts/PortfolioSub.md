@@ -53,6 +53,7 @@ struct AssetEntry {
 | --- | --- |
 | gasStation | contract IGasStation |
 | portfolioMinter | contract IPortfolioMinter |
+| portfolioSubHelper | contract IPortfolioSubHelper |
 | treasury | address |
 
 ## Methods
@@ -81,20 +82,48 @@ Remove token from the tokenMap
 **Dev notes:** \
 tokenTotals for the symbol should be 0 before it can be removed
 Make sure that there are no in-flight deposit messages.
-Calling this function also removes the token from portfolioBridge.
+Calling this function also removes the token from portfolioBridge. If multiple tokens in the
+portfolioBridgeSub shares the subnet symbol, the symbol is not deleted from the PortfolioSub
 
 ```solidity:no-line-numbers
-function removeToken(bytes32 _symbol, uint32 _srcChainId) public
+function removeToken(bytes32 _srcChainSymbol, uint32 _srcChainId, bytes32 _subnetSymbol) public
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _symbol | bytes32 | symbol of the token |
-| _srcChainId | uint32 | Source Chain id of the token to be removed. Used by PortfolioBridgeSub. |
+| _srcChainSymbol | bytes32 | Source Chain Symbol of the token |
+| _srcChainId | uint32 | Source Chain id of the token to be removed. Used by PortfolioBridgeSub. Don't use the subnet id here. Always use the chain id that the token is being removed. Otherwise it will silently fail as it can't find the token to delete in PortfolioBridgeSub |
+| _subnetSymbol | bytes32 | Subnet Symbol of the token |
 
 ### External
+
+#### addToken
+
+Adds the given token to the portfolio
+
+**Dev notes:** \
+Only callable by admin.
+We don't allow tokens with the same symbols but different addresses.
+Native symbol is also added by default with 0 address.
+
+```solidity:no-line-numbers
+function addToken(bytes32 _srcChainSymbol, address _tokenAddress, uint32 _srcChainId, uint8 _decimals, enum ITradePairs.AuctionMode _mode, uint256 _fee, uint256 _gasSwapRatio, bytes32 _subnetSymbol) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _srcChainSymbol | bytes32 | Source Chain Symbol of the token |
+| _tokenAddress | address | Address of the token |
+| _srcChainId | uint32 | Source Chain id |
+| _decimals | uint8 | Decimals of the token |
+| _mode | enum ITradePairs.AuctionMode | Starting auction mode of the token |
+| _fee | uint256 | Bridge Fee |
+| _gasSwapRatio | uint256 | Amount of token to swap per ALOT |
+| _subnetSymbol | bytes32 | Subnet Symbol of the token |
 
 #### setFeeAddress
 
@@ -159,6 +188,8 @@ function getBalance(address _owner, bytes32 _symbol) external view returns (uint
 Function for TradePairs to transfer tokens between addresses as a result of an execution
 
 **Dev notes:** \
+This function calculates the fee to be applied to the orders and it also looks up if
+a rate override mapping.
 WHEN Increasing in addExecution the amount is applied to both total and available
 (so SafeIncrease can be used) as opposed to
 WHEN Decreasing in addExecution the amount is only applied to total. (SafeDecrease
@@ -167,45 +198,47 @@ i.e. (USDT 100 Total, 50 Available after we send a BUY order of 10 avax at 5$.
 Partial Exec 5 at $5. Total goes down to 75. Available stays at 50)
 
 ```solidity:no-line-numbers
-function addExecution(enum ITradePairs.Side _makerSide, address _makerAddr, address _takerAddr, bytes32 _baseSymbol, bytes32 _quoteSymbol, uint256 _baseAmount, uint256 _quoteAmount, uint256 _makerfeeCharged, uint256 _takerfeeCharged) external
+function addExecution(bytes32 _tradePairId, struct ITradePairs.TradePair _tradePair, enum ITradePairs.Side _makerSide, address _makerAddr, address _takerAddr, uint256 _baseAmount, uint256 _quoteAmount) external returns (uint256 makerfee, uint256 takerfee)
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
+| _tradePairId | bytes32 |  |
+| _tradePair | struct ITradePairs.TradePair | TradePair struct |
 | _makerSide | enum ITradePairs.Side | Side of the maker |
 | _makerAddr | address | Address of the maker |
 | _takerAddr | address | Address of the taker |
-| _baseSymbol | bytes32 | Symbol of the base token |
-| _quoteSymbol | bytes32 | Symbol of the quote token |
 | _baseAmount | uint256 | Amount of the base token |
 | _quoteAmount | uint256 | Amount of the quote token |
-| _makerfeeCharged | uint256 | Fee charged to the maker |
-| _takerfeeCharged | uint256 | Fee charged to the taker |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| makerfee | uint256 | Maker fee |
+| takerfee | uint256 | Taker fee |
 
 #### processXFerPayload
 
 Processes the message coming from the bridge
 
 **Dev notes:** \
-DEPOSIT/RECOVERFUNDS messages are the only messages that can be sent to the portfolio sub for the moment
+DEPOSIT message is the only message that can be sent to portfolioSub for the moment
 Even when the contract is paused, this method is allowed for the messages that
 are in flight to complete properly.
 CAUTION: if Paused for upgrade, wait to make sure no messages are in flight, then upgrade.
 
 ```solidity:no-line-numbers
-function processXFerPayload(address _trader, bytes32 _symbol, uint256 _quantity, enum IPortfolio.Tx _transaction) external
+function processXFerPayload(struct IPortfolio.XFER _xfer) external
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _trader | address | Address of the trader |
-| _symbol | bytes32 | Symbol of the token |
-| _quantity | uint256 | Amount of the token |
-| _transaction | enum IPortfolio.Tx | Transaction type |
+| _xfer | struct IPortfolio.XFER | Transfer message |
 
 #### autoFill
 
@@ -264,7 +297,7 @@ function withdrawNative(address payable _to, uint256 _quantity) external
 
 #### withdrawToken
 
-Withdraws the token to the mainnet
+Withdraws token to the default destination chain. Keeping it for backward compatibility
 
 ```solidity:no-line-numbers
 function withdrawToken(address _to, bytes32 _symbol, uint256 _quantity, enum IPortfolioBridge.BridgeProvider _bridge) external
@@ -278,6 +311,24 @@ function withdrawToken(address _to, bytes32 _symbol, uint256 _quantity, enum IPo
 | _symbol | bytes32 | Symbol of the token |
 | _quantity | uint256 | Amount of the token |
 | _bridge | enum IPortfolioBridge.BridgeProvider | Enum bridge type |
+
+#### withdrawToken
+
+Withdraws token to a destination chain
+
+```solidity:no-line-numbers
+function withdrawToken(address _to, bytes32 _symbol, uint256 _quantity, enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstChainListOrgChainId) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _to | address | Address of the withdrawer |
+| _symbol | bytes32 | Symbol of the token |
+| _quantity | uint256 | Amount of the token |
+| _bridge | enum IPortfolioBridge.BridgeProvider | Enum bridge type |
+| _dstChainListOrgChainId | uint32 | Destination chain the token is being withdrawn |
 
 #### adjustAvailable
 
@@ -315,23 +366,64 @@ function transferToken(address _to, bytes32 _symbol, uint256 _quantity) external
 | _symbol | bytes32 | Symbol of the token |
 | _quantity | uint256 | Amount of the token |
 
-#### withdrawFees
+#### getBalances
 
-Withdraws collected fees from the feeAddress or treasury to the mainnet
+Function to show Trader's balances for all available tokens.
 
 **Dev notes:** \
-Only admin can call this function
+If you pass pageNo == 0 it will scan all available tokens but as the tokenlist grows,
+it may eventually run out of gas. Use _pageNo in this case to get 50 tokens at a time.
+The returned arrays will be ordered to have the tokens with balances first then empty entries
+next. You can discard all the entries starting from when symbols[i] == bytes32(0)
+or total[i] == 0
 
 ```solidity:no-line-numbers
-function withdrawFees(address _from, uint8 _maxCount) external
+function getBalances(address _owner, uint256 _pageNo) external view returns (bytes32[] symbols, uint256[] total, uint256[] available)
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _from | address | address that can withdraw collected fees |
-| _maxCount | uint8 | maximum number of ERC20 tokens with a non-zero balance to process at one time |
+| _owner | address | Address of the trader |
+| _pageNo | uint256 | Page no for pagination |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| symbols | bytes32[] | Array of Symbol |
+| total | uint256[] | Array of Totals |
+| available | uint256[] | Array of availables |
+
+#### setPortfolioSubHelper
+
+Sets the Rebate Accounts contract
+
+**Dev notes:** \
+Only admin can call this function
+
+```solidity:no-line-numbers
+function setPortfolioSubHelper(contract IPortfolioSubHelper _portfolioSubHelper) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _portfolioSubHelper | contract IPortfolioSubHelper | Rebate Accounts contract to be set |
+
+#### getPortfolioSubHelper
+
+```solidity:no-line-numbers
+function getPortfolioSubHelper() external view returns (contract IPortfolioSubHelper)
+```
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | contract IPortfolioSubHelper | IPortfolioSubHelper  PortfolioSubHelper contract |
 
 #### getGasStation
 
@@ -420,6 +512,70 @@ function setPortfolioMinter(contract IPortfolioMinter _portfolioMinter) external
 | ---- | ---- | ----------- |
 | _portfolioMinter | contract IPortfolioMinter | Portfolio minter contract to be set |
 
+#### getAllBridgeFees
+
+Returns the bridge fees for all the host chain tokens of a given subnet token
+
+**Dev notes:** \
+Calls the PortfolioBridgeSub contract to get the bridge fees
+
+```solidity:no-line-numbers
+function getAllBridgeFees(bytes32 _symbol, uint256 _quantity) external view returns (uint256[] bridgeFees, uint32[] chainIds)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _symbol | bytes32 | subnet symbol of the token |
+| _quantity | uint256 | quantity of the token to withdraw |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| bridgeFees | uint256[] | Array of bridge fees for each corresponding chainId |
+| chainIds | uint32[] | Array of chainIds for each corresponding bridgeFee |
+
+#### updateTokenDetailsAfterUpgrade
+
+Overwrites the evm initialized fields to proper values after the March 2024 upgrade.
+
+**Dev notes:** \
+We added sourceChainSymbol & isVirtual to the TokenDetails struct. We need to update
+reflect their proper values for consistency with newly added tokens in the future.
+This function can be removed after the upgrade CD
+All tokens except the native ALOT is virtual in the subnet
+
+```solidity:no-line-numbers
+function updateTokenDetailsAfterUpgrade() external
+```
+
+#### convertToken
+
+Moves the inventory of the trader from one symbol to the other symbol
+
+**Dev notes:** \
+Only the user can call this function. The user have the option to withdraw their funds back
+to the C-Chain if they chose to. But if they want to stay in the subnet and continue trading, they need
+to convert to the new naming convention.
+After the March 2024 upgrade we need to rename 3 current subnet symbols BTC.b, WETH.e and USDt to
+BTC, ETH, USDT to support multichain trading.
+The current inventory is completely from Avalanche C Chain which is the default destination for
+the subnet. So there is no inventory comingling until we onboard a new chain. The conversions can
+be done after the second mainnet but better to do it before for simplicity
+Token to convert to is controlled by the PortfolioSubHelper
+
+```solidity:no-line-numbers
+function convertToken(bytes32 _fromSymbol) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _fromSymbol | bytes32 | Token to be converted from. |
+
 ### Internal
 
 #### addTokenInternal
@@ -430,10 +586,10 @@ Adds the given token to the portfolioSub with 0 address in the subnet.
 This function is only callable by admin. \
 We don't allow tokens with same symbols. \
 Native symbol is also added as a token with 0 address. \
-PortfolioSub keeps track of total deposited tokens in tokenTotals for sanity checks against mainnet.
-It has no ERC20 Contracts hence, it overwrites the addresses with address(0). \
+PortfolioSub keeps track of total deposited tokens in tokenTotals for sanity checks against mainnet. It has
+no ERC20 Contracts hence, it overwrites the addresses with address(0) and isVirtual =true except native ALOT. \
 It also adds the token to the PortfolioBridgeSub with the proper sourceChainid
-Tokens in PortfolioSub has ZeroAddress but PortfolioBridge has the proper address from each chain
+Tokens in PortfolioSub has ZeroAddress but PortfolioBridgeMain has the proper address from each chain
 Sample Token List in PortfolioSub: \
 Symbol, SymbolId, Decimals, address, auction mode (432204: Dexalot Subnet ChainId) \
 ALOT ALOT432204 18 0x0000000000000000000000000000000000000000 0 \
@@ -447,18 +603,14 @@ USDt USDt432204 6 0x0000000000000000000000000000000000000000 0 \
 WETH.e WETH.e432204 18 0x0000000000000000000000000000000000000000 0 \
 
 ```solidity:no-line-numbers
-function addTokenInternal(bytes32 _symbol, address _tokenAddress, uint32 _srcChainId, uint8 _decimals, enum ITradePairs.AuctionMode _mode, uint256 _fee, uint256 _gasSwapRatio) internal
+function addTokenInternal(struct IPortfolio.TokenDetails _details, uint256 _fee, uint256 _gasSwapRatio) internal
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _symbol | bytes32 | Symbol of the token |
-| _tokenAddress | address | Address of the token |
-| _srcChainId | uint32 | Source Chain Id, overwritten by srcChain of Portolio but used when adding it to PortfolioBridgeSub. |
-| _decimals | uint8 | Decimals of the token |
-| _mode | enum ITradePairs.AuctionMode | Starting auction mode of the token |
+| _details | struct IPortfolio.TokenDetails | Token Details |
 | _fee | uint256 | Bridge Fee |
 | _gasSwapRatio | uint256 | Amount of token to swap per ALOT |
 
@@ -488,6 +640,27 @@ function setBridgeParamInternal(bytes32 _symbol, uint256 _fee, uint256 _gasSwapR
 | _usedForGasSwap | bool | bool to control the list of tokens that can be used for gas swap. Mostly majors |
 
 ### Private
+
+#### calculateFee
+
+Calculates the commission
+
+**Dev notes:** \
+Commissions are rounded down based on evm and display decimals to avoid DUST
+
+```solidity:no-line-numbers
+function calculateFee(struct ITradePairs.TradePair _tradePair, enum ITradePairs.Side _side, uint256 _quantity, uint256 _quoteAmount, uint256 _rate) private pure returns (uint256 lastFeeRounded)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _tradePair | struct ITradePairs.TradePair | TradePair struct |
+| _side | enum ITradePairs.Side | order side |
+| _quantity | uint256 | execution quantity |
+| _quoteAmount | uint256 | quote amount |
+| _rate | uint256 | taker or maker rate |
 
 #### autoFillPrivate
 
@@ -550,7 +723,7 @@ Increases the balance of the user
 Adds to tokenTotals: cumulative deposits per symbol for sanity checks with the mainnet
 
 ```solidity:no-line-numbers
-function safeIncrease(address _trader, bytes32 _symbol, uint256 _amount, uint256 _feeCharged, enum IPortfolio.Tx _transaction) private
+function safeIncrease(address _trader, bytes32 _symbol, uint256 _amount, uint256 _feeCharged, enum IPortfolio.Tx _transaction, address _traderOther) private
 ```
 
 ##### Arguments
@@ -562,6 +735,7 @@ function safeIncrease(address _trader, bytes32 _symbol, uint256 _amount, uint256
 | _amount | uint256 | Amount of the token |
 | _feeCharged | uint256 | Fee charged for the _transaction |
 | _transaction | enum IPortfolio.Tx | Transaction type |
+| _traderOther | address |  |
 
 #### safeDecreaseTotal
 
@@ -573,7 +747,7 @@ Decreases the total balance of the user
 Removes from tokenTotals: cumulative deposits per symbol for sanity checks with the mainnet
 
 ```solidity:no-line-numbers
-function safeDecreaseTotal(address _trader, bytes32 _symbol, uint256 _amount, uint256 _feeCharged, enum IPortfolio.Tx _transaction) private
+function safeDecreaseTotal(address _trader, bytes32 _symbol, uint256 _amount, uint256 _feeCharged, enum IPortfolio.Tx _transaction, address _traderOther) private
 ```
 
 ##### Arguments
@@ -585,13 +759,14 @@ function safeDecreaseTotal(address _trader, bytes32 _symbol, uint256 _amount, ui
 | _amount | uint256 | Amount of the token |
 | _feeCharged | uint256 | Fee charged for the transaction |
 | _transaction | enum IPortfolio.Tx | Transaction type |
+| _traderOther | address |  |
 
 #### safeDecrease
 
 Decreases the available balance of the user
 
 ```solidity:no-line-numbers
-function safeDecrease(address _trader, bytes32 _symbol, uint256 _amount, uint256 _feeCharged, enum IPortfolio.Tx _transaction) private
+function safeDecrease(address _trader, bytes32 _symbol, uint256 _amount, uint256 _feeCharged, enum IPortfolio.Tx _transaction, address _traderOther) private
 ```
 
 ##### Arguments
@@ -603,6 +778,7 @@ function safeDecrease(address _trader, bytes32 _symbol, uint256 _amount, uint256
 | _amount | uint256 | Amount of the token |
 | _feeCharged | uint256 | Fee charged for the transaction |
 | _transaction | enum IPortfolio.Tx | Transaction type |
+| _traderOther | address |  |
 
 #### transferToken
 
@@ -667,7 +843,7 @@ function getSwapAmount(bytes32 _symbol, uint256 _gasAmount) private view returns
 Wrapper for emit event
 
 ```solidity:no-line-numbers
-function emitPortfolioEvent(address _trader, bytes32 _symbol, uint256 _quantity, uint256 _feeCharged, enum IPortfolio.Tx _transaction) private
+function emitPortfolioEvent(address _trader, bytes32 _symbol, uint256 _quantity, uint256 _feeCharged, enum IPortfolio.Tx _transaction, address _traderOther) private
 ```
 
 ##### Arguments
@@ -679,4 +855,5 @@ function emitPortfolioEvent(address _trader, bytes32 _symbol, uint256 _quantity,
 | _quantity | uint256 | Amount of token used in the transaction |
 | _feeCharged | uint256 | Fee charged for the transaction |
 | _transaction | enum IPortfolio.Tx | Transaction type |
+| _traderOther | address |  |
 

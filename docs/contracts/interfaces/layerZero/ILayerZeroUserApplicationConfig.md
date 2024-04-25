@@ -4,6 +4,19 @@ headerDepth: 4
 
 # ILayerZeroUserApplicationConfig
 
+## Struct Types
+
+### Destination
+
+```solidity
+struct Destination {
+  uint16 lzRemoteChainId;
+  uint32 chainListOrgChainId;
+  bool userPaysFee;
+  uint256 gasForDestination;
+}
+```
+
 ## Methods
 
 ### External

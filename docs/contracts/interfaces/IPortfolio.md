@@ -27,6 +27,7 @@ struct XFER {
   bytes32 symbol;
   uint256 quantity;
   uint256 timestamp;
+  bytes28 customdata;
 }
 ```
 ### TokenDetails
@@ -39,6 +40,8 @@ struct TokenDetails {
   uint32 srcChainId;
   bytes32 symbol;
   bytes32 symbolId;
+  bytes32 sourceChainSymbol;
+  bool isVirtual;
 }
 ```
 
@@ -58,7 +61,8 @@ enum Tx {
   RECOVERFUNDS,
   ADDGAS,
   REMOVEGAS,
-  AUTOFILL
+  AUTOFILL,
+  CCTRADE
 }
 ```
 
@@ -67,7 +71,7 @@ enum Tx {
 ### PortfolioUpdated
 
 ```solidity:no-line-numbers
-event PortfolioUpdated(enum IPortfolio.Tx transaction, address wallet, bytes32 symbol, uint256 quantity, uint256 feeCharged, uint256 total, uint256 available)
+event PortfolioUpdated(enum IPortfolio.Tx transaction, address wallet, bytes32 symbol, uint256 quantity, uint256 feeCharged, uint256 total, uint256 available, address walletOther)
 ```
 
 ## Methods
@@ -89,13 +93,7 @@ function unpause() external
 #### pauseDeposit
 
 ```solidity:no-line-numbers
-function pauseDeposit(bool _pause) external
-```
-
-#### addToken
-
-```solidity:no-line-numbers
-function addToken(bytes32 _symbol, address _tokenaddress, uint32 _srcChainId, uint8 _decimals, enum ITradePairs.AuctionMode _mode, uint256 _fee, uint256 _gasSwapRatio) external
+function pauseDeposit(bool _depositPause) external
 ```
 
 #### removeToken
@@ -113,7 +111,7 @@ function depositNative(address payable _from, enum IPortfolioBridge.BridgeProvid
 #### processXFerPayload
 
 ```solidity:no-line-numbers
-function processXFerPayload(address _trader, bytes32 _symbol, uint256 _quantity, enum IPortfolio.Tx _transaction) external
+function processXFerPayload(struct IPortfolio.XFER _xfer) external
 ```
 
 #### getNative

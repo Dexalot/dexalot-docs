@@ -9,13 +9,15 @@ editLink: true
 
 ### Server Urls
 
-Testnet: [wss://api.dexalot-test.com](https://api.dexalot-test.com/api/)
+Testnet: [wss://api.dexalot-test.com](wss://api.dexalot-test.com)
 
-Mainnet: [wss://api.dexalot.com](https://api.dexalot-test.com/api/) (Behind CORS)
+Mainnet: [wss://api.dexalot.com](wss://api.dexalot.com)
 
-A token authorization is required to establish a websocket connection.
+You may create up to 10 simultaneous websocket connections from the same IP address anonymously. (You do not need to follow next steps)
 
-In order to create a web socket connection:
+If you need more simultaneous connections, token authorization is required to establish the websocket connections.
+
+In order to create a web socket connection with your api-key:
 
 1.  A web socket connection token will be requested via auth/getws
     endpoint (see Rest Api section for details). This endpoint
@@ -166,6 +168,7 @@ export type SOCKET_DATA_TYPES =
     | 'orderStatusUpdatEvent'
     | 'transactionEvent'
     | 'executionEvent'
+    | 'xChainFinalizedEvent'
 ```
 
 #### ChartSnapShot
@@ -288,7 +291,7 @@ export interface WsTradeHistoryData {
 
 #### OrderStatusUpdateEvent (Trader Event)
 
-This is the captured order status update event based on the trader address provided in the signature.
+After subscribing to the traderEvents this is the captured order status update event based on the trader address provided in the signature.
 
 ```ts
 export interface OrderStatusUpdateEvent {
@@ -301,9 +304,13 @@ export interface OrderStatusUpdateEvent {
   totalamount: string;
   quantity: string;
   side: string;
+  sideId: number;
   type1: string;
+  type1Id: number;
   type2: string;
+  type2Id: number;
   status: string;
+  statusId: number;
   quantityfilled: string;
   totalfee: string;
   code: string;
@@ -347,9 +354,13 @@ Sample Message:
         "totalamount": "5.2018",
         "quantity": "31.0",
         "side": "BUY",
+        "sideId": 0,
         "type1": "LIMIT",
+        "type1Id": 1,
         "type2": "GTC",
-        "status": "FILLED",
+        "type2Id": 0,
+        "status": "CANCELED",
+        "statusId": 4,
         "quantityfilled": "31.0",
         "totalfee": "0.06",
         "code": "",
@@ -364,19 +375,25 @@ Sample Message:
 
 #### TransactionEvent (Trader Event)
 
-This is the captured transaction event based on the trader address provided in the signature.
+After subscribing to the traderEvents this is the captured transaction event based on the trader address provided in the signature.
 
 ```ts
 export interface TransactionEvent {
   contract: string;
-  transaction: string;
   address: string;
-  symbol: string;
-  quantity: string;
-  feeCharged: string;
-  total: string;
   available: string;
+  feeCharged: string;
+  quantity: string;
+  symbol: string;
+  total: string;
+  transaction: string;
+  transactionId: number;
+  blockTimestamp: number;
+  transactionHash: string;
   blockNumber: number;
+  blockHash: string;
+  chainId: number;
+  env: string;
 }
 ```
 
@@ -392,7 +409,13 @@ Sample Message:
     "symbol": "ALOT",
     "total": "2199.49",
     "transaction": "IXFERSENT",
-    "blockNumber": 1007044
+    "transactionId": 5,
+    "blockNumber": 1400304,
+    "blockTimestamp": 1716480179,
+    "blockHash": "0x40669bf4f60d543caf28ee99204d0c31181019eebe6c73b9729eca9e2ae523a8",
+    "transactionHash": "0x209ab1617deedbaa6e0e67042aff9a193218bc90e8c98d0b69dabf7afe81813f",
+    "chainId": 432201,
+    "env": "fuji-multi-subnet"
   },
   "type": "transactionEvent"
 }
@@ -400,7 +423,7 @@ Sample Message:
 
 #### ExecutionEvent (Trader Event)
 
-This is the captured execution event based on the trader address provided in the signature.
+After subscribing to the traderEvents this is the captured execution event based on the trader address provided in the signature.
 
 ```ts
 export interface ExecutionEvent {
@@ -413,10 +436,14 @@ export interface ExecutionEvent {
   feeMaker: string;
   feeTaker: string;
   takerSide: string;
+  takerSideId: number;
   execId: number;
   addressMaker: string;
   addressTaker: string;
+  blockTimestamp: number;
+  transactionHash: string;
   blockNumber: number;
+  blockHash: string;
 }
 ```
 
@@ -433,11 +460,57 @@ Sample Message:
         "feeMaker": "0.0052",
         "feeTaker": "0.06",
         "takerSide": "BUY",
+        "takerSideId": 0,
         "execId": 1673612966,
         "addressMaker": "0x051A4F1EBFb2d57D3655581c64979FBe5dDF5C71",
         "addressTaker": "0xe05451d9882kCc72B81c78B7FD54fbcFbE0583d2",
-        "blockNumber": 920114
+        "blockNumber": 1400301,
+        "blockTimestamp": 1716479835,
+        "blockHash": "0x324ce93563f7aeffdfd0b6e3a3e8def19874ea68c500aa4ce2f4276b2a5e5e21",
+        "transactionHash": "0x27d8365afd38d6521fce5b584b30bf5740094462430f543d549441a535a5f13g"
     },
     "type": "executionEvent"
+}
+```
+
+#### XChainFinalizedEvent (Trader Event)
+
+After subscribing to the traderEvents this is the captured execution event based on the trader address provided in the signature.
+This event is generated when a crosschain swap is finalized.
+
+```ts
+export interface XChainFinalizedEvent {
+    nonceAndMeta: string;
+    trader: string;
+    symbol: string;
+    amount: string;
+    timestamp: number;
+    blockNumber: number;
+    blockTimestamp: number;
+    blockHash: string;
+    transactionHash: string;
+    takerSideId: number;
+    env: string;
+    chainId: number;
+}
+```
+
+Sample Message:
+```json
+{
+    "data": {
+        "nonceAndMeta": "0xeb19e67e69d659e386647eade5657ab9611d45295cdeb6570830e00000000000",
+        "trader": "0xEB19E67E69d659e386647EAde5657aB9611d4529",
+        "symbol": "USDC",
+        "amount": "1999600",
+        "timestamp": 1716481538,
+        "blockNumber": 33298587,
+        "blockTimestamp": 1716481538,
+        "blockHash": "0x905bd758cdee6582552f2389060a7bbeaa30fb3a19d0a57b9ea3453991d640f5",
+        "transactionHash": "0x33c3469d275881dcb8f7589abfce1e919e3d92f379057ab6ffa342e920651368",
+        "env": "fuji-multi-avax",
+        "chainId": 43113
+    },
+    "type": "xChainFinalizedEvent"
 }
 ```

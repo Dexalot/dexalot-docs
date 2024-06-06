@@ -259,25 +259,6 @@ function setInventoryBySymbolId(bytes32[] _tokens, uint256[] _quantities) extern
 | _tokens | bytes32[] | Array of tokens in the from of SYMBOL + srcChainId |
 | _quantities | uint256[] | Array of quantities |
 
-#### convertSymbol
-
-Converts the inventory of a token from one subnet symbol to another
-
-**Dev notes:** \
-Only portfolio bridge can call this function
-
-```solidity:no-line-numbers
-function convertSymbol(bytes32 _symbolId, bytes32 _fromSymbol, bytes32 _toSymbol) external
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _symbolId | bytes32 | SymbolId of the token |
-| _fromSymbol | bytes32 | Subnet symbol of the token to convert from |
-| _toSymbol | bytes32 | Subnet symbol of the token to convert to |
-
 #### calculateWithdrawalFee
 
 Calculates the withdrawal fee for a token

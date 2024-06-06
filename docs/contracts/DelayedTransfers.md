@@ -89,7 +89,7 @@ Not bridge specific! Delayed messages will be processed by the defaultBridge
 symbolId has already been mapped to symbol for the portfolio to properly process it
 
 ```solidity:no-line-numbers
-function checkThresholds(struct IPortfolio.XFER _xfer) external returns (bool)
+function checkThresholds(struct IPortfolio.XFER _xfer, uint32 _dstChainListOrgChainId) external returns (bool)
 ```
 
 ##### Arguments
@@ -97,6 +97,7 @@ function checkThresholds(struct IPortfolio.XFER _xfer) external returns (bool)
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _xfer | struct IPortfolio.XFER | XFER message |
+| _dstChainListOrgChainId | uint32 | Destination chain ID |
 
 ##### Return values
 
@@ -147,7 +148,7 @@ Executes delayed transfer if the delay period has passed
 Only admin can call this function
 
 ```solidity:no-line-numbers
-function executeDelayedTransfer(bytes32 _id) external returns (struct IPortfolio.XFER xfer)
+function executeDelayedTransfer(bytes32 _id) external returns (struct IPortfolio.XFER xfer, uint32 dstChainListOrgChainId)
 ```
 
 ##### Arguments
@@ -217,7 +218,7 @@ function updateVolume(bytes32 _token, uint256 _amount) external
 Adds transfer to delayed queue
 
 ```solidity:no-line-numbers
-function addDelayedTransfer(bytes32 _id, struct IPortfolio.XFER _xfer) private
+function addDelayedTransfer(bytes32 _id, struct IPortfolio.XFER _xfer, uint32 _dstChainListOrgChainId) private
 ```
 
 ##### Arguments
@@ -226,4 +227,5 @@ function addDelayedTransfer(bytes32 _id, struct IPortfolio.XFER _xfer) private
 | ---- | ---- | ----------- |
 | _id | bytes32 | Transfer ID |
 | _xfer | struct IPortfolio.XFER | XFER message |
+| _dstChainListOrgChainId | uint32 | Destination chain ID |
 

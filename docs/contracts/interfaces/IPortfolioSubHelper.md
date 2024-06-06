@@ -17,6 +17,14 @@ struct Rates {
   uint8 takerRate;
 }
 ```
+### Rebates
+
+```solidity
+struct Rebates {
+  uint8 maker;
+  uint8 taker;
+}
+```
 
 ## Methods
 
@@ -25,18 +33,12 @@ struct Rates {
 #### getRates
 
 ```solidity:no-line-numbers
-function getRates(address _makerAddr, address _takerAddr, bytes32 _tradePairId, uint8 _makerRate, uint8 _takerRate) external view returns (uint256 makerRate, uint256 takerRate)
+function getRates(address _makerAddr, address _takerAddr, bytes32 _tradePairId, uint256 _makerRate, uint256 _takerRate) external view returns (uint256 maker, uint256 taker)
 ```
 
 #### isAdminAccountForRates
 
 ```solidity:no-line-numbers
 function isAdminAccountForRates(address _account) external view returns (bool)
-```
-
-#### getSymbolToConvert
-
-```solidity:no-line-numbers
-function getSymbolToConvert(bytes32 _fromSymbol) external view returns (bytes32)
 ```
 

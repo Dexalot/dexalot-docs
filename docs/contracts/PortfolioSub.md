@@ -537,45 +537,6 @@ function getAllBridgeFees(bytes32 _symbol, uint256 _quantity) external view retu
 | bridgeFees | uint256[] | Array of bridge fees for each corresponding chainId |
 | chainIds | uint32[] | Array of chainIds for each corresponding bridgeFee |
 
-#### updateTokenDetailsAfterUpgrade
-
-Overwrites the evm initialized fields to proper values after the March 2024 upgrade.
-
-**Dev notes:** \
-We added sourceChainSymbol & isVirtual to the TokenDetails struct. We need to update
-reflect their proper values for consistency with newly added tokens in the future.
-This function can be removed after the upgrade CD
-All tokens except the native ALOT is virtual in the subnet
-
-```solidity:no-line-numbers
-function updateTokenDetailsAfterUpgrade() external
-```
-
-#### convertToken
-
-Moves the inventory of the trader from one symbol to the other symbol
-
-**Dev notes:** \
-Only the user can call this function. The user have the option to withdraw their funds back
-to the C-Chain if they chose to. But if they want to stay in the subnet and continue trading, they need
-to convert to the new naming convention.
-After the March 2024 upgrade we need to rename 3 current subnet symbols BTC.b, WETH.e and USDt to
-BTC, ETH, USDT to support multichain trading.
-The current inventory is completely from Avalanche C Chain which is the default destination for
-the subnet. So there is no inventory comingling until we onboard a new chain. The conversions can
-be done after the second mainnet but better to do it before for simplicity
-Token to convert to is controlled by the PortfolioSubHelper
-
-```solidity:no-line-numbers
-function convertToken(bytes32 _fromSymbol) external
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _fromSymbol | bytes32 | Token to be converted from. |
-
 ### Internal
 
 #### addTokenInternal

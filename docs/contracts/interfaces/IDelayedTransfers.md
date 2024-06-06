@@ -13,7 +13,7 @@ headerDepth: 4
 #### checkThresholds
 
 ```solidity:no-line-numbers
-function checkThresholds(struct IPortfolio.XFER _xfer) external returns (bool)
+function checkThresholds(struct IPortfolio.XFER _xfer, uint32 _dstChainListOrgChainId) external returns (bool)
 ```
 
 #### updateVolume
@@ -25,7 +25,7 @@ function updateVolume(bytes32 _token, uint256 _amount) external
 #### executeDelayedTransfer
 
 ```solidity:no-line-numbers
-function executeDelayedTransfer(bytes32 _id) external returns (struct IPortfolio.XFER xfer)
+function executeDelayedTransfer(bytes32 _id) external returns (struct IPortfolio.XFER xfer, uint32 dstChainListOrgChainId)
 ```
 
 #### setDelayThresholds

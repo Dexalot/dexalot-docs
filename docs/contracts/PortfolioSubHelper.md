@@ -19,27 +19,29 @@ multichain
 | --- | --- |
 | VERSION | bytes32 |
 | adminAccountsForRates | mapping(address &#x3D;&gt; bool) |
+| minTakerRate | uint256 |
 | organizations | mapping(address &#x3D;&gt; string) |
+| rateOverrides | mapping(address &#x3D;&gt; mapping(bytes32 &#x3D;&gt; struct IPortfolioSubHelper.Rates)) |
+| rebates | mapping(address &#x3D;&gt; struct IPortfolioSubHelper.Rebates) |
 
 ### Internal
 
 | Name | Type |
 | --- | --- |
-| __gap | uint256[50] |
+| __gap | uint256[48] |
 
 ### Private
 
 | Name | Type |
 | --- | --- |
 | convertableTokens | mapping(bytes32 &#x3D;&gt; bytes32) |
-| rateOverrides | mapping(address &#x3D;&gt; mapping(bytes32 &#x3D;&gt; struct IPortfolioSubHelper.Rates)) |
 
 ## Events
 
-### AddressSet
+### RateChanged
 
 ```solidity:no-line-numbers
-event AddressSet(string name, string actionName, address addressAdded, bytes32 customData)
+event RateChanged(string name, string actionName, address addressAdded, bytes32 customData, uint8 maker, uint8 taker)
 ```
 
 ## Methods
@@ -53,6 +55,23 @@ Initialize the upgradeable contract
 ```solidity:no-line-numbers
 function initialize() external
 ```
+
+#### setMinTakerRate
+
+Sets the minimum Taker rate that is possible after the volume rebates
+
+**Dev notes:** \
+Only callable by admin.
+
+```solidity:no-line-numbers
+function setMinTakerRate(uint256 _rate) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _rate | uint256 | Minimum Taker rate after volume rebates |
 
 #### addAdminAccountForRates
 
@@ -104,51 +123,86 @@ function isAdminAccountForRates(address _account) external view returns (bool)
 | ---- | ---- | ----------- |
 | _account | address | Address of the admin account |
 
-#### addRebateAccountForRates
+#### addVolumeBasedRebates
 
-Adds the given set of tradepair ids for a given address to rebateAccountsForRates
+Adds the given address to rebates mapping that keeps track of volume based rebates.
 
 **Dev notes:** \
-Only callable by admin. Rebates are set for each tradepair for a given address
+Only callable by admin. Rebates are set for each address. An offchain application
+checks the 30 days rolling volume and calculates the discount the address is eligible for.
+Pass 0 & 0 maker taker rebates to delete the rebate address from the mapping.
 
 ```solidity:no-line-numbers
-function addRebateAccountForRates(address _rebateAddress, string _organization, bytes32[] _tradePairIds, uint8[] _makerRates, uint8[] _takerRates) external
+function addVolumeBasedRebates(address[] _rebateAddress, uint8[] _makerRebates, uint8[] _takerRebates) external
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _rebateAddress | address | Address of rebate account |
+| _rebateAddress | address[] | Array of rebate accounts |
+| _makerRebates | uint8[] | Array of maker rebates |
+| _takerRebates | uint8[] | Array of taker rebates |
+
+#### addToRateOverrides
+
+Adds the given set of tradepairs for a given address to rateOverrides. Usually used
+for contracted market makers. (0.20% = 20 bps = 20/10000)
+Use 255 for logical deletion of one leg and keep the other leg. If both need to be deleted,
+use removeTradePairsFromRateOverrides function
+
+**Dev notes:** \
+Only callable by admin. Overrides are set for each tradepair for a given address.
+if you pass the max uint8 value 255 to either maker or taker rate, it will use the default maker/taker
+this is for situations where you want to have a preferential rate on the maker and also wanting to make
+use of volume rebates on the taker side or visa versa
+
+```solidity:no-line-numbers
+function addToRateOverrides(address _account, string _organization, bytes32[] _tradePairIds, uint8[] _makerRates, uint8[] _takerRates) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _account | address | Address for the override to be applied |
 | _organization | string | Organization / reason |
 | _tradePairIds | bytes32[] | Array of TradePairIds |
 | _makerRates | uint8[] | Array of maker rates |
 | _takerRates | uint8[] | Array of taker rates |
 
-#### removeTradePairsFromRebateAccount
+#### removeTradePairsFromRateOverrides
 
-Removes the a list of tradepairs of an address from rebateAccountsForRates
+Removes the a list of tradepairs of an address from rateOverrides
 
 **Dev notes:** \
 Only callable by admin
 
 ```solidity:no-line-numbers
-function removeTradePairsFromRebateAccount(address _rebateAddress, bytes32[] _tradePairIds) external
+function removeTradePairsFromRateOverrides(address _account, bytes32[] _tradePairIds) external
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _rebateAddress | address | Address of the admin account |
+| _account | address | Address of the admin account |
 | _tradePairIds | bytes32[] | Array of TradePairIds to remove |
 
 #### getRates
 
 Gets the preferential rates of maker and the taker if any
 
+**Dev notes:** \
+255 is used for logical deletion of one leg of preferential rates pair.
+Priority 1- check admin rates, 2- preferential rates, 3- Volume Rebates 4- Default rate
+Default rates are multiplied by 10 for an additional precision when dealing with default rates
+of 1 or 2 bps. Without this, we can't have any rates in between 1 and 2 bps. But with it, we can
+have 10(1 bps)-11(1.1 bps)... 19-20(2 bps)
+Portfolio.TENK denominator has been multipled by 10 and was changed to 100000 to level the increase.
+
 ```solidity:no-line-numbers
-function getRates(address _makerAddr, address _takerAddr, bytes32 _tradePairId, uint8 _makerRate, uint8 _takerRate) external view returns (uint256 makerRate, uint256 takerRate)
+function getRates(address _makerAddr, address _takerAddr, bytes32 _tradePairId, uint256 _makerRate, uint256 _takerRate) external view returns (uint256 maker, uint256 taker)
 ```
 
 ##### Arguments
@@ -158,71 +212,13 @@ function getRates(address _makerAddr, address _takerAddr, bytes32 _tradePairId, 
 | _makerAddr | address | Maker address of the trade |
 | _takerAddr | address | Taker address of the trade |
 | _tradePairId | bytes32 | TradePair Id |
-| _makerRate | uint8 | tradepair's default maker rate |
-| _takerRate | uint8 | tradepair's default taker rate |
+| _makerRate | uint256 | tradepair's default maker rate uint8 and < 100 |
+| _takerRate | uint256 | tradepair's default taker rate uint8 and < 100 |
 
 ##### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| makerRate | uint256 | tradepair's default maker rate or preferential maker rate if any |
-| takerRate | uint256 | tradepair's default taker rate or preferential taker rate if any |
-
-#### addConvertibleToken
-
-Adds a symbol to the convertible symbol mapping
-
-**Dev notes:** \
-Only admin can call this function. After the March 2024 upgrade we need to rename
-3 current subnet symbols BTC.b, WETH.e and USDt to BTC, ETH, USDT to support multichain trading.
-Tokens to convert to is controlled by the PortfolioSubHelper
-All 3 following functions can technically be removed after the March 24 upgrade.
-
-```solidity:no-line-numbers
-function addConvertibleToken(bytes32 _fromSymbol, bytes32 _toSymbol) external
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _fromSymbol | bytes32 | Token to be converted from. |
-| _toSymbol | bytes32 | trader address |
-
-#### removeConvertibleToken
-
-Removes a symbol to the convertible symbol mapping
-
-**Dev notes:** \
-Only callable by admin
-
-```solidity:no-line-numbers
-function removeConvertibleToken(bytes32 _fromSymbol) external
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _fromSymbol | bytes32 | Symbol to remove |
-
-#### getSymbolToConvert
-
-Gets  a symbol to the convertible symbol mapping
-
-```solidity:no-line-numbers
-function getSymbolToConvert(bytes32 _fromSymbol) external view returns (bytes32)
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _fromSymbol | bytes32 | From Symbol to be converted |
-
-##### Return values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bytes32 | _toSymbol To Symbol |
+| maker | uint256 | tradepair's default maker rate or discounted rate if any |
+| taker | uint256 | tradepair's default taker rate or discounted rate if any |
 

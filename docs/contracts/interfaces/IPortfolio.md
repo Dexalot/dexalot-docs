@@ -62,7 +62,9 @@ enum Tx {
   ADDGAS,
   REMOVEGAS,
   AUTOFILL,
-  CCTRADE
+  CCTRADE,
+  CONVERTFROM,
+  CONVERTTO
 }
 ```
 

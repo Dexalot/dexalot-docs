@@ -19,6 +19,7 @@ ExchangeMain needs to have DEFAULT_ADMIN_ROLE on PortfolioMain.
 | VERSION | bytes32 |
 | bridgeFeeCollected | mapping(bytes32 &#x3D;&gt; uint256) |
 | minDepositMultiplier | uint8 |
+| nativeDepositsRestricted | bool |
 | tokenMap | mapping(bytes32 &#x3D;&gt; contract IERC20Upgradeable) |
 | trustedContracts | mapping(address &#x3D;&gt; bool) |
 | trustedContractToIntegrator | mapping(address &#x3D;&gt; string) |
@@ -50,7 +51,8 @@ function initialize(bytes32 _native, uint32 _chainId) public
 
 #### removeToken
 
-Removes the given token from the portfolio
+Removes the given token from the portfolio. Native token removal is allowed if only the wrapped
+version of the token needs to be supported.
 
 **Dev notes:** \
 Only callable by admin and portfolio should be paused. Makes sure there are no
@@ -93,20 +95,6 @@ function addToken(bytes32 _symbol, address _tokenAddress, uint32 _srcChainId, ui
 | _fee | uint256 | Bridge Fee |
 | _gasSwapRatio | uint256 | Amount of token to swap per ALOT |
 | _isVirtual | bool | Not an ERC20 or native. It is only used to facilitate Cross Chain Trades where the token doesn't exist |
-
-#### updateTokenDetailsAfterUpgrade
-
-Overwrites the evm initialized fields to proper values after the March 2024 upgrade.
-
-**Dev notes:** \
-We added sourceChainSymbol & isVirtual to the TokenDetails struct. We need to update
-reflect their proper values for consistency with newly added tokens in the future.
-This function can be removed after the upgrade CD
-All the current tokens in the mainnet are real tokens (non-Virtual)
-
-```solidity:no-line-numbers
-function updateTokenDetailsAfterUpgrade() external
-```
 
 #### getToken
 

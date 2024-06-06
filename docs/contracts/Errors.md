@@ -144,7 +144,13 @@ P-ETNS-02: token is not supported in the host chain
 
 P-GSRO-01: gasSwapRatio needs to be > 0
 
+P-LENM-01: length mismatch in array type function parameters
+
 P-MDML-01: minimum deposit multipler can not be less than 10 (10/10)
+
+P-MTNZ-01: min taker rate can not be 0
+
+P-NDNS-01: native deposits not supported
 
 P-NETD-01: not enough ERC20 token balance to deposit
 
@@ -183,6 +189,8 @@ P-TAEX-01: token already exists
 P-TDDM-01: Token decimals do not match
 
 P-TFNE-01: total funds not enough
+
+P-TNBC-01: token not been converted
 
 P-TNEF-01: transaction amount not enough to cover fees
 

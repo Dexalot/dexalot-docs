@@ -42,7 +42,7 @@ function getTokenDetails(bytes32 _symbolId) external view returns (struct IPortf
 #### executeDelayedTransfer
 
 ```solidity:no-line-numbers
-function executeDelayedTransfer(uint16 _dstChainId, bytes32 _id) external
+function executeDelayedTransfer(bytes32 _id) external
 ```
 
 #### getAllBridgeFees

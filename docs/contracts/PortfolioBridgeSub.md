@@ -252,29 +252,6 @@ function sendXChainMessage(uint32 _dstChainListOrgChainId, enum IPortfolioBridge
 | _xfer | struct IPortfolio.XFER | XFER message to send |
 | _userFeePayer | address |  |
 
-#### renameToken
-
-Changes the mapping from one symbol to the other symbol
-
-**Dev notes:** \
-Only admin can call this function. After the March 2024 upgrade we need to rename
-3 current subnet symbols BTC.b, WETH.e and USDt to BTC, ETH, USDT to support multichain trading.
-The current inventory is completely from Avalanche C Chain which is the default destination for
-the subnet. So there is no inventory comingling until we onboard a new chain. The conversions can
-be done after the second mainnet but better to do it before for simplicity
-
-```solidity:no-line-numbers
-function renameToken(uint32 _dstChainListOrgChainId, bytes32 _fromSymbol, bytes32 _toSymbol) external
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _dstChainListOrgChainId | uint32 | destination ChainListOrg chain id |
-| _fromSymbol | bytes32 | Original subnet token symbol |
-| _toSymbol | bytes32 | New subnet token symbol |
-
 #### setDelayedTransfer
 
 Set DelayedTransfers address
@@ -300,14 +277,13 @@ Executes delayed transfer if the delay period has passed
 Only admin can call this function
 
 ```solidity:no-line-numbers
-function executeDelayedTransfer(uint16 _dstChainId, bytes32 _id) external
+function executeDelayedTransfer(bytes32 _id) external
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _dstChainId | uint16 | lz destination chain id |
 | _id | bytes32 | Transfer ID |
 
 #### setInventoryManager

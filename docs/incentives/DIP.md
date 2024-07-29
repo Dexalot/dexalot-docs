@@ -32,7 +32,7 @@ $$ qualityScore = {\sqrt{q} * \frac{t}{600} * e^{\frac{-3*pd}{md}}} $$
 - $t$: time in seconds order is open for
 - $md$: max depth, depth from best bid/ask to give rewards up to, orders outside this range are not calculated until they enter the range
 
-Quality scores are then normalised to give the final orderbook score. For every second on a given side of the orderbook a score of 1 is distributed proportionally across applicable orders. By scoring with respect to time orderbook scores across different pairs are comparable irrespective of price.
+In the quality score calculation $e$ is used to generate the distance from best bid/ask so orders tighter to the best price are rewarded exponentially better than those further away. After calculation, quality scores are normalised to give the final orderbook score. For every second on a given side of the orderbook a score of 1 is distributed proportionally across applicable orders. By scoring with respect to time orderbook scores across different pairs are comparable irrespective of price.
 
 $$ orderbookScore(x) = { \frac{qualityScore_x}{\sum_{i=1}^{n} qualityScore_i} * totalTime} $$
 

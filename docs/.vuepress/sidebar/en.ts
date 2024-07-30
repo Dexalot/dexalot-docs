@@ -233,6 +233,23 @@ export const enSidebarConfig = sidebar({
     },
 
     {
+      text: "Incentives",
+      icon: "trophy",
+      prefix: "incentives/",
+      collapsible: true,
+      children: [
+        {
+          text: "Volume Rebates",
+          link: "VolumeRebates"
+        },
+        {
+          text: "Dexalot Incentive Program (DIP)",
+          link: "DIP"
+        }
+      ]
+    },
+
+    {
       text: "Legal",
       icon: "gavel",
       prefix: "legal/",

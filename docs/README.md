@@ -23,6 +23,16 @@ features:
     details: "Read, watch and learn how to use Dexalot"
     link: tutorials
 
+  - title: Incentives
+    icon: trophy
+    details: "Learn more about Dexalot's incentive programs"
+    link: DIP
+
+  - title: Trading Fees & Discounts
+    icon: dollar
+    details: "Current trading fee rates and cah rebate tiers"
+    link: TradingFeeDiscounts
+
   - title: Smart Contracts
     icon: code
     details: "Main and auxiliary contracts that make the dual-chain application"
@@ -32,9 +42,4 @@ features:
     icon: link
     details: "Learn how to interact with Dexalot"
     link: apiv2
-
-  - title: Incentives
-    icon: trophy
-    details: "Learn more about Dexalot's incentive programs"
-    link: incentives/DIP.md
 ---

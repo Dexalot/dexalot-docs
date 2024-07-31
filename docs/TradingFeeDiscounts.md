@@ -1,8 +1,6 @@
-# Volume Rebates
+# Trading Fees & Discounts
 
-To reward users for executing on our platform we are providing volume rebates via discounted maker and taker fee rates, applicable only for orders entered via the orderbook. These fee rebates are applied systematically so when users execute they will be charged the correct fee according to their discounted rate. Listed below are the current fee rates, VIP tiers and fee discounts users will receive based on their rolling 28 day volume:
-
-## Fee Rates
+## Trading Fees
 
 | Pair | Maker Fee (bps) | Taker Fee (bps) |
 | ---- | --------------- | --------------- |
@@ -11,7 +9,10 @@ To reward users for executing on our platform we are providing volume rebates vi
 | EURC/USDC | 0 | 4
 | All Other Pairs | 10 | 12
 
-## Rebate Tiers
+## Trading Fee Rebates
+
+To reward users for executing on our platform we are providing volume rebates via discounted maker and taker fee rates, applicable only for orders entered via the orderbook. These fee rebates are applied systematically so when users execute they will be charged the correct fee according to their discounted rate. Listed below are the VIP tiers and additional fee discounts users will receive based on their rolling 28 day volume and ALOT holdings.
+
 
 | Tier | Cumulative 28D Volume | Maker Discount | Taker Discount |
 | --- | --- | --- | --- |
@@ -26,7 +27,7 @@ To reward users for executing on our platform we are providing volume rebates vi
 
 ## Additional Trading Fee Discounts
 
-An additional fee discount is applied based on a user's ALOT holdings. This discount is applied cumulatively (i.e. if a user trades $110k and has 12k ALOT their maker discount = 8% + 6% = 14%). Current fee discounts based on end of day ALOT balance are listed below:
+An additional fee discount is applied based on a user's ALOT holdings. This discount is applied cumulatively (e.g. if a user trades $110k and has 12k ALOT their maker discount = 8% + 6% = 14%). Current fee discounts based on end of day ALOT balance are listed below:
 
 | ALOT EOD Balance | Maker Discount | Taker Discount |
 | --- | --- | --- |
@@ -46,3 +47,7 @@ Please note the following details regarding fee tier calculations:
 - Cumulative volume is calculated by looking at the past 28 days of executions
 - ALOT balances only at the end of day are used
 - Processing new tiers may take up to 1 hour, i.e. between 00:00 - 01:00 UTC users may still be on their previous discount fee rate until all processing is complete
+
+## Institutional Traders or Market Makers
+
+Institutional Traders such as market makers, high frequency traders and api users should contact [bd@dexalot.com](mailto:bd@dexalot.com)

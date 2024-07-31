@@ -96,6 +96,19 @@ export const enSidebarConfig = sidebar({
         }
       ]
     },
+
+    {
+      text: "Incentives",
+      icon: "trophy",
+      link: "DIP",
+    },
+
+    {
+      text: "Trading Fees & Discounts",
+      icon: "dollar",
+      link: "TradingFeeDiscounts",
+    },
+
     {
       text: "Smart Contracts",
       icon: "code",

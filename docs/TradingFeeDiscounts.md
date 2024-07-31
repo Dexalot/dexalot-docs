@@ -11,7 +11,7 @@
 
 ## Trading Fee Rebates
 
-To reward users for executing on our platform we are providing volume rebates via discounted maker and taker fee rates, applicable only for orders entered via the orderbook. These fee rebates are applied systematically so when users execute they will be charged the correct fee according to their discounted rate. Listed below are the VIP tiers and additional fee discounts users will receive based on their rolling 28 day volume and ALOT holdings.
+To reward users for executing on our platform we are providing volume rebates via discounted maker and taker fee rates, applicable only for orders entered via the orderbook. These fee rebates are applied systematically so when users execute they will be charged the correct fee according to their discounted rate. Listed below are the VIP tiers and additional fee discounts users will receive based on their rolling 28 day volume.
 
 
 | Tier | Cumulative 28D Volume | Maker Discount | Taker Discount |
@@ -50,4 +50,4 @@ Please note the following details regarding fee tier calculations:
 
 ## Institutional Traders or Market Makers
 
-Institutional Traders such as market makers, high frequency traders and api users should contact [bd@dexalot.com](mailto:bd@dexalot.com)
+Institutional Traders such as market makers, high frequency traders and api users should contact [bd@dexalot.com](mailto:bd@dexalot.com).

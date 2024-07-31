@@ -30,7 +30,7 @@ features:
 
   - title: Trading Fees & Discounts
     icon: dollar
-    details: "Current trading fee rates and cah rebate tiers"
+    details: "Current trading fee rates and rebate tiers"
     link: TradingFeeDiscounts
 
   - title: Smart Contracts

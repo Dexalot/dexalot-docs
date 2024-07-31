@@ -1,6 +1,15 @@
 # Volume Rebates
 
-To reward users for executing on our platform we are providing volume rebates via discounted maker and taker fee rates. These fee rebates are applied on the contract side so when a user executes they will be a charged the correct fee according to their discounted rate. Listed below are the current VIP tiers and fee discounts users will recieve based on their last 28 day volume:
+To reward users for executing on our platform we are providing volume rebates via discounted maker and taker fee rates, applicable only for orders entered via the orderbook. These fee rebates are applied systematically so when a user executes they will be charged the correct fee according to their discounted rate. Listed below are the current fee rates, VIP tiers and fee discounts users will receive based on their rolling 28 day volume:
+
+## Fee Rates
+
+| Pair | Maker Fee (bps) | Taker Fee (bps) |
+| ---- | --------------- | --------------- |
+| USDT/USDC | 0 | 2
+| sAVAX/AVAX | 0 | 3
+| EURC/USDC | 0 | 4
+| All Other Pairs | 10 | 12
 
 ## Rebate Tiers
 
@@ -15,9 +24,9 @@ To reward users for executing on our platform we are providing volume rebates vi
 | VIP 7 | $25,000,000 - $50,000,000 | 59% | 59% |
 | VIP 8 | $50,000,000+ | 68% | 68% |
 
-## ALOT Discount Fee Rates
+## Additional Trading Fee Discounts
 
-An additional fee discount is applied based on a user's ALOT holdings. This discount is applied cumulatively i.e. if a user trades $110k and has 12k ALOT their maker discount = 8% + 6% = 14%. Current fee discounts based on end of day ALOT balance are listed below:
+An additional fee discount is applied based on a user's ALOT holdings. This discount is applied cumulatively (i.e. if a user trades $110k and has 12k ALOT their maker discount = 8% + 6% = 14%). Current fee discounts based on end of day ALOT balance are listed below:
 
 | ALOT EOD Balance | Maker Discount | Taker Discount |
 | --- | --- | --- |
@@ -33,7 +42,7 @@ An additional fee discount is applied based on a user's ALOT holdings. This disc
 ## Fee Rebate Calculations
 
 Please note the following details regarding fee tier calculations:
-- All tier calculations occur at the end of day i.e. 00:00 UTC
+- All tier calculations occur at the end of day, i.e. 00:00 UTC
 - Cumulative volume is calculated by looking at the past 28 days of executions
 - ALOT balances only at the end of day are used
-- Processing new tiers may take up to 2 hours i.e. between 00:00 - 02:00 UTC users may still be on previous discount fee rate until all processing is complete
+- Processing new tiers may take up to 1 hour, i.e. between 00:00 - 01:00 UTC users may still be on their previous discount fee rate until all processing is complete

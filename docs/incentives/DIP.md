@@ -1,6 +1,6 @@
 # Dexalot Incentive Program (DIP)
 
-The Dexalot Incentive Program (DIP) is designed to reward users for providing liquidity and trading on our protocol. User's are scored based on their activity on a pair by pair basis. Pair scores are put together to give a combined token score per user. Calculations are processed on a daily basis after 00:00 UTC. At the end of the month a user's score is finalised and reward tokens are distributed proportionally based on this score. The score consists of 3 underlying components, executed volume (E), orderbook score (O) and ALOT balance score (A). Each pair and reward token and may be weighted differently, the current active weightings can be viewed [here](/incentives/DIP.md#weightings)
+The Dexalot Incentive Program (DIP) is designed to reward users for providing liquidity and trading on our protocol. Users are scored on their activity on a pair by pair basis. Pair scores are put together to give a combined token score per user. Calculations are processed on a daily basis after 00:00 UTC. At the end of the month a user's score is finalized and reward tokens are distributed proportionally based on this score. The score consists of 3 underlying components, executed volume (E), orderbook score (O) and ALOT balance score (A). Each pair and reward token and may be weighted differently, the current active weightings can be viewed [here](/incentives/DIP.md#weightings)
 
 ## Executed Volume (E)
 
@@ -14,10 +14,10 @@ Orderbook score determines the “quality” of a user's orders based on the siz
 
 | Pair | Max Spread (bps) | Max Depth (bps) |
 | ---- | ---------- | --------- |
-| sAVAX/AVAX | 4 | 8.5
 | USDT/USDC | 4 | 8.5
+| sAVAX/AVAX | 4 | 8.5
 | EURC/USDC | 8 | 16
-| * | 200 | 400
+| All Other Pairs | 100 | 200
 
 The formula for orderbook score calculations is as follows:
 
@@ -32,7 +32,7 @@ $$ qualityScore = {\sqrt{q} * \frac{t}{600} * e^{\frac{-3*pd}{md}}} $$
 - $t$: time in seconds order is open for
 - $md$: max depth, depth from best bid/ask to give rewards up to, orders outside this range are not calculated until they enter the range
 
-In the quality score calculation $e$ is used to generate the distance from best bid/ask so orders tighter to the best price are rewarded exponentially better than those further away. After calculation, quality scores are normalised to give the final orderbook score. For every second on a given side of the orderbook a score of 1 is distributed proportionally across applicable orders. By scoring with respect to time orderbook scores across different pairs are comparable irrespective of price.
+In the quality score calculation $e$ is used to generate the distance from best bid/ask so orders tighter to the best price are rewarded exponentially better than those further away. After calculation, quality scores are normalized to give the final orderbook score. For every second on a given side of the orderbook a score of 1 is distributed proportionally across applicable orders. By scoring with respect to time orderbook scores across different pairs are comparable irrespective of price.
 
 $$ orderbookScore(x) = { \frac{qualityScore_x}{\sum_{i=1}^{n} qualityScore_i} * totalTime} $$
 
@@ -71,16 +71,20 @@ $$ balanceScore = {\sqrt{alotBalance * 0.014 * timeHeld / 3600}} $$
 
 **DIP Distribution by Token**
 
-| Token  | Monthly Amount | E % | O % | A % |
-| ------ | -------------- | --- | --- | --- |
-| ALOT   | $100,000 (*)   | 20% | 75% | 5%  |
-| sAVAX  | 1,250          | 50% | 0%  | 50% |
-| QI     | 200,000        | 50% | 0%  | 50% |
+| Token  | Monthly Amount | End Date | E % | O % | A % |
+| ------ | -------------- | -------- | --- | --- | --- |
+| ALOT   | up to $200,000 (*) | 2025-07-31 | 20% | 75% | 5%  |
+| sAVAX  | 1,250          | 2024-12-31 (**)  | 50% | 0%  | 50% |
+| QI     | 1,200,000 (***)    | 2024-09-30 | 50% | 0%  | 50% |
 
 
-(*) - To calculate the absolute number of ALOT tokens the 7 day average ALOT price is used (taken on the day prior to the start of a new month). This absolute number is capped at 200,000 ALOT.
+(*) - To calculate the absolute number of ALOT tokens the 7 day volume weighted average ALOT price is used (taken on the day prior to the start of a new month).
 
-For ALOT rewards emphasis on executions has been reduced as these users will now be rewarded via volume rebates.
+(**) - sAVAX rewards may be extended further, subject to Multiverse tiers.
+
+(***) - QI monthly amount and end date subject to change as per partnership agreements with Benqi.
+
+For ALOT rewards emphasis on executions is reduced as these users will now be rewarded via volume rebates.
 
 ## Score Calculations
 

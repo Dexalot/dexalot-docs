@@ -32,4 +32,9 @@ features:
     icon: link
     details: "Learn how to interact with Dexalot"
     link: apiv2
+
+  - title: Incentives
+    icon: trophy
+    details: "Learn more about Dexalot's incentive programs"
+    link: incentives/DIP.md
 ---

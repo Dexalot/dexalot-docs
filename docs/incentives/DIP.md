@@ -14,10 +14,10 @@ Orderbook score determines the “quality” of a user's orders based on the siz
 
 | Pair | Max Spread (bps) | Max Depth (bps) |
 | ---- | ---------- | --------- |
-| sAVAX/AVAX | 4 | 8.5
 | USDT/USDC | 4 | 8.5
+| sAVAX/AVAX | 4 | 8.5
 | EURC/USDC | 8 | 16
-| * | 200 | 400
+| All Other Pairs | 100 | 200
 
 The formula for orderbook score calculations is as follows:
 
@@ -71,16 +71,16 @@ $$ balanceScore = {\sqrt{alotBalance * 0.014 * timeHeld / 3600}} $$
 
 **DIP Distribution by Token**
 
-| Token  | Monthly Amount | E % | O % | A % |
-| ------ | -------------- | --- | --- | --- |
-| ALOT   | $100,000 (*)   | 20% | 75% | 5%  |
-| sAVAX  | 1,250          | 50% | 0%  | 50% |
-| QI     | 200,000        | 50% | 0%  | 50% |
+| Token  | Monthly Amount | End Date | E % | O % | A % |
+| ------ | -------------- | -------- | --- | --- | --- |
+| ALOT   | up to $200,000 (*) | 2025-07-31 | 20% | 75% | 5%  |
+| sAVAX  | 1,250              | 2024-12-31 | 50% | 0%  | 50% |
+| QI     | 1,200,000          | 2024-09-30 | 50% | 0%  | 50% |
 
 
-(*) - To calculate the absolute number of ALOT tokens the 7 day average ALOT price is used (taken on the day prior to the start of a new month). This absolute number is capped at 200,000 ALOT.
+(*) - To calculate the absolute number of ALOT tokens the 7 day volume weighted average ALOT price is used (taken on the day prior to the start of a new month).
 
-For ALOT rewards emphasis on executions has been reduced as these users will now be rewarded via volume rebates.
+For ALOT rewards emphasis on executions is reduced as these users will now be rewarded via volume rebates. In addition please note that the end dates for sAVAX and QI rewards are provisional and are likely to be extended closer to the time.
 
 ## Score Calculations
 

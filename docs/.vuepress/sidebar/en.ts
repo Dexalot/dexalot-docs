@@ -96,6 +96,19 @@ export const enSidebarConfig = sidebar({
         }
       ]
     },
+
+    {
+      text: "Incentives",
+      icon: "trophy",
+      link: "DIP",
+    },
+
+    {
+      text: "Trading Fees & Discounts",
+      icon: "dollar",
+      link: "TradingFeeDiscounts",
+    },
+
     {
       text: "Smart Contracts",
       icon: "code",
@@ -229,23 +242,6 @@ export const enSidebarConfig = sidebar({
           text: "SimpleSwap",
           link: "SimpleSwap"
         },
-      ]
-    },
-
-    {
-      text: "Incentives",
-      icon: "trophy",
-      prefix: "incentives/",
-      collapsible: true,
-      children: [
-        {
-          text: "Volume Rebates",
-          link: "VolumeRebates"
-        },
-        {
-          text: "Dexalot Incentive Program (DIP)",
-          link: "DIP"
-        }
       ]
     },
 

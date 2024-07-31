@@ -1,6 +1,6 @@
 # Volume Rebates
 
-To reward users for executing on our platform we are providing volume rebates via discounted maker and taker fee rates, applicable only for orders entered via the orderbook. These fee rebates are applied systematically so when a user executes they will be charged the correct fee according to their discounted rate. Listed below are the current fee rates, VIP tiers and fee discounts users will receive based on their rolling 28 day volume:
+To reward users for executing on our platform we are providing volume rebates via discounted maker and taker fee rates, applicable only for orders entered via the orderbook. These fee rebates are applied systematically so when users execute they will be charged the correct fee according to their discounted rate. Listed below are the current fee rates, VIP tiers and fee discounts users will receive based on their rolling 28 day volume:
 
 ## Fee Rates
 

@@ -82,7 +82,7 @@ $$ balanceScore = {\sqrt{alotBalance * 0.014 * timeHeld / 3600}} $$
 
 (**) - sAVAX rewards may be extended further, subject to Multiverse tiers.
 
-(***) - QI end date is rolling, subject to change as per partnership agreements with Benqi.
+(***) - QI end date is rolling and amount is subject to change as per partnership agreements with Benqi.
 
 For ALOT rewards emphasis on executions is reduced as these users will now be rewarded via volume rebates.
 

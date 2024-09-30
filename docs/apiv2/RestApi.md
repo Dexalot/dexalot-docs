@@ -659,62 +659,7 @@ https://api.dexalot-test.com/privapi/signed/orders?periodfrom=2023-02-22T18:20:0
 
 ###  Get Trader history
 
-GET signed/traderhistory
-
-#### Description
-
-Returns full trading history for the given address. If onlyfills is
-used, returns only filled transactions (trades) . Maximum 90 days and/or
-500 records returned.
-
-**Warning**: This endpoint is intended to be used for reporting purposes only. If you want to check only the latest state of your orders please try /orders endpoint.
-
-#### Query Parameters
-
-| **Field Name**| **Required** | **Sample Value**   |
-|---------------|-----------------------------------|-------------------------------------------------------|
-| periodfrom (default : from 7 days ago) | N | 2022-03-02T00:00:00.000Z                              |
-| periodto (default : current_time)| N      | 2022-04-11T00:00:00.000Z                               |
-
-#### Sample Requests
-
-```
-https://api.dexalot-test.com/privapi/signed/traderhistory
-```
-
-```
-https://api.dexalot-test.com/privapi/signed/traderhistory?periodfrom=2022-08-02T00:00:00.000Z&periodto=2022-08-11T00:00:00.000Z
-```
-
-```bash
-curl --location 'https://api.dexalot-test.com/privapi/signed/traderhistory?periodfrom=2023-01-01T18%3A20%3A02.000Z&periodto=2023-03-01T18%3A40%3A02.000Z' \
---header 'x-signature: [ADDRESS:SIGNATURE]'
-```
-#### Sample Response
-
-```json
-[
-    {
-        "traderaddress": "0x55c66320CEB54Ad680ffae12e6A09603cbA0db70",
-        "id": "0x0000000000000000000000000000000000000000000000000000000062efccb5",
-        "tx": "0x1ddcced430085902734bee4da8609c57e55203cdd3bffb088d07439394d8614c",
-        "pair": "ETH/USDC",
-        "side": 0,
-        "type": "FILLED",
-        "blocknumber": "122926",
-        "gasused": 433461,
-        "gasprice": "2.5",
-        "gasinnative": "0.0010836525",
-        "execid": 1659882678,
-        "execquantity": "2",
-        "execprice": "19",
-        "fee": "0.004",
-        "feetype": "T",
-        "feeunit": "ETH",
-        "ts": "2022-08-09T20:11:41.000Z"
-    }
-]
-```
+GET signed/traderhistory (This endpoint has been deprecated please see order endpoints)
 
 ### Get Order Execution Details
 

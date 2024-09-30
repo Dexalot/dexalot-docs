@@ -17,7 +17,7 @@ Orderbook score determines the “quality” of a user's orders based on the siz
 | USDT/USDC | 4 | 8.5
 | sAVAX/AVAX | 4 | 8.5
 | EURC/USDC | 8 | 16
-| All Other Pairs | 50 | 100
+| All Other Pairs | 30 | 100
 
 The formula for orderbook score calculations is as follows:
 
@@ -75,14 +75,14 @@ $$ balanceScore = {\sqrt{alotBalance * 0.014 * timeHeld / 3600}} $$
 | ------ | -------------- | -------- | --- | --- | --- |
 | ALOT   | up to $200,000 (*) | 2025-07-31 | 5% | 75% | 20%  |
 | sAVAX  | 1,250          | 2024-12-31 (**)  | 20% | 30%  | 50% |
-| QI     | 1,200,000 (***)    | 2024-09-30 | 20% | 30%  | 50% |
+| QI     | 1,200,000     | (***) | 20% | 30%  | 50% |
 
 
 (*) - To calculate the absolute number of ALOT tokens the 7 day volume weighted average ALOT price is used (taken on the day prior to the start of a new month).
 
 (**) - sAVAX rewards may be extended further, subject to Multiverse tiers.
 
-(***) - QI monthly amount and end date subject to change as per partnership agreements with Benqi.
+(***) - QI end date is rolling, subject to change as per partnership agreements with Benqi.
 
 For ALOT rewards emphasis on executions is reduced as these users will now be rewarded via volume rebates.
 

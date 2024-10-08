@@ -56,7 +56,42 @@ Similarly a Cross Chain Swaps Betwen Avalanche & Arb would work as follows, say 
 <td>v4.0</td>
 <td>2024-10-15</td>
 <td>Cross Chain Swaps & Avalanche ICM Bridge</td>
+InventoryManager:<br/>
+- Remove setInventoryBySymbolId (required for initial deployment)<br/>
+- Add array functions for setting and getting scaling factors<br/>
+- Correct fee logic by multiplying by scaling factor after invariant math calc<br/>
 
+InvariantMathLibrary:<br/>
+- Remove division by scale factor in calculations<br/>
+
+Portfolio:<br/>
+- Enable bridgeProvider via external contract<br/>
+
+PortfolioBridge:<br/>
+- Refactor logic to not inherit bridge logic but call bridge specific contracts which handle sending/receiving of messages<br/>
+- Remove reliance of lzChainID for normal chainID in mapping/structs<br/>
+- Add support for ICM bridge type<br/>
+- Modify bridge fee functions to use bridge type parameter<br/>
+- Add xChainAllowedDestinations to support cross chain swaps<br/>
+- Add mapping for multiplier factor in subnet to discount various bridge providers on withdrawal<br/>
+
+TradePairs:<br/>
+- Add addNewOrder with order data provided via a struct<br/>
+- Replaced cancelReplaceList with cancelAddList to improve on cancel replace logic and allow orders to any pair<br/>
+- Using newOrder Struct instead of individual parameters<br/>
+- New functions will raise reject events as much as possible instead of reverting<br/>
+- Autofill to be executed with the last order in the cancelAddList.<br/>
+
+MainnetRFQ:<br/>
+- Add volatility admin role to slip quotes during volatile periods<br/>
+- Add volatilityPairs bitmap to determine which pairs to slip<br/>
+- Use one byte from nonceAndMeta to represent the pair<br/>
+
+BridgeApps:<br/>
+- Add new ICM bridge type<br/>
+- Replace LZApp with LzV2App for support with LayerZero Endpoint V2<br/>
+- Move remote chain + gas limit logic to individual bridge apps<br/>
+- Add ICMApp to send/receive messages via ICM/Teleporter messaging on avalanche blockchains<br/>
 
 </tr>
 

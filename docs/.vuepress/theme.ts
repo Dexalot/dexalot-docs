@@ -62,7 +62,8 @@ export default hopeTheme({
     components: ["YouTube"],
     mdEnhance: {
       imageMark: true,
-      imageSize: true
+      imageSize: true,
+      katex: true,
     }
   },
 

@@ -56,6 +56,11 @@ Similarly a Cross Chain Swaps Betwen Avalanche & Arb would work as follows, say 
 <td>v4.0</td>
 <td>2024-10-15</td>
 <td>Cross Chain Swaps & Avalanche ICM Bridge</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>
 InventoryManager:<br/>
 - Remove setInventoryBySymbolId (required for initial deployment)<br/>
 - Add array functions for setting and getting scaling factors<br/>
@@ -92,7 +97,7 @@ BridgeApps:<br/>
 - Replace LZApp with LzV2App for support with LayerZero Endpoint V2<br/>
 - Move remote chain + gas limit logic to individual bridge apps<br/>
 - Add ICMApp to send/receive messages via ICM/Teleporter messaging on avalanche blockchains<br/>
-
+</td>
 </tr>
 
 <tr>

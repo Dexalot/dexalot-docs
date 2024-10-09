@@ -61,11 +61,12 @@ i.e USDt sent &amp; received in Avalanche Mainnet whereas USDT is sent &amp; rec
 
 | Name | Type |
 | --- | --- |
-| __gap | uint256[49] |
+| __gap | uint256[48] |
 | defaultBridgeProvider | enum IPortfolioBridge.BridgeProvider |
 | defaultChainId | uint32 |
 | mainnetRfq | contract IMainnetRFQ |
 | portfolio | contract IPortfolio |
+| supportedChains | struct EnumerableMapUpgradeable.UintToUintMap |
 
 ### Private
 
@@ -432,6 +433,26 @@ function getBridgeFee(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstC
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | bridgeFee | uint256 | bridge fee for the destination |
+
+#### getSupportedChainIds
+
+Returns an array of chainIds that are supported by the selected bridge
+
+```solidity:no-line-numbers
+function getSupportedChainIds(enum IPortfolioBridge.BridgeProvider _bridge) external view returns (uint32[] chainIds)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _bridge | enum IPortfolioBridge.BridgeProvider | Bridge provider |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| chainIds | uint32[] | Array of chainIds |
 
 #### unpackXFerMessage
 

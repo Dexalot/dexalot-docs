@@ -8,16 +8,6 @@ headerDepth: 4
 
 ### Order
 
-Order is the data structure defining an order on Dexalot.
-
-**Dev notes:** \
-If there are multiple partial fills, the new partial fill `price * quantity`
-is added to the current value in `totalamount`. Average execution price can be
-quickly calculated by `totalamount / quantityfilled` regardless of the number of
-partial fills at different prices \
-`totalFee` is always in terms of received(incoming) currency. ie. if Buy ALOT/AVAX,
-fee is paid in ALOT, if Sell ALOT/AVAX, fee is paid in AVAX
-
 ```solidity
 struct Order {
   bytes32 id;
@@ -37,11 +27,6 @@ struct Order {
 ```
 ### NewOrder
 
-Data structure to send a new order to Dexalot.
-
-**Dev notes:** \
-Use this struct to send ListOrders
-
 ```solidity
 struct NewOrder {
   bytes32 clientOrderId;
@@ -55,8 +40,6 @@ struct NewOrder {
 }
 ```
 ### TradePair
-
-TradePair is the data structure defining a trading pair on Dexalot.
 
 ```solidity
 struct TradePair {
@@ -85,12 +68,6 @@ struct TradePair {
 
 ### Side
 
-Order Side
-
-**Dev notes:** \
-0: BUY    – BUY \
-1: SELL   – SELL
-
 ```solidity
 enum Side {
   BUY,
@@ -98,16 +75,6 @@ enum Side {
 }
 ```
 ### Type1
-
-Order Type1
-
-**Dev notes:** \
-Type1 = LIMIT is always allowed. MARKET is enabled pair by pair basis based on liquidity. \
-0: MARKET – Order will immediately match with the best Bid/Ask  \
-1: LIMIT  – Order that may execute at limit price or better at the order entry. The remaining quantity
-will be entered in the order book\
-2: STOP   –  For future use \
-3: STOPLIMIT  –  For future use \
 
 ```solidity
 enum Type1 {
@@ -118,20 +85,6 @@ enum Type1 {
 }
 ```
 ### Status
-
-Order Status
-
-**Dev notes:** \
-And order automatically gets the NEW status once it is committed to the blockchain \
-0: NEW      – Order is in the orderbook with no trades/executions \
-1: REJECTED – Order is rejected. Currently used addLimitOrderList to notify when an order from the list is
-rejected instead of reverting the entire order list \
-2: PARTIAL  – Order filled partially and it remains in the orderbook until FILLED/CANCELED \
-3: FILLED   – Order filled fully and removed from the orderbook \
-4: CANCELED – Order canceled and removed from the orderbook. PARTIAL before CANCELED is allowed \
-5: EXPIRED  – For future use \
-6: KILLED   – For future use \
-7: CANCEL_REJECT   – Cancel Request Rejected with reason code
 
 ```solidity
 enum Status {
@@ -147,13 +100,6 @@ enum Status {
 ```
 ### RateType
 
-Rate Type
-
-**Dev notes:** \
-Maker Rates are typically lower than taker rates \
-0: MAKER   – MAKER \
-1: TAKER   – TAKER
-
 ```solidity
 enum RateType {
   MAKER,
@@ -161,18 +107,6 @@ enum RateType {
 }
 ```
 ### Type2
-
-Order Type2 to be used in conjunction with when Type1= LIMIT
-
-**Dev notes:** \
-GTC is the default Type2 \
-0: GTC  – Good Till Cancel \
-1: FOK  – Fill or Kill. The order will either get an immediate FILLED status or be reverted with *T-FOKF-01*.
-If reverted, no transaction is committed to the blockchain) \
-2: IOC  – Immediate or Cancel. The order will either get a PARTIAL followed by an automatic CANCELED
-or a FILLED. If PARTIAL, the remaining will not be entered into the orderbook) \
-3: PO   – Post Only. The order will either be entered into the orderbook without any fills or be reverted with
-T-T2PO-01. If reverted, no transaction is committed to the blockchain)
 
 ```solidity
 enum Type2 {
@@ -183,36 +117,6 @@ enum Type2 {
 }
 ```
 ### AuctionMode
-
-Auction Mode of a token
-
-**Dev notes:** \
-Only the baseToken of a TradePair can be in an auction mode other than OFF
-When a token is in auction, it can not be withdrawn or transfeered as a Protection againt rogue AMM Pools
-popping up during auction and distorting the fair auction price. \
-Auction tokens can only be deposited by the contracts in the addTrustedContracts list. They are currently
-Avalaunch and Dexalot TokenVesting contracts. These contracts allow the deposits to Dexalot Discovery Auction
-before TGE
-***Transitions ***
-AUCTION_ADMIN enters the tradepair in PAUSED mode \
-Changes it to OPEN at pre-announced auction start date/time \
-Changes it to CLOSING at pre-announced Randomized Auction Closing Sequence date/time
-ExchangeMain.flipCoin() are called for the randomization \
-Changes it to MATCHING when the flipCoin condition is satisfied. And proceeds with setting the auction Price
-and ExchangeSub.matchAuctionOrders until all the crossed orders are matched and removed from the orderbook \
-Changes it to LIVETRADING if pre-announced token release date/time is NOT reached, so regular trading can start
-without allowing tokens to be retrieved/transferred  \
-Changes it to OFF when the pre-announced token release time is reached. Regular trading in effect and tokens
-can be withdrawn or transferred \
-0: OFF  – Used for the Regular Listing of a token. Default \
-1: LIVETRADING  – Token is in auction. Live trading in effect but tokens can't be withdrawn or transferred \
-2: OPEN  – Ongoing auction. Orders can be entered/cancelled freely. Orders will not match. \
-3: CLOSING   – Randomized Auction Closing Sequence before the auction is closed, new orders/cancels allowed
-but auction can close at any time \
-4: PAUSED   – Auction paused, no new orders/cancels allowed \
-5: MATCHING   – Auction closed. Final Auction Price is determined and set. No new orders/cancels allowed.
-orders matching starts \
-6: RESTRICTED   – Functionality Reserved for future use \
 
 ```solidity
 enum AuctionMode {

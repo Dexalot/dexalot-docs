@@ -1136,7 +1136,7 @@ Cancels an order given the order id supplied
 See cancelOrder
 
 ```solidity:no-line-numbers
-function cancelOrderPrivate(address _msgSender, bytes32 _orderId) private
+function cancelOrderPrivate(address _msgSender, bytes32 _orderId, bool _autofill) private
 ```
 
 ##### Arguments
@@ -1145,6 +1145,7 @@ function cancelOrderPrivate(address _msgSender, bytes32 _orderId) private
 | ---- | ---- | ----------- |
 | _msgSender | address | address of the msg.Sender |
 | _orderId | bytes32 | order id to cancel |
+| _autofill | bool | controls the autofill logic. Autofill is applied if it is a single cancel or the very last cancel in a cancel list. |
 
 #### cancelOrderListPrivate
 
@@ -1154,7 +1155,7 @@ Cancels all the orders in the array of order ids supplied
 See cancelOrderList
 
 ```solidity:no-line-numbers
-function cancelOrderListPrivate(address _msgSender, bytes32[] _orderIds) private
+function cancelOrderListPrivate(address _msgSender, bytes32[] _orderIds, bool _autofill) private
 ```
 
 ##### Arguments
@@ -1163,18 +1164,20 @@ function cancelOrderListPrivate(address _msgSender, bytes32[] _orderIds) private
 | ---- | ---- | ----------- |
 | _msgSender | address | array of order ids to be canceled |
 | _orderIds | bytes32[] | array of order ids |
+| _autofill | bool | controls the autofill logic. Autofill only when processing the last cancel in the cancel list & if also the _autofill flag is true |
 
 #### doOrderCancel
 
 Cancels an order and makes the locked amount available in the portfolio
 
 ```solidity:no-line-numbers
-function doOrderCancel(bytes32 _orderId) private
+function doOrderCancel(bytes32 _orderId, bool _autofill) private
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _orderId | bytes32 | order id to cancel true by default but false when called by cancelReplaceOrder function |
+| _orderId | bytes32 | order id to cancel |
+| _autofill | bool | when true autofills the user's gas tank if it is below the treshold |
 

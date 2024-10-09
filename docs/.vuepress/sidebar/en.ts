@@ -148,6 +148,7 @@ export const enSidebarConfig = sidebar({
           collapsible: true,
           children: [
             "Bytes32LinkedListLibrary",
+            "InvariantMathLibrary",
             "RBTLibrary",
             "UtilsLibrary"
           ],
@@ -172,16 +173,6 @@ export const enSidebarConfig = sidebar({
             "IGasStation",
             "IBannedAccounts",
             "INativeMinter",
-            {
-              text: "LayerZero",
-              prefix: "layerZero/",
-              collapsible: true,
-              children: [
-                "ILayerZeroEndpoint",
-                "ILayerZeroReceiver",
-                "ILayerZeroUserApplicationConfig"
-              ]
-            },
           ],
         },
 
@@ -191,7 +182,9 @@ export const enSidebarConfig = sidebar({
           prefix: "bridgeApps/",
           collapsible: true,
           children: [
-            "LzApp"
+            "DefaultBridgeApp",
+            "ICMApp",
+            "LzV2App"
           ],
         },
 

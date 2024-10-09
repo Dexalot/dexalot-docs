@@ -79,6 +79,7 @@ PortfolioBridge:<br/>
 - Modify bridge fee functions to use bridge type parameter<br/>
 - Add xChainAllowedDestinations to support cross chain swaps<br/>
 - Add mapping for multiplier factor in subnet to discount various bridge providers on withdrawal<br/>
+- Add getSupportedChainIds function per bridge provider<br/>
 
 TradePairs:<br/>
 - Add addNewOrder with order data provided via a struct<br/>

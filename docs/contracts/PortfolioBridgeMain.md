@@ -61,7 +61,7 @@ i.e USDt sent &amp; received in Avalanche Mainnet whereas USDT is sent &amp; rec
 
 | Name | Type |
 | --- | --- |
-| __gap | uint256[48] |
+| __gap | uint256[46] |
 | defaultBridgeProvider | enum IPortfolioBridge.BridgeProvider |
 | defaultChainId | uint32 |
 | mainnetRfq | contract IMainnetRFQ |

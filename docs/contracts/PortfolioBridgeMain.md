@@ -4,18 +4,20 @@ headerDepth: 4
 
 # PortfolioBridgeMain
 
-**PortfolioBridgeMain. Bridge aggregator and message relayer for mainnet using multiple different bridges**
+**PortfolioBridgeMain. Bridge aggregator and message relayer for mainnet using multiple different bridges.
+Dexalot is bridge agnostic and currently supports ICM and LayerZero. Additional bridge providers will be added
+as needed.**
 
-The default bridge provider is LayerZero and it can&#x27;t be disabled. Additional bridge providers
-will be added as needed. This contract encapsulates all bridge provider implementations that Portfolio
-doesn&#x27;t need to know about. \
+The default bridge provider is ICM (Avalanche&#x27;s Interchain Messaging) within Avalanche echosystem &amp;
+LayerZero for any other chains. The default bridge can&#x27;t be disabled.
+You can deposit with Avalanche&#x27;s ICM and withdraw with LayerZero.
 This contract does not hold any users funds. it is responsible for paying the bridge fees in form of
 the chain’s gas token to 3rd party bridge providers whenever a new cross chain message is sent out by
 the user. Hence the project deposit gas tokens to this contract. And the project can withdraw
 the gas tokens from this contract whenever it finds it necessary.
 
 **Dev notes:** \
-PortfolioBridgeSub &amp; PortfolioSub are Dexalot Subnet contracts and they can&#x27;t be deployed anywhere else.
+PortfolioBridgeSub &amp; PortfolioSub are Dexalot L1 contracts and they can&#x27;t be deployed anywhere else.
 Contracts with *Main* in their name can be deployed to any evm compatible blockchain.
 Here are the potential flows:
 DEPOSITS: \
@@ -26,20 +28,21 @@ WITHDRAWALS (reverse flows): \
 PortfolioSub &#x3D;&gt; PortfolioBridgeSub &#x3D;&gt; BridgeProviderA/B/n &#x3D;&gt; PortfolioBridgeMain(Avax) &#x3D;&gt; PortfolioMain(Avax) \
 PortfolioSub &#x3D;&gt; PortfolioBridgeSub &#x3D;&gt; BridgeProviderA/B/n &#x3D;&gt; PortfolioBridgeMain(Arb) &#x3D;&gt; PortfolioMain(Arb) \
 PortfolioSub &#x3D;&gt; PortfolioBridgeSub &#x3D;&gt; BridgeProviderA/B/n &#x3D;&gt; PortfolioBridgeMain(Gun) &#x3D;&gt; PortfolioMain(Gun) \
-
-In addition, to be able to support cross chain trades for subnets like Gunzilla that only has their gas token
-and no ERC20 available, we introduced a new flow where you provide the counter token in an L1 and receive your GUN
-in Gunzilla network. Similarly you can sell your GUN in Gunzilla network and receive your counter token in any L1.
-When Buying GUN from Avalanche with counter token USDC, USDC is kept in MainnetRFQ(Avax) and GUN is deposited
-to the buyer&#x27;s wallet via MainnetRFQ(Gun). The flow is : \
-MainnetRFQ(Avax) &#x3D;&gt; PortfolioBridgeMain(Avax) &#x3D;&gt; BridgeProviderA/B/n &#x3D;&gt; PortfolioBridgeMain(Gun) &#x3D;&gt; MainnetRFQ(Gun) \
+In addition, we introduced a new cross chain swap flow(originally referred to as GUN Flow) where
+any user can buy GUN token from any network with a single click. This is particularly
+beneficial for Avalanche L1s that have certain token restrictions. For example Gunzilla prohibits ERC20s just
+like Dexalat L1 and they don&#x27;t allow their gas token in any network but in Gunzilla.
+When Buying GUN from Avalanche(or Arb,...) with counter token USDC, USDC is kept in MainnetRFQ(Avax)
+and GUN is deposited to the buyer&#x27;s wallet via MainnetRFQ(Gun). The flow is : \
+MainnetRFQ(Avax) &#x3D;&gt; PortfolioBridgeMain(Avax) &#x3D;&gt; ICM &#x3D;&gt; PortfolioBridgeMain(Gun) &#x3D;&gt; MainnetRFQ(Gun) \
 When Selling GUN from Gunzilla with counter token USDC. GUN is kept in MainnetRFQ(Gun) and USDC is deposited
 to the buyer&#x27;s wallet via MainnetRFQ(Avax) The flow is : \
-MainnetRFQ(Gun) &#x3D;&gt; PortfolioBridgeMain(Gun) &#x3D;&gt; BridgeProviderA/B/n &#x3D;&gt; PortfolioBridgeMain(Avax) &#x3D;&gt; MainnetRFQ(Avax) \
-The same flow can be replicated with any other L1 like Arb as well. \
+MainnetRFQ(Gun) &#x3D;&gt; PortfolioBridgeMain(Gun) &#x3D;&gt; ICM &#x3D;&gt; PortfolioBridgeMain(Avax) &#x3D;&gt; MainnetRFQ(Avax) \
+Similarly a Cross Chain Swaps Betwen Avalanche &amp; Arb would work as follows exchanging AVAX &amp; ETH
+MainnetRFQ(Avax) &#x3D;&gt; PortfolioBridgeMain(Avax) &#x3D;&gt; LayerZero &#x3D;&gt; PortfolioBridgeMain(Arb) &#x3D;&gt; MainnetRFQ(Arb) \
+MainnetRFQ(Arb) &#x3D;&gt; PortfolioBridgeMain(Arb) &#x3D;&gt; LayerZero &#x3D;&gt; PortfolioBridgeMain(Avax) &#x3D;&gt; MainnetRFQ(Avax) \
 PortfolioBridgeMain always sends the ERC20 Symbol from its own network and expects the same back
 i.e USDt sent &amp; received in Avalanche Mainnet whereas USDT is sent &amp; received in Arbitrum.
-Use multiple inheritance to add additional bridge implementations in the future. Currently LzApp only.
 
 ## Variables
 
@@ -49,23 +52,26 @@ Use multiple inheritance to add additional bridge implementations in the future.
 | --- | --- |
 | BRIDGE_USER_ROLE | bytes32 |
 | BRIDGE_ADMIN_ROLE | bytes32 |
-| bridgeEnabled | mapping(enum IPortfolioBridge.BridgeProvider &#x3D;&gt; bool) |
+| enabledBridges | mapping(enum IPortfolioBridge.BridgeProvider &#x3D;&gt; contract IBridgeProvider) |
+| outNonce | uint64 |
+| userPaysFee | mapping(uint32 &#x3D;&gt; mapping(enum IPortfolioBridge.BridgeProvider &#x3D;&gt; bool)) |
+| xChainAllowedDestinations | mapping(bytes32 &#x3D;&gt; mapping(uint32 &#x3D;&gt; bool)) |
 
 ### Internal
 
 | Name | Type |
 | --- | --- |
-| __gap | uint256[50] |
+| __gap | uint256[46] |
 | defaultBridgeProvider | enum IPortfolioBridge.BridgeProvider |
-| lzDestinationMap | mapping(uint32 &#x3D;&gt; uint16) |
+| defaultChainId | uint32 |
 | mainnetRfq | contract IMainnetRFQ |
 | portfolio | contract IPortfolio |
+| supportedChains | struct EnumerableMapUpgradeable.UintToUintMap |
 
 ### Private
 
 | Name | Type |
 | --- | --- |
-| DEFAULT_PAYLOAD | bytes |
 | XCHAIN_XFER_MESSAGE_VERSION | uint8 |
 
 ## Events
@@ -79,13 +85,7 @@ event RoleUpdated(string name, string actionName, bytes32 updatedRole, address u
 ### DefaultChainIdUpdated
 
 ```solidity:no-line-numbers
-event DefaultChainIdUpdated(enum IPortfolioBridge.BridgeProvider bridge, uint32 destinationLzChainId)
-```
-
-### GasForDestinationLzReceiveUpdated
-
-```solidity:no-line-numbers
-event GasForDestinationLzReceiveUpdated(enum IPortfolioBridge.BridgeProvider bridge, uint32 destinationChainId, uint256 gasForDestination)
+event DefaultChainIdUpdated(uint32 destinationChainId)
 ```
 
 ### UserPaysFeeForDestinationUpdated
@@ -130,17 +130,11 @@ function revokeRole(bytes32 _role, address _address) public
 Initializer for upgradeable contract.
 
 **Dev notes:** \
-Grant admin, pauser and msg_sender role to the sender. Set gas for lz. Set endpoint and enable bridge
+Grant admin, pauser and msg_sender role to the sender. Enable lz bridge contract as default.
 
 ```solidity:no-line-numbers
-function initialize(address _endpoint) external
+function initialize(address _lzBridgeProvider, address _owner) external
 ```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _endpoint | address | Endpoint of the LZ bridge |
 
 #### pause
 
@@ -172,7 +166,7 @@ Enables/disables given bridge. Default bridge's state can't be modified
 Only admin can enable/disable bridge
 
 ```solidity:no-line-numbers
-function enableBridgeProvider(enum IPortfolioBridge.BridgeProvider _bridge, bool _enable) external
+function enableBridgeProvider(enum IPortfolioBridge.BridgeProvider _bridge, address _bridgeProvider) external
 ```
 
 ##### Arguments
@@ -180,7 +174,7 @@ function enableBridgeProvider(enum IPortfolioBridge.BridgeProvider _bridge, bool
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _bridge | enum IPortfolioBridge.BridgeProvider | Bridge to enable/disable |
-| _enable | bool | True to enable, false to disable |
+| _bridgeProvider | address | Address of bridge provider contract, 0 address if not exists |
 
 #### isBridgeProviderEnabled
 
@@ -226,7 +220,7 @@ function setDefaultBridgeProvider(enum IPortfolioBridge.BridgeProvider _bridge) 
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _bridge | enum IPortfolioBridge.BridgeProvider | Bridge |
+| _bridge | enum IPortfolioBridge.BridgeProvider | Bridge Provider type |
 
 #### getDefaultDestinationChain
 
@@ -242,16 +236,34 @@ function getDefaultDestinationChain() external view returns (uint32 chainListOrg
 | ---- | ---- | ----------- |
 | chainListOrgChainId | uint32 | Default Destination Chainlist.org Chain Id |
 
+#### enableXChainSwapDestination
+
+Enables/disables a symbol for a given destination for cross chain swaps
+
+**Dev notes:** \
+Only admin can enable/disable
+
+```solidity:no-line-numbers
+function enableXChainSwapDestination(bytes32 _symbol, uint32 _chainListOrgChainId, bool _enable) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _symbol | bytes32 | Symbol of the token |
+| _chainListOrgChainId | uint32 | Remote Chainlist.org chainid |
+| _enable | bool | True to enable, false to disable |
+
 #### setTrustedRemoteAddress
 
-Sets trusted remote address for the cross-chain communication. It also sets the defaultLzDestination
-if it is not setup yet.
+Sets trusted remote address for the cross-chain communication. I
 
 **Dev notes:** \
 Allow DEFAULT_ADMIN to set it multiple times.
 
 ```solidity:no-line-numbers
-function setTrustedRemoteAddress(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstChainIdBridgeAssigned, bytes _remoteAddress, uint32 _chainListOrgChainId, uint256 _gasForDestination, bool _userPaysFee) external virtual
+function setTrustedRemoteAddress(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _chainListOrgChainId, bytes32 _dstChainIdBridgeAssigned, bytes32 _remoteAddress, bool _userPaysFee) external virtual
 ```
 
 ##### Arguments
@@ -259,49 +271,28 @@ function setTrustedRemoteAddress(enum IPortfolioBridge.BridgeProvider _bridge, u
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _bridge | enum IPortfolioBridge.BridgeProvider | Bridge |
-| _dstChainIdBridgeAssigned | uint32 | Remote chain id |
-| _remoteAddress | bytes | Remote contract address |
 | _chainListOrgChainId | uint32 | Remote Chainlist.org chainid |
-| _gasForDestination | uint256 | max gas that can be used at the destination chain after message delivery |
-| _userPaysFee | bool |  |
+| _dstChainIdBridgeAssigned | bytes32 | Bytes32 chain id assigned by the bridge provider |
+| _remoteAddress | bytes32 | Remote contract address on the destination chain |
+| _userPaysFee | bool | True if user must pay the bridge fee, false otherwise |
 
 #### setDefaultDestinationChain
 
-Sets default destination (remote) address for the cross-chain communication
+Sets default destination chain id for the cross-chain communication
 
 **Dev notes:** \
 Allow DEFAULT_ADMIN to set it multiple times. For PortfolioBridgeSub it is avalanche C-Chain
-For other blockchains it is Dexalot Subnet
+For other blockchains it is Dexalot L1
 
 ```solidity:no-line-numbers
-function setDefaultDestinationChain(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstChainIdBridgeAssigned) external virtual
+function setDefaultDestinationChain(uint32 _chainListOrgChainId) external virtual
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _bridge | enum IPortfolioBridge.BridgeProvider | Bridge |
-| _dstChainIdBridgeAssigned | uint32 | Remote chain id assigned by the Bridge (lz) |
-
-#### setGasForDestination
-
-Set max gas that can be used at the destination chain after message delivery
-
-**Dev notes:** \
-Only admin can set gas for destination chain
-
-```solidity:no-line-numbers
-function setGasForDestination(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstChainIdBridgeAssigned, uint256 _gas) external
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _bridge | enum IPortfolioBridge.BridgeProvider | Bridge |
-| _dstChainIdBridgeAssigned | uint32 | Remote chain id assigned by the Bridge (lz) |
-| _gas | uint256 | Gas for destination chain |
+| _chainListOrgChainId | uint32 | Default Destination Chainlist.org chainid |
 
 #### setUserPaysFeeForDestination
 
@@ -311,7 +302,7 @@ Set whether a user must pay the bridge fee for message delivery at the destinati
 Only admin can set user pays fee for destination chain
 
 ```solidity:no-line-numbers
-function setUserPaysFeeForDestination(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstChainIdBridgeAssigned, bool _userPaysFee) external
+function setUserPaysFeeForDestination(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _chainListOrgChainId, bool _userPaysFee) external
 ```
 
 ##### Arguments
@@ -319,7 +310,7 @@ function setUserPaysFeeForDestination(enum IPortfolioBridge.BridgeProvider _brid
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _bridge | enum IPortfolioBridge.BridgeProvider | Bridge |
-| _dstChainIdBridgeAssigned | uint32 | Remote chain id assigned by the Bridge (lz) |
+| _chainListOrgChainId | uint32 | Destination Chainlist.org chainid |
 | _userPaysFee | bool | True if user must pay the bridge fee, false otherwise |
 
 #### setPortfolio
@@ -433,7 +424,7 @@ function getBridgeFee(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstC
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _bridge | enum IPortfolioBridge.BridgeProvider | Bridge |
-| _dstChainListOrgChainId | uint32 | destination chain id           _symbol  symbol of the token, not relevant in for this function           _quantity quantity of the token, not relevant in for this function |
+| _dstChainListOrgChainId | uint32 | destination chain id           _symbol  symbol of the token, not relevant in for this function           _quantity quantity of the token, not relevant in for this function |
 |  | bytes32 |  |
 |  | uint256 |  |
 
@@ -442,6 +433,26 @@ function getBridgeFee(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstC
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | bridgeFee | uint256 | bridge fee for the destination |
+
+#### getSupportedChainIds
+
+Returns an array of chainIds that are supported by the selected bridge
+
+```solidity:no-line-numbers
+function getSupportedChainIds(enum IPortfolioBridge.BridgeProvider _bridge) external view returns (uint32[] chainIds)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _bridge | enum IPortfolioBridge.BridgeProvider | Bridge provider |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| chainIds | uint32[] | Array of chainIds |
 
 #### unpackXFerMessage
 
@@ -486,71 +497,25 @@ function sendXChainMessage(uint32 _dstChainListOrgChainId, enum IPortfolioBridge
 | _xfer | struct IPortfolio.XFER | XFER message to send |
 | _userFeePayer | address | Address of the user who pays the bridge fee |
 
-#### lzRetryPayload
+#### processPayload
 
-Retries the stuck message in the bridge, if any
+Processes message received from source chain via bridge in the host chain.
 
 **Dev notes:** \
-Only BRIDGE_ADMIN_ROLE can call this function
-Reverts if there is no storedPayload in the bridge or the supplied payload doesn't match the storedPayload
+If bridge is disabled or PAUSED and there are messages in flight, we still need to
+                process them when received at the destination. Only callable by the bridge implementation contracts.
+                Overrides in the subnet
 
 ```solidity:no-line-numbers
-function lzRetryPayload(uint16 _srcChainId, bytes _payload) external
+function processPayload(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _srcChainListOrgChainId, bytes _payload) external virtual
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _srcChainId | uint16 | Source chain id |
-| _payload | bytes | Payload to retry |
-
-#### lzDestroyAndRecoverFunds
-
-This is a destructive, secondary option. Always try lzRetryPayload first.
-if this function still fails call LzApp.forceResumeReceive directly with DEFAULT_ADMIN_ROLE as the last resort
-Destroys the message that is blocking the bridge and calls processPayload
-Effectively completing the message trajectory from originating chain to the target chain.
-if successful, the funds are processed at the target chain. If not, no funds are recovered and
-the bridge is still in blocked status and additional messages are queued behind.
-
-**Dev notes:** \
-Only recover/process message if forceResumeReceive() successfully completes.
-Only the BRIDGE_ADMIN_ROLE can call this function.
-If there is no storedpayload (stuck message), this function will revert, _payload parameter will be ignored and
-will not be processed. If this function keeps failing due to an error condition after the forceResumeReceive call
-then forceResumeReceive(uint16 _srcChainId, bytes calldata _srcAddress) has to be called directly with
-DEFAULT_ADMIN_ROLE and the funds will have to be recovered manually
-
-```solidity:no-line-numbers
-function lzDestroyAndRecoverFunds(uint16 _srcChainId, bytes _payload) external
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _srcChainId | uint16 | Source chain id |
-| _payload | bytes | Payload of the message |
-
-#### lzReceive
-
-Receive message from source chain via LayerZero
-
-**Dev notes:** \
-Only trusted LZ endpoint can call
-
-```solidity:no-line-numbers
-function lzReceive(uint16 _srcChainId, bytes _srcAddress, uint64, bytes _payload) external virtual
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _srcChainId | uint16 | Source chain ID |
-| _srcAddress | bytes | Source address |
-|  | uint64 |  |
+| _bridge | enum IPortfolioBridge.BridgeProvider | Bridge to receive message from |
+| _srcChainListOrgChainId | uint32 | Source chain ID |
 | _payload | bytes | Payload received |
 
 #### refundNative
@@ -581,6 +546,9 @@ fallback() external payable
 #### sendXChainMessageInternal
 
 Actual internal function that implements the message sending.
+
+**Dev notes:** \
+Handles the fee payment and message sending to the bridge contract implementation
 
 ```solidity:no-line-numbers
 function sendXChainMessageInternal(uint32 _dstChainListOrgChainId, enum IPortfolioBridge.BridgeProvider _bridge, struct IPortfolio.XFER _xfer, address _userFeePayer) internal virtual
@@ -614,27 +582,6 @@ function processPayloadShared(enum IPortfolioBridge.BridgeProvider _bridge, uint
 | _srcChainListOrgChainId | uint32 | Source chain ID |
 | _payload | bytes | Payload received |
 
-#### processPayload
-
-Processes message received from source chain via bridge in the host chain.
-
-**Dev notes:** \
-if bridge is disabled or PAUSED and there are messages in flight, we still need to
-                process them when received at the destination.
-                Overrides in the subnet
-
-```solidity:no-line-numbers
-function processPayload(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _srcChainListOrgChainId, bytes _payload) internal virtual
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _bridge | enum IPortfolioBridge.BridgeProvider | Bridge to receive message from |
-| _srcChainListOrgChainId | uint32 | Source chain ID |
-| _payload | bytes | Payload received |
-
 #### addNativeToken
 
 private function that handles the addition of native token
@@ -647,77 +594,6 @@ function addNativeToken() internal virtual
 ```
 
 ### Private
-
-#### incrementOutNonce
-
-Increments bridge nonce
-
-**Dev notes:** \
-Only portfolio can call
-
-```solidity:no-line-numbers
-function incrementOutNonce(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstChainIdBridgeAssigned) private view returns (uint64 nonce)
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _bridge | enum IPortfolioBridge.BridgeProvider | Bridge to increment nonce for. Placeholder for multiple bridge implementation |
-| _dstChainIdBridgeAssigned | uint32 | the destination chain identifier |
-
-##### Return values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| nonce | uint64 | New nonce |
-
-#### validateSymbol
-
-Validates the symbol from portfolio and transaction type
-
-**Dev notes:** \
-This function is called both when sending & receiving a message.
-Deposit/ Withdraw Tx can only be done with non-virtual tokens.
-You can only send Virtual Tokens to a destination chain using CCTRADE.
-But at the destination, received token has to be non-virtual token.
-
-```solidity:no-line-numbers
-function validateSymbol(bytes32 _symbol, enum IPortfolio.Tx _transaction, enum IPortfolioBridge.Direction _direction) private view
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _symbol | bytes32 | symbol of the token |
-| _transaction | enum IPortfolio.Tx | transaction type |
-| _direction | enum IPortfolioBridge.Direction | direction of the message (SENT-0 || RECEIVED-1) |
-
-#### _lzSend
-
-Send message to destination chain via LayerZero
-
-**Dev notes:** \
-Only called by sendXChainMessageInternal that can be called by Portfolio
-
-```solidity:no-line-numbers
-function _lzSend(uint16 _dstLzChainId, bytes _payload, address _userFeePayer) private returns (uint256)
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _dstLzChainId | uint16 | Lz destination chain identifier |
-| _payload | bytes | Payload to send |
-| _userFeePayer | address | Address of the user who pays the bridge fee, zero address for PortfolioBridge |
-
-##### Return values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | uint256 | uint256  Message Fee |
 
 #### packXferMessage
 
@@ -745,4 +621,10 @@ function packXferMessage(struct IPortfolio.XFER _xfer) private pure returns (byt
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | message | bytes | Encoded XFER message |
+
+#### getCrossChainMessageType
+
+```solidity:no-line-numbers
+function getCrossChainMessageType(enum IPortfolio.Tx _transaction) private pure returns (enum IBridgeProvider.CrossChainMessageType)
+```
 

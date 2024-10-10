@@ -6,7 +6,7 @@ headerDepth: 4
 
 **Request For Quote smart contract**
 
-This contract takes advantage of prices from the Dexalot subnet to provide
+This contract takes advantage of prices from the Dexalot L1 to provide
 token swaps on EVM compatible chains. Users must request a quote via our RFQ API.
 Using this quote they can execute a swap on the current chain using simpleSwap() or partialSwap().
 The contract also supports cross chain swaps using xChainSwap() which locks funds in the current
@@ -16,9 +16,23 @@ chain and sends a message to the destination chain to release funds.
 After getting a firm quote from our off chain RFQ API, call the simpleSwap() function with
 the quote. This will execute a swap, exchanging the taker asset (asset you provide) with
 the maker asset (asset we provide). In times of high volatility, the API may adjust the expiry of your quote.
-may also be adjusted during times of high volatility. Monitor the SwapExpired event to verify if a swap has been
-adjusted. Adjusting the quote is rare, and only resorted to in periods of high volatility for quotes that do
-not properly represent the liquidity of the Dexalot subnet.
+The Api may also add slippage to all orders for a particular tradepair during times of high volatility.
+Monitor the SwapExpired event to verify if a swap has been adjusted. Adjusting the quote is rare, and
+only resorted to in periods of high volatility for quotes that do not properly represent the liquidity
+of the Dexalot L1.
+IThis contract also supports a new cross chain swap flow(originally referred to as GUN Flow) where
+any user can buy GUN token from any network with a single click. This is particularly
+beneficial for Avalanche L1s that have certain token restrictions. For example Gunzilla prohibits ERC20s just
+like Dexalat L1 and they don&#x27;t allow their gas token in any network but in Gunzilla.
+When Buying GUN from Avalanche(or Arb,...) with counter token USDC, USDC is kept in MainnetRFQ(Avax)
+and GUN is deposited to the buyer&#x27;s wallet via MainnetRFQ(Gun). The flow is : \
+MainnetRFQ(Avax) &#x3D;&gt; PortfolioBridgeMain(Avax) &#x3D;&gt; ICM &#x3D;&gt; PortfolioBridgeMain(Gun) &#x3D;&gt; MainnetRFQ(Gun) \
+When Selling GUN from Gunzilla with counter token USDC. GUN is kept in MainnetRFQ(Gun) and USDC is deposited
+to the buyer&#x27;s wallet via MainnetRFQ(Avax) The flow is : \
+MainnetRFQ(Gun) &#x3D;&gt; PortfolioBridgeMain(Gun) &#x3D;&gt; ICM &#x3D;&gt; PortfolioBridgeMain(Avax) &#x3D;&gt; MainnetRFQ(Avax) \
+Similarly a Cross Chain Swaps Betwen Avalanche &amp; Arb would work as follows exchanging AVAX &amp; ETH
+MainnetRFQ(Avax) &#x3D;&gt; PortfolioBridgeMain(Avax) &#x3D;&gt; LayerZero &#x3D;&gt; PortfolioBridgeMain(Arb) &#x3D;&gt; MainnetRFQ(Arb) \
+MainnetRFQ(Arb) &#x3D;&gt; PortfolioBridgeMain(Arb) &#x3D;&gt; LayerZero &#x3D;&gt; PortfolioBridgeMain(Avax) &#x3D;&gt; MainnetRFQ(Avax) \
 
 ## Struct Types
 
@@ -84,6 +98,7 @@ struct PendingSwap {
 | PORTFOLIO_BRIDGE_ROLE | bytes32 |
 | REBALANCER_ADMIN_ROLE | bytes32 |
 | VERSION | bytes32 |
+| VOLATILITY_ADMIN_ROLE | bytes32 |
 | completedSwaps | mapping(uint256 &#x3D;&gt; uint256) |
 | expiredSwaps | mapping(uint256 &#x3D;&gt; uint256) |
 | portfolioBridge | contract IPortfolioBridge |
@@ -91,12 +106,13 @@ struct PendingSwap {
 | swapSigner | address |
 | slippageTolerance | uint256 |
 | swapQueue | mapping(uint256 &#x3D;&gt; struct MainnetRFQ.PendingSwap) |
+| volatilePairs | uint256 |
 
 ### Internal
 
 | Name | Type |
 | --- | --- |
-| __gap | uint256[44] |
+| __gap | uint256[43] |
 
 ### Private
 
@@ -183,7 +199,7 @@ function isValidSignature(bytes32 _hash, bytes _signature) public view returns (
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| [0] | bytes4 | bytes4   The Magic Value based on ERC1271 standard. 0x1626ba7e represents a valid signature, while 0x00000000 represents an invalid signature. |
+| [0] | bytes4 | bytes4   The Magic Value based on ERC1271 standard. 0x1626ba7e represents a valid signature, while 0x00000000 represents an invalid signature. |
 
 ### External
 
@@ -204,7 +220,7 @@ function initialize(address _swapSigner) external
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _swapSigner | address | Address of swap signer, rebalancer is also defaulted to swap signer but it can be changed later |
+| _swapSigner | address | Address of swap signer, rebalancer is also defaulted to swap signer but it can be changed later |
 
 #### receive
 
@@ -221,7 +237,7 @@ Swaps two assets for another smart contract or EOA, based off a predetermined sw
 **Dev notes:** \
 This function can only be called after generating a firm quote from the RFQ API.
 All parameters are generated from the RFQ API. Prices are determined based off of trade
-prices from the Dexalot subnet.
+prices from the Dexalot L1.
 
 ```solidity:no-line-numbers
 function simpleSwap(struct MainnetRFQ.Order _order, bytes _signature) external payable
@@ -241,7 +257,7 @@ Swaps two assets for another smart contract or EOA, based off a predetermined sw
 **Dev notes:** \
 This function can only be called after generating a firm quote from the RFQ API.
 All parameters are generated from the RFQ API. Prices are determined based off of trade
-prices from the Dexalot subnet. This function is used for multi hop swaps and will partially fill
+prices from the Dexalot L1. This function is used for multi hop swaps and will partially fill
 at the original quoted price.
 
 ```solidity:no-line-numbers
@@ -263,7 +279,7 @@ Swaps two assets cross chain, based on a predetermined swap price
 **Dev notes:** \
 This function can only be called after generating a firm quote from the RFQ API.
 All parameters are generated from the RFQ API. Prices are determined based off of trade
-prices from the Dexalot subnet. This function is called on the source chain where is locks
+prices from the Dexalot L1. This function is called on the source chain where is locks
 funds and sends a cross chain message to release funds on the destination chain.
 
 ```solidity:no-line-numbers
@@ -435,6 +451,41 @@ function removeFromSwapQueue(uint256 _nonceAndMeta) external
 | ---- | ---- | ----------- |
 | _nonceAndMeta | uint256 | Nonce of order |
 
+#### setSlippageTolerance
+
+Sets slippage tolerance for the contract
+
+**Dev notes:** \
+Slippage tolerance is represented in BIPs. i.e. slippage must be less than 1%.
+
+```solidity:no-line-numbers
+function setSlippageTolerance(uint256 _slippageTolerance) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _slippageTolerance | uint256 | slippage tolerance in BIPs |
+
+#### setVolatilePairs
+
+Sets volatile pairs to slip for the contract
+
+**Dev notes:** \
+Volatile pairs is a bitmap. If a pair is set to slip, the contract will
+slip the quote for that pair during high volatility.
+
+```solidity:no-line-numbers
+function setVolatilePairs(uint256 _volatilePairs) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _volatilePairs | uint256 | volatile pairs to slip bitmap |
+
 #### addRebalancer
 
 Adds Rebalancer Admin role to the address
@@ -483,6 +534,34 @@ Removes Default Admin role from the address
 
 ```solidity:no-line-numbers
 function removeAdmin(address _address) external virtual
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _address | address | address to remove role from |
+
+#### addVolatilityAdmin
+
+Adds Volatility Admin role to the address
+
+```solidity:no-line-numbers
+function addVolatilityAdmin(address _address) external virtual
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _address | address | address to add role to |
+
+#### removeVolatilityAdmin
+
+Removes Volatility Admin role from the address
+
+```solidity:no-line-numbers
+function removeVolatilityAdmin(address _address) external virtual
 ```
 
 ##### Arguments
@@ -590,7 +669,7 @@ function _verifyOrder(struct MainnetRFQ.Order _order, bytes _signature) private 
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| [0] | address | address The address where the funds will be transferred. It is an Aggregator address if the address in the nonceAndMeta matches the msg.sender |
+| [0] | address | address The address where the funds will be transferred. It is an Aggregator address if the address in the nonceAndMeta matches the msg.sender |
 
 #### _executeOrder
 

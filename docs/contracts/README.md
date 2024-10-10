@@ -62,6 +62,7 @@ Similarly a Cross Chain Swaps Betwen Avalanche & Arb would work as follows, say 
 <td></td>
 <td>
 InventoryManager:<br/>
+
 - Remove setInventoryBySymbolId (required for initial deployment)<br/>
 - Add array functions for setting and getting scaling factors<br/>
 - Correct fee logic by multiplying by scaling factor after invariant math calc<br/>
@@ -161,8 +162,8 @@ ExchangeMain:<br/>
 
 Portfolio:<br/>
 
--Moved addToken from Portfolio to PortfolioMain &amp; PortfolioSub with different signatures<br/>
--addTokenInternal multichain support<br/>
+- Moved addToken from Portfolio to PortfolioMain &amp; PortfolioSub with different signatures<br/>
+- addTokenInternal multichain support<br/>
 
 LzApp:<br/>
 

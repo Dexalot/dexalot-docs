@@ -83,8 +83,7 @@ PortfolioBridge:<br/>
 - Add getSupportedChainIds function per bridge provider<br/>
 
 TradePairs:<br/>
-- Add addNewOrder with order data provided via a struct<br/>
-- Using newOrder Struct instead of individual parameters<br/>
+- New addNewOrder function that is using newOrder Struct instead of individual parameters<br/>
 - Breaking Change: addOrder is deprecated and left in the code base for backward compatibility but we strongly advise to migrate your code base to use addNewOrder along with the other breaking changes listed below
 - Breaking Change: Replaced addLimitOrderList with addOrderList to improve list order functionality<br/>
 - Breaking Change: Replaced cancelReplaceList with cancelAddList to improve on cancel replace logic and allow orders to any pair<br/>
@@ -104,7 +103,6 @@ TradePairs:<br/>
     - args.order.updateBlock
     - args.order.tradePairId has the same value as args.pair above
     - args.order.traderaddress has the same value as args.traderaddress above
-
 - New functions will raise reject events as much as possible instead of reverting<br/>
 - Autofill to be executed with the last order in the cancelAddList.<br/>
 

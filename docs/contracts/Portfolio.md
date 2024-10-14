@@ -6,15 +6,14 @@ headerDepth: 4
 
 **Abstract contract to be inherited in PortfolioMain and PortfolioSub**
 
-Dexalot is omni chain and ERC20less. As of November, 2024 it is connected to Avalanche C-Chain
-(mainnet), Dexalot L1 (previously subnet), Arbitrum, Base and Gunzilla L1.
-Dexalot’s contracts don’t bridge any coins or tokens among any chains, but rather lock them in
-the PortfolioMain contract in the originating chain and then communicate the users’ holdings to its
-counter part smart sontracts in the Dexalot L1 for trading purposes without needing to deploy
-ERC20 contacts in Dexalot L1for the tokens in question.
-Dexalot is bridge agnostic and currently supports ICM and LayerZero.
-You can deposit with Avalanche&#x27;s ICM and withdraw with LayerZero.
-Because of this novel architecture, a Dexalot L1 wallet can only house ALOT token and nothing
+Dexalot lives in a dual chain environment. Avalanche Mainnet C-Chain (mainnet) and Avalanche
+supported Dexalot Subnet (subnet). Dexalot’s contracts don’t bridge any coins or tokens
+between these two chains, but rather lock them in the PortfolioMain contract in the
+mainnet and then communicate the users’ holdings to its smart contracts in the subnet for
+trading purposes. Dexalot is bridge agnostic. You will be able to deposit with one bridge and
+withdraw with another. Having said that, LayerZero is the sole bridge provider at the start.
+More bridges can be added in the future as needed.
+Because of this novel architecture, a subnet wallet can only house ALOT token and nothing
 else. That&#x27;s why the subnet wallet is referred to as the “Gas Tank”. All assets will be
 handled inside the PortfolioSub smart contract in the subnet.
 PortfolioBridgeMain and PortfolioBridgeSub are bridge aggregators in charge of sending/receiving messages
@@ -22,10 +21,10 @@ via generic messaging using active bridge transports.
 
 **Dev notes:** \
 This contract contains shared logic for PortfolioMain and PortfolioSub.
-It is perfectly sufficient for your trading application to interface with only the Dexalot L1
-and use Dexalot frontend to perform deposit/withdraw operations manually.
+It is perfectly sufficient for your trading application to interface with only the Dexalot Subnet
+and use Dexalot frontend to perform deposit/withdraw operations manually for cross chain bridging.
 If your trading application has a business need to deposit/withdraw more often, then your app
-will need to integrate with the PortfolioMain contract in the mainnets as well to fully automate
+will need to integrate with the PortfolioMain contract in the mainnet as well to fully automate
 your flow.
 Exchange needs to have DEFAULT_ADMIN_ROLE on this contract.
 
@@ -157,7 +156,7 @@ Enables or disables a bridge provider
 Only callable by admin
 
 ```solidity:no-line-numbers
-function enableBridgeProvider(enum IPortfolioBridge.BridgeProvider _bridge, address _bridgeContract) external
+function enableBridgeProvider(enum IPortfolioBridge.BridgeProvider _bridge, bool _enable) external
 ```
 
 ##### Arguments
@@ -165,7 +164,7 @@ function enableBridgeProvider(enum IPortfolioBridge.BridgeProvider _bridge, addr
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _bridge | enum IPortfolioBridge.BridgeProvider | Enum value of the bridge provider |
-| _bridgeContract | address | Address of bridge contract to enable, zero address to disable |
+| _enable | bool | True to enable, false to disable |
 
 #### getNative
 
@@ -290,7 +289,7 @@ function getTokenDetails(bytes32 _symbol) external view returns (struct IPortfol
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| [0] | struct IPortfolio.TokenDetails | TokenDetails decimals : Identical both in the mainnet and the subnet tokenAddress : Token address at the mainnet , zeroaddress at the subnet symbolId : symbol + chainId native coin : it will always have zeroaddress both in the mainnet and the subnet |
+| [0] | struct IPortfolio.TokenDetails | TokenDetails decimals : Identical both in the mainnet and the subnet tokenAddress : Token address at the mainnet , zeroaddress at the subnet symbolId : symbol + chainId native coin : it will always have zeroaddress both in the mainnet and the subnet |
 
 #### getTokenDetailsById
 
@@ -425,7 +424,7 @@ function addTokenInternal(struct IPortfolio.TokenDetails _details, uint256, uint
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _details | struct IPortfolio.TokenDetails | Token Details  _fee  Bridge Fee (child implementation)  _gasSwapRatio  Amount of token to swap per ALOT (child implementation) |
+| _details | struct IPortfolio.TokenDetails | Token Details  _fee  Bridge Fee (child implementation)  _gasSwapRatio  Amount of token to swap per ALOT (child implementation) |
 |  | uint256 |  |
 |  | uint256 |  |
 

@@ -26,18 +26,6 @@ A1-THAC-01: tokens have already been claimed
 
 BA-LENM-01: number of banned accounts and ban reasons do not match
 
-## DefaultBridgeApp
-
-DB-OPBA-01: only portfolio bridge allowed to call this function
-
-DB-PBNZ-01: portfolio bridge must not be zero address
-
-DB-RCNM-01: remote contract for source does not match sender
-
-DB-RCNS-01: remote chain info for destination not set
-
-DB-RCNS-02: remote chain info for source not set
-
 ## Exchange
 
 E-ALOA-01: at least one account needed in admin group
@@ -73,14 +61,6 @@ GS-FAIL-02: send failed in withdrawNative
 GS-NFUN-01: unknown function call
 
 GS-ZADDR-01: cannot request gas to zero address(0)
-
-## ICMApp
-
-IC-ARNZ-01: add relayer address must be non-zero
-
-IC-GLNS-01: gas limit not set for msgType
-
-IC-TNTH-01: teleporter nonce too high
 
 ## IncentiveDistributor
 
@@ -132,11 +112,9 @@ IM-ZADDR-01: portfolio bridge sub cannot be the zero address
 
 LA-DCNT-01: destination chain is not a trusted source
 
+LA-IUMF-01: insufficient user message fee received
+
 LA-LIZA-01: endpoint cannot be zero address(0)
-
-## LzAppV2
-
-LZ-EONS-01: enforced options not set for msgType
 
 ## Portfolio
 
@@ -224,6 +202,8 @@ P-TSDM-01: token symbols do not match
 
 P-TTNZ-01: tokanTotals needs to be 0
 
+P-VTNS-01: virtual token can not be deposited
+
 P-WNFA-01: withdrawNative failed
 
 P-WUTH-01: withdraw under threshold
@@ -240,15 +220,13 @@ PB-ALOA-01: at least one account needed in admin group
 
 PB-ALOA-02: can not remove Portfolio from PORTFOLIO_ROLE, use setPortfolio instead
 
-PB-BCNE-01: bridge contract not enabled
-
 PB-CBIZ-01: balance of this contract is 0, send gas for message fees
 
 PB-CBIZ-02: balance of this contract is 0, send gas for message fees
 
 PB-CCTR-01: CCTRADE is not a valid transaction type in the subnet
 
-PB-CCTR-02: symbol not allowed for CCTRADE at destination
+PB-CCTR-02: can only send a virtual tokens with CCTRADE
 
 PB-CCTR-03: can only receive non-virtual tokens with CCTRADE
 
@@ -256,11 +234,11 @@ PB-CSDE-01: destination for celerSend is not allowed
 
 PB-DBCD-01: default bridge can not be disabled
 
+PB-DDCS-01: default destination is not setup. Use setTrustedRemoteAddress first
+
 PB-DDNS-01: destination not found when calling getTokenId
 
 PB-DDNS-02: destination not found when calling sendXChainMessageInternal
-
-PB-DDNZ-01: default destination chain id must be non zero
 
 PB-DTAE-01: delayed transfer already exists
 
@@ -276,15 +254,11 @@ PB-INVT-01: target chain does not have enough inventory to cover this withdrawal
 
 PB-INVZ-01: inventoryBySymbolId needs to be 0
 
-PB-IUMF-01: insufficient user message fee received
-
 PB-IVEC-01: invalid endpoint caller
 
 PB-LENM-01: length mismatch in array type function parameters
 
 PB-MING-01: gas can not be less than 200000 minimum gas required
-
-PB-MPGT-01: bridge fee multipler is greater than 100%
 
 PB-NFUN-01: unknown function call
 
@@ -293,8 +267,6 @@ PB-OACC-01: admin account or PORTFOLIO_ROLE needed for this function
 PB-RBNE-01: requested bridge not enabled
 
 PB-RBNE-02: requested bridge not implemented
-
-PB-RBNE-03: requested bridge not enabled for bridge fee
 
 PB-SDMP-01: symbol doesn't match Portfolio's common symbol
 
@@ -363,8 +335,6 @@ RF-QE-01: quote expired due to manual override
 RF-QE-02: quote expired due to block ts
 
 RF-SAZ-01: set address to zero
-
-RF-STTA-01: slippage tolerance too aggressive
 
 RF-TF-01: transfer failed
 
@@ -435,6 +405,8 @@ T-POOA-01: Only PO(PostOnly) Orders allowed for this pair
 T-PPAU-01: Pair paused
 
 T-PPAU-02: cancelOrder pair paused
+
+T-PPAU-03: cancelOrderList pair paused
 
 T-PPAU-04: Pair should be paused for this operation
 

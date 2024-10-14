@@ -151,7 +151,7 @@ Add new token to portfolio
 Exchange needs to be DEFAULT_ADMIN on the Portfolio
 
 ```solidity:no-line-numbers
-function addToken(bytes32 _symbol, address _tokenaddress, uint8 _decimals, uint256 _fee, uint256 _gasSwapRatio) external
+function addToken(bytes32 _symbol, address _tokenaddress, uint32 _srcChainId, uint8 _decimals, uint256 _fee, uint256 _gasSwapRatio, bool _isVirtual) external
 ```
 
 ##### Arguments
@@ -160,9 +160,11 @@ function addToken(bytes32 _symbol, address _tokenaddress, uint8 _decimals, uint2
 | ---- | ---- | ----------- |
 | _symbol | bytes32 | symbol of the token |
 | _tokenaddress | address | address of the token |
+| _srcChainId | uint32 | Source Chain Symbol of the virtual token only. Otherwise it is overridden by the current chainid |
 | _decimals | uint8 | decimals of the token |
 | _fee | uint256 | Bridge Fee |
 | _gasSwapRatio | uint256 | Amount of token to swap per ALOT |
+| _isVirtual | bool | Token to facilitate for Cross Chain Trades |
 
 #### addTrustedContract
 

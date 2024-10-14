@@ -594,7 +594,20 @@ function addOrderList(struct ITradePairs.NewOrder[] _orders) external
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _orders | struct ITradePairs.NewOrder[] | array of newOrder struct. See ITradePairs.NewOrder Sample typescript code const orders = []; const order = { traderaddress: Ox               , clientOrderId: Oxid3               , tradePairId:               , price:               , quantity:               , side: 0  // Buy               , type1: 1 // Limit               , type2: 3 //PO          }; orders.push(order); await tradePairs.addOrderList(orders); |
+| _orders | struct ITradePairs.NewOrder[] | array of newOrder struct. See ITradePairs.NewOrder
+ Sample typescript code
+ const orders = [];
+ const order = { traderaddress: Ox
+               , clientOrderId: Oxid3
+               , tradePairId:
+               , price:
+               , quantity:
+               , side: 0  // Buy
+               , type1: 1 // Limit
+               , type2: 3 //PO
+          };
+ orders.push(order);
+ await tradePairs.addOrderList(orders); |
 
 #### addOrder
 
@@ -651,7 +664,17 @@ function addNewOrder(struct ITradePairs.NewOrder _order) external
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _order | struct ITradePairs.NewOrder | newOrder struct to be sent out. See ITradePairs.NewOrder Sample typescript code const order = { traderaddress: Ox    //address of the trader. If msg.sender is not the `_trader` the tx will revert.               , clientOrderId: Oxid3 //unique id provided by the owner of an order               , tradePairId:         //id of the trading pair               , price:               //price of the order               , quantity:            //quantity of the order               , side: 0              // enum ITradePairs.Side  Side of the order 0 BUY, 1 SELL               , type1: 1             // enum ITradePairs.Type1 Type of the order. 0 MARKET, 1 LIMIT               , type2: 3             // enum ITradePairs.Type2 SubType of the order          }; |
+| _order | struct ITradePairs.NewOrder | newOrder struct to be sent out. See ITradePairs.NewOrder
+ Sample typescript code
+ const order = { traderaddress: Ox    //address of the trader. If msg.sender is not the `_trader` the tx will revert.
+               , clientOrderId: Oxid3 //unique id provided by the owner of an order
+               , tradePairId:         //id of the trading pair
+               , price:               //price of the order
+               , quantity:            //quantity of the order
+               , side: 0              // enum ITradePairs.Side  Side of the order 0 BUY, 1 SELL
+               , type1: 1             // enum ITradePairs.Type1 Type of the order. 0 MARKET, 1 LIMIT
+               , type2: 3             // enum ITradePairs.Type2 SubType of the order
+          }; |
 
 #### matchAuctionOrder
 
@@ -755,7 +778,7 @@ function cancelOrder(bytes32 _orderId) external
 To Cancel and then add multiple Orders in a single transaction designed specifically for Market Makers
 
 **Dev notes:** \
-It calls cancelOrderList and then addLimitOrderList functions
+It calls cancelOrderList and then addOrderList functions
 Cancels all the orders in the _orderIds list and then adds the orders in the _orders list immediately in the same block.
 Cancel List is completely independent of the new list to be added. In other words, you can technically cancel 2 orders
 from 2 different tradepairs and then add 5 new orders for a third tradePairId.
@@ -791,7 +814,21 @@ function cancelAddList(bytes32[] _orderIdsToCancel, struct ITradePairs.NewOrder[
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _orderIdsToCancel | bytes32[] | array of order ids to be canceled |
-| _orders | struct ITradePairs.NewOrder[] | array of newOrder struct to be sent out. See ITradePairs.NewOrder Sample typescript code const orderIdsToCancel =["id1","id2"]; const orders = []; const order = { traderaddress: Ox               , clientOrderId: Oxid3               , tradePairId:               , price:               , quantity:               , side: 0  // Buy               , type1: 1 // Limit               , type2: 3 //PO          }; orders.push(order); await tradePairs.cancelAddList(orderIdsToCancel, orders); |
+| _orders | struct ITradePairs.NewOrder[] | array of newOrder struct to be sent out. See ITradePairs.NewOrder
+ Sample typescript code
+ const orderIdsToCancel =["id1","id2"];
+ const orders = [];
+ const order = { traderaddress: Ox
+               , clientOrderId: Oxid3
+               , tradePairId:
+               , price:
+               , quantity:
+               , side: 0  // Buy
+               , type1: 1 // Limit
+               , type2: 3 //PO
+          };
+ orders.push(order);
+ await tradePairs.cancelAddList(orderIdsToCancel, orders); |
 
 #### cancelOrderList
 
@@ -1067,10 +1104,22 @@ function addOrderPrivate(address _msgSender, struct ITradePairs.NewOrder _order,
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _msgSender | address | address of the msg.Sender. If msg.sender is not the same as _order.traderaddress the tx will revert. |
+| _msgSender | address | address of the msg.Sender. If msg.sender is not the same as _order.traderaddress
+ the tx will revert. |
 | _order | struct ITradePairs.NewOrder | newOrder struct to be sent out. See ITradePairs.NewOrder |
-| _autofill | bool | controls the autofill logic. Autofill is applied if it is a single order or the very last order in a list. If we apply autofill to any order before the last one in a list, we may change the balances of a token and subsequent orders for the same token may expect the balances before the tx has started. Total 20 Y available. 2 orders entered. Ord1 Sell 12 Y and Ord2 Sell another 8 Y. if we autofill on Ord1, Ord2 will revert the entire tx with P-AFNE In this case it will attempt to autofill on Ord2 but it won't since there will be no inventory available. if Ord1 Sell 12 Y and Ord2 Sell another 7 Y , then there is 1 Y available that can be used for autofill. |
-| _revertOrders | bool | controls the revert logic if true, it is called from deprecated addOrder function, it will revert with the a rejectReason for backward compatibility.\ if false, it is called from addOrderList or new addOrder function. it will reject the order by emitting OrderStatusChange with "status" = REJECTED and "code" = rejectReason instead of reverting. Should be removed when deprecated addOrder method is removed |
+| _autofill | bool | controls the autofill logic. Autofill is applied
+ if it is a single order or the very last order in a list. If we apply autofill to any order before
+ the last one in a list, we may change the balances of a token and subsequent orders for the same token
+ may expect the balances before the tx has started. Total 20 Y available. 2 orders entered.
+ Ord1 Sell 12 Y and Ord2 Sell another 8 Y. if we autofill on Ord1, Ord2 will revert the entire tx with P-AFNE
+ In this case it will attempt to autofill on Ord2 but it won't since there will be no inventory available.
+ if Ord1 Sell 12 Y and Ord2 Sell another 7 Y , then there is 1 Y available that can be used for autofill. |
+| _revertOrders | bool | controls the revert logic
+ if true, it is called from deprecated addOrder function, it will revert with the a rejectReason for backward
+ compatibility.\
+ if false, it is called from addOrderList or new addOrder function. it will reject the order by emitting
+ OrderStatusChange with "status" = REJECTED and "code" = rejectReason instead of reverting.
+ Should be removed when deprecated addOrder method is removed |
 
 #### matchOrder
 
@@ -1096,7 +1145,8 @@ function matchOrder(bytes32 _takerOrderId, uint256 _maxNbrOfFills) private retur
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _takerOrderId | bytes32 | Taker Order id |
-| _maxNbrOfFills | uint256 | Max number of fills an order can get at a time to avoid running out of gas (Defaults to maxNbrOfFills=100). |
+| _maxNbrOfFills | uint256 | Max number of fills an order can get at a time to avoid running out of gas
+ (Defaults to maxNbrOfFills=100). |
 
 ##### Return values
 
@@ -1121,7 +1171,8 @@ function cancelOrderPrivate(address _msgSender, bytes32 _orderId, bool _autofill
 | ---- | ---- | ----------- |
 | _msgSender | address | address of the msg.Sender |
 | _orderId | bytes32 | order id to cancel |
-| _autofill | bool | controls the autofill logic. Autofill is applied if it is a single cancel or the very last cancel in a cancel list. |
+| _autofill | bool | controls the autofill logic. Autofill is applied
+ if it is a single cancel or the very last cancel in a cancel list. |
 
 #### cancelOrderListPrivate
 
@@ -1140,7 +1191,8 @@ function cancelOrderListPrivate(address _msgSender, bytes32[] _orderIds, bool _a
 | ---- | ---- | ----------- |
 | _msgSender | address | array of order ids to be canceled |
 | _orderIds | bytes32[] | array of order ids |
-| _autofill | bool | controls the autofill logic. Autofill only when processing the last cancel in the cancel list & if also the _autofill flag is true |
+| _autofill | bool | controls the autofill logic. Autofill only when processing the last
+ cancel in the cancel list & if also the _autofill flag is true |
 
 #### doOrderCancel
 
@@ -1156,4 +1208,3 @@ function doOrderCancel(bytes32 _orderId, bool _autofill) private
 | ---- | ---- | ----------- |
 | _orderId | bytes32 | order id to cancel |
 | _autofill | bool | when true autofills the user's gas tank if it is below the treshold |
-

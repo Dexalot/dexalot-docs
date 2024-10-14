@@ -7,7 +7,9 @@ headerDepth: 4
 **Mainnet Portfolio**
 
 **Dev notes:** \
-This contract prevalidates the PortfolioSub checks and allows deposits to be sent to the subnet.
+This contract is the gateway for deposits to the Dexalot L1(subnet).
+It also processes withdrawal messages received from Dexalot L1 and releases the funds
+to the requester&#x27;s wallet
 ExchangeMain needs to have DEFAULT_ADMIN_ROLE on PortfolioMain.
 
 ## Variables
@@ -81,7 +83,7 @@ We don't allow tokens with the same symbols but different addresses.
 Native symbol is also added by default with 0 address.
 
 ```solidity:no-line-numbers
-function addToken(bytes32 _symbol, address _tokenAddress, uint32 _srcChainId, uint8 _decimals, uint256 _fee, uint256 _gasSwapRatio, bool _isVirtual) external
+function addToken(bytes32 _symbol, address _tokenAddress, uint8 _decimals, uint256 _fee, uint256 _gasSwapRatio) external
 ```
 
 ##### Arguments
@@ -90,11 +92,9 @@ function addToken(bytes32 _symbol, address _tokenAddress, uint32 _srcChainId, ui
 | ---- | ---- | ----------- |
 | _symbol | bytes32 | Symbol of the token |
 | _tokenAddress | address | Address of the token |
-| _srcChainId | uint32 | Source Chain Symbol of the virtual token only. Otherwise it is overridden by the current chainid |
 | _decimals | uint8 | Decimals of the token |
 | _fee | uint256 | Bridge Fee |
 | _gasSwapRatio | uint256 | Amount of token to swap per ALOT |
-| _isVirtual | bool | Not an ERC20 or native. It is only used to facilitate Cross Chain Trades where the token doesn't exist |
 
 #### getToken
 
@@ -359,7 +359,7 @@ function collectNativeBridgeFees() external
 Internal function that implements the token addition
 
 **Dev notes:** \
-Unlike in the subnet it doesn't add the token to the PortfolioBridgeMain as it is redundant
+The token tis not added o the PortfolioBridgeMain unlike in the Dexalot L1(subnet)
 Sample Token List in PortfolioMain: \
 Symbol, SymbolId, Decimals, address, auction mode (43114: Avalanche C-ChainId) \
 ALOT ALOT43114 18 0x5FbDB2315678afecb367f032d93F642f64180aa3 0 (Avalanche ALOT) \
@@ -401,7 +401,7 @@ function setBridgeParamInternal(bytes32 _symbol, uint256 _fee, uint256 _gasSwapR
 | ---- | ---- | ----------- |
 | _symbol | bytes32 | Symbol of the token |
 | _fee | uint256 | Fee to be set |
-| _gasSwapRatio | uint256 | Amount of token to swap per ALOT. Used to control min deposit amount in the mainnet Because we want users to deposit more than whats going to be swapped out for them to end up a portion of their token in their subnet portfolio after the swap. gasSwapRatio will be updated daily with an offchain app with the current market pricesexcept for ALOT which is always 1 to 1. Daily update is sufficient as it is multiplied by 1.9 to calculate the min deposit Amount. _usedForGasSwap  not used in the mainnet |
+| _gasSwapRatio | uint256 | Amount of token to swap per ALOT. Used to control min deposit amount in the mainnet Because we want users to deposit more than whats going to be swapped out for them to end up a portion of their token in their Dexalot L1(subnet) portfolio after the swap. gasSwapRatio will be updated daily with an offchain app with the current market pricesexcept for ALOT which is always 1 to 1. Daily update is sufficient as it is multiplied by 1.9 to calculate the min deposit Amount. _usedForGasSwap  not used in the mainnet |
 |  | bool |  |
 
 ### Private

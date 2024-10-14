@@ -84,8 +84,27 @@ PortfolioBridge:<br/>
 
 TradePairs:<br/>
 - Add addNewOrder with order data provided via a struct<br/>
-- Replaced cancelReplaceList with cancelAddList to improve on cancel replace logic and allow orders to any pair<br/>
 - Using newOrder Struct instead of individual parameters<br/>
+- Breaking Change: addOrder is deprecated and left in the code base for backward compatibility but we strongly advise to migrate your code base to use addNewOrder along with the other breaking changes listed below
+- Breaking Change: Replaced addLimitOrderList with addOrderList to improve list order functionality<br/>
+- Breaking Change: Replaced cancelReplaceList with cancelAddList to improve on cancel replace logic and allow orders to any pair<br/>
+- Breaking Change: OrderStatusChanged Event changes<br/>
+    - args.version= 3
+    - args.traderaddress (indexed - no change)
+    - args.pair (indexed - no change)
+    - args.previousUpdateBlock (new field)
+    - args.code  (no change)
+    - Access all the rest of the order details using "args.order.xxx"
+    - Few fields Renamed:
+    - args.orderId ==> args.order.id
+    - args.totalamount  => args.order.totalAmount   (changed to Camel Case)
+    - args.quantityfilled  => args.order.quantityFilled (changed to Camel Case)
+    - args.totalfee  => args.order.totalFee (changed to Camel Case)
+    - New Fields:
+    - args.order.updateBlock
+    - args.order.tradePairId has the same value as args.pair above
+    - args.order.traderaddress has the same value as args.traderaddress above
+
 - New functions will raise reject events as much as possible instead of reverting<br/>
 - Autofill to be executed with the last order in the cancelAddList.<br/>
 

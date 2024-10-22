@@ -23,6 +23,21 @@ struct Order {
   enum ITradePairs.Type1 type1;
   enum ITradePairs.Type2 type2;
   enum ITradePairs.Status status;
+  uint32 updateBlock;
+}
+```
+### NewOrder
+
+```solidity
+struct NewOrder {
+  bytes32 clientOrderId;
+  bytes32 tradePairId;
+  uint256 price;
+  uint256 quantity;
+  address traderaddress;
+  enum ITradePairs.Side side;
+  enum ITradePairs.Type1 type1;
+  enum ITradePairs.Type2 type2;
 }
 ```
 ### TradePair
@@ -138,7 +153,7 @@ fee is paid in ALOT, if Sell ALOT/AVAX , fee is paid in AVAX \
 **Note**: The execution price will always be equal or better than the Order price.
 
 ```solidity:no-line-numbers
-event OrderStatusChanged(uint8 version, address traderaddress, bytes32 pair, bytes32 orderId, bytes32 clientOrderId, uint256 price, uint256 totalamount, uint256 quantity, enum ITradePairs.Side side, enum ITradePairs.Type1 type1, enum ITradePairs.Type2 type2, enum ITradePairs.Status status, uint256 quantityfilled, uint256 totalfee, bytes32 code)
+event OrderStatusChanged(uint8 version, address traderaddress, bytes32 pair, struct ITradePairs.Order order, uint32 previousUpdateBlock, bytes32 code)
 ```
 
 ##### Arguments
@@ -148,17 +163,8 @@ event OrderStatusChanged(uint8 version, address traderaddress, bytes32 pair, byt
 | version | uint8 | event version |
 | traderaddress | address | traders’s wallet (immutable) |
 | pair | bytes32 | traded pair. ie. ALOT/AVAX in bytes32 (immutable) |
-| orderId | bytes32 | unique order id assigned by the contract (immutable) |
-| clientOrderId | bytes32 | client order id given by the sender of the order as a reference (immutable) |
-| price | uint256 | price of the order entered by the trader. (0 if market order) (immutable) |
-| totalamount | uint256 | cumulative amount in quote currency: `price * quantityfilled` |
-| quantity | uint256 | order quantity (immutable) |
-| side | enum ITradePairs.Side | Order Side  See #Side (immutable) |
-| type1 | enum ITradePairs.Type1 | Order Type1  See #Type1 (immutable) |
-| type2 | enum ITradePairs.Type2 | Order Type2  See #Type2 (immutable) |
-| status | enum ITradePairs.Status | Order Status See #Status |
-| quantityfilled | uint256 | cumulative quantity filled |
-| totalfee | uint256 | cumulative fee paid for the order |
+| order | struct ITradePairs.Order | See ITradePairs.Order Struct (Order details) |
+| previousUpdateBlock | uint32 | Previous Block No the order was last changed/created |
 | code | bytes32 | reason when order has REJECT or CANCEL_REJECT status |
 ### Executed
 
@@ -319,6 +325,24 @@ function getOrderByClientOrderId(address _trader, bytes32 _clientOrderId) extern
 
 ```solidity:no-line-numbers
 function addOrder(address _trader, bytes32 _clientOrderId, bytes32 _tradePairId, uint256 _price, uint256 _quantity, enum ITradePairs.Side _side, enum ITradePairs.Type1 _type1, enum ITradePairs.Type2 _type2) external
+```
+
+#### addNewOrder
+
+```solidity:no-line-numbers
+function addNewOrder(struct ITradePairs.NewOrder _order) external
+```
+
+#### addOrderList
+
+```solidity:no-line-numbers
+function addOrderList(struct ITradePairs.NewOrder[] _orders) external
+```
+
+#### cancelAddList
+
+```solidity:no-line-numbers
+function cancelAddList(bytes32[] _orderIdsToCancel, struct ITradePairs.NewOrder[] _orders) external
 ```
 
 #### cancelOrder

@@ -8,7 +8,7 @@ headerDepth: 4
 
 This contract is used to manage a list of banned accounts. A banned account
 is not allowed to deposit into Dexalot portfolio to engage in any activity on
-Dexalot subnet.
+Dexalot L1.
 
 ## Struct Types
 

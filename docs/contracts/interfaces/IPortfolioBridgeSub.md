@@ -48,7 +48,7 @@ function executeDelayedTransfer(bytes32 _id) external
 #### getAllBridgeFees
 
 ```solidity:no-line-numbers
-function getAllBridgeFees(bytes32 _symbol, uint256 _quantity) external view returns (uint256[] bridgeFees, uint32[] chainIds)
+function getAllBridgeFees(enum IPortfolioBridge.BridgeProvider _bridge, bytes32 _symbol, uint256 _quantity) external view returns (uint256[] bridgeFees, uint32[] chainIds)
 ```
 
 #### setBridgeFees

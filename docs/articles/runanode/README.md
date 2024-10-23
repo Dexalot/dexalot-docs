@@ -1,0 +1,161 @@
+---
+editLink: true
+---
+
+# Running a Non-Validating Dexalot L1 Node
+
+![runanode](/images/howtouse/Subnetlogo.png)
+
+Ava Labs does not recommend running a validating node as an RPC server. Therefore, a non-validating node is typically run internally by projects that require RPC server access without any public RPC server rate-limitations. A non-validating node may also be run as a backup node to have it ready as an easy replacement for validating nodes in case of problems.
+
+This article describes how to run a non-validating Avalanche node that tracks Dexalot L1.  It requires downloading AvalancheGo executable binary, adding Virtual Machine binaries as plugins to your local data directory, and running AvalancheGo to track these binaries.
+
+## Overview
+
+We highly recommend the user to follow the official documentation from Ava Labs [Nodes & Validators](https://docs.avax.network/nodes) to run an Avalanche node to track the primary networks as a good starting point.
+
+The overall steps will be as follows:
+1. Get the AvalancheGo executable binary to track the primnary networks as a start
+2. Once you achieve a healthy running node get subnet-evm plugin binary and place it to the correct location with the right name
+3. Copy the latest `upgrade.json` file for Dexalot L1 to the right location
+4. Restart AvalancheGo executable binary
+
+### Note on State-Sync Option
+
+If you are not planning on querying for historical chain data with older blocknumbers on the C-Chain you can start your node with state-sync enabled. It will reduce your storage needs significantly and cut down your bootstrapping time.  Review notes on [State Sync](https://docs.avax.network/nodes/chain-configs/c-chain#state-sync) to decide.  To enable it, you need to add the following option to your C-chain configuration at `~/.avalanchego/configs/chains/C/config.json` if you are using the standard installation locations.
+
+```json
+{
+    "state-sync-enabled": true
+}
+```
+
+## Install AvalancheGo Executable Binary
+
+Follow the instructions from Ava Labs documentation to install AvalancheGo Executable Binary from the link [installing AvalancheGo Executable Binary](https://docs.avax.network/nodes/using-install-script/installing-avalanche-go).
+
+
+## Download Subnet-EVM Plugin Binary
+
+Save the below script in your home directory as `get_evm.sh`.
+
+```sh
+#!/bin/sh
+
+# this script downloads the specified version of subnet-evm plugin for the avalanchego
+
+VERSION=0.6.10
+OS=linux
+ARCH=amd64
+
+# parametrized url on github
+URL="https://github.com/ava-labs/subnet-evm/releases/download/v${VERSION}/subnet-evm_${VERSION}_${OS}_${ARCH}.tar.gz"
+
+# get the archive with the specified subnet-evm version
+curl -sSfL ${URL} -o "subnet-evm_${VERSION}_${OS}_${ARCH}.tar.gz"
+
+# extract subnet-evm plugin binary from the archive
+tar -zxf "subnet-evm_${VERSION}_${OS}_${ARCH}.tar.gz" "subnet-evm"
+
+# rm archive
+rm "subnet-evm_${VERSION}_${OS}_${ARCH}.tar.gz"
+
+# gracefully exit the script
+exit 0
+```
+
+Make the `get_evm.sh` script executable as follows:
+
+```sh
+chmnod u+rwx get_evm.sh
+```
+
+Now, run the script to get the subnet-evm plugin binary.
+
+```sh
+./get_evm.sh
+```
+
+## Rename the Subnet-EVM plugin binary and place it to the plugins directory
+
+The plugin needs to have the correct VM ID as its name to function correctly. Use the table below to move `subnet-evm` to the plugins directory with the corresponding VM ID as its name.
+
+| Network | VM ID                                             |
+|---------|---------------------------------------------------|
+| Fuji    | mDVSxzeWHpEU3eSqMwwGQsD787xGp7hv9Qgoe3R9SdjPapte8 |
+| Mainnet | mDVSxzeWHmgqrcXK1tPYqavqTK5MC3mMqme6r3a6cz2fqMfqf |
+
+When done correctly the directory tree where avalanchego binary is residing should look like this for fuji.
+
+```sh
+>ls *
+avalanchego
+
+plugins:
+mDVSxzeWHpEU3eSqMwwGQsD787xGp7hv9Qgoe3R9SdjPapte8
+```
+
+## Copy the correct upgrade.json
+
+Dexalot L1 is upgraded at various blocks over time like any other blockchain. The `upgrade.json` file tracks these hard forks and it needs to be placed to the right place to ensure the network can start and bootstrap correctly.
+
+Copy the latest `upgrade.json` file from [Dexalot Public Chain Assets](https://github.com/Dexalot/dexalot-public-chain-assets) and place it to the parametrized location `~/.avalanchego/configs/chains/${BLOCKCHAIN_ID}/config.json` with the correct blockchain ID from the table below.
+
+| Network | Blockchain ID                                      |
+|---------|----------------------------------------------------|
+| Fuji    | XuEPnCE59rtutASDPCDeYw8geQaGWwteWjkDXYLWvssfuirde  |
+| Mainnet | 21Ths5Afqi5r4PaoV8r8cruGZWhN11y5rxvy89K8px7pKy3P8E |
+
+## Enable State-Sync on Dexalot L1
+
+State-sync can also be enabled for Dexalot L1. The `config.json` file needs to be updated with the `"state-sync-enabled": true` option at the parametrized location `~/.avalanchego/configs/chains/${BLOCKCHAIN_ID}/config.json` with the correct blockchain ID from the table below to activate state-sync.
+
+| Network | Blockchain ID                                      |
+|---------|----------------------------------------------------|
+| Fuji    | XuEPnCE59rtutASDPCDeYw8geQaGWwteWjkDXYLWvssfuirde  |
+| Mainnet | 21Ths5Afqi5r4PaoV8r8cruGZWhN11y5rxvy89K8px7pKy3P8E |
+
+## Add Dexalot L1 as a tracked chain to node configuration file
+
+Before we can restart the avalanchego node we need to update the node config file so it knows that we want it to track Dexalot L1.  For that add `track-subnets` option to the `~/.avalanchego/configs/node.json` file using the corresponding Subnet ID from the table below.
+
+```json
+{
+  "track-subnets": "${SUBNET_ID}"
+}
+```
+
+| Network | Subnet ID                                          |
+|---------|----------------------------------------------------|
+| Fuji    | 9m6a3Qte8FaRbLZixLhh8Ptdkemm4csNaLwQeKkENx5wskbWP  |
+| Mainnet | wenKDikJWAYQs3f2v9JhV86fC6kHZwkFZsuUBftnmgZ4QXPnu  |
+
+## Restart your node and monitor its bootstrapping
+
+### Restart AvalancheGo Service
+
+```sh
+sudo systemctl stop avalanchego
+sleep 2
+sudo systemctl start avalanchego
+```
+
+### Check Status of AvalancheGo Service
+
+```sh
+sudo systemctl status avalanchego
+```
+
+### Monitor Logs via Systemd Journal
+
+```sh
+sudo journalctl -u avalanchego -f
+```
+
+You can break this monitoring with `CTRL-C`
+
+---
+
+**Author**: M. Nihat Gurmen
+
+**Graphics**: Can Toygar

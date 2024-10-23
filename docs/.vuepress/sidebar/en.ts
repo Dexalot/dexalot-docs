@@ -15,6 +15,11 @@ export const enSidebarConfig = sidebar({
           link: "subnet"
         },
         {
+          text: "Run a Dexalot L1 Node",
+          icon: "book-open",
+          link: "runanode"
+        },
+        {
           text: "The Dexalot Subnet Guide",
           icon: "book-open",
           link: "guide"

@@ -2,10 +2,10 @@
 editLink: true
 ---
 
-# Fix Pending Metamask Transactions
- How to
-  ![fixmmcover](/images/recovrmmtxn/fixpendngcvr.png)
----
+# How to Fix Pending Metamask Transactions
+
+ ![fixmmcover](/images/recovrmmtxn/fixpendngcvr.png)
+
  Dexalot is built on top of the Avalanche network, which is clearly growing in popularity very quickly. One consequence of this growing use: gas fees can be periodically high for one app as a result of high activity on another app. When traffic is high, [transactions can be pending](https://snowtrace.io/chart/pendingtx) for longer than usual.
 
  ![pendingchart](/images/recovrmmtxn/pendngchrt.png)

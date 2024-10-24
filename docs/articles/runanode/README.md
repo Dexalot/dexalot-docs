@@ -4,7 +4,7 @@ editLink: true
 
 # Running a Non-Validating Dexalot L1 Node
 
-![runanode](/images/howtouse/Subnetlogo.png)
+![runanode](/images/runanode/runanode.png)
 
 ## Introduction
 
@@ -48,7 +48,7 @@ Please note that a state-sync enabled node starts its database state from a rela
         CPU: Equivalent of 8 AWS vCPU or better.
         RAM: At least 16 GB.
         Storage: SSD with at least 500 GB of free space.
-        Network: High-speed internet connection with at least 25 Mbps upload/download speed.
+        Network: High-speed internet with at least 25 Mbps upload/download speed.
 
 ### Tips for Running a Stable Node
 
@@ -59,7 +59,7 @@ Please note that a state-sync enabled node starts its database state from a rela
 
 ### Port Settings
 
-Ensure that necessary ports are open (default is `TCP/9651` for P2P and `TCP/9650` for API).  The access `TCP/9650` needs to be managed to avoid unauthorized access to the API. On a validator node typically only `TCP/9651` would be open to public and `TCP/9651` would be available for local access. Adjust access to `TCP/9651` for a non-validating node based on your needs.
+Ensure that necessary ports are open (default is `TCP/9651` for P2P and `TCP/9650` for API).  The access to `TCP/9650` needs to be managed to avoid unauthorized access to the API. On a validator node typically only `TCP/9651` would be open to public and `TCP/9650` would be available for local access. Adjust access to `TCP/9650` for a non-validating node based on your needs.
 
 ## Install AvalancheGo Executable Binary
 
@@ -200,6 +200,6 @@ You can break this monitoring with `CTRL-C`
 
 ---
 
-**Author**: M. Nihat Gurmen
+**Authors**: M. Nihat Gurmen, Kaan Keskin, Ilker Ulutas
 
 **Graphics**: Can Toygar

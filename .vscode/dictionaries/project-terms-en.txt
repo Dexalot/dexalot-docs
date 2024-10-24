@@ -32,11 +32,13 @@ chainid
 chainlink
 clientorderid
 CLOSINGT2
+darwin
 dbnonce
 DCAR
 decreaseavail
 depl
 devdoc
+DEX
 dexalot
 DISPDEC
 div
@@ -64,6 +66,7 @@ isnative
 iszero
 ixferrec
 ixfersent
+journalctl
 keccak
 layerzero
 LibCLL
@@ -71,6 +74,7 @@ linux
 lletog
 lzsourcechainid
 MAXTRAMT
+Mbps
 merkle
 MINTRAMT
 mlast

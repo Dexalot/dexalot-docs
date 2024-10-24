@@ -6,19 +6,27 @@ editLink: true
 
 ![runanode](/images/howtouse/Subnetlogo.png)
 
-Ava Labs does not recommend running a validating node as an RPC server. Therefore, a non-validating node is typically run internally by projects that require RPC server access without any public RPC server rate-limitations. A non-validating node may also be run as a backup node to have it ready as an easy replacement for validating nodes in case of problems.
+## Introduction
 
-This article describes how to run a non-validating Avalanche node that tracks Dexalot L1.  It requires downloading AvalancheGo executable binary, adding Virtual Machine binaries as plugins to your local data directory, and running AvalancheGo to track these binaries.
+Dexalot is a decentralized exchange (DEX) that operates on the Avalanche network, providing users with a centralized exchange experience in a decentralized environment. To interact with Dexalot you might need to run an Avalanche node that tracks the Dexalot L1 blockchain.
+
+Running a non-validating Avalanche node may be needed for several reasons:
+  - Access to Full RPC Functionality: It allows projects to access to the Avalanche network's RPC server without the rate limitations imposed on public endpoints.
+  - Backup Node: It could serve as a ready replacement for validating nodes in case of issues.
+  - Test Node: It allows risk-free testing on a node for various configuration options and profiling.
+
+This guide provides detailed instructions on setting up a non-validating Avalanche node that tracks Dexalot L1. The process involves downloading the AvalancheGo executable binary, adding the Subnet-EVM plugin, configuring the node to track the Dexalot L1 using these binaries, and ensuring it's properly synchronized with the network.
 
 ## Overview
 
 We highly recommend the user to follow the official documentation from Ava Labs [Nodes & Validators](https://docs.avax.network/nodes) to run an Avalanche node to track the primary networks as a good starting point.
 
-The overall steps will be as follows:
-1. Get the AvalancheGo executable binary to track the primnary networks as a start
-2. Once you achieve a healthy running node get subnet-evm plugin binary and place it to the correct location with the right name
-3. Copy the latest `upgrade.json` file for Dexalot L1 to the right location
-4. Restart AvalancheGo executable binary
+To successfully run a non-validating Avalanche node that tracks Dexalot L1, you'll perform the following high-level steps:
+  - Install the AvalancheGo Executable Binary: Set up the base Avalanche node software to connect to the primary networks.
+  - Download and Configure the Subnet-EVM Plugin: Obtain the correct version of the Subnet-EVM plugin and configure it for Dexalot L1.
+  - Configure Dexalot L1 Specific Settings: Add the latest `upgrade.json` file and enable state-sync if desired.
+  - Update Node Configuration to Track Dexalot L1: Modify the node's configuration to include the Dexalot subnet.
+  - Start and Monitor the Node: Launch the node and monitor its status to ensure it's operating correctly.
 
 ### Note on State-Sync Option
 
@@ -30,23 +38,46 @@ If you are not planning on querying for historical chain data with older blocknu
 }
 ```
 
+Please note that a state-sync enabled node starts its database state from a relatively recent blocknumber.  Therefore, the bootstrapped database size for a state-sync node is a fraction of a full node. However, even for a state-sync node new blocks are continuously added to the database increasing its size at the same rate of a full node.  In short, over time storage management will be needed for a state-sync node as well.
+
+### Prerequisites
+
+    A machine running Ubuntu 22.04 (recommended) or a compatible Linux distribution.
+    Basic knowledge of Linux command-line operations.
+    Sufficient hardware resources as recommended by Ava Labs:
+        CPU: Equivalent of 8 AWS vCPU or better.
+        RAM: At least 16 GB.
+        Storage: SSD with at least 500 GB of free space.
+        Network: High-speed internet connection with at least 25 Mbps upload/download speed.
+
+### Tips for Running a Stable Node
+
+  - **Hardware Resources**: Ensure your hardware meets or exceeds the recommended specifications.
+  - **Network Stability**: A stable internet connection is crucial for maintaining node uptime.
+  - **Regular Updates**: Keep AvalancheGo and Subnet-EVM up-to-date by regularly checking for new releases.
+  - **Monitoring**: Set up monitoring tools to alert you of any issues with your node.
+
+### Port Settings
+
+Ensure that necessary ports are open (default is `TCP/9651` for P2P and `TCP/9650` for API).  The access `TCP/9650` needs to be managed to avoid unauthorized access to the API. On a validator node typically only `TCP/9651` would be open to public and `TCP/9651` would be available for local access. Adjust access to `TCP/9651` for a non-validating node based on your needs.
+
 ## Install AvalancheGo Executable Binary
 
 Follow the instructions from Ava Labs documentation to install AvalancheGo Executable Binary from the link [installing AvalancheGo Executable Binary](https://docs.avax.network/nodes/using-install-script/installing-avalanche-go).
 
-
 ## Download Subnet-EVM Plugin Binary
 
-Save the below script in your home directory as `get_evm.sh`.
+Save the below script in your home directory as `get_evm.sh`.  This script will download the set version from Ava Labs' GitHub repo. You can check the latest release version from [Subnet-EVM Releases](https://github.com/ava-labs/subnet-evm/releases). The ReadMe file on this repo also provides a compatibility matrix between AvalancheGo and Subnet-EVM binaries.
 
 ```sh
 #!/bin/sh
 
 # this script downloads the specified version of subnet-evm plugin for the avalanchego
 
-VERSION=0.6.10
-OS=linux
-ARCH=amd64
+VERSION=0.6.10  # check AvalancheGo Compatibility matrix from https://github.com/ava-labs/subnet-evm
+                # typically you would need the latest compatible versions for both AvalancheGo and Subnet-EVM binaries
+OS=linux        # linux or darwin
+ARCH=amd64      # amd64 or arm64
 
 # parametrized url on github
 URL="https://github.com/ava-labs/subnet-evm/releases/download/v${VERSION}/subnet-evm_${VERSION}_${OS}_${ARCH}.tar.gz"
@@ -153,6 +184,19 @@ sudo journalctl -u avalanchego -f
 ```
 
 You can break this monitoring with `CTRL-C`
+
+## Troubleshooting
+
+### Node Fails to Start
+
+1. **Check Logs**: Use `sudo journalctl -u avalanchego -f` to view logs for error messages.
+2. **Configuration Errors**: Verify that all configuration files are correctly formatted JSON and contain the correct IDs.
+3. **Plugin Placement**: Ensure the Subnet-EVM plugin is correctly named and placed in the plugins directory.
+
+### Node is Not Bootstrapping
+
+1. **Network Connectivity**: Ensure your node can reach other nodes on the network.
+2. **Firewall Settings**: Check that necessary ports are open (default is `TCP/9651` for P2P and `TCP/9650` for API).
 
 ---
 

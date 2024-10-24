@@ -8,12 +8,16 @@ editLink: true
 
 ## Introduction
 
-Dexalot is a decentralized exchange (DEX) that operates on the Avalanche network, providing users with a centralized exchange experience in a decentralized environment. To interact with Dexalot you might need to run an Avalanche node that tracks the Dexalot L1 blockchain.
+Dexalot is an omni-chain decentralized exchange (DEX) that operates a central limit order book (CLOB) in its own sovereign blockchain within the Avalanche L1 Universe. It provides two distinct experiences to the users to access its superior prices and ample liquidity:
 
-Running a non-validating Avalanche node may be needed for several reasons:
-  - Access to Full RPC Functionality: It allows projects to access to the Avalanche network's RPC server without the rate limitations imposed on public endpoints.
-  - Backup Node: It could serve as a ready replacement for validating nodes in case of issues.
-  - Test Node: It allows risk-free testing on a node for various configuration options and profiling.
+1. A centralized exchange experience with limit and market orders for market makers and experienced traders as well as casual traders requiring best prices and more control over their orders.
+2. A swap experience that can be accessed from other connected chains catering more to traders looking for an AMM-like interface.
+
+Some users may want to interact with Dexalot running their own non-validating Avalanche node that tracks the Dexalot L1 blockchain in addition to the primary networks X, P, and C. Running a non-validating node may be needed for several reasons:
+
+  - **Access to Full RPC Functionality**: It allows projects to access to the Avalanche network's RPC server without the rate limitations imposed on public endpoints.
+  - **Backup Node**: It could serve as a ready replacement for validating nodes in case of issues.
+  - **Test Node**: It allows risk-free testing on a node for various configuration options and profiling.
 
 This guide provides detailed instructions on setting up a non-validating Avalanche node that tracks Dexalot L1. The process involves downloading the AvalancheGo executable binary, adding the Subnet-EVM plugin, configuring the node to track the Dexalot L1 using these binaries, and ensuring it's properly synchronized with the network.
 
@@ -22,11 +26,11 @@ This guide provides detailed instructions on setting up a non-validating Avalanc
 We highly recommend the user to follow the official documentation from Ava Labs [Nodes & Validators](https://docs.avax.network/nodes) to run an Avalanche node to track the primary networks as a good starting point.
 
 To successfully run a non-validating Avalanche node that tracks Dexalot L1, you'll perform the following high-level steps:
-  - Install the AvalancheGo Executable Binary: Set up the base Avalanche node software to connect to the primary networks.
-  - Download and Configure the Subnet-EVM Plugin: Obtain the correct version of the Subnet-EVM plugin and configure it for Dexalot L1.
-  - Configure Dexalot L1 Specific Settings: Add the latest `upgrade.json` file and enable state-sync if desired.
-  - Update Node Configuration to Track Dexalot L1: Modify the node's configuration to include the Dexalot subnet.
-  - Start and Monitor the Node: Launch the node and monitor its status to ensure it's operating correctly.
+  - **Install the AvalancheGo Executable Binary**: Set up the base Avalanche node software, `avalanchego`, to connect to the primary networks.
+  - **Download and Configure the Subnet-EVM Plugin**: Obtain the correct version of the Subnet-EVM plugin and configure it for Dexalot L1.
+  - **Configure Dexalot L1 Specific Settings**: Add the latest `upgrade.json` file and enable state-sync if desired.
+  - **Update Node Configuration to Track Dexalot L1**: Modify the node's configuration to include the Dexalot L1 tracking.
+  - **Start and Monitor the Node**: Launch the node and monitor its status to ensure it's operating correctly.
 
 ### Note on State-Sync Option
 
@@ -72,11 +76,12 @@ Save the below script in your home directory as `get_evm.sh`.  This script will 
 ```sh
 #!/bin/sh
 
-# this script downloads the specified version of subnet-evm plugin for the avalanchego
+# this script downloads the specified version of subnet-evm plugin for avalanchego
 
-VERSION=0.6.10  # check AvalancheGo Compatibility matrix from https://github.com/ava-labs/subnet-evm
-                # typically you would need the latest compatible versions for both AvalancheGo and Subnet-EVM binaries
-OS=linux        # linux or darwin
+VERSION=0.6.11  # check compatibility matrix from https://github.com/ava-labs/subnet-evm
+                # typically you would need the latest compatible versions for both
+                # AvalancheGo and Subnet-EVM binaries
+OS=linux        # linux or darwin for macos
 ARCH=amd64      # amd64 or arm64
 
 # parametrized url on github
@@ -148,7 +153,7 @@ State-sync can also be enabled for Dexalot L1. The `config.json` file needs to b
 
 ## Add Dexalot L1 as a tracked chain to node configuration file
 
-Before we can restart the avalanchego node we need to update the node config file so it knows that we want it to track Dexalot L1.  For that add `track-subnets` option to the `~/.avalanchego/configs/node.json` file using the corresponding Subnet ID from the table below.
+Before we can (re)start the avalanchego node we need to update the node config file so it knows that we want it to track Dexalot L1.  For that add `track-subnets` option to the `~/.avalanchego/configs/node.json` file using the corresponding Subnet ID from the table below.
 
 ```json
 {
@@ -185,6 +190,10 @@ sudo journalctl -u avalanchego -f
 
 You can break this monitoring with `CTRL-C`
 
+## Conclusion
+
+By following this guide, you've set up a non-validating Avalanche node that tracks Dexalot L1. This setup allows you to interact with the Avalanche C-Chain and Dexalot L1 chains directly, bypassing any limitations of public RPC endpoints, and contributes to the transparency of the network.
+
 ## Troubleshooting
 
 ### Node Fails to Start
@@ -197,6 +206,12 @@ You can break this monitoring with `CTRL-C`
 
 1. **Network Connectivity**: Ensure your node can reach other nodes on the network.
 2. **Firewall Settings**: Check that necessary ports are open (default is `TCP/9651` for P2P and `TCP/9650` for API).
+
+## References
+
+- [Avalanche Node Installation Guide](https://docs.avax.network/nodes/using-install-script/installing-avalanche-go)
+- [Subnet-EVM Repo](https://github.com/ava-labs/subnet-evm)
+- [AvalancheGo Configuration Flags](https://docs.avax.network/nodes/configure/configs-flags)
 
 ---
 

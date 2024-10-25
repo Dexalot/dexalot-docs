@@ -10,12 +10,12 @@ export const esSidebarConfig = sidebar({
       prefix: "/es/articles/",
       children: [
         {
-          text: "La Dexalot Subnet",
+          text: "La Dexalot L1",
           icon: "book-open",
           link: "subnet"
         },
         {
-          text: "Guia Subnet de Dexalot",
+          text: "Guia L1 de Dexalot",
           icon: "book-open",
           link: "guide"
         },
@@ -64,12 +64,12 @@ export const esSidebarConfig = sidebar({
       prefix: "/es/tutorials/",
       children: [
         {
-          text: "Introducción a la Dexalot Subnet",
+          text: "Introducción a la Dexalot L1",
           icon: "play",
           link: "howtouse"
         },
         {
-          text: "Testing de la Dexalot-Subnet",
+          text: "Testing de la Dexalot L1",
           icon: "play",
           link: "howtotest"
         },

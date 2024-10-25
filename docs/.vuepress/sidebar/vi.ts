@@ -10,12 +10,12 @@ export const viSidebarConfig = sidebar({
       prefix: "/vi/articles/",
       children: [
         {
-          text: "Dexalot Subnet",
+          text: "Dexalot L1",
           icon: "book-open",
           link: "subnet"
         },
         {
-          text: "Hướng dẫn Dexalot Subnet",
+          text: "Hướng dẫn Dexalot L1",
           icon: "book-open",
           link: "guide"
         },
@@ -65,12 +65,12 @@ export const viSidebarConfig = sidebar({
       prefix: "/vi/tutorials/",
       children: [
         {
-          text: "Mạng con Dexalot",
+          text: "Mạng con Dexalot L1",
           icon: "play",
           link: "howtouse"
         },
         {
-          text: "Thử nghiệm công khai Dexalot-Subnet",
+          text: "Thử nghiệm công khai Dexalot L1",
           icon: "play",
           link: "howtotest"
         },

@@ -2,11 +2,11 @@
 editLink: true
 ---
 
-# The Dexalot Subnet Guide
+# The Dexalot L1 Guide
 
 ![guide_1](/images/guide/guide_1.png)
 
-[Dexalot](https://dexalot.com/) has launched on an [Avalanche Subnet](https://www.avax.network/subnets) ! Like its [sunsetting single-chain predecessor app on the Avalanche C-Chain](https://medium.com/dexalot/dexalot-single-chain-sunset-schedule-847f47091598), the Dexalot Subnet aims to replicate the user experience of a centralized exchange (CEX) without compromising on decentralization and transparency ! The subnet is a user-friendly on-chain central limit order book (CLOB) with low transaction fees, fast transaction finality sporting upcoming support across the following trade pairs:
+[Dexalot](https://dexalot.com/) has launched on an [Avalanche L1](https://www.avax.network/subnets) ! Like its [sunsetting single-chain predecessor app on the Avalanche C-Chain](https://medium.com/dexalot/dexalot-single-chain-sunset-schedule-847f47091598), the Dexalot L1 aims to replicate the user experience of a centralized exchange (CEX) without compromising on decentralization and transparency ! The subnet is a user-friendly on-chain central limit order book (CLOB) with low transaction fees, fast transaction finality sporting upcoming support across the following trade pairs:
 
 - **AVAX/USDC**
 - **AVAX/USDT**
@@ -16,7 +16,7 @@ editLink: true
 
 ---
 
-## Welcome to the Dexalot Subnet!!
+## Welcome to the Dexalot L1!!
 
 - [Dexalot Single-Chain Sunset Schedule](https://medium.com/dexalot/dexalot-single-chain-sunset-schedule-847f47091598)
 - History and Introduction to the [The Dexalot Subnet](https://medium.com/dexalot/the-dexalot-subnet-96b2a05cb435)

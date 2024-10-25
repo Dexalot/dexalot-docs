@@ -10,12 +10,12 @@ export const trSidebarConfig = sidebar({
       prefix: "/tr/articles/",
       children: [
         {
-          text: "Dexalot Subnet",
+          text: "Dexalot L1",
           icon: "book-open",
           link: "subnet"
         },
         {
-          text: "Dexalot Subnet Rehberi",
+          text: "Dexalot L1 Rehberi",
           icon: "book-open",
           link: "guide"
         },
@@ -64,12 +64,12 @@ export const trSidebarConfig = sidebar({
       prefix: "/tr/tutorials/",
       children: [
         {
-          text: "Subnet’e giriş",
+          text: "L1'e giriş",
           icon: "play",
           link: "howtouse"
         },
         {
-          text: "Dexalot-Subnet Testi",
+          text: "Dexalot L1 Testi",
           icon: "play",
           link: "howtotest"
         },

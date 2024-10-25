@@ -20,11 +20,6 @@ export const enSidebarConfig = sidebar({
           link: "guide"
         },
         {
-          text: "Dexalot L1 Node",
-          icon: "book-open",
-          link: "runanode"
-        },
-        {
           text: "Dexalot Incentive Program",
           icon: "book-open",
           link: "dip"
@@ -80,14 +75,19 @@ export const enSidebarConfig = sidebar({
       prefix: "tutorials/",
       children: [
         {
-          text: "Dexalot Subnet Intro",
+          text: "Dexalot L1 Intro",
           icon: "play",
           link: "howtouse"
         },
         {
-          text: "Dexalot Subnet Testing",
+          text: "Dexalot L1 Testing",
           icon: "play",
           link: "howtotest"
+        },
+        {
+          text: "Run a Dexalot L1 Node",
+          icon: "book-open",
+          link: "runanode"
         },
         {
           text: "Metamask Install",

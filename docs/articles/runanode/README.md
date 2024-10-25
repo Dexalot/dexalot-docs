@@ -2,24 +2,26 @@
 editLink: true
 ---
 
-# Running a Non-Validating Dexalot L1 Node
+# How to Run a Non-Validating Dexalot L1 Node
 
 ![runanode](/images/runanode/runanode.png)
 
 ## Introduction
 
-Dexalot is an omni-chain decentralized exchange (DEX) that operates a central limit order book (CLOB) in its own sovereign blockchain within the Avalanche L1 Universe. It provides two distinct experiences to the users to access its superior prices and ample liquidity:
+Dexalot is an omni-chain decentralized exchange (DEX) that operates a central limit order book (CLOB) on its own sovereign blockchain within the Avalanche L1 ecosystem. It provides three distinct experiences to the users to access its superior prices and ample liquidity:
 
-1. A centralized exchange experience with limit and market orders for market makers and experienced traders as well as casual traders requiring best prices and more control over their orders.
+1. A centralized exchange experience with limit and market orders for experienced traders as well as casual traders requiring best prices and more control over their orders.
 2. A swap experience that can be accessed from other connected chains catering more to traders looking for an AMM-like interface.
+3. A programmatic trading experience through its APIs and well-documented contract interfaces for professional market makers and heavy traders.
 
-Some users may want to interact with Dexalot running their own non-validating Avalanche node that tracks the Dexalot L1 blockchain in addition to the primary networks X, P, and C. Running a non-validating node may be needed for several reasons:
+Some users may want to interact with Dexalot running their own non-validating Avalanche node that tracks the Dexalot L1 blockchain in addition to the primary networks X, P, and C.
 
-  - **Access to Full RPC Functionality**: It allows projects to access to the Avalanche network's RPC server without the rate limitations imposed on public endpoints.
-  - **Backup Node**: It could serve as a ready replacement for validating nodes in case of issues.
-  - **Test Node**: It allows risk-free testing on a node for various configuration options and profiling.
+Running a non-validating node may be needed for several reasons:
+- **Access to Full RPC Functionality**: It allows projects to have access to an Avalanche Network RPC server without the rate limitations imposed on public endpoints.
+- **Backup Node**: It could serve as a ready replacement for validating nodes in case of issues.
+- **Test Node**: It allows risk-free testing on a node for various configuration options and profiling.
 
-This guide provides detailed instructions on setting up a non-validating Avalanche node that tracks Dexalot L1. The process involves downloading the AvalancheGo executable binary, adding the Subnet-EVM plugin, configuring the node to track the Dexalot L1 using these binaries, and ensuring it's properly synchronized with the network.
+This guide provides detailed instructions on setting up a non-validating Avalanche node that tracks Dexalot L1. The process involves downloading the AvalancheGo executable binary, adding the Subnet-EVM plugin, configuring the node to track the Dexalot L1 using these binaries, and ensuring it is properly synchronized with the network.
 
 ## Overview
 

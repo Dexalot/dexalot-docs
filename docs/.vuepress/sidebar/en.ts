@@ -10,19 +10,19 @@ export const enSidebarConfig = sidebar({
       prefix: "articles/",
       children: [
         {
-          text: "Dexalot Subnet",
+          text: "Dexalot L1 Intro",
           icon: "book-open",
           link: "subnet"
         },
         {
-          text: "Run a Dexalot L1 Node",
-          icon: "book-open",
-          link: "runanode"
-        },
-        {
-          text: "The Dexalot Subnet Guide",
+          text: "Dexalot L1 Guide",
           icon: "book-open",
           link: "guide"
+        },
+        {
+          text: "Dexalot L1 Node",
+          icon: "book-open",
+          link: "runanode"
         },
         {
           text: "Dexalot Incentive Program",

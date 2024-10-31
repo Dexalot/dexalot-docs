@@ -15,6 +15,10 @@ This release includes some breaking changes! Please check and make sure your int
 
 Full List of changes related to this release can be found in [version history](/contracts/#version-history)
 
+### Contract Event Changes:
+
+* Event signature changed for OrderStatusChanged. New event version will be version=3 in the events you receive from the chain.
+
 ### New Trading functions to implement:
 
 * [AddNewOrder](/contracts/TradePairs.html#addneworder)

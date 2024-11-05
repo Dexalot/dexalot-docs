@@ -440,11 +440,15 @@ T-PPAU-04: Pair should be paused for this operation
 
 T-RMTP-01: orderbook has to be empty to remove the tradePair
 
+T-STPR-01: order cancled due to self trade prevention
+
 T-T2PO-01: Post Only order is not allowed to be a taker
 
 T-TMDP-01: too many decimals in the price
 
 T-TMDQ-01: too many decimals in the quantity
+
+T-USCL-01: unsolicited cancel from exchange
 
 ## TokenVesting
 

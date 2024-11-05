@@ -156,10 +156,10 @@ Emits a given order's latest state
 
 **Dev notes:** \
 If there are multiple partial fills, the new partial fill `price * quantity`
-is added to the current value in `totalamount`. Average execution price can be
-quickly calculated by `totalamount / quantityfilled` regardless of the number of
+is added to the current value in `totalAmount`. Average execution price can be
+quickly calculated by `totalAmount / quantityFilled` regardless of the number of
 partial fills at different prices \
-`totalfee` is always in terms of received(incoming) currency. ie. if Buy ALOT/AVAX,
+`totalFee` is always in terms of received(incoming) currency. ie. if Buy ALOT/AVAX,
 fee is paid in ALOT, if Sell ALOT/AVAX , fee is paid in AVAX \
 **Note**: The execution price will always be equal or better than the Order price.
 
@@ -212,12 +212,6 @@ event Executed(uint8 version, bytes32 pair, uint256 price, uint256 quantity, byt
 
 ```solidity:no-line-numbers
 event ParameterUpdated(uint8 version, bytes32 pair, string param, uint256 oldValue, uint256 newValue)
-```
-
-### SelfTradePrevention
-
-```solidity:no-line-numbers
-event SelfTradePrevention(address traderAddress, bool protection)
 ```
 
 ## Methods

@@ -602,6 +602,7 @@ can be obtained by calling `getTradePair(..)` and accessing baseDisplayDecimals 
 This transaction will REVERT for the following reasons:
 - insufficient funds
 - if the msg sender is different than the order.traderaddress
+- if type2=FOK and the order can't be fully filled. (Use type2=IOC instead for smother list orders)
 - tradePair.pairPaused (Exchange Level admin function)
 - tradePair.addOrderPaused (Exchange Level admin function)
 For the rest of the order level check failures, the order will be REJECTED, NOT REVERTED by emitting
@@ -616,7 +617,7 @@ Valid quantity decimals (quoteDisplayDecimals) and evm decimals can be obtained 
 `getTradePair(..)` and accessing quoteDisplayDecimals and quoteDecimals respectively. \
 `Type2` : \
 0 = GTC : Good Till Cancel - default\
-1 = FOK : FIll or Kill (Will fill entirely or will get status=KILLED with code = "T-FOKF-01") \
+1 = FOK : FIll or Kill (Will entirely fill or revert with code = "T-FOKF-01") \
 2 = IOC : Immediate or Cancel  (Will try to fill fully, if filled partially it will get status=CANCELED) \
 3 = PO  : Post Only (Will either go in the orderbook or will get status=REJECTED with "T-T2PO-01"
 if it has a potential match) \
@@ -1037,7 +1038,7 @@ Adds the remaining quantity of an unfilled taker order to the orderbook
 
 **Dev notes:** \
 memory taker order is cast to storage prospective maker order before being added
-to the orderbook
+to the orderbook  (Including Auction Orders)
 
 ```solidity:no-line-numbers
 function addTakerToOrderBook(bytes32 _tradePairId, uint256 _quantityRemaining, struct ITradePairs.Order _takerOrder) private

@@ -575,7 +575,7 @@ To send multiple Orders of any type in a single transaction designed for Market 
 if a single order in the new list REVERTS, the entire transaction is reverted.
 No orders nor cancels will go through.
 If any of the orders/cancels is rejected, it will continue to process the rest of the orders without any issues.
-See #addNewOrder for REVERT and REJECT conditions. \
+See #addNewOrder for `REVERT` and `REJECT` conditions. \
 ```
 Sample typescript code:
 const orders = [];
@@ -609,7 +609,7 @@ function addOrderList(struct ITradePairs.NewOrder[] _orders) external
 Function for adding a single order
 
 **Dev notes:** \
-Adds an order with the given order struct.
+Adds an order with the given order struct. \
 `REVERT` vs `REJECT` \
 When a transaction is `REVERTED`, neither the order is accepted nor the transaction is committed
 to the blockchain. A record of the failure that can be seen with a blockchain explorer like
@@ -652,9 +652,9 @@ The `OrderStatusChanged` event always will return an `id` (orderId) assigned by 
 with your `clientOrderId` when trying to enter a new order regardless of the status of the order.\
 `clientOrderId` is user generated and must be unique per traderaddress. \
 For MARKET orders, values sent by the user in the `price` and `type2` fields will be ignored and
-defaulted to 0 and Type2.GTC respectively. \
+defaulted to `0` and `Type2.GTC` respectively. \
 Similarly for auction orders, values sent by the user in the `stp` and `type2` fields will be ignored
-and defaulted to STP.NONE and Type2.GTC respectively. \
+and defaulted to `STP.NONE` and `Type2.GTC` respectively. \
 Valid quantity precision (baseDisplayDecimals) and base token evm decimals can be obtained by calling
 `getTradePair(..)` and accessing baseDisplayDecimals and baseDecimals respectively.
 Valid price precision and quote token evm decimals can also be obtained from the same function above and
@@ -763,7 +763,7 @@ Canceled order's locked quantity is made available for the new order within this
 This function will technically accept the same clientOrderId as the previous because previous clientOrderId
 is made vailable when the previous order is cancelled as  it is removed from the mapping.
 !!Not recommended! \
-********Important: STP defaults to STP.CANCELMAKER ********
+`Important: STP defaults to STP.CANCELMAKER`
 
 ```solidity:no-line-numbers
 function cancelReplaceOrder(bytes32 _orderId, bytes32 _clientOrderId, uint256 _price, uint256 _quantity) external
@@ -818,12 +818,12 @@ same block. Cancel List is completely independent of the new list to be added. I
 cancel 2 orders from 2 different tradepairs and then add 5 new orders for a third tradePairId.
 Canceled order's locked quantity is made available for the new order within this tx if they are for the same pair.
 Call with Maximum ~15 orders at a time for a block size of 30M \
-`When processing cancellations list (_orderIdsToCancel` \
+`When processing cancellations list (_orderIdsToCancel)` \
 Will emit OrderStatusChanged `status = CANCEL_REJECT`, `code= T-OAEX-01` for orders that are already canceled/filled \
 In this case, because the closed orders are already removed from the blockchain, all the values in the OrderStatusChanged
 event except `id`, `traderaddress`, `status` and `code` fields will be empty/default values. This includes the
 indexed field `pair` which you may use as filters for your event listeners. Hence you should process the
-transaction log rather than relying on your event listeners if you need to capture CANCEL_REJECT messages and
+transaction log rather than relying on your event listeners if you need to capture `CANCEL_REJECT` messages and
 filtering your events using the `pair` field.
 Will emit OrderStatusChanged `status = CANCEL_REJECT`, `code= T-OOCC-02` if the traderaddress
 of the order that is being canceled is different than msg.sender.
@@ -831,7 +831,7 @@ if any of the cancels are rejected, the rest of the cancel requests will still b
 `When processing the NEW Orders list(_orders)` \
 if a single order in the new list REVERTS, the entire transaction is reverted. No orders nor cancels will go through.
 If any of the orders/cancels is rejected, it will continue to process the rest of the orders without any issues.
-See #addNewOrder for REVERT and REJECT conditions. \
+See #addNewOrder for `REVERT` and `REJECT` conditions. \
 ```
 Sample typescript code:
 const orderIdsToCancel =["id1","id2"];
@@ -874,7 +874,7 @@ canceled/filled while continuing to cancel the remaining open orders in the list
 Because the closed orders are already removed from the blockchain, all values in the OrderStatusChanged
 event except `id`, `traderaddress`, `status` and `code` fields will be empty/default values. This includes the
 indexed field `pair` which you may use as filters for your event listeners. Hence you should process the
-transaction log rather than relying on your event listeners if you need to capture CANCEL_REJECT messages and
+transaction log rather than relying on your event listeners if you need to capture `CANCEL_REJECT` messages and
 filtering your events using the `pair` field.
 
 ```solidity:no-line-numbers
@@ -970,7 +970,7 @@ The details of the emitted event: \
 `status` ITradePairs.Status See #addNewOrder (immutable) \
 `updateBlock` the block number the order was created or last changed (mutable)\
 `previousUpdateBlock` the previous block number the order was changed (mutable)\
-`code`  reason when the order has REJECT, CANCEL_REJECT, CANCELED(due to STP) status, empty otherwise (mutable)\
+`code`  reason when the order's `status in REJECT, CANCEL_REJECT, CANCELED (due to STP)`, empty otherwise (mutable)\
 Note: The execution price will always be equal or better than the Taker Order price for LIMIT Orders.
 
 ```solidity:no-line-numbers

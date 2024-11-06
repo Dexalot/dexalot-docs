@@ -20,7 +20,6 @@ TradePairs should have EXECUTOR_ROLE on OrderBooks.
 | Name | Type |
 | --- | --- |
 | EXCHANGE_ROLE | bytes32 |
-| TENK | uint256 |
 | VERSION | bytes32 |
 | maxNbrOfFills | uint256 |
 
@@ -525,7 +524,7 @@ function getOrder(bytes32 _orderId) external view returns (struct ITradePairs.Or
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| [0] | struct ITradePairs.Order | Order  Order Struct |
+| [0] | struct ITradePairs.Order | Order Struct |
 
 #### getOrderRemainingQuantity
 
@@ -566,7 +565,7 @@ function getOrderByClientOrderId(address _trader, bytes32 _clientOrderId) extern
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| [0] | struct ITradePairs.Order | Order  Order Struct |
+| [0] | struct ITradePairs.Order | Order Struct |
 
 #### addOrderList
 
@@ -577,7 +576,23 @@ if a single order in the new list reverts, the entire transaction is reverted.
 None of the orders will go through
 See addNewOrder for REVERT conditions.
 If any of the orders is rejected, it will continue to process the rest of the orders without any issues.
-See addNewOrder & addOrderChecks for REJECT conditions.
+See addNewOrder & addOrderChecks for REJECT conditions.\
+```
+Sample typescript code:
+const orders = [];
+const order = { traderaddress: Ox
+              , clientOrderId: Oxid3
+              , tradePairId:
+              , price:
+              , quantity:
+              , side: 0  // Buy
+              , type1: 1 // Limit
+              , type2: 3 // PO
+              , stp: 0   // STP
+         };
+orders.push(order);
+await tradePairs.addOrderList(orders);
+```
 
 ```solidity:no-line-numbers
 function addOrderList(struct ITradePairs.NewOrder[] _orders) external
@@ -587,7 +602,7 @@ function addOrderList(struct ITradePairs.NewOrder[] _orders) external
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _orders | struct ITradePairs.NewOrder[] | array of newOrder struct. See ITradePairs.NewOrder Sample typescript code const orders = []; const order = { traderaddress: Ox               , clientOrderId: Oxid3               , tradePairId:               , price:               , quantity:               , side: 0  // Buy               , type1: 1 // Limit               , type2: 3 // PO               , stp: 0   // STP          }; orders.push(order); await tradePairs.addOrderList(orders); |
+| _orders | struct ITradePairs.NewOrder[] | array of newOrder struct. See ITradePairs.NewOrder |
 
 #### addNewOrder
 
@@ -597,7 +612,7 @@ Function for adding a single order
 Adds an order with the given order struct.
 `clientOrderId` is user generated and it is returned in all the responses for reference. It must be unique
 per traderaddress. \
-`Price` for MARKET orders (type1=0) are set to 0 internally. Valid price decimals and evm decimals
+`Price` for MARKET orders (type1=0) is overridden to 0 internally. Valid price decimals and evm decimals
 can be obtained by calling `getTradePair(..)` and accessing baseDisplayDecimals and baseDecimals respectively. \
 This transaction will REVERT for the following reasons:
 - insufficient funds
@@ -605,27 +620,43 @@ This transaction will REVERT for the following reasons:
 - if type2=FOK and the order can't be fully filled. (Use type2=IOC instead for smother list orders)
 - tradePair.pairPaused (Exchange Level admin function)
 - tradePair.addOrderPaused (Exchange Level admin function)
+
 For the rest of the order level check failures, the order will be REJECTED, NOT REVERTED by emitting
 OrderStatusChanged event with "status" = REJECTED and "code" = errorCode.
 The OrderStatusChanged event always will return `id` (orderId) assigned from the blockchain along with
 your clientorderid when trying to enter a new order.
 See addOrderChecks function for potential reject reasons. Every line that starts with return (0, errorCode)
-will be rejected.
+will be rejected.\
 When the blockchain is extremely busy, the transactions are queued up in the mempool and prioritized
 based on their gas price.
 Valid quantity decimals (quoteDisplayDecimals) and evm decimals can be obtained by calling
-`getTradePair(..)` and accessing quoteDisplayDecimals and quoteDecimals respectively. \
+`getTradePair(..)` and accessing quoteDisplayDecimals and quoteDecimals respectively.
+
 `Type2` : \
 0 = GTC : Good Till Cancel - default\
 1 = FOK : FIll or Kill (Will entirely fill or revert with code = "T-FOKF-01") \
 2 = IOC : Immediate or Cancel  (Will try to fill fully, if filled partially it will get status=CANCELED) \
 3 = PO  : Post Only (Will either go in the orderbook or will get status=REJECTED with "T-T2PO-01"
-if it has a potential match) \
+if it has a potential match)
+
 `STP`   : Self Trade Prevention Mode when both maker and taker orders are from the same traderaddress. \
 0: CANCELTAKER   – Cancel taker Order. Let the resting maker order remain in the orderbook. \
 1: CANCELMAKER   – Cancel maker Order. Continue to execute the newer taking order.\
 2: CANCELBOTH    – Cancel both maker & taker orders immediately.\
-3: NONE          – Do nothing. Self Trade allowed \
+3: NONE          – Do nothing. Self Trade allowed
+```
+Sample typescript code:
+const order = { traderaddress: Ox    // address of the trader. If msg.sender != `traderaddress` the tx will revert.
+              , clientOrderId: Oxid3 // unique id provided by the owner of an order bytes32
+              , tradePairId:         // id of the trading pair in bytes32
+              , price:               // price of the order
+              , quantity:            // quantity of the order
+              , side: 0              // enum ITradePairs.Side  Side of the order 0 BUY, 1 SELL
+              , type1: 1             // enum ITradePairs.Type1 Type of the order. 0 MARKET, 1 LIMIT
+              , type2: 3             // enum ITradePairs.Type2 SubType of the order
+              , stp: 0               // enum ITradePairs.STP self trade prevention mode
+         };
+```
 
 ```solidity:no-line-numbers
 function addNewOrder(struct ITradePairs.NewOrder _order) external
@@ -635,7 +666,7 @@ function addNewOrder(struct ITradePairs.NewOrder _order) external
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _order | struct ITradePairs.NewOrder | newOrder struct to be sent out. See ITradePairs.NewOrder Sample typescript code const order = { traderaddress: Ox    // address of the trader. If msg.sender != `traderaddress` the tx will revert.               , clientOrderId: Oxid3 // unique id provided by the owner of an order bytes32               , tradePairId:         // id of the trading pair in bytes32               , price:               // price of the order               , quantity:            // quantity of the order               , side: 0              // enum ITradePairs.Side  Side of the order 0 BUY, 1 SELL               , type1: 1             // enum ITradePairs.Type1 Type of the order. 0 MARKET, 1 LIMIT               , type2: 3             // enum ITradePairs.Type2 SubType of the order               , stp: 0               // enum ITradePairs.STP self trade prevention mode          }; |
+| _order | struct ITradePairs.NewOrder | newOrder struct to be sent out. See ITradePairs.NewOrder |
 
 #### matchAuctionOrder
 
@@ -696,7 +727,7 @@ fields are copied from the canceled order to the new order.
 The time priority of the original order is lost.
 Canceled order's locked quantity is made available for the new order within this tx
 This function will technically accept the same clientOrderId as the previous because when the previous order
-is cancelled it is removed from the mapping and the previous clientOrderId is now available. Not recommended!
+is cancelled it is removed from the mapping and the previous clientOrderId is now available. Not recommended! \
 ********Important: STP defaults to STP.CANCELMAKER ********
 
 ```solidity:no-line-numbers
@@ -745,8 +776,8 @@ Cancels all the orders in the _orderIds list and then adds the orders in the _or
 Cancel List is completely independent of the new list to be added. In other words, you can technically cancel 2 orders
 from 2 different tradepairs and then add 5 new orders for a third tradePairId.
 Canceled order's locked quantity is made available for the new order within this tx if they are for the same pair.
-Call with Maximum ~15 orders at a time for a block size of 30M
-****** When processing cancellations list (_orderIdsToCancel) ******
+Call with Maximum ~15 orders at a time for a block size of 30M \
+****** When processing cancellations list (_orderIdsToCancel) ****** \
 Will emit OrderStatusChanged "status" = CANCEL_REJECT, "code"= "T-OAEX-01" for orders that are already canceled/filled \
 In this case, because the closed orders are already removed from the blockchain, all the values in the OrderStatusChanged
 event except "orderId", "traderaddress", "status" and "code" fields will be empty/default values. This includes the
@@ -754,13 +785,30 @@ indexed field "pair" which you may use as filters for your event listeners. Henc
 transaction log rather than relying on your event listeners if you need to capture CANCEL_REJECT messages and
 filtering your events using the "pair" field.
 Will emit OrderStatusChanged "status" = CANCEL_REJECT, "code"= T-OOCC-02" if the traderaddress
-of the order that is being canceled is different than msg.sender
-if any of the cancels are rejected, the rest of the cancel requests will still be processed.
-****** When processing the NEW Orders list(_orders) ******
+of the order that is being canceled is different than msg.sender.
+if any of the cancels are rejected, the rest of the cancel requests will still be processed.\
+****** When processing the NEW Orders list(_orders) ****** \
 if a single order in the new list REVERTS, the entire transaction is reverted. No orders nor cancels will go through.
 See addNewOrder for REVERT conditions.
 If any of the orders/cancels is rejected, it will continue to process the rest of the orders without any issues.
-See addNewOrder & addOrderChecks for REJECT conditions.
+See addNewOrder & addOrderChecks for REJECT conditions. \
+```
+Sample typescript code:
+const orderIdsToCancel =["id1","id2"];
+const orders = [];
+const order = { traderaddress: Ox
+              , clientOrderId: Oxid3
+              , tradePairId:
+              , price:
+              , quantity:
+              , side: 0  // Buy
+              , type1: 1 // Limit
+              , type2: 3 // PO
+              , stp : 0  // STP
+         };
+orders.push(order);
+await tradePairs.cancelAddList(orderIdsToCancel, orders);
+```
 
 ```solidity:no-line-numbers
 function cancelAddList(bytes32[] _orderIdsToCancel, struct ITradePairs.NewOrder[] _orders) external
@@ -771,7 +819,7 @@ function cancelAddList(bytes32[] _orderIdsToCancel, struct ITradePairs.NewOrder[
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _orderIdsToCancel | bytes32[] | array of order ids to be canceled |
-| _orders | struct ITradePairs.NewOrder[] | array of newOrder struct to be sent out. See ITradePairs.NewOrder Sample typescript code const orderIdsToCancel =["id1","id2"]; const orders = []; const order = { traderaddress: Ox               , clientOrderId: Oxid3               , tradePairId:               , price:               , quantity:               , side: 0  // Buy               , type1: 1 // Limit               , type2: 3 // PO               , stp : 0  // STP          }; orders.push(order); await tradePairs.cancelAddList(orderIdsToCancel, orders); |
+| _orders | struct ITradePairs.NewOrder[] | array of newOrder struct to be sent out. See ITradePairs.NewOrder |
 
 #### cancelOrderList
 
@@ -929,13 +977,13 @@ function addExecution(bytes32 _makerOrderId, struct ITradePairs.Order _takerOrde
 
 Emits the Executed Event showing \
 `version`  event version \
-`tradePairId`  traded pair from makerOrder, i.e. ALOT/AVAX in bytes32 \
-`_price`  see below \
-`_quantity`  see below \
-`_makerOrderId`  see below \
-`_takerOrderId`  see below \
-`_mlastFee`  see below \
-`_tlastFee`  see below \
+`pair`  traded pair id from makerOrder, i.e. ALOT/AVAX in bytes32 \
+`price`  executed price \
+`quantity`  executed quantity \
+`makerOrder`  makerOrder id \
+`takerOrder`  takerOrder id \
+`feeMaker`  fee paid by maker \
+`feeTaker`  fee paid by taker \
 `takerSide`  Side of the taker order. 0 - BUY, 1- SELL (Note: This can be used to identify
 the fee UNITs. If takerSide = 1, then the fee is paid by the Maker in Base
 Currency and the fee paid by the taker in Quote currency. If takerSide= 0
@@ -1020,6 +1068,15 @@ function addOrderListPrivate(address _msSender, struct ITradePairs.NewOrder[] _o
 
 See addOrder
 
+**Dev notes:** \
+This function attempts to fill the Gas Tank if it is a single order or the very last order in a list. If we
+apply fillGasTank to any order before the last one in a list, the balances of the token may change and error out
+as subsequent orders for the same token may expect the balances before the tx has started. Total 20 Y
+available. 2 orders entered. Ord1 Sell 12 Y and Ord2 Sell another 8 Y. if we fillGasTank on Ord1, Ord2 will
+revert the entire tx with `P-AFNE`. In this case it will attempt to fillGasTank on Ord2 but it won't since
+there will be no inventory available. If Ord1 Sell 12 Y and Ord2 Sell another 7 Y , then there is 1 Y
+available that can be used for fillGasTank.
+
 ```solidity:no-line-numbers
 function addOrderPrivate(address _msSender, struct ITradePairs.NewOrder _order, bool _fillGasTank) private
 ```
@@ -1028,9 +1085,9 @@ function addOrderPrivate(address _msSender, struct ITradePairs.NewOrder _order, 
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _msSender | address | address of the msg.Sender. If msg.sender is not the same as _order.traderaddress the tx will revert. |
+| _msSender | address | address of the msg.Sender. If msg.sender is not the same as _order.traderaddress the tx will revert. |
 | _order | struct ITradePairs.NewOrder | newOrder struct to be sent out. See ITradePairs.NewOrder |
-| _fillGasTank | bool | controls the fillGasTank logic. Gas Tank fill is applied if it is a single order or the very last order in a list. If we apply fillGasTank to any order before the last one in a list, it may change the balances of a token, This may cause errors as subsequent orders for the same token may expect the balances before the tx has started. Total 20 Y available. 2 orders entered. Ord1 Sell 12 Y and Ord2 Sell another 8 Y. if we fillGasTank on Ord1, Ord2 will revert the entire tx with P-AFNE. In this case it will attempt to fillGasTank on Ord2 but it won't since there will be no inventory available. If Ord1 Sell 12 Y and Ord2 Sell another 7 Y , then there is 1 Y available that can be used for fillGasTank. |
+| _fillGasTank | bool | fill GasTank if true and when the user's balance is below the treshold |
 
 #### addTakerToOrderBook
 
@@ -1069,15 +1126,15 @@ function matchOrder(struct ITradePairs.Order _takerOrder, uint256 _maxNbrOfFills
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _takerOrder | struct ITradePairs.Order | Taker Order |
-| _maxNbrOfFills | uint256 | Max number of fills an order can get at a time to avoid running out of gas (Defaults to maxNbrOfFills=100). |
+| _maxNbrOfFills | uint256 | Max number of fills an order can get at a time to avoid running out of gas (Default: 100) |
 | _stp | enum ITradePairs.STP | Self Trade Prevention mode |
 
 ##### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| [0] | struct ITradePairs.Order | takerOrder updated taker order (status,quantityFilled, totalAmount etc..) |
-| code | bytes32 | additional explanation of an action. Currently when an order is canceled in case of self  trade Prevention , reason is stated in the code |
+| [0] | struct ITradePairs.Order | updated taker order (status,quantityFilled, totalAmount etc..) |
+| code | bytes32 | reason for the cancel in the `code` field. Currently only due to STP |
 
 #### cancelOrderPrivate
 
@@ -1096,7 +1153,7 @@ function cancelOrderPrivate(address _msSender, bytes32 _orderId, bool _fillGasTa
 | ---- | ---- | ----------- |
 | _msSender | address | address of the msg.Sender |
 | _orderId | bytes32 | order id to cancel |
-| _fillGasTank | bool | controls the fillGasTank logic. fillGasTank is applied if it is a single cancel or the very last cancel in a cancel list. |
+| _fillGasTank | bool | fill GasTank if true and when the user's balance is below the treshold |
 
 #### cancelOrderListPrivate
 
@@ -1115,7 +1172,7 @@ function cancelOrderListPrivate(address _msSender, bytes32[] _orderIds, bool _fi
 | ---- | ---- | ----------- |
 | _msSender | address | array of order ids to be canceled |
 | _orderIds | bytes32[] | array of order ids |
-| _fillGasTank | bool | controls the fillGasTank logic. fillGasTank only when processing the last cancel in the cancel list & if also the _fillGasTank flag is true |
+| _fillGasTank | bool | fill GasTank if true and only when processing the last cancel in the cancel list |
 
 #### doOrderCancel
 
@@ -1130,6 +1187,6 @@ function doOrderCancel(bytes32 _orderId, bool _fillGasTank, bytes32 _code) priva
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _orderId | bytes32 | order id to cancel |
-| _fillGasTank | bool | when true, it fills the user's gas tank when it is below the treshold |
+| _fillGasTank | bool | fill GasTank if true and when the user's balance is below the treshold |
 | _code | bytes32 | additional explanation ( i.e unsolicited Cancel) |
 

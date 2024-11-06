@@ -20,12 +20,6 @@ It is designed to be used in conjunction with the PortfolioBridge contract.
 | allowedRelayers | address[] |
 | gasLimits | mapping(enum IBridgeProvider.CrossChainMessageType &#x3D;&gt; uint256) |
 
-### Private
-
-| Name | Type |
-| --- | --- |
-| __gap | uint256[50] |
-
 ## Events
 
 ### AddRelayer

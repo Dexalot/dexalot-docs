@@ -149,24 +149,6 @@ function setPortfolioBridge(address _portfolioBridge) external
 | ---- | ---- | ----------- |
 | _portfolioBridge | address | New portfolio bridge contract address |
 
-#### enableBridgeProvider
-
-Enables or disables a bridge provider
-
-**Dev notes:** \
-Only callable by admin
-
-```solidity:no-line-numbers
-function enableBridgeProvider(enum IPortfolioBridge.BridgeProvider _bridge, address _bridgeContract) external
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _bridge | enum IPortfolioBridge.BridgeProvider | Enum value of the bridge provider |
-| _bridgeContract | address | Address of bridge contract to enable, zero address to disable |
-
 #### getNative
 
 Returns the native token of the chain

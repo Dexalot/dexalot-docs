@@ -59,12 +59,6 @@ event FutureAUpdated(uint256 futureA, uint256 futureATime, uint256 timestamp)
 event AUpdated(uint256 A, uint256 timestamp)
 ```
 
-### InventorySet
-
-```solidity:no-line-numbers
-event InventorySet(bytes32 symbol, bytes32 symbolId, uint256 quantity, uint256 timestamp)
-```
-
 ## Methods
 
 ### Public

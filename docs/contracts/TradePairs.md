@@ -572,11 +572,10 @@ function getOrderByClientOrderId(address _trader, bytes32 _clientOrderId) extern
 To send multiple Orders of any type in a single transaction designed for Market Making operations
 
 **Dev notes:** \
-if a single order in the new list reverts, the entire transaction is reverted.
-None of the orders will go through
-See addNewOrder for REVERT conditions.
-If any of the orders is rejected, it will continue to process the rest of the orders without any issues.
-See addNewOrder & addOrderChecks for REJECT conditions.\
+if a single order in the new list REVERTS, the entire transaction is reverted.
+No orders nor cancels will go through.
+If any of the orders/cancels is rejected, it will continue to process the rest of the orders without any issues.
+See `addNewOrder` for REVERT and REJECT conditions. \
 ```
 Sample typescript code:
 const orders = [];
@@ -611,24 +610,32 @@ Function for adding a single order
 
 **Dev notes:** \
 Adds an order with the given order struct.
-`clientOrderId` is user generated and it is returned in all the responses for reference. It must be unique
-per traderaddress. \
-`price` for MARKET orders (type1=0) is overridden to 0 internally. Valid price decimals and evm decimals
-can be obtained by calling `getTradePair(..)` and accessing quoteDisplayDecimals and quoteDecimals respectively.
-Any reference data is also available from the REST API. See Trading API \
-`REVERT conditions:`
+`REVERT' vs `REJECT`
+When a transaction is `REVERTED`, neither the order is accepted nor the transaction is committed
+to the blockchain. A record of the failure that can be seen with a blockchain explorer like
+snowtrace to get some additional information.
+A `REVERT` reverts the entire transaction. If multiple orders are submitted together,
+a single revert caused by any of the orders in the list (first or the last order in the list) will
+cause them to fail all together.
+Reverted orders will NOT show up in your order history.
+
+When an order is REJECTED, the order is accepted for processing, an orderId is assigned to it but
+then gets REJECTED. The transaction is also successfully committed to the blockchain.
+An `OrderStatusChanged` event is raised to give the user additional information about the reject
+condition. The order will show up in your order history as `REJECTED`. The rejection has no impact
+on the additional orders submitted along with the rejected order. The remaining orders are processed
+without disruption.\
+
+`REVERT conditions:` \
 - `P-AFNE-01` or `P-AFNE-02` available funds not enough
 - `T-OOCA-01` only msg.sender can add orders
 - `T-FOKF-01` if type2=FOK and the order can't be fully filled. (Use type2=IOC instead for smother list orders)
-- `T-PPAU-01` tradePair.pairPaused (Exchange Level admin function)
-- `T-AOPA-01` tradePair.addOrderPaused (Exchange Level admin function)
+- `T-PPAU-01` tradePair.pairPaused (Exchange Level state set by the admins)
+- `T-AOPA-01` tradePair.addOrderPaused (Exchange Level state set by the admins)
 
-`REJECT conditions:`
-
-For the rest of the order level check failures, the order will be REJECTED, NOT REVERTED by emitting
-OrderStatusChanged event with "status" = REJECTED and "code" = errorCode.
-The OrderStatusChanged event always will return `id` (orderId) assigned from the blockchain along with
-your clientorderid when trying to enter a new order regardless of the status of the order.
+`REJECT conditions:`\
+For all the order level check failures, the order will be REJECTED by emitting
+OrderStatusChanged event with `status = REJECTED` and `code = errorCode`.
 - `T-IVOT-01` : invalid order type / order type not enabled
 - `T-TMDQ-01` : too many decimals in the quantity
 - `T-TMDP-01` : too many decimals in the price
@@ -639,28 +646,38 @@ your clientorderid when trying to enter a new order regardless of the status of 
 - `T-POOA-01` : Only PO(PostOnly) Orders allowed for this pair
 - `T-AUCT-04` : market orders not allowed in auction mode
 
-When the blockchain is extremely busy, the transactions are queued up in the mempool and prioritized
-based on their gas price.
-Valid quantity decimals (baseDisplayDecimals) and evm decimals can be obtained by calling
-`getTradePair(..)` and accessing baseDisplayDecimals and baseDecimals  respectively.
- Any reference data is also available from the REST API. See Trading API
+The `OrderStatusChanged` event always will return an `id` (orderId) assigned by the blockchain along
+with your `clientOrderId` when trying to enter a new order regardless of the status of the order.\
+`clientOrderId` is user generated and must be unique per traderaddress. \
+For MARKET orders, values sent by the user in the `price` and `type2` fields will be ignored and
+defaulted to 0 and Type2.GTC respectively. \
+Similarly for auction orders, values sent by the user in the `stp` and `type2` fields will be ignored
+and defaulted to STP.NONE and Type2.GTC respectively. \
+Valid quantity precision (baseDisplayDecimals) and base token evm decimals can be obtained by calling
+`getTradePair(..)` and accessing baseDisplayDecimals and baseDecimals respectively.
+Valid price precision and quote token evm decimals can also be obtained from the same function above and
+accessing quoteDisplayDecimals and quoteDecimals respectively. Any reference data is also available from
+the REST API. See Trading API \
 
 `Type2` : \
-0 = GTC : Good Till Cancel - default\
-1 = FOK : FIll or Kill (Will entirely fill or revert with code = "T-FOKF-01") \
-2 = IOC : Immediate or Cancel  (Will try to fill fully, if filled partially it will get status=CANCELED) \
-3 = PO  : Post Only (Will either go in the orderbook or will get status=REJECTED with "T-T2PO-01"
-if it has a potential match)
+0 = GTC : Good Till Cancel order is kept open until it’s either executed or manually canceled \
+1 = FOK : FIll or Kill (Will entirely fill the order or revert with code = `T-FOKF-01`) \
+2 = IOC : Immediate or Cancel (any part of the order that isn’t immediately filled will get status=CANCELED) \
+3 = PO  : Post Only (Will either go in the orderbook without any fills or will get status=REJECTED
+with `T-T2PO-01` if it has a potential match)
 
 `STP`   : Self Trade Prevention Mode when both maker and taker orders are from the same traderaddress. \
-0: CANCELTAKER   – Cancel taker Order. Let the resting maker order remain in the orderbook. \
-1: CANCELMAKER   – Cancel maker Order. Continue to execute the newer taking order.\
-2: CANCELBOTH    – Cancel both maker & taker orders immediately.\
-3: NONE          – Do nothing. Self Trade allowed
+0 = CANCELTAKER   – Cancel taker Order. Let the resting maker order remain in the orderbook. \
+1 = CANCELMAKER   – Cancel maker Order. Continue to execute the newer taking order.\
+2 = CANCELBOTH    – Cancel both maker & taker orders immediately.\
+3 = NONE          – Do nothing. Self Trade allowed
+
+When the blockchain is extremely busy, the transactions are queued up in the mempool and prioritized
+based on their gas price.
 ```
 Sample typescript code:
-const order = { traderaddress: Ox    // address of the trader. If msg.sender != `traderaddress` the tx will revert.
-              , clientOrderId: Oxid3 // unique id provided by the owner of an order bytes32
+const order = { traderaddress: Ox    // address of the trader. If msg.sender != `traderaddress` the tx will revert with `T-OOCA-01`.
+              , clientOrderId: Oxid3 // unique id provided by the owner of an order in bytes32
               , tradePairId:         // id of the trading pair in bytes32
               , price:               // price of the order
               , quantity:            // quantity of the order
@@ -765,10 +782,10 @@ Cancels an order given the order id supplied
 
 **Dev notes:** \
 FILLED & CANCELED orders are removed from the blockchain state.
-Will emit OrderStatusChanged "status" = CANCEL_REJECT, "code"= "T-OAEX-01" for orders that are
+Will emit OrderStatusChanged `status = CANCEL_REJECT`, `code= T-OAEX-01` for orders that are
 already canceled/filled.
 The remaining status are NEW & PARTIAL and they are ok to cancel
-Will emit OrderStatusChanged "status" = CANCEL_REJECT, "code"= T-OOCC-02" if the order.traderaddress
+Will emit OrderStatusChanged `status = CANCEL_REJECT`, `code= T-OOCC-02` if the order.traderaddress
 of the order that is canceled is different than msg.sender
 Will only revert if tradePair.pairPaused is set to true by admins
 
@@ -784,30 +801,35 @@ function cancelOrder(bytes32 _orderId) external
 
 #### cancelAddList
 
-To Cancel and then Add multiple orders in a single transaction designed for Market Making operations
+To Cancel and then Add multiple orders in a single transaction designed for Market Making operations.
+It calls cancelOrderList and then addOrderList functions.
+This function ensures that cancelation and addition of the orders are done in the same block for a healthy
+orderbook.
+Note to Market Makers. Please use this function rather than calling cancelOrderList and then addOrderList
+separately. For example, suppose there is a single market maker on the orderbook X/USDC. If the market maker
+cancels all his orders and wait for the confirmation before sending the new orders, the orderbook can be
+theoretically be completely empty for a block or two which will cause a lot of grief to the market participants.
 
 **Dev notes:** \
-It calls cancelOrderList and then addOrderList functions
-Cancels all the orders in the _orderIds list and then adds the orders in the _orders list immediately in the same block.
-Cancel List is completely independent of the new list to be added. In other words, you can technically cancel 2 orders
-from 2 different tradepairs and then add 5 new orders for a third tradePairId.
+Cancels all the orders in the _orderIds list and then adds the orders in the _orders list immediately in the
+same block. Cancel List is completely independent of the new list to be added. In other words, you can technically
+cancel 2 orders from 2 different tradepairs and then add 5 new orders for a third tradePairId.
 Canceled order's locked quantity is made available for the new order within this tx if they are for the same pair.
 Call with Maximum ~15 orders at a time for a block size of 30M \
-****** When processing cancellations list (_orderIdsToCancel) ****** \
-Will emit OrderStatusChanged "status" = CANCEL_REJECT, "code"= "T-OAEX-01" for orders that are already canceled/filled \
+`When processing cancellations list (_orderIdsToCancel` \
+Will emit OrderStatusChanged `status = CANCEL_REJECT`, `code= T-OAEX-01` for orders that are already canceled/filled \
 In this case, because the closed orders are already removed from the blockchain, all the values in the OrderStatusChanged
-event except "orderId", "traderaddress", "status" and "code" fields will be empty/default values. This includes the
-indexed field "pair" which you may use as filters for your event listeners. Hence you should process the
+event except `id`, `traderaddress`, `status` and `code` fields will be empty/default values. This includes the
+indexed field `pair` which you may use as filters for your event listeners. Hence you should process the
 transaction log rather than relying on your event listeners if you need to capture CANCEL_REJECT messages and
-filtering your events using the "pair" field.
-Will emit OrderStatusChanged "status" = CANCEL_REJECT, "code"= T-OOCC-02" if the traderaddress
+filtering your events using the `pair` field.
+Will emit OrderStatusChanged `status = CANCEL_REJECT`, `code= T-OOCC-02` if the traderaddress
 of the order that is being canceled is different than msg.sender.
 if any of the cancels are rejected, the rest of the cancel requests will still be processed.\
-****** When processing the NEW Orders list(_orders) ****** \
+`When processing the NEW Orders list(_orders)` \
 if a single order in the new list REVERTS, the entire transaction is reverted. No orders nor cancels will go through.
-See addNewOrder for REVERT conditions.
 If any of the orders/cancels is rejected, it will continue to process the rest of the orders without any issues.
-See addNewOrder & addOrderChecks for REJECT conditions. \
+See `addNewOrder` for REVERT and REJECT conditions. \
 ```
 Sample typescript code:
 const orderIdsToCancel =["id1","id2"];
@@ -845,13 +867,13 @@ Cancels all the orders in the array of order ids supplied
 **Dev notes:** \
 This function may run out of gas if a trader is trying to cancel too many orders
 Call with Maximum ~50 orders at a time for a block size of 30M
-Will emit OrderStatusChanged "status" = CANCEL_REJECT, "code"= "T-OAEX-01" for orders that are already
+Will emit OrderStatusChanged `status = CANCEL_REJECT`, `code= T-OAEX-01` for orders that are already
 canceled/filled while continuing to cancel the remaining open orders in the list. \
 Because the closed orders are already removed from the blockchain, all values in the OrderStatusChanged
-event except "orderId", "traderaddress", "status" and "code" fields will be empty/default values. This includes the
-indexed field "pair" which you may use as filters for your event listeners. Hence you should process the
+event except `id`, `traderaddress`, `status` and `code` fields will be empty/default values. This includes the
+indexed field `pair` which you may use as filters for your event listeners. Hence you should process the
 transaction log rather than relying on your event listeners if you need to capture CANCEL_REJECT messages and
-filtering your events using the "pair" field.
+filtering your events using the `pair` field.
 
 ```solidity:no-line-numbers
 function cancelOrderList(bytes32[] _orderIds) external
@@ -1132,7 +1154,7 @@ maker orders that are matching with it. This variable is ESSENTIAL for tradepair
 because we are guaranteed to run into such situations where a single large SELL order (quantity 1000)
 is potentially matched with multiple small BUY orders (1000 orders with quantity 1) , creating 1000 matches
 which will run out of gas.
-STP logic is implemented here as well.
+Self Trade Prevention is also checked here before allowing any matches.
 
 ```solidity:no-line-numbers
 function matchOrder(struct ITradePairs.Order _takerOrder, uint256 _maxNbrOfFills, enum ITradePairs.STP _stp) private returns (struct ITradePairs.Order, bytes32 code)

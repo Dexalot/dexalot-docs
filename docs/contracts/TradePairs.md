@@ -575,7 +575,7 @@ To send multiple Orders of any type in a single transaction designed for Market 
 if a single order in the new list REVERTS, the entire transaction is reverted.
 No orders nor cancels will go through.
 If any of the orders/cancels is rejected, it will continue to process the rest of the orders without any issues.
-See `addNewOrder` for REVERT and REJECT conditions. \
+See #addNewOrder for REVERT and REJECT conditions. \
 ```
 Sample typescript code:
 const orders = [];
@@ -610,14 +610,14 @@ Function for adding a single order
 
 **Dev notes:** \
 Adds an order with the given order struct.
-`REVERT' vs `REJECT`
+`REVERT` vs `REJECT` \
 When a transaction is `REVERTED`, neither the order is accepted nor the transaction is committed
 to the blockchain. A record of the failure that can be seen with a blockchain explorer like
 snowtrace to get some additional information.
 A `REVERT` reverts the entire transaction. If multiple orders are submitted together,
-a single revert caused by any of the orders in the list (first or the last order in the list) will
-cause them to fail all together.
-Reverted orders will NOT show up in your order history.
+a single revert caused by any of the orders regardless of its position in the order list
+will cause them to revert all together.
+Orders from Reverted transactions will NOT show up in your order history. \
 
 When an order is REJECTED, the order is accepted for processing, an orderId is assigned to it but
 then gets REJECTED. The transaction is also successfully committed to the blockchain.
@@ -626,14 +626,16 @@ condition. The order will show up in your order history as `REJECTED`. The rejec
 on the additional orders submitted along with the rejected order. The remaining orders are processed
 without disruption.\
 
-`REVERT conditions:` \
+`REVERT conditions:`
+
 - `P-AFNE-01` or `P-AFNE-02` available funds not enough
 - `T-OOCA-01` only msg.sender can add orders
-- `T-FOKF-01` if type2=FOK and the order can't be fully filled. (Use type2=IOC instead for smother list orders)
+- `T-FOKF-01` if type2=FOK and the order can't be fully filled. (Use `type2=IOC` instead for smoother list orders)
 - `T-PPAU-01` tradePair.pairPaused (Exchange Level state set by the admins)
 - `T-AOPA-01` tradePair.addOrderPaused (Exchange Level state set by the admins)
 
-`REJECT conditions:`\
+`REJECT conditions:`
+
 For all the order level check failures, the order will be REJECTED by emitting
 OrderStatusChanged event with `status = REJECTED` and `code = errorCode`.
 - `T-IVOT-01` : invalid order type / order type not enabled
@@ -660,17 +662,17 @@ accessing quoteDisplayDecimals and quoteDecimals respectively. Any reference dat
 the REST API. See Trading API \
 
 `Type2` : \
-0 = GTC : Good Till Cancel order is kept open until it’s either executed or manually canceled \
-1 = FOK : FIll or Kill (Will entirely fill the order or revert with code = `T-FOKF-01`) \
-2 = IOC : Immediate or Cancel (any part of the order that isn’t immediately filled will get status=CANCELED) \
-3 = PO  : Post Only (Will either go in the orderbook without any fills or will get status=REJECTED
-with `T-T2PO-01` if it has a potential match)
+`0 = GTC` : Good Till Cancel. Order is kept open until it’s either executed or manually canceled \
+`1 = FOK` : FIll or Kill. Will entirely fill the order or revert with code = `T-FOKF-01` \
+`2 = IOC` : Immediate or Cancel. Any part of the order that isn’t immediately filled will get `status=CANCELED` \
+`3 = PO`  : Post Only. Will either go in the orderbook without any fills or will get `status=REJECTED`
+with `T-T2PO-01` if it has a potential match
 
 `STP`   : Self Trade Prevention Mode when both maker and taker orders are from the same traderaddress. \
-0 = CANCELTAKER   – Cancel taker Order. Let the resting maker order remain in the orderbook. \
-1 = CANCELMAKER   – Cancel maker Order. Continue to execute the newer taking order.\
-2 = CANCELBOTH    – Cancel both maker & taker orders immediately.\
-3 = NONE          – Do nothing. Self Trade allowed
+`0 = CANCELTAKER`   – Cancel taker Order. Let the resting maker order remain in the orderbook. \
+`1 = CANCELMAKER`  – Cancel maker Order. Continue to execute the newer taking order.\
+`2 = CANCELBOTH`    – Cancel both maker & taker orders immediately.\
+`3 = NONE`          – Do nothing. Self Trade allowed
 
 When the blockchain is extremely busy, the transactions are queued up in the mempool and prioritized
 based on their gas price.
@@ -829,7 +831,7 @@ if any of the cancels are rejected, the rest of the cancel requests will still b
 `When processing the NEW Orders list(_orders)` \
 if a single order in the new list REVERTS, the entire transaction is reverted. No orders nor cancels will go through.
 If any of the orders/cancels is rejected, it will continue to process the rest of the orders without any issues.
-See `addNewOrder` for REVERT and REJECT conditions. \
+See #addNewOrder for REVERT and REJECT conditions. \
 ```
 Sample typescript code:
 const orderIdsToCancel =["id1","id2"];
@@ -953,26 +955,23 @@ The details of the emitted event: \
 `clientOrderId`  client order id provided by the sender of the order as a reference (immutable) \
 `tradePairId` duplicate. same as `pair` above (immutable) \
 `price ` price of the order entered by the trader. (0 if market order) (immutable) \
-`totalAmount`  cumulative amount in quote currency. ⇒ price * quantityFilled . If
-multiple partial fills , the new partial fill amount= price * quantity is added to the
-current value in the field. Average execution price can be quickly calculated by
-totalAmount/quantityFilled regardless of the number of partial fills at different prices (mutable)\
+`totalAmount`  cumulative amount in quote currency. If multiple partial fills exist,
+ the new partial fill amount(price * quantity) is added to the current value in the field. Average execution
+ price can be quickly calculated by totalAmount/quantityFilled regardless of the number of partial fills at
+ different prices (mutable)\
 `quantity`  order quantity (immutable) \
-`quantityfilled`  cumulative quantity filled (mutable)\
-`totalFee` cumulative fee paid for the order (total fee is always in terms of
-received(incoming) currency. ie. if Buy ALOT/AVAX, fee is paid in ALOT, if Sell
-ALOT/AVAX , fee is paid in AVAX (mutable) \
+`quantityFilled`  cumulative quantity filled (mutable)\
+`totalFee` cumulative fee paid for the order (total fee is always in terms of received(incoming) currency.
+ ie. if Buy ALOT/AVAX, fee is paid in ALOT, if Sell ALOT/AVAX , fee is paid in AVAX (mutable) \
 `traderaddress`  traders’s wallet (immutable) duplicate \
-`side` Order side. See #addOrder (immutable)  See ITradePairs.Side \
-`type1`  See #addOrder (immutable) See ITradePairs.Type1 \
-`type2`  See #addOrder (immutable) See ITradePairs.Type2 \
-`status`  latest status of the order. See ITradePairs.Status \
+`side`   ITradePairs.Side   See #addNewOrder (immutable) \
+`type1`  ITradePairs.Type1  See #addNewOrder (immutable) \
+`type2`  ITradePairs.Type2  See #addNewOrder (immutable) \
+`status` ITradePairs.Status See #addNewOrder (immutable) \
 `updateBlock` the block number the order was created or last changed (mutable)\
 `previousUpdateBlock` the previous block number the order was changed (mutable)\
-`code`  reason when the order has REJECT, CANCEL_REJECT, CANCELED(due to STP) status
-, empty otherwise (mutable)\
-Note: The execution price will always be equal or better than the Taker Order price for
-LIMIT Orders.
+`code`  reason when the order has REJECT, CANCEL_REJECT, CANCELED(due to STP) status, empty otherwise (mutable)\
+Note: The execution price will always be equal or better than the Taker Order price for LIMIT Orders.
 
 ```solidity:no-line-numbers
 function emitStatusUpdate(bytes32 _orderId, bytes32 _code) private
@@ -1090,7 +1089,7 @@ function addOrderChecks(address _msSender, struct ITradePairs.NewOrder _order) p
 To send multiple Orders of any type in a single transaction designed for Market Making operations
 
 **Dev notes:** \
-See addOrderList
+See #addOrderList
 
 ```solidity:no-line-numbers
 function addOrderListPrivate(address _msSender, struct ITradePairs.NewOrder[] _orders) private
@@ -1105,7 +1104,7 @@ function addOrderListPrivate(address _msSender, struct ITradePairs.NewOrder[] _o
 
 #### addOrderPrivate
 
-See addOrder
+See #addNewOrder
 
 **Dev notes:** \
 This function attempts to fill the Gas Tank if it is a single order or the very last order in a list. If we
@@ -1180,7 +1179,7 @@ function matchOrder(struct ITradePairs.Order _takerOrder, uint256 _maxNbrOfFills
 Cancels an order given the order id supplied
 
 **Dev notes:** \
-See cancelOrder
+See #cancelOrder
 
 ```solidity:no-line-numbers
 function cancelOrderPrivate(address _msSender, bytes32 _orderId, bool _fillGasTank) private
@@ -1199,7 +1198,7 @@ function cancelOrderPrivate(address _msSender, bytes32 _orderId, bool _fillGasTa
 Cancels all the orders in the array of order ids supplied
 
 **Dev notes:** \
-See cancelOrderList
+See #cancelOrderList
 
 ```solidity:no-line-numbers
 function cancelOrderListPrivate(address _msSender, bytes32[] _orderIds, bool _fillGasTank) private

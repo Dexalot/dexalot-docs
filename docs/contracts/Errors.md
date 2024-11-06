@@ -408,6 +408,8 @@ T-AUCT-05: setAuctionMode can not turn on live trading when orderbook is crossed
 
 T-CLOI-01: client order id has to be unique per trader
 
+T-FOKF-01: FOK order can't be fully filled. Tx reverted
+
 T-IVOT-01: invalid order type
 
 T-LONR-01: Limit order type cannot be removed
@@ -424,7 +426,7 @@ T-OACC-01: admin account needed for this function
 
 T-OAEX-01: order is already executed and cannot be canceled
 
-T-OOCA-01: only msg.sender or permissioned contracts can add orders
+T-OOCA-01: only msg.sender can add orders
 
 T-OOCC-01: only owner of the order can cancel
 

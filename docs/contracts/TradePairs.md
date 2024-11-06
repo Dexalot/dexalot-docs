@@ -591,7 +591,8 @@ const order = { traderaddress: Ox
               , stp: 0   // STP
          };
 orders.push(order);
-await tradePairs.addOrderList(orders);
+const tx = await tradePairs.addOrderList(orders);
+orderLog = await tx.wait();
 ```
 
 ```solidity:no-line-numbers
@@ -612,25 +613,37 @@ Function for adding a single order
 Adds an order with the given order struct.
 `clientOrderId` is user generated and it is returned in all the responses for reference. It must be unique
 per traderaddress. \
-`Price` for MARKET orders (type1=0) is overridden to 0 internally. Valid price decimals and evm decimals
-can be obtained by calling `getTradePair(..)` and accessing baseDisplayDecimals and baseDecimals respectively. \
-This transaction will REVERT for the following reasons:
-- insufficient funds
-- if the msg sender is different than the order.traderaddress
-- if type2=FOK and the order can't be fully filled. (Use type2=IOC instead for smother list orders)
-- tradePair.pairPaused (Exchange Level admin function)
-- tradePair.addOrderPaused (Exchange Level admin function)
+`price` for MARKET orders (type1=0) is overridden to 0 internally. Valid price decimals and evm decimals
+can be obtained by calling `getTradePair(..)` and accessing quoteDisplayDecimals and quoteDecimals respectively.
+Any reference data is also available from the REST API. See Trading API \
+`REVERT conditions:`
+- `P-AFNE-01` or `P-AFNE-02` available funds not enough
+- `T-OOCA-01` only msg.sender can add orders
+- `T-FOKF-01` if type2=FOK and the order can't be fully filled. (Use type2=IOC instead for smother list orders)
+- `T-PPAU-01` tradePair.pairPaused (Exchange Level admin function)
+- `T-AOPA-01` tradePair.addOrderPaused (Exchange Level admin function)
+
+`REJECT conditions:`
 
 For the rest of the order level check failures, the order will be REJECTED, NOT REVERTED by emitting
 OrderStatusChanged event with "status" = REJECTED and "code" = errorCode.
 The OrderStatusChanged event always will return `id` (orderId) assigned from the blockchain along with
-your clientorderid when trying to enter a new order.
-See addOrderChecks function for potential reject reasons. Every line that starts with return (0, errorCode)
-will be rejected.\
+your clientorderid when trying to enter a new order regardless of the status of the order.
+- `T-IVOT-01` : invalid order type / order type not enabled
+- `T-TMDQ-01` : too many decimals in the quantity
+- `T-TMDP-01` : too many decimals in the price
+- `T-CLOI-01` : client order id has to be unique per trader
+- `T-LTMT-01` : trade amount is less than minTradeAmount for the tradePair
+- `T-LTMT-01` : trade amount is more than maxTradeAmount for the tradePair
+- `T-T2PO-01` : Post Only order is not allowed to be a taker
+- `T-POOA-01` : Only PO(PostOnly) Orders allowed for this pair
+- `T-AUCT-04` : market orders not allowed in auction mode
+
 When the blockchain is extremely busy, the transactions are queued up in the mempool and prioritized
 based on their gas price.
-Valid quantity decimals (quoteDisplayDecimals) and evm decimals can be obtained by calling
-`getTradePair(..)` and accessing quoteDisplayDecimals and quoteDecimals respectively.
+Valid quantity decimals (baseDisplayDecimals) and evm decimals can be obtained by calling
+`getTradePair(..)` and accessing baseDisplayDecimals and baseDecimals  respectively.
+ Any reference data is also available from the REST API. See Trading API
 
 `Type2` : \
 0 = GTC : Good Till Cancel - default\
@@ -656,6 +669,8 @@ const order = { traderaddress: Ox    // address of the trader. If msg.sender != 
               , type2: 3             // enum ITradePairs.Type2 SubType of the order
               , stp: 0               // enum ITradePairs.STP self trade prevention mode
          };
+const tx = await tradePairs.addNewOrder(order);
+orderLog = await tx.wait();
 ```
 
 ```solidity:no-line-numbers
@@ -723,11 +738,12 @@ Cancels an order and immediately enters a similar order in the same direction.
 
 **Dev notes:** \
 Only the quantity and the price of the order can be changed. All the other order
-fields are copied from the canceled order to the new order.
+fields are copied from the to-be canceled order to the new order.
 The time priority of the original order is lost.
 Canceled order's locked quantity is made available for the new order within this tx
-This function will technically accept the same clientOrderId as the previous because when the previous order
-is cancelled it is removed from the mapping and the previous clientOrderId is now available. Not recommended! \
+This function will technically accept the same clientOrderId as the previous because previous clientOrderId
+is made vailable when the previous order is cancelled as  it is removed from the mapping.
+!!Not recommended! \
 ********Important: STP defaults to STP.CANCELMAKER ********
 
 ```solidity:no-line-numbers
@@ -807,7 +823,8 @@ const order = { traderaddress: Ox
               , stp : 0  // STP
          };
 orders.push(order);
-await tradePairs.cancelAddList(orderIdsToCancel, orders);
+const tx = await tradePairs.cancelAddList(orderIdsToCancel, orders);
+orderLog = await tx.wait();
 ```
 
 ```solidity:no-line-numbers
@@ -905,11 +922,11 @@ function getNextId() private returns (uint256)
 Emits a given order's latest state
 
 **Dev notes:** \
-The details of the emitted event is as follows: \
-*version*  event version \
-*traderaddress*  traders’s wallet (immutable) \
-*pair*  traded pair. ie. ALOT/AVAX in bytes32 (immutable) \
-*ITradePairs.Order*:
+The details of the emitted event: \
+`version`  event version \
+`traderaddress`  traders’s wallet (immutable) \
+`pair`  traded pair. ie. ALOT/AVAX in bytes32 (immutable) \
+*ITradePairs.Order*: \
 `id`  unique order id assigned by the contract (immutable) \
 `clientOrderId`  client order id provided by the sender of the order as a reference (immutable) \
 `tradePairId` duplicate. same as `pair` above (immutable) \
@@ -917,23 +934,23 @@ The details of the emitted event is as follows: \
 `totalAmount`  cumulative amount in quote currency. ⇒ price * quantityFilled . If
 multiple partial fills , the new partial fill amount= price * quantity is added to the
 current value in the field. Average execution price can be quickly calculated by
-totalAmount/quantityFilled regardless of the number of partial fills at different prices \
+totalAmount/quantityFilled regardless of the number of partial fills at different prices (mutable)\
 `quantity`  order quantity (immutable) \
-`quantityfilled`  cumulative quantity filled \
+`quantityfilled`  cumulative quantity filled (mutable)\
 `totalFee` cumulative fee paid for the order (total fee is always in terms of
 received(incoming) currency. ie. if Buy ALOT/AVAX, fee is paid in ALOT, if Sell
-ALOT/AVAX , fee is paid in AVAX \
+ALOT/AVAX , fee is paid in AVAX (mutable) \
 `traderaddress`  traders’s wallet (immutable) duplicate \
 `side` Order side. See #addOrder (immutable)  See ITradePairs.Side \
 `type1`  See #addOrder (immutable) See ITradePairs.Type1 \
 `type2`  See #addOrder (immutable) See ITradePairs.Type2 \
 `status`  latest status of the order. See ITradePairs.Status \
-`updateBlock` the block number the order was created or last changed \
-`previousUpdateBlock` the previous block number the order was changed \
+`updateBlock` the block number the order was created or last changed (mutable)\
+`previousUpdateBlock` the previous block number the order was changed (mutable)\
 `code`  reason when the order has REJECT, CANCEL_REJECT, CANCELED(due to STP) status
-, empty otherwise \
-Note: Taker Order price can be different than the execution price but it will only
-be improved from the user's perspective
+, empty otherwise (mutable)\
+Note: The execution price will always be equal or better than the Taker Order price for
+LIMIT Orders.
 
 ```solidity:no-line-numbers
 function emitStatusUpdate(bytes32 _orderId, bytes32 _code) private
@@ -958,7 +975,7 @@ Applies an execution to both maker and the taker orders and adjust holdings in p
 
 **Dev notes:** \
 Emits Executed event showing the execution details. Note that an order's price
-can be different than a taker order price, but it should be identical to maker order's price.
+can be different than the execution price, but it should be identical to maker order's price.
 
 ```solidity:no-line-numbers
 function addExecution(bytes32 _makerOrderId, struct ITradePairs.Order _takerOrder, uint256 _price, uint256 _quantity) private returns (struct ITradePairs.Order)

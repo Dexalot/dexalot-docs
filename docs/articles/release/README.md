@@ -18,15 +18,15 @@ Full List of changes related to this release can be found in [version history](/
 
 ### Note for integrations done before November 7, 2024
 
-* A new trade feature has been added to the ITradePairs.NewOrder struct as the last parameter. Please see for details [AddNewOrder](/contracts/TradePairs.html#addneworder)
+* A new trade parameter has been added to the `ITradePairs.NewOrder` struct as the last parameter. Please see for details [AddNewOrder](/contracts/TradePairs.html#addneworder)
 
 ### Functions deprecated
 
 The following functions are deprecated and will no longer work. Please implement the replacement functions in the next section .
 
-* addOrder
-* addLimitOrderList
-* cancelReplaceList
+* `addOrder`
+* `addLimitOrderList`
+* `cancelReplaceList`
 
 
 ### Use NewOrder Struct when sending orders using the below functions
@@ -34,10 +34,10 @@ The following functions are deprecated and will no longer work. Please implement
 
 ### New Trading functions to implement:
 
-* if your current code base uses addOrder, replace it with [addNewOrder](/contracts/TradePairs.html#addneworder)
-* if your current code base uses addLimitOrderList, replace it with [addOrderList](/contracts/TradePairs.html#addorderlist)
-* if your current code base uses cancelReplaceList, replace it with [cancelAddList](/contracts/TradePairs.html#canceladdlist)
-* Note: Please use the cancelAddList as much as possible(rather than using addOrderList and then cancelOrderList) to be able to cancel your orders and add new ones in the same block to maintain a healthy orderbook.
+* if your current code base uses `addOrder`, replace it with [addNewOrder](/contracts/TradePairs.html#addneworder)
+* if your current code base uses `addLimitOrderList`, replace it with [addOrderList](/contracts/TradePairs.html#addorderlist)
+* if your current code base uses `cancelReplaceList`, replace it with [cancelAddList](/contracts/TradePairs.html#canceladdlist)
+* Note: Please use the `cancelAddList` as much as possible(rather than using `addOrderList` and then `cancelOrderList`) to be able to cancel your orders and add new ones in the same block to maintain a healthy orderbook.
 
 ### New Trading feature: STP (Self Trade Prevention)
 
@@ -45,11 +45,11 @@ The following functions are deprecated and will no longer work. Please implement
 
 ### Contract Event Changes:
 
-* Event signature changed for OrderStatusChanged. New event version will be version=3 in the events you receive from the chain.
+* Event signature changed for `OrderStatusChanged`. New event `version` will be `3` in the events you receive from the chain.
 
 ### Special note for bots that relied on addOrder function
 
-* addOrder function heavily relied on `REVERTS` rather than `REJECTS`. Most of the `REVERTS` conditions have been replaced with `REJECTS` in the new addNewOrder. This is to ensure that all responses from all the new trading functions above are consistent. Please see `REVERTS`vs `REJECTS` in [addNewOrder](/contracts/TradePairs.html#addneworder)
+* `addOrder` function heavily relied on `REVERTS` rather than `REJECTS`. Most of the `REVERTS` conditions have been replaced with `REJECTS` in the new addNewOrder. This is to ensure that all responses from all the new trading functions above are consistent. Please see `REVERTS`vs `REJECTS` in [addNewOrder](/contracts/TradePairs.html#addneworder)
 
 
 ---

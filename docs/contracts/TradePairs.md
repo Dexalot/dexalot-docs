@@ -576,8 +576,7 @@ if a single order in the new list REVERTS, the entire transaction is reverted.
 No orders nor cancels will go through.
 If any of the orders/cancels is rejected, it will continue to process the rest of the orders without any issues.
 See #addNewOrder for `REVERT` and `REJECT` conditions. \
-```
-Sample typescript code:
+```typescript:no-line-numbers
 const orders = [];
 const order = { traderaddress: Ox
               , clientOrderId: Oxid3
@@ -676,8 +675,7 @@ with `T-T2PO-01` if it has a potential match
 
 When the blockchain is extremely busy, the transactions are queued up in the mempool and prioritized
 based on their gas price.
-```
-Sample typescript code:
+```typescript:no-line-numbers
 const order = { traderaddress: Ox    // address of the trader. If msg.sender != `traderaddress` the tx will revert with `T-OOCA-01`.
               , clientOrderId: Oxid3 // unique id provided by the owner of an order in bytes32
               , tradePairId:         // id of the trading pair in bytes32
@@ -832,8 +830,7 @@ if any of the cancels are rejected, the rest of the cancel requests will still b
 if a single order in the new list REVERTS, the entire transaction is reverted. No orders nor cancels will go through.
 If any of the orders/cancels is rejected, it will continue to process the rest of the orders without any issues.
 See #addNewOrder for `REVERT` and `REJECT` conditions. \
-```
-Sample typescript code:
+```typescript:no-line-numbers
 const orderIdsToCancel =["id1","id2"];
 const orders = [];
 const order = { traderaddress: Ox
@@ -1198,7 +1195,7 @@ function cancelOrderPrivate(address _msSender, bytes32 _orderId, bool _fillGasTa
 Cancels all the orders in the array of order ids supplied
 
 **Dev notes:** \
-See #cancelOrderList
+See # cancelOrderList
 
 ```solidity:no-line-numbers
 function cancelOrderListPrivate(address _msSender, bytes32[] _orderIds, bool _fillGasTank) private

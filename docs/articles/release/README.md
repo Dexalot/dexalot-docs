@@ -6,8 +6,8 @@ editLink: true
 
 ## November Nov-20-2024 10:00AM EST (Tentative) Release - Multiple Breaking Changes!
 
-This release includes breaking changes! Please check and make sure your integration is working on our test environment before the release date.
-Please use the new function cancelAddList as much as possible(rather than using addOrderList and then cancelOrderList) to be able to cancel your orders and add new ones in the same block to maintain a healthy orderbook.
+This release includes breaking changes! Please check and make sure your integration is working on our test environment before the release date. \
+Please use the new function `cancelAddList` as much as possible(rather than using `addOrderList` and then `cancelOrderList`) to be able to cancel your orders and add new ones `in the same block to maintain a healthy orderbook`.
 
 ### Documentation Links:
 
@@ -37,7 +37,7 @@ The following functions are deprecated and will no longer work. Please implement
 * if your current code base uses `addOrder`, replace it with [addNewOrder](/contracts/TradePairs.html#addneworder)
 * if your current code base uses `addLimitOrderList`, replace it with [addOrderList](/contracts/TradePairs.html#addorderlist)
 * if your current code base uses `cancelReplaceList`, replace it with [cancelAddList](/contracts/TradePairs.html#canceladdlist)
-* Note: Please use the `cancelAddList` as much as possible(rather than using `addOrderList` and then `cancelOrderList`) to be able to cancel your orders and add new ones in the same block to maintain a healthy orderbook.
+* Note: Please use the `cancelAddList` as much as possible(rather than using `addOrderList` and then `cancelOrderList`) to be able to cancel your orders and add new ones `in the same block to maintain a healthy orderbook`.
 
 ### New Trading feature: STP (Self Trade Prevention)
 

@@ -455,7 +455,7 @@ function getBridgeFee(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstC
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _bridge | enum IPortfolioBridge.BridgeProvider | Bridge |
-| _dstChainListOrgChainId | uint32 | destination chain id           _symbol  symbol of the token, not relevant in for this function           _quantity quantity of the token, not relevant in for this function |
+| _dstChainListOrgChainId | uint32 | destination chain id           _symbol  symbol of the token, not relevant in for this function           _quantity quantity of the token, not relevant in for this function |
 |  | bytes32 |  |
 |  | uint256 |  |
 

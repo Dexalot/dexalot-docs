@@ -1195,7 +1195,7 @@ function cancelOrderPrivate(address _msSender, bytes32 _orderId, bool _fillGasTa
 Cancels all the orders in the array of order ids supplied
 
 **Dev notes:** \
-See # cancelOrderList
+See #cancelOrderList
 
 ```solidity:no-line-numbers
 function cancelOrderListPrivate(address _msSender, bytes32[] _orderIds, bool _fillGasTank) private

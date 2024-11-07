@@ -58,6 +58,7 @@ struct XChainSwap {
   uint32 expiry;
   address taker;
   uint32 destChainId;
+  enum IPortfolioBridge.BridgeProvider bridgeProvider;
   bytes32 makerSymbol;
   address makerAsset;
   address takerAsset;
@@ -176,6 +177,18 @@ event SwapExpired(uint256 nonceAndMeta, uint256 timestamp)
 event SwapQueue(string action, uint256 nonceAndMeta, struct MainnetRFQ.PendingSwap pendingSwap)
 ```
 
+### UpdatedSlippageTolerance
+
+```solidity:no-line-numbers
+event UpdatedSlippageTolerance(uint256 slippageTolerance)
+```
+
+### UpdatedVolatilePairs
+
+```solidity:no-line-numbers
+event UpdatedVolatilePairs(uint256 volatilePairs)
+```
+
 ## Methods
 
 ### Public
@@ -199,7 +212,7 @@ function isValidSignature(bytes32 _hash, bytes _signature) public view returns (
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| [0] | bytes4 | bytes4   The Magic Value based on ERC1271 standard. 0x1626ba7e represents a valid signature, while 0x00000000 represents an invalid signature. |
+| [0] | bytes4 | bytes4   The Magic Value based on ERC1271 standard. 0x1626ba7e represents a valid signature, while 0x00000000 represents an invalid signature. |
 
 ### External
 
@@ -220,7 +233,7 @@ function initialize(address _swapSigner) external
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _swapSigner | address | Address of swap signer, rebalancer is also defaulted to swap signer but it can be changed later |
+| _swapSigner | address | Address of swap signer, rebalancer is also defaulted to swap signer but it can be changed later |
 
 #### receive
 
@@ -669,7 +682,7 @@ function _verifyOrder(struct MainnetRFQ.Order _order, bytes _signature) private 
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| [0] | address | address The address where the funds will be transferred. It is an Aggregator address if the address in the nonceAndMeta matches the msg.sender |
+| [0] | address | address The address where the funds will be transferred. It is an Aggregator address if the address in the nonceAndMeta matches the msg.sender |
 
 #### _executeOrder
 

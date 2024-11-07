@@ -25,6 +25,20 @@ It is designed to be used in conjunction with the PortfolioBridge contract.
 | --- | --- |
 | DEFAULT_PAYLOAD | bytes |
 
+## Events
+
+### LzMessageSent
+
+```solidity:no-line-numbers
+event LzMessageSent(uint32 dstEid, uint64 nonce, bytes32 guid)
+```
+
+### LzMessageReceived
+
+```solidity:no-line-numbers
+event LzMessageReceived(uint32 srcEid, uint64 nonce, bytes32 guid)
+```
+
 ## Methods
 
 ### Public
@@ -119,7 +133,7 @@ function getBridgeFee(uint32 _chainID) external view returns (uint256)
 Receives a message from a remote chain via the LZEndpointV2
 
 ```solidity:no-line-numbers
-function _lzReceive(struct Origin _origin, bytes32, bytes _payload, address, bytes) internal
+function _lzReceive(struct Origin _origin, bytes32 _guid, bytes _payload, address, bytes) internal
 ```
 
 ##### Arguments
@@ -127,7 +141,7 @@ function _lzReceive(struct Origin _origin, bytes32, bytes _payload, address, byt
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _origin | struct Origin | Details of the origin chain and sender |
-|  | bytes32 |  |
+| _guid | bytes32 |  |
 | _payload | bytes | Bytes payload of the message |
 |  | address |  |
 |  | bytes |  |

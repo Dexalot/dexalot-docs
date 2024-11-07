@@ -23,7 +23,7 @@ The formula for orderbook score calculations is as follows:
 
 $$ pd = {|\frac{bp - p}{p}|} $$
 
-$$ qualityScore = {\sqrt{q} * \frac{t}{600} * e^{\frac{-3*pd}{md}}} $$
+$$ qualityScore = {q * \frac{t}{600} * e^{\frac{-3*pd}{md}}} $$
 
 - $bp$: best price, best ask for ask side or best bid for bid side
 - $p$: price of the order

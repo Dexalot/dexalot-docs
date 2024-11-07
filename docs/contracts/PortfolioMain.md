@@ -401,7 +401,7 @@ function setBridgeParamInternal(bytes32 _symbol, uint256 _fee, uint256 _gasSwapR
 | ---- | ---- | ----------- |
 | _symbol | bytes32 | Symbol of the token |
 | _fee | uint256 | Fee to be set |
-| _gasSwapRatio | uint256 | Amount of token to swap per ALOT. Used to control min deposit amount in the mainnet Because we want users to deposit more than whats going to be swapped out for them to end up a portion of their token in their Dexalot L1(subnet) portfolio after the swap. gasSwapRatio will be updated daily with an offchain app with the current market pricesexcept for ALOT which is always 1 to 1. Daily update is sufficient as it is multiplied by 1.9 to calculate the min deposit Amount. _usedForGasSwap  not used in the mainnet |
+| _gasSwapRatio | uint256 | Amount of token to swap per ALOT. Used to control min deposit amount in the mainnet Because we want users to deposit more than whats going to be swapped out for them to end up a portion of their token in their Dexalot L1(subnet) portfolio after the swap. gasSwapRatio will be updated daily with an offchain app with the current market pricesexcept for ALOT which is always 1 to 1. Daily update is sufficient as it is multiplied by 1.9 to calculate the min deposit Amount. _usedForGasSwap  not used in the mainnet |
 |  | bool |  |
 
 ### Private

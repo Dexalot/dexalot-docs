@@ -38,6 +38,7 @@ struct NewOrder {
   enum ITradePairs.Side side;
   enum ITradePairs.Type1 type1;
   enum ITradePairs.Type2 type2;
+  enum ITradePairs.STP stp;
 }
 ```
 ### TradePair
@@ -107,6 +108,16 @@ enum RateType {
   TAKER
 }
 ```
+### STP
+
+```solidity
+enum STP {
+  CANCELTAKER,
+  CANCELMAKER,
+  CANCELBOTH,
+  NONE
+}
+```
 ### Type2
 
 ```solidity
@@ -145,10 +156,10 @@ Emits a given order's latest state
 
 **Dev notes:** \
 If there are multiple partial fills, the new partial fill `price * quantity`
-is added to the current value in `totalamount`. Average execution price can be
-quickly calculated by `totalamount / quantityfilled` regardless of the number of
+is added to the current value in `totalAmount`. Average execution price can be
+quickly calculated by `totalAmount / quantityFilled` regardless of the number of
 partial fills at different prices \
-`totalfee` is always in terms of received(incoming) currency. ie. if Buy ALOT/AVAX,
+`totalFee` is always in terms of received(incoming) currency. ie. if Buy ALOT/AVAX,
 fee is paid in ALOT, if Sell ALOT/AVAX , fee is paid in AVAX \
 **Note**: The execution price will always be equal or better than the Order price.
 
@@ -165,7 +176,7 @@ event OrderStatusChanged(uint8 version, address traderaddress, bytes32 pair, str
 | pair | bytes32 | traded pair. ie. ALOT/AVAX in bytes32 (immutable) |
 | order | struct ITradePairs.Order | See ITradePairs.Order Struct (Order details) |
 | previousUpdateBlock | uint32 | Previous Block No the order was last changed/created |
-| code | bytes32 | reason when order has REJECT or CANCEL_REJECT status |
+| code | bytes32 | reason code when order has CANCELED(due to self trade protection), REJECTED or CANCEL_REJECT status |
 ### Executed
 
 Emits the Executed/Trade Event showing
@@ -321,12 +332,6 @@ function getOrder(bytes32 _orderId) external view returns (struct ITradePairs.Or
 function getOrderByClientOrderId(address _trader, bytes32 _clientOrderId) external view returns (struct ITradePairs.Order)
 ```
 
-#### addOrder
-
-```solidity:no-line-numbers
-function addOrder(address _trader, bytes32 _clientOrderId, bytes32 _tradePairId, uint256 _price, uint256 _quantity, enum ITradePairs.Side _side, enum ITradePairs.Type1 _type1, enum ITradePairs.Type2 _type2) external
-```
-
 #### addNewOrder
 
 ```solidity:no-line-numbers
@@ -390,7 +395,7 @@ function getBookId(bytes32 _tradePairId, enum ITradePairs.Side _side) external v
 #### matchAuctionOrder
 
 ```solidity:no-line-numbers
-function matchAuctionOrder(bytes32 _takerOrderId, uint256 _maxNbrOfFills) external returns (uint256)
+function matchAuctionOrder(struct ITradePairs.Order _takerOrder, uint256 _maxNbrOfFills) external returns (uint256)
 ```
 
 #### getOrderRemainingQuantity

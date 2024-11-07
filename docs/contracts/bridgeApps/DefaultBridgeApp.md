@@ -18,6 +18,12 @@ Default implementation of the IBridgeProvider interface
 | remoteBlockchains | mapping(bytes32 &#x3D;&gt; struct IBridgeProvider.RemoteChain) |
 | remoteChainIDs | mapping(uint32 &#x3D;&gt; struct IBridgeProvider.RemoteChain) |
 
+### Private
+
+| Name | Type |
+| --- | --- |
+| __gap | uint256[50] |
+
 ## Events
 
 ### PortfolioBridgeUpdated
@@ -158,6 +164,26 @@ function _receiveMessage(bytes32 _blockchainID, bytes32 _sourceContract, bytes _
 | _blockchainID | bytes32 | The blockchain ID of the source chain |
 | _sourceContract | bytes32 | The address of the source contract |
 | _payload | bytes | The message payload |
+
+#### _verifyDestination
+
+Internal function to verify the destination chain
+
+```solidity:no-line-numbers
+function _verifyDestination(uint32 _chainId) internal view returns (struct IBridgeProvider.RemoteChain destination)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _chainId | uint32 | The chainlist chain ID |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| destination | struct IBridgeProvider.RemoteChain | RemoteChain struct |
 
 #### _sendMessage
 

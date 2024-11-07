@@ -80,7 +80,7 @@ IC-ARNZ-01: add relayer address must be non-zero
 
 IC-GLNS-01: gas limit not set for msgType
 
-IC-TNTH-01: teleporter nonce too high
+IC-SRNZ-01: set relayer addresses must be non-zero
 
 ## IncentiveDistributor
 
@@ -290,6 +290,8 @@ PB-NFUN-01: unknown function call
 
 PB-OACC-01: admin account or PORTFOLIO_ROLE needed for this function
 
+PB-OBSA-01: old bridge provider still active
+
 PB-RBNE-01: requested bridge not enabled
 
 PB-RBNE-02: requested bridge not implemented
@@ -408,6 +410,8 @@ T-AUCT-05: setAuctionMode can not turn on live trading when orderbook is crossed
 
 T-CLOI-01: client order id has to be unique per trader
 
+T-FOKF-01: FOK order can't be fully filled. Tx reverted
+
 T-IVOT-01: invalid order type
 
 T-LONR-01: Limit order type cannot be removed
@@ -424,7 +428,7 @@ T-OACC-01: admin account needed for this function
 
 T-OAEX-01: order is already executed and cannot be canceled
 
-T-OOCA-01: only msg.sender or permissioned contracts can add orders
+T-OOCA-01: only msg.sender can add orders
 
 T-OOCC-01: only owner of the order can cancel
 
@@ -440,11 +444,15 @@ T-PPAU-04: Pair should be paused for this operation
 
 T-RMTP-01: orderbook has to be empty to remove the tradePair
 
+T-STPR-01: order cancled due to self trade prevention
+
 T-T2PO-01: Post Only order is not allowed to be a taker
 
 T-TMDP-01: too many decimals in the price
 
 T-TMDQ-01: too many decimals in the quantity
+
+T-USCL-01: unsolicited cancel from exchange
 
 ## TokenVesting
 

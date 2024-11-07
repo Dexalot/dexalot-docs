@@ -17,27 +17,27 @@ It is designed to be used in conjunction with the PortfolioBridge contract.
 
 | Name | Type |
 | --- | --- |
-| allowedRelayers | address[] |
+| allowedRelayers | mapping(bytes32 &#x3D;&gt; address[]) |
 | gasLimits | mapping(enum IBridgeProvider.CrossChainMessageType &#x3D;&gt; uint256) |
 
-### Private
-
-| Name | Type |
-| --- | --- |
-| __gap | uint256[50] |
-
 ## Events
+
+### SetRelayers
+
+```solidity:no-line-numbers
+event SetRelayers(bytes32 blockchainId, address[] relayers)
+```
 
 ### AddRelayer
 
 ```solidity:no-line-numbers
-event AddRelayer(address relayer)
+event AddRelayer(bytes32 blockchainId, address relayer)
 ```
 
 ### ClearRelayers
 
 ```solidity:no-line-numbers
-event ClearRelayers()
+event ClearRelayers(bytes32 blockchainId)
 ```
 
 ### SetGasLimit
@@ -95,27 +95,49 @@ function setPortfolioBridge(address _portfolioBridgeAddr) external
 | ---- | ---- | ----------- |
 | _portfolioBridgeAddr | address | The address of the PortfolioBridge contract |
 
-#### addRelayer
+#### setRelayers
 
-Add an allowed relayer address
+Set the allowed relayer addresses
 
 ```solidity:no-line-numbers
-function addRelayer(address _relayer) external
+function setRelayers(bytes32 _blockchainId, address[] _relayers) external
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
+| _blockchainId | bytes32 | The destination blockchain ID |
+| _relayers | address[] | The addresses of the relayers |
+
+#### addRelayer
+
+Add an allowed relayer address
+
+```solidity:no-line-numbers
+function addRelayer(bytes32 _blockchainId, address _relayer) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _blockchainId | bytes32 | The destination blockchain ID |
 | _relayer | address | The address of the relayer |
 
 #### clearRelayers
 
-Clear all allowed relayer addresses
+Clear all allowed relayer addresses for a given chain
 
 ```solidity:no-line-numbers
-function clearRelayers() external
+function clearRelayers(bytes32 _blockchainId) external
 ```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _blockchainId | bytes32 | The destination blockchain ID |
 
 #### setGasLimit
 

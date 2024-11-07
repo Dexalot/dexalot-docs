@@ -52,6 +52,7 @@ i.e USDt sent &amp; received in Avalanche Mainnet whereas USDT is sent &amp; rec
 | --- | --- |
 | BRIDGE_USER_ROLE | bytes32 |
 | BRIDGE_ADMIN_ROLE | bytes32 |
+| BRIDGE_PROVIDER_ROLE | bytes32 |
 | enabledBridges | mapping(enum IPortfolioBridge.BridgeProvider &#x3D;&gt; contract IBridgeProvider) |
 | outNonce | uint64 |
 | userPaysFee | mapping(uint32 &#x3D;&gt; mapping(enum IPortfolioBridge.BridgeProvider &#x3D;&gt; bool)) |
@@ -61,7 +62,7 @@ i.e USDt sent &amp; received in Avalanche Mainnet whereas USDT is sent &amp; rec
 
 | Name | Type |
 | --- | --- |
-| __gap | uint256[46] |
+| __gap | uint256[50] |
 | defaultBridgeProvider | enum IPortfolioBridge.BridgeProvider |
 | defaultChainId | uint32 |
 | mainnetRfq | contract IMainnetRFQ |
@@ -130,11 +131,19 @@ function revokeRole(bytes32 _role, address _address) public
 Initializer for upgradeable contract.
 
 **Dev notes:** \
-Grant admin, pauser and msg_sender role to the sender. Enable lz bridge contract as default.
+Grant admin, pauser and msg_sender role to the sender. Enable _defaultBridgeProviderAddress as default.
 
 ```solidity:no-line-numbers
-function initialize(address _lzBridgeProvider, address _owner) external
+function initialize(enum IPortfolioBridge.BridgeProvider _defaultBridgeProvider, address _defaultBridgeProviderAddress, address _owner) external
 ```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _defaultBridgeProvider | enum IPortfolioBridge.BridgeProvider | Default bridge provider |
+| _defaultBridgeProviderAddress | address | Address of the default bridge provider contract |
+| _owner | address | Owner of the contract |
 
 #### pause
 
@@ -160,10 +169,10 @@ function unpause() external
 
 #### enableBridgeProvider
 
-Enables/disables given bridge. Default bridge's state can't be modified
+Enables/disables given bridge. Default bridge cannot be removed.
 
 **Dev notes:** \
-Only admin can enable/disable bridge
+Only admin can enable/disable bridge. Default bridge can only be updated to new contract when paused
 
 ```solidity:no-line-numbers
 function enableBridgeProvider(enum IPortfolioBridge.BridgeProvider _bridge, address _bridgeProvider) external
@@ -175,6 +184,25 @@ function enableBridgeProvider(enum IPortfolioBridge.BridgeProvider _bridge, addr
 | ---- | ---- | ----------- |
 | _bridge | enum IPortfolioBridge.BridgeProvider | Bridge to enable/disable |
 | _bridgeProvider | address | Address of bridge provider contract, 0 address if not exists |
+
+#### removeBridgeProvider
+
+Removes an bridge provider's access to processPayload
+
+**Dev notes:** \
+Only admin can remove bridge provider. Executed when a bridge provider is disabled
+or updated and has no inflight messages.
+
+```solidity:no-line-numbers
+function removeBridgeProvider(enum IPortfolioBridge.BridgeProvider _bridge, address _bridgeProvider) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _bridge | enum IPortfolioBridge.BridgeProvider | Bridge type to remove |
+| _bridgeProvider | address | Address of old bridge provider contract |
 
 #### isBridgeProviderEnabled
 
@@ -211,6 +239,9 @@ function getDefaultBridgeProvider() external view returns (enum IPortfolioBridge
 #### setDefaultBridgeProvider
 
 Sets the default bridge Provider
+
+**Dev notes:** \
+Default bridge provider can only be changed to an enabled bridge provider
 
 ```solidity:no-line-numbers
 function setDefaultBridgeProvider(enum IPortfolioBridge.BridgeProvider _bridge) external
@@ -424,7 +455,7 @@ function getBridgeFee(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstC
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _bridge | enum IPortfolioBridge.BridgeProvider | Bridge |
-| _dstChainListOrgChainId | uint32 | destination chain id           _symbol  symbol of the token, not relevant in for this function           _quantity quantity of the token, not relevant in for this function |
+| _dstChainListOrgChainId | uint32 | destination chain id           _symbol  symbol of the token, not relevant in for this function           _quantity quantity of the token, not relevant in for this function |
 |  | bytes32 |  |
 |  | uint256 |  |
 

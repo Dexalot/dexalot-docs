@@ -83,28 +83,36 @@ PortfolioBridge:<br/>
 - Add getSupportedChainIds function per bridge provider<br/>
 
 TradePairs:<br/>
-- New addNewOrder function that is using newOrder Struct instead of individual parameters<br/>
-- Breaking Change: addOrder is deprecated and left in the code base for backward compatibility but we strongly advise to migrate your code base to use addNewOrder along with the other breaking changes listed below
-- Breaking Change: Replaced addLimitOrderList with addOrderList to improve list order functionality<br/>
-- Breaking Change: Replaced cancelReplaceList with cancelAddList to improve on cancel replace logic and allow orders to any pair<br/>
+- Breaking Change: `addOrder,addLimitOrderList,cancelReplaceList` are deprecated
+- Breaking Change: Replaced the deprecated addOrder with `addNewOrder` function that is using `ITradePairs.NewOrder` Struct instead of individual parameters<br/>
+- Breaking Change: Replaced the deprecated addLimitOrderList with `addOrderList` to improve list order functionality<br/>
+- Breaking Change: Replaced the deprecated cancelReplaceList with `cancelAddList` to improve on cancel replace logic and allow orders to any pair<br/>
 - Breaking Change: OrderStatusChanged Event changes<br/>
-    - args.version= 3
+    - `args.version= 3`
     - args.traderaddress (indexed - no change)
     - args.pair (indexed - no change)
-    - args.previousUpdateBlock (new field)
+    - `args.previousUpdateBlock` (new field)
     - args.code  (no change)
-    - Access all the rest of the order details using "args.order.xxx"
-    - Few fields Renamed:
-    - args.orderId ==> args.order.id
-    - args.totalamount  => args.order.totalAmount   (changed to Camel Case)
-    - args.quantityfilled  => args.order.quantityFilled (changed to Camel Case)
-    - args.totalfee  => args.order.totalFee (changed to Camel Case)
-    - New Fields:
-    - args.order.updateBlock
+    - `Access all the rest of the order details using "args.order.xxx"`
+    - Fields Renamed:
+    - args.orderId ==> `args.order.id`
+    - args.totalamount  => `args.order.totalAmount `  (changed to Camel Case)
+    - args.quantityfilled  => `args.order.quantityFilled` (changed to Camel Case)
+    - args.totalfee  => `args.order.totalFee` (changed to Camel Case)
+    - New Fields in the args.order:
+    - `args.order.updateBlock`
     - args.order.tradePairId has the same value as args.pair above
     - args.order.traderaddress has the same value as args.traderaddress above
-- New functions will raise reject events as much as possible instead of reverting<br/>
-- Autofill to be executed with the last order in the cancelAddList.<br/>
+- Breaking Change only in fuji after November 7, 2024: NewOrder Struct(ITradePairs.NewOrder) has a new required STP (Self Trade Prevention) flag when sending a new order. Self Trade Prevention Mode is checked when both maker and taker orders are from the same traderaddress.
+     - 0: `CANCELTAKER`   – Cancel taker Order. Let the resting maker order remain in the orderbook.
+     - 1: `CANCELMAKER`   – Cancel maker Order. Continue matching the newer taking order against the orderbook.
+     - 2: `CANCELBOTH`   – Cancel both maker & taker orders immediately.
+     - 3: `NONE`         – Do nothing. Self Trade allowed <br/>
+- All trading functions will raise OrderStatusChanged events with `status= REJECTED` instead of reverting for smoother list functions. See [addNewOrder](/contracts/TradePairs.html#addneworder) documentation for REVERT & REJECT conditions<br/>
+- Rejected new Orders will start getting an id(orderId) assigned by the blockchain for consistency<br/>
+- Unsolicited cancels will continue to get `status=CANCELED` status but `code` field will be populated with `"T-USCL-01"` for additional explanation<br/>
+- 30-35% Gas optimization when sending new orders <br/>
+- Auto GasTank Fill to be executed with the last order in the cancelAddList.<br/>
 
 MainnetRFQ:<br/>
 - Add volatility admin role to slip quotes during volatile periods<br/>

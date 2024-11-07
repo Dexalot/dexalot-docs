@@ -35,6 +35,7 @@ remoteChainId on the way in and out.
 
 | Name | Type |
 | --- | --- |
+| DEFAULT_MAX_BRIDGE_FEE_CAP | uint16 |
 | TENK | uint256 |
 | delayedTransfers | contract IDelayedTransfers |
 | inventoryManager | contract IInventoryManager |
@@ -131,7 +132,7 @@ function addToken(bytes32 _srcChainSymbol, address _tokenAddress, uint32 _srcCha
 | _srcChainSymbol | bytes32 | Source Chain Symbol of the token |
 | _tokenAddress | address | Mainnet token address the symbol or zero address for AVAX |
 | _srcChainId | uint32 | Source Chain id |
-| _decimals | uint8 | Decimals of the token param   ITradePairs.AuctionMode  irrelevant for PBridge |
+| _decimals | uint8 | Decimals of the token param   ITradePairs.AuctionMode  irrelevant for PBridge |
 |  | enum ITradePairs.AuctionMode |  |
 | _subnetSymbol | bytes32 | Dexalot L1(subnet) Symbol of the token (Shared Symbol of the same token from different chains) |
 | _bridgeFee | uint256 | Bridge Fee |
@@ -186,7 +187,7 @@ Sets the bridge fee for each token calculated offChain for the targetChainId
 Only admin can call this function
 
 ```solidity:no-line-numbers
-function setBridgeFees(uint32 _dstChainListOrgChainId, bytes32[] _tokens, uint256[] _bridgeFees) external
+function setBridgeFees(uint32 _dstChainListOrgChainId, bytes32[] _tokens, uint240[] _bridgeFees) external
 ```
 
 ##### Arguments
@@ -195,7 +196,7 @@ function setBridgeFees(uint32 _dstChainListOrgChainId, bytes32[] _tokens, uint25
 | ---- | ---- | ----------- |
 | _dstChainListOrgChainId | uint32 | destination chain id |
 | _tokens | bytes32[] | Array of Dexalot L1(subnet) Symbol |
-| _bridgeFees | uint256[] | Array of  bridge fees |
+| _bridgeFees | uint240[] | Array of  bridge fees |
 
 #### getTokenDetails
 
@@ -346,6 +347,25 @@ function setBridgeFeeMultipler(enum IPortfolioBridge.BridgeProvider _bridge, uin
 | _bridge | enum IPortfolioBridge.BridgeProvider | Bridge provider to use |
 | _multipler | uint256 | Multipler to set |
 
+#### setMaxBridgeFeeCaps
+
+Set the max bridge fee cap for a given token
+
+**Dev notes:** \
+Only admin can set the max bridge fee cap
+
+```solidity:no-line-numbers
+function setMaxBridgeFeeCaps(uint32 _dstChainListOrgChainId, bytes32[] _tokens, uint16[] _maxBridgeFeeCaps) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _dstChainListOrgChainId | uint32 | destination chain id |
+| _tokens | bytes32[] | array of Dexalot L1(subnet) symbols |
+| _maxBridgeFeeCaps | uint16[] | array of max bridge fee caps to set |
+
 ### Internal
 
 #### addNativeToken
@@ -381,7 +401,7 @@ function sendXChainMessageInternal(uint32 _dstChainListOrgChainId, enum IPortfol
 Calculate the bridge fee for a given bridge
 
 ```solidity:no-line-numbers
-function _calcBridgeFee(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstChainListOrgChainId, bytes32 _symbol) internal view returns (uint256)
+function _calcBridgeFee(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstChainListOrgChainId, bytes32 _symbol, uint256 _quantity, uint256 _inventoryFee) internal view returns (uint256)
 ```
 
 ##### Arguments
@@ -391,6 +411,8 @@ function _calcBridgeFee(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _ds
 | _bridge | enum IPortfolioBridge.BridgeProvider | Bridge provider to use |
 | _dstChainListOrgChainId | uint32 | destination chain id |
 | _symbol | bytes32 | Dexalot L1(subnet) symbol of the token |
+| _quantity | uint256 |  |
+| _inventoryFee | uint256 |  |
 
 ##### Return values
 

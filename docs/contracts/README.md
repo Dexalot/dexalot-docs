@@ -103,12 +103,12 @@ TradePairs:<br/>
     - `args.order.updateBlock`
     - args.order.tradePairId has the same value as args.pair above
     - args.order.traderaddress has the same value as args.traderaddress above
-- Breaking Change: NewOrder Struct(ITradePairs.NewOrder) has a new required STP (Self Trade Prevention) flag when sending a new order. Self Trade Prevention Mode is checked when both maker and taker orders are from the same traderaddress.
+- Breaking Change only in fuji after November 7, 2024: NewOrder Struct(ITradePairs.NewOrder) has a new required STP (Self Trade Prevention) flag when sending a new order. Self Trade Prevention Mode is checked when both maker and taker orders are from the same traderaddress.
      - 0: `CANCELTAKER`   – Cancel taker Order. Let the resting maker order remain in the orderbook.
      - 1: `CANCELMAKER`   – Cancel maker Order. Continue matching the newer taking order against the orderbook.
      - 2: `CANCELBOTH`   – Cancel both maker & taker orders immediately.
      - 3: `NONE`         – Do nothing. Self Trade allowed <br/>
-- All trading functions will raise OrderStatusChanged events with `status= REJECTED` instead of reverting for smoother list functions. See addNewOrder documentation for REVERT & REJECT conditions<br/>
+- All trading functions will raise OrderStatusChanged events with `status= REJECTED` instead of reverting for smoother list functions. See [addNewOrder](/contracts/TradePairs.html#addneworder) documentation for REVERT & REJECT conditions<br/>
 - Rejected new Orders will start getting an id(orderId) assigned by the blockchain for consistency<br/>
 - Unsolicited cancels will continue to get `status=CANCELED` status but `code` field will be populated with `"T-USCL-01"` for additional explanation<br/>
 - 30-35% Gas optimization when sending new orders <br/>

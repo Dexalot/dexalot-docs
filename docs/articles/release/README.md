@@ -18,7 +18,7 @@ Full List of changes related to this release can be found in [version history](/
 
 ### Note for integrations done before November 7, 2024
 
-* A new trade parameter has been added to the `ITradePairs.NewOrder` struct as the last parameter. Please see for details [AddNewOrder](/contracts/TradePairs.html#addneworder)
+* A new trade parameter `STP` has been added to the `ITradePairs.NewOrder` struct as the last parameter. Please see [AddNewOrder](/contracts/TradePairs.html#addneworder) for implementation details.
 
 ### Functions deprecated
 
@@ -41,7 +41,7 @@ The following functions are deprecated and will no longer work. Please implement
 
 ### New Trading feature: STP (Self Trade Prevention)
 
-* Please see for details [AddNewOrder](/contracts/TradePairs.html#addneworder)
+* Please see [AddNewOrder](/contracts/TradePairs.html#addneworder) for implementation details.
 
 ### Contract Event Changes:
 

@@ -13,8 +13,23 @@ headerDepth: 4
 ```solidity
 struct TokenDestinationInfo {
   bytes32 symbolId;
-  uint256 bridgeFee;
+  uint240 bridgeFee;
+  uint16 maxBridgeFeeCap;
 }
+```
+
+## Events
+
+### BridgeFeeUpdated
+
+```solidity:no-line-numbers
+event BridgeFeeUpdated(uint32 dstChainId, bytes32[] tokens, uint240[] bridgeFees)
+```
+
+### MaxBridgeFeeCapUpdated
+
+```solidity:no-line-numbers
+event MaxBridgeFeeCapUpdated(uint32 dstChainId, bytes32[] tokens, uint16[] maxBridgeFeeCaps)
 ```
 
 ## Methods
@@ -54,6 +69,6 @@ function getAllBridgeFees(enum IPortfolioBridge.BridgeProvider _bridge, bytes32 
 #### setBridgeFees
 
 ```solidity:no-line-numbers
-function setBridgeFees(uint32 _dstChainListOrgChainId, bytes32[] _tokens, uint256[] _bridgeFees) external
+function setBridgeFees(uint32 _dstChainListOrgChainId, bytes32[] _tokens, uint240[] _bridgeFees) external
 ```
 

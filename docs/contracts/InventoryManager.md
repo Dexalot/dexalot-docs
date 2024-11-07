@@ -59,6 +59,12 @@ event FutureAUpdated(uint256 futureA, uint256 futureATime, uint256 timestamp)
 event AUpdated(uint256 A, uint256 timestamp)
 ```
 
+### PortfolioBridgeSubUpdated
+
+```solidity:no-line-numbers
+event PortfolioBridgeSubUpdated(address portfolioBridgeSub)
+```
+
 ## Methods
 
 ### Public

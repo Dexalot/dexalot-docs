@@ -97,7 +97,7 @@ function removeToken(bytes32 _srcChainSymbol, uint32 _srcChainId, bytes32 _subne
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _srcChainSymbol | bytes32 | Source Chain Symbol of the token |
-| _srcChainId | uint32 | Source Chain id of the token to be removed. Used by PortfolioBridgeSub. Don't use the Dexalot L1(subnet) id here. Always use the chain id that the token is being removed. Otherwise it will silently fail as it can't find the token to delete in PortfolioBridgeSub |
+| _srcChainId | uint32 | Source Chain id of the token to be removed. Used by PortfolioBridgeSub. Don't use the Dexalot L1(subnet) id here. Always use the chain id that the token is being removed. Otherwise it will silently fail as it can't find the token to delete in PortfolioBridgeSub |
 | _subnetSymbol | bytes32 | Dexalot L1(subnet) Symbol of the token |
 
 ### External

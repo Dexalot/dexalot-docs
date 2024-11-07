@@ -272,7 +272,7 @@ function getTokenDetails(bytes32 _symbol) external view returns (struct IPortfol
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| [0] | struct IPortfolio.TokenDetails | TokenDetails decimals : Identical both in the mainnet and the subnet tokenAddress : Token address at the mainnet , zeroaddress at the subnet symbolId : symbol + chainId native coin : it will always have zeroaddress both in the mainnet and the subnet |
+| [0] | struct IPortfolio.TokenDetails | TokenDetails decimals : Identical both in the mainnet and the subnet tokenAddress : Token address at the mainnet , zeroaddress at the subnet symbolId : symbol + chainId native coin : it will always have zeroaddress both in the mainnet and the subnet |
 
 #### getTokenDetailsById
 
@@ -407,7 +407,7 @@ function addTokenInternal(struct IPortfolio.TokenDetails _details, uint256, uint
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _details | struct IPortfolio.TokenDetails | Token Details  _fee  Bridge Fee (child implementation)  _gasSwapRatio  Amount of token to swap per ALOT (child implementation) |
+| _details | struct IPortfolio.TokenDetails | Token Details  _fee  Bridge Fee (child implementation)  _gasSwapRatio  Amount of token to swap per ALOT (child implementation) |
 |  | uint256 |  |
 |  | uint256 |  |
 

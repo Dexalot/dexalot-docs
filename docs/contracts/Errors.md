@@ -80,7 +80,7 @@ IC-ARNZ-01: add relayer address must be non-zero
 
 IC-GLNS-01: gas limit not set for msgType
 
-IC-TNTH-01: teleporter nonce too high
+IC-SRNZ-01: set relayer addresses must be non-zero
 
 ## IncentiveDistributor
 
@@ -289,6 +289,8 @@ PB-MPGT-01: bridge fee multipler is greater than 100%
 PB-NFUN-01: unknown function call
 
 PB-OACC-01: admin account or PORTFOLIO_ROLE needed for this function
+
+PB-OBSA-01: old bridge provider still active
 
 PB-RBNE-01: requested bridge not enabled
 

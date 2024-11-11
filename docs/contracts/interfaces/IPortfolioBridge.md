@@ -28,7 +28,8 @@ enum Direction {
 ```solidity
 enum BridgeProvider {
   LZ,
-  CELER
+  CELER,
+  ICM
 }
 ```
 
@@ -71,7 +72,7 @@ function unpackXFerMessage(bytes _data) external view returns (struct IPortfolio
 #### enableBridgeProvider
 
 ```solidity:no-line-numbers
-function enableBridgeProvider(enum IPortfolioBridge.BridgeProvider _bridge, bool _enable) external
+function enableBridgeProvider(enum IPortfolioBridge.BridgeProvider _bridge, address _bridgeContract) external
 ```
 
 #### isBridgeProviderEnabled

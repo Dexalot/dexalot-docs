@@ -59,10 +59,10 @@ event FutureAUpdated(uint256 futureA, uint256 futureATime, uint256 timestamp)
 event AUpdated(uint256 A, uint256 timestamp)
 ```
 
-### InventorySet
+### PortfolioBridgeSubUpdated
 
 ```solidity:no-line-numbers
-event InventorySet(bytes32 symbol, bytes32 symbolId, uint256 quantity, uint256 timestamp)
+event PortfolioBridgeSubUpdated(address portfolioBridgeSub)
 ```
 
 ## Methods
@@ -191,23 +191,40 @@ function updatePortfolioBridgeSub(address _portfolioBridgeSub) external
 | ---- | ---- | ----------- |
 | _portfolioBridgeSub | address | Address of PortfolioBridgeSub contract |
 
-#### setScalingFactor
+#### setScalingFactors
 
-Updates the scaling factor for a token
+Updates the scaling factor for a number of tokens
 
 **Dev notes:** \
 Only admin can call this function
 
 ```solidity:no-line-numbers
-function setScalingFactor(bytes32 _symbolId, uint8 _scalingFactor) external
+function setScalingFactors(bytes32[] _symbolIds, uint8[] _scalingFactors) external
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _symbolId | bytes32 | SymbolId of the token |
-| _scalingFactor | uint8 | New scaling factor |
+| _symbolIds | bytes32[] | SymbolIds of the token |
+| _scalingFactors | uint8[] | New scaling factors to set |
+
+#### removeScalingFactors
+
+Removes multiple scaling factors for non-existent tokens
+
+**Dev notes:** \
+Only admin can call this function
+
+```solidity:no-line-numbers
+function removeScalingFactors(bytes32[] _symbolIds) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _symbolIds | bytes32[] | SymbolIds of the tokens to remove |
 
 #### updateFutureA
 
@@ -238,27 +255,6 @@ Only admin can call this function
 function updateA() external
 ```
 
-#### setInventoryBySymbolId
-
-Sets host chains inventories for each token
-
-**Dev notes:** \
-Only admin can call this function. After the March 2024 we need to equal
-inventoryBySymbolId portfolioSub.tokenTotals as the C-Chain will still be the only
-destination from the subnet right after the upgrade. This function can be removed
-after the upgrade
-
-```solidity:no-line-numbers
-function setInventoryBySymbolId(bytes32[] _tokens, uint256[] _quantities) external
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _tokens | bytes32[] | Array of tokens in the from of SYMBOL + srcChainId |
-| _quantities | uint256[] | Array of quantities |
-
 #### calculateWithdrawalFee
 
 Calculates the withdrawal fee for a token
@@ -286,25 +282,6 @@ function calculateWithdrawalFee(bytes32 _symbol, bytes32 _symbolId, uint256 _qua
 | fee | uint256 | Withdrawal fee |
 
 ### Private
-
-#### set
-
-Sets a new inventory for a token
-
-**Dev notes:** \
-Only used once for the initial setup of the inventory
-
-```solidity:no-line-numbers
-function set(bytes32 _symbol, bytes32 _symbolId, uint256 _quantity) private
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _symbol | bytes32 | Subnet symbol of the token |
-| _symbolId | bytes32 | SymbolId of the token |
-| _quantity | uint256 | Quantity of the token |
 
 #### scaleInventory
 

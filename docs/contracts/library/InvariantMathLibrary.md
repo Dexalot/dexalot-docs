@@ -22,7 +22,7 @@ approximate the value of D and YD. For more information, see the StableSwap whit
 Calculate the withdrawal fee for a token from a given chain
 
 ```solidity:no-line-numbers
-function calcWithdrawOneChain(uint256 _quantity, uint256 _i, uint256[] _xp, uint256 _totalInventory, uint256 _scaleFactor, uint256 _A, uint256 _N) internal pure returns (uint256 fee)
+function calcWithdrawOneChain(uint256 _quantity, uint256 _i, uint256[] _xp, uint256 _totalInventory, uint256 _A, uint256 _N) internal pure returns (uint256 fee)
 ```
 
 ##### Arguments
@@ -33,7 +33,6 @@ function calcWithdrawOneChain(uint256 _quantity, uint256 _i, uint256[] _xp, uint
 | _i | uint256 | The index of the chain to withdraw from |
 | _xp | uint256[] | The array of inventory per chain |
 | _totalInventory | uint256 | The total inventory across all chains |
-| _scaleFactor | uint256 |  |
 | _A | uint256 | The amplification coefficient |
 | _N | uint256 | The number of chains |
 

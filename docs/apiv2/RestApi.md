@@ -766,7 +766,8 @@ GET /signed/portfoliobalance
 
 #### Description
 
-Retrieves portfolio balances
+Retrieves portfolio balances.
+Please DO NOT use this endpoint for trading purposes and get the most recent portfolio information from our contracts instead.
 
 #### Parameters
 

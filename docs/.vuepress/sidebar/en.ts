@@ -10,12 +10,12 @@ export const enSidebarConfig = sidebar({
       prefix: "articles/",
       children: [
         {
-          text: "Dexalot Subnet",
+          text: "Dexalot L1 Intro",
           icon: "book-open",
           link: "subnet"
         },
         {
-          text: "The Dexalot Subnet Guide",
+          text: "Dexalot L1 Guide",
           icon: "book-open",
           link: "guide"
         },
@@ -75,14 +75,19 @@ export const enSidebarConfig = sidebar({
       prefix: "tutorials/",
       children: [
         {
-          text: "Dexalot Subnet Intro",
+          text: "Dexalot L1 Intro",
           icon: "play",
           link: "howtouse"
         },
         {
-          text: "Dexalot Subnet Testing",
+          text: "Dexalot L1 Testing",
           icon: "play",
           link: "howtotest"
+        },
+        {
+          text: "Run a Dexalot L1 Node",
+          icon: "book-open",
+          link: "runanode"
         },
         {
           text: "Metamask Install",
@@ -148,6 +153,7 @@ export const enSidebarConfig = sidebar({
           collapsible: true,
           children: [
             "Bytes32LinkedListLibrary",
+            "InvariantMathLibrary",
             "RBTLibrary",
             "UtilsLibrary"
           ],
@@ -172,16 +178,6 @@ export const enSidebarConfig = sidebar({
             "IGasStation",
             "IBannedAccounts",
             "INativeMinter",
-            {
-              text: "LayerZero",
-              prefix: "layerZero/",
-              collapsible: true,
-              children: [
-                "ILayerZeroEndpoint",
-                "ILayerZeroReceiver",
-                "ILayerZeroUserApplicationConfig"
-              ]
-            },
           ],
         },
 
@@ -191,7 +187,9 @@ export const enSidebarConfig = sidebar({
           prefix: "bridgeApps/",
           collapsible: true,
           children: [
-            "LzApp"
+            "DefaultBridgeApp",
+            "ICMApp",
+            "LzV2App"
           ],
         },
 

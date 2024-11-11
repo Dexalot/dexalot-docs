@@ -294,8 +294,6 @@ PB-OBSA-01: old bridge provider still active
 
 PB-RBNE-01: requested bridge not enabled
 
-PB-RBNE-02: requested bridge not implemented
-
 PB-RBNE-03: requested bridge not enabled for bridge fee
 
 PB-SDMP-01: symbol doesn't match Portfolio's common symbol

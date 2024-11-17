@@ -6,63 +6,63 @@ export const enSidebarConfig = sidebar({
       text: "Articles",
       icon: "book-reader",
       collapsible: true,
-      link: "articles",
-      prefix: "articles/",
+      link: "articles/",
+      prefix: "articles",
       children: [
         {
           text: "Dexalot L1 Intro",
           icon: "book-open",
-          link: "subnet"
+          link: "subnet/"
         },
         {
           text: "Dexalot L1 Guide",
           icon: "book-open",
-          link: "guide"
+          link: "guide/"
         },
         {
           text: "Dexalot Incentive Program",
           icon: "book-open",
-          link: "dip"
+          link: "dip/"
         },
         {
           text: "Dexalot Incentive Commitments",
           icon: "book-open",
-          link: "incentives"
+          link: "incentives/"
         },
         {
           text: "Dexalot x LayerZero",
           icon: "book-open",
-          link: "layerzero"
+          link: "layerzero/"
         },
                 {
           text: "Asset Balance Snapshot",
           icon: "book-open",
-          link: "abs"
+          link: "abs/"
         },
         {
           text: "Dexalot Discovery",
           icon: "book-open",
-          link: "discovery"
+          link: "discovery/"
         },
         {
           text: "Dexalot's Sample Bot",
           icon: "book-open",
-          link: "samplebot"
+          link: "samplebot/"
         },
         {
           text: "Dexalot Trading Cup",
           icon: "book-open",
-          link: "cup"
+          link: "cup/"
         },
         {
           text: "Litepaper",
           icon: "book-open",
-          link: "litepaper"
+          link: "litepaper/"
         },
         {
           text: "Token Conversion",
           icon: "book-open",
-          link: "tokenconversion"
+          link: "tokenconversion/"
         }
       ]
     },
@@ -71,33 +71,33 @@ export const enSidebarConfig = sidebar({
       text: "Tutorials",
       icon: "mortar-board",
       collapsible: true,
-      link: "tutorials",
+      link: "tutorials/",
       prefix: "tutorials/",
       children: [
         {
           text: "Dexalot L1 Intro",
           icon: "play",
-          link: "howtouse"
+          link: "howtouse/"
         },
         {
           text: "Dexalot L1 Testing",
           icon: "play",
-          link: "howtotest"
+          link: "howtotest/"
         },
         {
           text: "Run a Dexalot L1 Node",
           icon: "book-open",
-          link: "runanode"
+          link: "runanode/"
         },
         {
           text: "Metamask Install",
           icon: "play",
-          link: "metamaskuse"
+          link: "metamaskuse/"
         },
         {
           text: "Pending Transaction Help",
           icon: "play",
-          link: "recovrmmtxn"
+          link: "recovrmmtxn/"
         }
       ]
     },
@@ -118,7 +118,7 @@ export const enSidebarConfig = sidebar({
       text: "Smart Contracts",
       icon: "code",
       collapsible: true,
-      link: "contracts",
+      link: "contracts/",
       prefix: "contracts/",
       children: [
         {
@@ -221,7 +221,7 @@ export const enSidebarConfig = sidebar({
       text: "Trading API",
       icon: "link",
       prefix: "apiv2/",
-      link: "apiv2",
+      link: "apiv2/",
       collapsible: true,
       children: [
         {

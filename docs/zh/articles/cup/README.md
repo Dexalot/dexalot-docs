@@ -8,7 +8,7 @@ editLink: true
 
 子网即将到来！无论您是一直参与#Stake2TheSubnet 还是刚接触 Dexalot，现在都是时候获得一些奖励了。我们将为用户提供一系列有趣的全新交易竞赛，每两周就会有新的奖品、模拟代币和规则。如果你错过了 DTC 第 1 轮，可以来参与我们的第 2 轮竞赛。准备好#Trade2theSubnet 了吗？我们的第二轮 Dexalot 交易杯将于 11 月 21 日星期一开始，顶级交易员将瓜分 2,000 美元的$ALOT！是上次的两倍！！过程很简单，进入网站，拿到模拟代币，交易并赢得奖励。
 
-<YouTube id="o4NocPEZT4A"/>
+<VidStack src="youtube/o4NocPEZT4A"/>
 
 ## 亮点
 
@@ -36,7 +36,7 @@ editLink: true
 * [第一次#Trade2theSubnet 竞赛](https://medium.com/dexalot/dexalot-%E4%BA%A4%E6%98%93%E6%9D%AF-8bddd854ddd6)的参与者将在投资组合（portfolios）中自动收到 kAVAX 和 kUSDC 模拟代币，并可以立刻开始使用。
 * 其他人都可以通过填写此表格 ( [TRADE2THESUBNET](https://dexalot.typeform.com/DTCround2?typeform-source=medium.com) ) 来申请。请提供你的电子邮件和 Avalanche C 链钱包地址。
 
-<YouTube id="eSZ5zYGv65M"/>
+<VidStack src="youtube/eSZ5zYGv65M"/>
 
 ## 准备
 
@@ -58,7 +58,7 @@ editLink: true
 * 向专家学习交易策略。
 * [在Discord](https://discord.com/invite/dexalot) #dexalot-trading-cup上提问并获得答案。
 
-<YouTube id="bNdTyR-fTYY"/>
+<VidStack src="youtube/bNdTyR-fTYY"/>
 
 ## 开始交易
 

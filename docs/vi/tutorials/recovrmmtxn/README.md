@@ -34,7 +34,7 @@ Hãy xem công cụ theo gas của Snowtrace để có ước tính về phí c�
 
 Nếu bạn đã biết rằng mạng đang bận, bạn có thể chọn đặt mức phí ưu tiên tối đa cao trước khi bạn gửi giao dịch. Bằng cách đó, bạn có thể không cần tăng tốc sau này. Đây là một đoạn video ngắn giải thích quá trình này.
 
-<YouTube id="gsfJywNxpi4" />
+<VidStack src="youtube/gsfJywNxpi4" />
 
 ## Giải pháp 2 — Hủy giao dịch đang chờ xử lý của bạn bằng cách tạo một giao dịch khác với cùng một nonce, nhưng lượng gas cao hơn
 

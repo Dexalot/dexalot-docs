@@ -16,7 +16,7 @@ Bu Avalanche Subnet’i, hem Ana Ağ’ı hem de Subneti içeren [çift zincirli
 
 İşte Dexalot’un yeni Subnet Beta uygulamasına bir Giriş.
 
-<YouTube id="vRvaswPuMNg" />
+<VidStack src="youtube/vRvaswPuMNg" />
 
 ## Gösterge Paneli (Dashboard)
 

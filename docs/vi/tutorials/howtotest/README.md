@@ -16,7 +16,7 @@ Vì Subnet về cơ bản giống như Mainnet mà bạn đã quen thuộc, nên
 
 Vui lòng dùng thử bằng phần Giới thiệu này hoặc đọc phần bên dưới để tìm hiểu thêm nhằm trợ giúp và hướng dẫn bạn trong quá trình thử nghiệm.
 
-<YouTube id="vRvaswPuMNg" />
+<VidStack src="youtube/vRvaswPuMNg" />
 
 Đây là bản beta công khai và chúng tôi hy vọng cộng đồng có thể giúp chúng tôi kiểm tra hệ thống của mình một cách triệt để nhất. Nếu bạn muốn trợ giúp, nhưng không biết bắt đầu từ đâu, vui lòng sử dụng danh sách nhiệm vụ bên dưới.
 

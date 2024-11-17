@@ -6,52 +6,52 @@ export const esSidebarConfig = sidebar({
       text: "Artículos",
       icon: "book-reader",
       collapsible: true,
-      link: "/es/articles",
+      link: "/es/articles/",
       prefix: "/es/articles/",
       children: [
-        {
-          text: "La Dexalot L1",
+          {
+            text: "La Dexalot L1",
+            icon: "book-open",
+            link: "subnet/"
+          },
+          {
+            text: "Guia L1 de Dexalot",
+            icon: "book-open",
+            link: "guide/"
+          },
+          {
+            text: "Incentivos de Dexalot",
+            icon: "book-open",
+            link: "dip/"
+          },
+          {
+            text: "Dexalot Incentivo Compromisos",
+            icon: "book-open",
+            link: "incentives/"
+          },
+          {text: "Dexalot x LayerZero",
           icon: "book-open",
-          link: "subnet"
+          link: "layerzero/"
         },
         {
-          text: "Guia L1 de Dexalot",
+          text: "Asset Balance Snapshot",
           icon: "book-open",
-          link: "guide"
+          link: "abs/"
         },
-        {
-          text: "Incentivos de Dexalot",
-          icon: "book-open",
-          link: "dip"
-        },
-        {
-          text: "Dexalot Incentivo Compromisos",
-          icon: "book-open",
-          link: "incentives"
-        },
-        {text: "Dexalot x LayerZero",
-        icon: "book-open",
-        link: "layerzero"
-      },
-      {
-        text: "Asset Balance Snapshot",
-        icon: "book-open",
-        link: "abs"
-      },
         {
           text: "Dexalot Discovery",
           icon: "book-open",
-          link: "discovery"
+          link: "discovery/"
         },
           {
             text: "Sample Bot de Dexalot",
             icon: "book-open",
-            link: "samplebot"
+            link: "samplebot/"
           },
         {
           text: "Dexalot Trading Cup",
           icon: "book-open",
-          link: "cup"
+          link: "cup/"
         }
       ]
     },
@@ -60,23 +60,23 @@ export const esSidebarConfig = sidebar({
       text: "Tutoriales",
       icon: "mortar-board",
       collapsible: true,
-      link: "/es/tutorials",
+      link: "/es/tutorials/",
       prefix: "/es/tutorials/",
       children: [
         {
           text: "Introducción a la Dexalot L1",
           icon: "play",
-          link: "howtouse"
+          link: "howtouse/"
         },
         {
           text: "Testing de la Dexalot L1",
           icon: "play",
-          link: "howtotest"
+          link: "howtotest/"
         },
         {
           text: "Instalación de MetaMask",
           icon: "play",
-          link: "metamaskuse"
+          link: "metamaskuse/"
         },
       ]
     },
@@ -84,8 +84,8 @@ export const esSidebarConfig = sidebar({
     {
       text: "Legal",
       icon: "gavel",
-      link: "/es/legal",
-      prefix: "/eslegal/",
+      link: "/es/legal/",
+      prefix: "/es/legal",
       collapsible: true,
     },
 

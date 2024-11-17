@@ -16,7 +16,7 @@ Since Dexalot L1 is essentially just like the Mainnet you are familiar with, you
 
 Feel free to try it out using this Introduction or read below to learn more to help and guide you in your testing.
 
-<YouTube id="vRvaswPuMNg" />
+<VidStack src="youtube/vRvaswPuMNg" />
 
 This is a public beta and we hope the community can help us stress-test our systems. If you want to help, but don’t know where to start, feel free to use the task list below.
 

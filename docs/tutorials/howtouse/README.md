@@ -16,7 +16,7 @@ This Dexalot L1 is [a dual-chain application](https://medium.com/dexalot/the-dex
 
 Here is an Introduction to Dexalot’s new L1 Beta application.
 
-<YouTube id="vRvaswPuMNg" />
+<VidStack src="youtube/vRvaswPuMNg" />
 
 ## The Dashboard
 The website dashboard is similar to what you are already familiar with. Connect your wallet (Core, Metamask, and WalletConnect) just as you have done before. If you need a refresher, watch [these tutorials](https://medium.com/dexalot/tagged/dexalot-tutorial) and learn the [basics](https://medium.com/dexalot/learn-the-basics-e893a62261a3).

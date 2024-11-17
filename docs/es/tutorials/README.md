@@ -2,7 +2,7 @@
 title: Tutoriales
 icon: mortar-board
 prev: /es/
-next: /es/tutorials/howtouse
+next: /es/tutorials/howtouse/
 editLink: true
 ---
 

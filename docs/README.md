@@ -9,19 +9,19 @@ footer: true
 
 actions:
   - text: Get Started 💡
-    link: contracts
+    link: articles/
     type: primary
 
 features:
   - title: Articles
     icon: book-reader
     details: "Learn the concepts, background and vision"
-    link: articles
+    link: articles/
 
   - title: Tutorials
     icon: mortar-board
     details: "Read, watch and learn how to use Dexalot"
-    link: tutorials
+    link: tutorials/
 
   - title: Incentives
     icon: trophy
@@ -36,10 +36,10 @@ features:
   - title: Smart Contracts
     icon: code
     details: "Main and auxiliary contracts that make the dual-chain application"
-    link: contracts
+    link: contracts/
 
   - title: Trading API
     icon: link
     details: "Learn how to interact with Dexalot"
-    link: apiv2
+    link: apiv2/
 ---

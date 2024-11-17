@@ -12,7 +12,7 @@ Un exchange innovador sobre el paradigma de la escalabilidad horizontal del ecos
 
 El equipo de Dexalot ha estado trabajando duro construyendo nuestra Subnet de Avalanche, ¡y ya casi está aquí! Nuestra Subnet está actualmente siendo testeada en la red de prueba Avalanche Fuji, por lo que los usuarios podrán disfrutar de una nueva experiencia de trading mejorada una vez que esté completa. La tarifas de transacciones mas baratas, la liquidez mejorada, y la altísima velocidad son sólo algunas de las muchas nuevas características que vendrán con la subnet. Echemos un vistazo a la novedosa estructura del nuevo Dexalot y como establece una base para un futuro multi-chain como una Subnet de Avalanche.
 
-<YouTube id="vRvaswPuMNg" />
+<VidStack src="youtube/vRvaswPuMNg" />
 
 
 La Testner original de Dexalot Testnet se presentó el 6 de Agosto de 2021, seguida del lanzamiento de la Mainnet el 6 de Diciembre de 2021. Posteriormente, la [Testnet Subnet de Dexalot](https://medium.com/dexalot/la-subnet-de-dexalot-5deec1500503) se creó el 25 de Abril de 2022. Dicho sencillamente, todos los entornos fueron actualizados a medida que Dexalot migra a la nueva arquitectura.

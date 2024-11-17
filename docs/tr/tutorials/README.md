@@ -2,7 +2,7 @@
 title: Öğretici Içerikler
 icon: mortar-board
 prev: /tr/
-next: /tr/tutorials/howtouse
+next: /tr/tutorials/howtouse/
 editLink: true
 ---
 

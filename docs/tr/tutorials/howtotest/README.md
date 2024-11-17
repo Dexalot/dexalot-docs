@@ -20,7 +20,7 @@ Aşağıdaki tanıtım videosu yardımıyla testi denemekten çekinmeyin veya te
 
 Feel free to try it out using this Introduction or read below to learn more to help and guide you in your testing.
 
-<YouTube id="vRvaswPuMNg" />
+<VidStack src="youtube/vRvaswPuMNg" />
 
 Bu herkese açık bir beta sürümüdür ve topluluğun sistemlerimizi stres testine tabi tutmamıza yardımcı olabileceğini umuyoruz. Yardım etmek istiyor ancak nereden başlayacağınızı bilmiyorsanız, aşağıdaki görev listesini kullanmaktan çekinmeyin.
 

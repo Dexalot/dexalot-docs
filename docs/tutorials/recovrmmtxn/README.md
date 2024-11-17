@@ -32,7 +32,7 @@ Have a look at Snowtrace’s gas tracker to get an estimate of the average base 
 
 If you already know that the network is busy, you can choose to set the max priority fee high before you even send the transaction. That way, you might not need to speed it up later. Here is a short video explaining the process.
 
-<YouTube id="gsfJywNxpi4" />
+<VidStack src="youtube/gsfJywNxpi4" />
 
 ## Solution 2 — Force cancellation of your pending transaction by creating another transaction with the same nonce, but higher amount of gas
 

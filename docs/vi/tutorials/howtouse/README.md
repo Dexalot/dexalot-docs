@@ -16,7 +16,7 @@ Mạng con Avalanche [này là một ứng dụng chuỗi kép](https://medium.c
 
 Đây là phần Giới thiệu về ứng dụng Subnet Beta mới của Dexalot.
 
-<YouTube id="vRvaswPuMNg" />
+<VidStack src="youtube/vRvaswPuMNg" />
 
 ## Bảng điều khiển
 

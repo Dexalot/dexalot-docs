@@ -16,7 +16,7 @@ editLink: true
 
 您可以通过阅读以下内容了解更多信息，从而帮助和指导您进行测试。
 
-<YouTube id="vRvaswPuMNg" />
+<VidStack src="youtube/vRvaswPuMNg" />
 
 这是一个公开测试版，我们希望社区可以帮助我们对系统进行压力测试。如果您想提供帮助，但不知道从哪里开始，请随时查看下面的任务列表。
 

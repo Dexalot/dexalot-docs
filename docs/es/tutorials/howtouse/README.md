@@ -14,7 +14,7 @@ Después de meses [de construcción y testeos](https://medium.com/dexalot/testin
 
 Aquí hay una introducción a la aplicación de la nueva Subnet Beta de Dexalot.
 
-<YouTube id="vRvaswPuMNg" />
+<VidStack src="youtube/vRvaswPuMNg" />
 
 ## El Panel de Control
 El panel de control del sitio web es similar al que ya conoces. Conecta tu wallet (Core, Metamask, y WalletConnect) tal como hiciste antes. Si necesitas un repaso, mira [éstos tutoriales](https://medium.com/dexalot/tagged/dexalot-tutorial) y [aprende lo básico](https://medium.com/dexalot/aprende-lo-b%C3%A1sico-749d29fad69f).

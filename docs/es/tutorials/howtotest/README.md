@@ -14,7 +14,7 @@ En tanto que la Subnet es esenciamente igual que la Mainnet con la que estás fa
 
 Sentite libre de probarla usando ésta Introduction o lee a continuación para aprender mas para ayudarte y guiarte en tu testeo.
 
-<YouTube id="vRvaswPuMNg" />
+<VidStack src="youtube/vRvaswPuMNg" />
 
 Ésta es una beta pública y esperamos que la comunidad pueda ayudarnos a realizar pruebas de stress de nuestros sistemas. Si quieres ayudar, pero no sabes por donde comenzar, siéntete libre de utilizar la lista de tareas que está mas abajo.
 

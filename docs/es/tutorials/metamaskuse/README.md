@@ -7,7 +7,7 @@ editLink: true
 
 MetaMask es una aplicación que te permite administrar las llaves de la cuenta y enviar/recibir criptomonedas basadas en Ethereum desde tu teléfono celular o navegador web. Necesitarás una cuenta de MetaMask para comenzar a operar en Dexalot.
 
-<YouTube id="8V7r3vIm_Pc" />
+<VidStack src="youtube/8V7r3vIm_Pc" />
 
 1. Download MetaMask desde [aquí](https://metamask.io/). Se instalará como una extensión en tu actual navegador web.
 

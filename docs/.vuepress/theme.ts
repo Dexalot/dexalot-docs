@@ -64,7 +64,9 @@ export default hopeTheme({
 
     searchPro: {
       indexContent: true,
+      hotReload: true,
       autoSuggestions: true,
+      suggestDelay: 400
     },
 
     comment: {

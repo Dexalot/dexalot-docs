@@ -1,7 +1,12 @@
+import { viteBundler } from "@vuepress/bundler-vite";
 import { defineUserConfig } from "vuepress"
 import theme from "./theme.js";
 
 export default defineUserConfig({
+  base: "/",
+
+  dest: "./dist",
+
   locales: {
     "/": {
       lang: "en-US",
@@ -38,6 +43,8 @@ export default defineUserConfig({
       level: [1, 2, 3, 4],
     },
   },
+
+  bundler: viteBundler(),
 
   theme,
 

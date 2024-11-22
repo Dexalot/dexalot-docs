@@ -29,19 +29,20 @@ export const esSidebarConfig = sidebar({
             icon: "book-open",
             link: "incentives/"
           },
-          {text: "Dexalot x LayerZero",
-          icon: "book-open",
-          link: "layerzero/"
+          {
+            text: "Dexalot x LayerZero",
+            icon: "book-open",
+            link: "layerzero/"
         },
         {
-          text: "Asset Balance Snapshot",
-          icon: "book-open",
-          link: "abs/"
+            text: "Asset Balance Snapshot",
+            icon: "book-open",
+            link: "abs/"
         },
         {
-          text: "Dexalot Discovery",
-          icon: "book-open",
-          link: "discovery/"
+            text: "Dexalot Discovery",
+            icon: "book-open",
+            link: "discovery/"
         },
           {
             text: "Sample Bot de Dexalot",

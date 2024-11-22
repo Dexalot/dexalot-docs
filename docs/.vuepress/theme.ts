@@ -16,7 +16,7 @@ import {
 
 export default hopeTheme({
   logo: "/logos/dexalot_logo.png",
-  footer: "Last updated 11/16/2024",
+  footer: "Last updated 11/22/2024",
   copyright: "BUSL 1.1 Licensed | Copyright © 2024 Dexalot",
   displayFooter: true,
   headerDepth: 4,
@@ -59,28 +59,12 @@ export default hopeTheme({
 
   plugins: {
     components: {
-      components: ["VidStack"]
+      components: ['VidStack']
     },
 
-    search: {
-      maxSuggestions: 10,
-      locales: {
-        '/': {
-          placeholder: 'Search',
-        },
-        '/es/': {
-          placeholder: 'Buscar',
-        },
-        '/vi/': {
-          placeholder: 'Tìm kiếm',
-        },
-        '/tr/': {
-          placeholder: 'Ara',
-        },
-        '/zh/': {
-          placeholder: '搜索',
-        },
-      }
+    searchPro: {
+      indexContent: true,
+      autoSuggestions: true,
     },
 
     comment: {
@@ -96,6 +80,9 @@ export default hopeTheme({
       inputPosition: "bottom"
     },
 
-    mdEnhance: {},
+    markdownMath: true,
+
+    mdEnhance: {
+    },
   },
 });

@@ -29,14 +29,15 @@ export const trSidebarConfig = sidebar({
           icon: "book-open",
           link: "incentives/"
         },
-        {text: "Dexalot x LayerZero",
-        icon: "book-open",
-        link: "layerzero/"
+        {
+          text: "Dexalot x LayerZero",
+          icon: "book-open",
+          link: "layerzero/"
         },
         {
-        text: "Dexalot’un Asset Balance Snapshot’ı",
-        icon: "book-open",
-        link: "abs/"
+          text: "Dexalot’un Asset Balance Snapshot’ı",
+          icon: "book-open",
+          link: "abs/"
         },
         {
           text: "Dexalot Discovery",

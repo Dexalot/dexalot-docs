@@ -1,5 +1,7 @@
 # Dexalot Incentive Program (DIP)
 
+![Dipbanner](/images/dip/dipban.png)
+
 The Dexalot Incentive Program (DIP) is designed to reward users for providing liquidity and trading on our protocol. Users are scored on their activity on a pair by pair basis. Pair scores are put together to give a combined token score per user. Calculations are processed on a daily basis after 00:00 UTC. At the end of the month a user's score is finalized and reward tokens are distributed proportionally based on this score. The score consists of 3 underlying components, executed volume (E), orderbook score (O) and ALOT balance score (A). Each pair and reward token and may be weighted differently, the current active weightings can be viewed [here](/en/DIP.md#weightings)
 
 ## Executed Volume (E)

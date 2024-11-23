@@ -5,6 +5,7 @@ editLink: true
 # Dexalot Incentive Program
 
 ![Dipbanner](/images/dip/dipban.png)
+
 The Dexalot Subnet is launching, so it’s time to celebrate. We are introducing the Dexalot Incentive Program giving away up to 4.8 Million $ALOT!
 
 Dexalot Subnet users can expect cheaper transaction/trading fees, better liquidity, tighter bid-offer spreads, blazing speed, and much more. And, with DIP, you will also be rewarded for trading on Dexalot.

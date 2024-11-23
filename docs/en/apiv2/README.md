@@ -17,7 +17,7 @@ editLink: true
 | v2.5 | 2022-11-07 | Websocket orderbook message changes:<br><br>- (Breaking Change) Renamed "totals" field to "baseCumulative"<br>- Added "quoteCumulative" which shows the cumulative quote amount<br>- Added "quoteTotal" which shows quote asset orderbook line total.|
 | v2.6 | 2023-02-22 |- Addition of signed endpoints: orders, traderhistory, executions, transfers, portfoliobalance, transactions<br>- Removed onlyfills parameter from signed traderhistory endpoint|
 | v2.7 | 2023-03-06 |- Remove api-key restrictions from all endpoints except auth/getwstoken (temp ws token)<br>- Added curl examples for requests, added Python example for signing.|
-| v2.8 | 2024-03-22 |Added additional entries for new chains, affecting the following endpoints:<br>- [Get Environments](/apiv2/RestApi.md#get-environments)<br>- [Get Tokens](/apiv2/RestApi.md#get-tokens)<br>- [Get Deployment](/apiv2/RestApi.md#get-deployment-contract-addresses-and-abi)<br><br>Added executor address for [RFQ firm quote](/apiv2/SimpleSwap.md#_4-request-firm-quote).<br><br>Updated contract events for multichain, affecting the following events:<br>- [PortfolioUpdated](/contracts/interfaces/IPortfolio.html#portfolioupdated)<br>- [XChainXferMessage](/contracts/interfaces/IPortfolioBridge.html#xchainxfermessage) with new [Xfer](/contracts/interfaces/IPortfolio.html#xfer)<br>- [SwapExecuted](/contracts/MainnetRFQ.html#swapexecuted)|
+| v2.8 | 2024-03-22 |Added additional entries for new chains, affecting the following endpoints:<br>- [Get Environments](/en/apiv2/RestApi.md#get-environments)<br>- [Get Tokens](/en/apiv2/RestApi.md#get-tokens)<br>- [Get Deployment](/en/apiv2/RestApi.md#get-deployment-contract-addresses-and-abi)<br><br>Added executor address for [RFQ firm quote](/en/apiv2/SimpleSwap.md#_4-request-firm-quote).<br><br>Updated contract events for multichain, affecting the following events:<br>- [PortfolioUpdated](/en/contracts/interfaces/IPortfolio.html#portfolioupdated)<br>- [XChainXferMessage](/en/contracts/interfaces/IPortfolioBridge.html#xchainxfermessage) with new [Xfer](/en/contracts/interfaces/IPortfolio.html#xfer)<br>- [SwapExecuted](/en/contracts/MainnetRFQ.html#swapexecuted)|
 
 ## Architecture
 
@@ -34,7 +34,7 @@ Integration with the TradePairs & PorfolioSub in the Dexalot L1 will give you al
 
 If your trading application has a business need to deposit/withdraw more often, then your app will need to integrate with the PortfolioMain contracts in the host-chains as well to fully automate your flow.
 
-WebSocket & REST API interfaces are optional and provided purely for convenience. Instead of directly reading from the chain, you can rely on the websocket interface for example, to get the order books. But the information in the ws will have to go through Dexalot’s backend before it reaches your app and may deliver the order books’ state a few milliseconds slower. In other words, Dexalot’s backend does exactly what your application would do on its own: Reading the order book from the chain and publishing it over the websocket. Similarly, any information received from the REST API is a drop-copy of a transaction that has already been confirmed on the blockchain.  Please refer to contracts documentation [here](/contracts) for interacting with the blockchain directly.
+WebSocket & REST API interfaces are optional and provided purely for convenience. Instead of directly reading from the chain, you can rely on the websocket interface for example, to get the order books. But the information in the ws will have to go through Dexalot’s backend before it reaches your app and may deliver the order books’ state a few milliseconds slower. In other words, Dexalot’s backend does exactly what your application would do on its own: Reading the order book from the chain and publishing it over the websocket. Similarly, any information received from the REST API is a drop-copy of a transaction that has already been confirmed on the blockchain.  Please refer to contracts documentation [here](/en/contracts) for interacting with the blockchain directly.
 
 Needless to say, Dexalot does not require nor take custody of your private keys. Hence deposit/withdrawal or any trade functions can only be performed via its smart contracts. These functions are not supported via the RESTAPI nor WS.
 
@@ -52,7 +52,7 @@ Needless to say, Dexalot does not require nor take custody of your private keys.
 
 ## Docs
 
-* [Rest Api](/apiv2/RestApi.md)
-* [Contracts](/apiv2/Contracts.md)
-* [Websocket](/apiv2/Websocket.md)
-* [SimpleSwap](/apiv2/SimpleSwap.md)
+* [Rest Api](/en/apiv2/RestApi.md)
+* [Contracts](/en/apiv2/Contracts.md)
+* [Websocket](/en/apiv2/Websocket.md)
+* [SimpleSwap](/en/apiv2/SimpleSwap.md)

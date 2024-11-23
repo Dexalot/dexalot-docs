@@ -5,9 +5,9 @@ next: SimpleSwap
 editLink: true
 ---
 
-## Web Socket Interface (Draft)
+# Web Socket Interface
 
-### Server Urls
+## Server Urls
 
 Testnet: [wss://api.dexalot-test.com](wss://api.dexalot-test.com)
 
@@ -28,7 +28,7 @@ In order to create a web socket connection with your api-key:
     wss://api.dexalot-dev.com?wstoken=ff0d8450-3e86-49ff-91fb-37156615c6ee
 3.  If your token expires you can request a new one using Step 1.
 
-### Web Socket subscribe/unsubscribe
+## Web Socket subscribe/unsubscribe
 
 Note: Please always unsubscribe whenever it is architecturally sound in your app.
 
@@ -45,7 +45,7 @@ export enum SUBSCRIPTION {
 }
 ```
 
-### Sample Code for subscribe/unsubscribe
+## Sample Code for subscribe/unsubscribe
 
 ```ts
 subscribe() {
@@ -80,7 +80,7 @@ Example trader event subscribe message :
 {"type":"tradereventsubscribe", "signature":"0xXXXXXXXXXXXXXXXXXX:0xXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"}
 ```
 To generate signature you can use the sample code provided in RestApi Signed Endpoints.
-* [Rest Api](/apiv2/RestApi.md)
+* [Rest Api](/en/apiv2/RestApi.md)
 
 Sample code unsubscribe:
 ```ts
@@ -154,7 +154,7 @@ chartUnsubscribe(charttype: string) {
 }
 ```
 
-### Message Types Published by the Server over WebSocket
+## Message Types Published by the Server over WebSocket
 
 ```ts
 export type SOCKET_DATA_TYPES =
@@ -171,7 +171,7 @@ export type SOCKET_DATA_TYPES =
     | 'xChainFinalizedEvent'
 ```
 
-#### ChartSnapShot
+## ChartSnapShot
 
 ![Chart snaphot in JS console](/images/api/chart_snapshot.png)
 
@@ -195,7 +195,7 @@ export interface CandleDataRaw {
     }
 ```
 
-#### OrderBooks
+## OrderBooks
 
 OrderBooks can also be accessed directly from the blockchain itself. And
 orderbooks provided by the websocket interface will inherently have a
@@ -229,7 +229,7 @@ export interface WsSinglebook {
 }
 ```
 
-#### MarketSnapShot
+## MarketSnapShot
 
 ![MarketSnapShots in JS console](/images/api/market_snapshots.png)
 
@@ -246,7 +246,7 @@ export interface MarketsSnapData {
 }
 ```
 
-#### Prices
+## Prices
 
 ![Prices in JS console](/images/api/prices.png)
 
@@ -261,13 +261,13 @@ export interface WsPricesData {
 }
 ```
 
-#### APP VERSION
+## APP VERSION
 
 This is backend application version
 
 ![APP_VERSION in JS console](/images/api/app_version.png)
 
-#### LastTrade
+## LastTrade
 
 ![LastTrade in JS console](/images/api/last_trade.png)
 
@@ -289,7 +289,7 @@ export interface WsTradeHistoryData {
 }
 ```
 
-#### OrderStatusUpdateEvent (Trader Event)
+## OrderStatusUpdateEvent (Trader Event)
 
 After subscribing to the traderEvents this is the captured order status update event based on the trader address provided in the signature.
 
@@ -373,7 +373,7 @@ Sample Message:
 }
 ```
 
-#### TransactionEvent (Trader Event)
+## TransactionEvent (Trader Event)
 
 After subscribing to the traderEvents this is the captured transaction event based on the trader address provided in the signature.
 
@@ -421,7 +421,7 @@ Sample Message:
 }
 ```
 
-#### ExecutionEvent (Trader Event)
+## ExecutionEvent (Trader Event)
 
 After subscribing to the traderEvents this is the captured execution event based on the trader address provided in the signature.
 
@@ -473,7 +473,7 @@ Sample Message:
 }
 ```
 
-#### XChainFinalizedEvent (Trader Event)
+## XChainFinalizedEvent (Trader Event)
 
 After subscribing to the traderEvents this is the captured execution event based on the trader address provided in the signature.
 This event is generated when a crosschain swap is finalized.

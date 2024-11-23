@@ -1,7 +1,7 @@
 ---
 icon: gavel
 editLink: true
-next: /legal/License.md
+next: /en/legal/License.md
 ---
 # Yasal Bilgiler
 

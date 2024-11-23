@@ -20,7 +20,7 @@ Sentite libre de probarla usando ésta Introduction o lee a continuación para a
 
 Los desarrolladores de Dexalot abordarán la mayor cantidad de bugs y problemas de usabilidad como sea posible. Por favor, informanos cualquier observación o inquietud que desees que examine el equipo. Por favor, adjunte capturas de pantalla de tus inquietudes y la información suficiente, incluyendo IDs de las transacciones, para ayudarlos a abordar tus observaciones y ellos harán los cambios necesarios.
 
-Podes enviarle al equipo tu reporte por email a [support@dexalot.com](support@dexalot.com). Los community managers y moderadores de Dexalot están disponibles en Discord para ayudarte, podes dejarles tus comentarios en el hilo de los testeos de la Subnet en el canal #Subnet. ¡Nos vemos allí!
+Podes enviarle al equipo tu reporte por email a [support@dexalot.com](mailto:support@dexalot.com). Los community managers y moderadores de Dexalot están disponibles en Discord para ayudarte, podes dejarles tus comentarios en el hilo de los testeos de la Subnet en el canal #Subnet. ¡Nos vemos allí!
 
 **Feliz testeo!!**
 

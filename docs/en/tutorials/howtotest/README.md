@@ -22,7 +22,7 @@ This is a public beta and we hope the community can help us stress-test our syst
 
 The Dexalot developers will address as many bugs and usability issues as possible. Please report back any observations and concerns you would like the team to examine. Please attach screenshots of your concerns and enough information including transaction ids to assist them in addressing your observations and they will make changes as necessary.
 
-You can email the team your report at [support@dexalot.com](support@dexalot.com). Dexalot community managers and moderators are available in Discord to help you and you may leave your comments in the L1 Testing thread within the #Subnet channel. See you there!
+You can email the team your report at [support@dexalot.com](mailto:support@dexalot.com). Dexalot community managers and moderators are available in Discord to help you and you may leave your comments in the L1 Testing thread within the #Subnet channel. See you there!
 
 **Happy Testing!!**
 

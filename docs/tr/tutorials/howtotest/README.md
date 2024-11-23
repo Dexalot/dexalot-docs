@@ -26,7 +26,7 @@ Bu herkese açık bir beta sürümüdür ve topluluğun sistemlerimizi stres tes
 
 Dexalot geliştiricileri, mümkün olduğunca çok sayıda hata ve kullanım sorununu ele alacaktır. Lütfen ekibin incelemesini istediğiniz tüm gözlemlerinizi ve varsa sorunları geri bildirin. Lütfen karşılaştığınız hataların ekran görüntülerini ve gözlemlerinizi ele almalarına yardımcı olmak için transaction id’ leri de dahil olmak üzere yeterli bilgiyi ekleyin; ekibimiz gerekli değişiklikleri yapacaklardır.
 
-Ekibe raporunuzu, [support@dexalot.com](support@dexalot.com) adresinden e-posta ile gönderebilirsiniz. Dexalot topluluk yöneticileri ve moderatörleri size yardımcı olmak için Discord’da olacaklardır ve yorumlarınızı #Subnet kanalındaki Subnet Testing bölümüne bırakabilirsiniz. Orada görüşmek üzere!
+Ekibe raporunuzu, [support@dexalot.com](mailto:support@dexalot.com) adresinden e-posta ile gönderebilirsiniz. Dexalot topluluk yöneticileri ve moderatörleri size yardımcı olmak için Discord’da olacaklardır ve yorumlarınızı #Subnet kanalındaki Subnet Testing bölümüne bırakabilirsiniz. Orada görüşmek üzere!
 
 **Mutlu Testler!!**
 

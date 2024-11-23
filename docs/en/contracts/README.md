@@ -2,7 +2,7 @@
 title: Smart Contracts
 icon: code
 prev: /
-next: /contracts/Exchange
+next: /en/contracts/Exchange
 editLink: true
 ---
 
@@ -108,7 +108,7 @@ TradePairs:<br/>
      - 1: `CANCELMAKER`   – Cancel maker Order. Continue matching the newer taking order against the orderbook.
      - 2: `CANCELBOTH`   – Cancel both maker & taker orders immediately.
      - 3: `NONE`         – Do nothing. Self Trade allowed <br/>
-- All trading functions will raise OrderStatusChanged events with `status= REJECTED` instead of reverting for smoother list functions. See [addNewOrder](/contracts/TradePairs.html#addneworder) documentation for REVERT & REJECT conditions<br/>
+- All trading functions will raise OrderStatusChanged events with `status= REJECTED` instead of reverting for smoother list functions. See [addNewOrder](/en/contracts/TradePairs.html#addneworder) documentation for REVERT & REJECT conditions<br/>
 - Rejected new Orders will start getting an id(orderId) assigned by the blockchain for consistency<br/>
 - Unsolicited cancels will continue to get `status=CANCELED` status but `code` field will be populated with `"T-USCL-01"` for additional explanation<br/>
 - 30-35% Gas optimization when sending new orders <br/>

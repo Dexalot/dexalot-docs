@@ -33,10 +33,10 @@ Here is a short video showing you how to connect your wallet and obtain the bala
 
 ## Own your ABS:
 
-If you are interested in manually verifying your own asset balances you can use [Merkletreejs](https://www.npmjs.com/package/merkletreejs) ( a Javascript library). You can use this library to simplify the following [steps](https://app.dexalot-test.com/balance_proof):
+If you are interested in manually verifying your own asset balances you can use [Merkletreejs](https://www.npmjs.com/package/merkletreejs) ( a Javascript library). You can use this library to simplify the following [steps](https://app.dexalot.com/balance_proof):
 
-- Get the root of the balance merkle tree from [IPFS](https://ipfs.io/ipfs/bafkreibus7wgzcnukfkc5klog4urln4w5qgxxdfo2nx6okwucggaph5qci).
-- Get the balance Merkle tree from [S3](https://dexalot-balance-merkle-test.s3.amazonaws.com/AVAX-1672244063.json).
+- Get the root of the balance merkle tree from [IPFS](https://ipfs.dexalot.com/ipfs/bafkreifjvfqxxar2upv5ab42ewy327g6hcdswq5imrhpa3wgdtoki47auq).
+- Get the balance Merkle tree from [S3](https://merkletree.dexalot.com/ALOT-1732324905.json).
 - Verify the root using the tree.
 - Verify your leaf hash using Solidity’s keccak256 algorithm from your leaf index, your wallet address, and your asset balance using the tree.
 - Verify the proofs for your leaf hash using the root and tree.

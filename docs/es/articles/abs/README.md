@@ -34,10 +34,10 @@ Aquí hay un breve video que muestra como conectar tu wallet y obtener el saldo 
 
 ## Sé dueño de tu ABS:
 
-Si estás interesado en verificar manualmente tus propios saldos de activos, puedes usar [Merkletreejs](https://www.npmjs.com/package/merkletreejs) (una librería Javascript). Puedes utilizar ésta librería para simplificar los siguientes [pasos](https://app.dexalot-test.com/balance_proof):
+Si estás interesado en verificar manualmente tus propios saldos de activos, puedes usar [Merkletreejs](https://www.npmjs.com/package/merkletreejs) (una librería Javascript). Puedes utilizar ésta librería para simplificar los siguientes [pasos](https://app.dexalot.com/asset_balance_snapshot):
 
-- Obtén el saldo de merkle tree desde [IPFS](https://ipfs.io/ipfs/bafkreibus7wgzcnukfkc5klog4urln4w5qgxxdfo2nx6okwucggaph5qci).
-- Obtén el saldo de Merkle tree desde [S3](https://dexalot-balance-merkle-test.s3.amazonaws.com/AVAX-1672244063.json).
+- Obtén el saldo de merkle tree desde [IPFS](https://ipfs.dexalot.com/ipfs/bafkreifjvfqxxar2upv5ab42ewy327g6hcdswq5imrhpa3wgdtoki47auq).
+- Obtén el saldo de Merkle tree desde [S3](https://merkletree.dexalot.com/ALOT-1732324905.json).
 - Verificar el root utilizando el tree.
 - Verificar tu leaf hash utilizando el algoritmokeccak256 de Solidity desde tu leaf index, tu wallet address, y tu saldo de activos utilizando el tree.
 - Verificar las pruebas de tus leaf hash utilizando el root y el tree.

@@ -22,7 +22,7 @@ Vui lòng dùng thử bằng phần Giới thiệu này hoặc đọc phần bê
 
 Các nhà phát triển Dexalot sẽ giải quyết càng nhiều lỗi và các vấn đề về khả năng sử dụng càng tốt. Vui lòng báo cáo lại bất kỳ quan sát và lo ngại nào mà bạn muốn nhóm kiểm tra. Vui lòng đính kèm ảnh chụp màn hình về các mối quan tâm của bạn và đủ thông tin bao gồm id giao dịch để hỗ trợ họ giải quyết các quan sát của bạn và họ sẽ thực hiện các thay đổi khi cần thiết.
 
-Bạn có thể gửi email cho nhóm báo cáo của mình tại [support@dexalot.com](support@dexalot.com). Người quản lý và người kiểm duyệt cộng đồng Dexalot sẵn sàng trợ giúp bạn và bạn có thể để lại nhận xét của mình trong chuỗi Kiểm tra mạng con trong kênh #Subnet. Hẹn gặp bạn ở đó!
+Bạn có thể gửi email cho nhóm báo cáo của mình tại [support@dexalot.com](mailto:support@dexalot.com). Người quản lý và người kiểm duyệt cộng đồng Dexalot sẵn sàng trợ giúp bạn và bạn có thể để lại nhận xét của mình trong chuỗi Kiểm tra mạng con trong kênh #Subnet. Hẹn gặp bạn ở đó!
 
 **Chúc bạn thử nghiệm vui vẻ !!**
 

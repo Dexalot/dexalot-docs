@@ -6,8 +6,8 @@ export const enSidebarConfig = sidebar({
       text: "Articles",
       icon: "book-reader",
       collapsible: true,
-      link: "articles/",
-      prefix: "articles",
+      link: "/en/articles/",
+      prefix: "/en/articles",
       children: [
         {
           text: "Dexalot L1 Intro",
@@ -71,8 +71,8 @@ export const enSidebarConfig = sidebar({
       text: "Tutorials",
       icon: "mortar-board",
       collapsible: true,
-      link: "tutorials/",
-      prefix: "tutorials/",
+      link: "/en/tutorials/",
+      prefix: "/en/tutorials/",
       children: [
         {
           text: "Dexalot L1 Intro",
@@ -105,21 +105,21 @@ export const enSidebarConfig = sidebar({
     {
       text: "Incentives",
       icon: "trophy",
-      link: "DIP",
+      link: "/en/DIP",
     },
 
     {
       text: "Trading Fees & Discounts",
       icon: "dollar",
-      link: "TradingFeeDiscounts",
+      link: "/en/TradingFeeDiscounts",
     },
 
     {
       text: "Smart Contracts",
       icon: "code",
       collapsible: true,
-      link: "contracts/",
-      prefix: "contracts/",
+      link: "/en/contracts/",
+      prefix: "/en/contracts/",
       children: [
         {
           text: "Main Contracts",
@@ -220,8 +220,8 @@ export const enSidebarConfig = sidebar({
     {
       text: "Trading API",
       icon: "link",
-      prefix: "apiv2/",
-      link: "apiv2/",
+      prefix: "/en/apiv2/",
+      link: "/en/apiv2/",
       collapsible: true,
       children: [
         {
@@ -246,7 +246,7 @@ export const enSidebarConfig = sidebar({
     {
       text: "Legal",
       icon: "gavel",
-      prefix: "legal/",
+      prefix: "/en/legal/",
       collapsible: true,
       children: [
         {
@@ -270,13 +270,13 @@ export const enSidebarConfig = sidebar({
     {
       text: "Contact",
       icon: "envelope",
-      link: "Contact"
+      link: "/en/Contact"
     },
 
     {
       text: "About",
       icon: "circle-info",
-      link: "About"
+      link: "/en/About"
     }
   ],
 });

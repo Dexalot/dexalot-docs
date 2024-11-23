@@ -22,7 +22,7 @@ editLink: true
 
 Dexalot 开发人员将尽可能多地修正错误和解决可用性问题，您可以随时给予任何反馈，团队会及时解答您的疑虑。请附上相关屏幕截图和足够的信息，包括交易 ID，从而帮助开发团队更好了解您的观察结果，他们将根据需要进行更改。
 
-您可以将您的报告通过电子邮件发送到[support@dexalot.com](support@dexalot.com)。Discord 中的 Dexalot 社区管理员和主理人(moderators)也可以为您提供帮助，您可以在#Subnet 频道的子网测试线程中留下您的评论。期待与您相遇！
+您可以将您的报告通过电子邮件发送到[support@dexalot.com](mailto:support@dexalot.com)。Discord 中的 Dexalot 社区管理员和主理人(moderators)也可以为您提供帮助，您可以在#Subnet 频道的子网测试线程中留下您的评论。期待与您相遇！
 
 祝测试愉快！！
 

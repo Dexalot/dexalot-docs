@@ -84,7 +84,7 @@ The transfers tab now also has more information available to you, including wher
 
 ![transferstab](/images/howtouse/transferstab.png)
 
-Dexalot is looking to complete thorough testing of the Dexalot L1 and we are thankful to everyone for providing crucial feedback. You too can help improve the L1 by simply following the steps outlined above and report back any comments, observations or issues encountered. You can read a detailed guide to testing the Dexalot L1 [here](https://medium.com/dexalot/the-dexalot-subnet-public-testing-4bea8bc80521). You may send your test results to [support@dexalot.com](support@dexalot.com ) or simply chat with moderators on Dexalot Discord.
+Dexalot is looking to complete thorough testing of the Dexalot L1 and we are thankful to everyone for providing crucial feedback. You too can help improve the L1 by simply following the steps outlined above and report back any comments, observations or issues encountered. You can read a detailed guide to testing the Dexalot L1 [here](https://medium.com/dexalot/the-dexalot-subnet-public-testing-4bea8bc80521). You may send your test results to [support@dexalot.com](mailto:support@dexalot.com) or simply chat with moderators on Dexalot Discord.
 
 **Thanks for being a part of this exciting development of Web 3.0, DeFi and the growth of the Avalanche ecosystem with Dexalot. Welcome aboard.**
 

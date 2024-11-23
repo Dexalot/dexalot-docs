@@ -88,7 +88,7 @@ Tab chuyển tiền hiện cũng có thêm thông tin có sẵn cho bạn, bao g
 
 ![transferstab](/images/howtouse/transferstab.png)
 
-Dexalot đang tìm cách hoàn tất quá trình kiểm tra kỹ lưỡng Dexalot-Subnet và chúng tôi rất cảm ơn mọi người đã cung cấp những phản hồi quan trọng. Bạn cũng có thể giúp cải thiện Mạng con bằng cách đơn giản làm theo các bước được nêu ở trên và báo cáo lại bất kỳ nhận xét, quan sát hoặc vấn đề nào gặp phải. Bạn có thể đọc hướng dẫn chi tiết để kiểm tra Dexalot-Subnet [tại đây](https://medium.com/dexalot/th%E1%BB%AD-nghi%E1%BB%87m-c%C3%B4ng-khai-dexalot-subnet-b6b364f2af60) . Bạn có thể gửi kết quả kiểm tra của mình tới [support@dexalot.com](support@dexalot.com) hoặc chỉ cần trò chuyện với người kiểm duyệt trên Dexalot Discord.
+Dexalot đang tìm cách hoàn tất quá trình kiểm tra kỹ lưỡng Dexalot-Subnet và chúng tôi rất cảm ơn mọi người đã cung cấp những phản hồi quan trọng. Bạn cũng có thể giúp cải thiện Mạng con bằng cách đơn giản làm theo các bước được nêu ở trên và báo cáo lại bất kỳ nhận xét, quan sát hoặc vấn đề nào gặp phải. Bạn có thể đọc hướng dẫn chi tiết để kiểm tra Dexalot-Subnet [tại đây](https://medium.com/dexalot/th%E1%BB%AD-nghi%E1%BB%87m-c%C3%B4ng-khai-dexalot-subnet-b6b364f2af60) . Bạn có thể gửi kết quả kiểm tra của mình tới [support@dexalot.com](mailto:support@dexalot.com) hoặc chỉ cần trò chuyện với người kiểm duyệt trên Dexalot Discord.
 
 **Cảm ơn bạn đã là một phần của sự phát triển thú vị này của Web 3.0, DeFi và sự phát triển của hệ sinh thái Avalanche với Dexalot. Chào mừng bạn lên tàu.**
 

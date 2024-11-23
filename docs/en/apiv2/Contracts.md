@@ -5,6 +5,8 @@ next: Websocket
 editLink: true
 ---
 
+# Contracts
+
 ## Subnet Contract Invocations
 
 1. Perform "Deposit to subnet" from the frontend for each token of

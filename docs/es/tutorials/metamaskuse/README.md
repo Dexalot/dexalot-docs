@@ -15,7 +15,7 @@ MetaMask es una aplicación que te permite administrar las llaves de la cuenta y
 ![mmuseinstall](/images/metamaskuse/mmuseinstall.png)
 
 3. Conecta MetaMask a Avalanche Mainnet
-(Puedes hacerlo automáticamente yendo a [Dexalot](Dexalot.com), o manualmente siguiendo los pasos a continuación)
+(Puedes hacerlo automáticamente yendo a [Dexalot](https://dexalot.com), o manualmente siguiendo los pasos a continuación)
 
 a. Utiliza el menú desplegable en Metamask y selecciona “Custom RPC”
 

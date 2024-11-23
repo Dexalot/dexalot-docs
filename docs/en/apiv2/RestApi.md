@@ -1,6 +1,6 @@
 ---
 icon: link
-prev: /apiv2
+prev: /en/apiv2/
 next: Contracts
 editLink: true
 ---

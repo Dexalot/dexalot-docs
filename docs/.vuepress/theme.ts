@@ -1,18 +1,22 @@
-import { hopeTheme } from "vuepress-theme-hope";
+import { hopeTheme } from "vuepress-theme-hope"
+
 import {
   enNavbarConfig,
   esNavbarConfig,
   viNavbarConfig,
   trNavbarConfig,
   zhNavbarConfig,
-} from "./navbar/index.js";
+} from "./navbar/index.js"
+
 import {
   enSidebarConfig,
   esSidebarConfig,
   viSidebarConfig,
   trSidebarConfig,
   zhSidebarConfig,
-} from "./sidebar/index.js";
+} from "./sidebar/index.js"
+
+import { sitemapOptions, seoOptions } from "./options.js"
 
 export default hopeTheme({
   logo: "/logos/dexalot_logo.png",
@@ -68,6 +72,10 @@ export default hopeTheme({
       autoSuggestions: true,
       suggestDelay: 400
     },
+
+    sitemap: process.env.NODE_ENV === 'development' ? false : sitemapOptions,
+
+    seo: process.env.NODE_ENV === 'development' ? false : seoOptions,
 
     comment: {
       provider: "Giscus",

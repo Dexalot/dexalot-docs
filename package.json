@@ -23,7 +23,8 @@
     "pretty-fix": "./node_modules/.bin/prettier --write **/*.{ts,js,md}",
     "clean": "rimraf docs/.vuepress/.cache docs/.vuepress/.temp docs/.vuepress/dist",
     "docs:serve": "http-server -a localhost docs/.vuepress/dist -o",
-    "docs:build": "vuepress-vite build docs",
+    "docs:build:dev": "export NODE_ENV=development; vuepress-vite build docs",
+    "docs:build:prod": "export NODE_ENV=production; vuepress-vite build docs",
     "docs:clean-dev": "vuepress-vite dev docs --clean-cache",
     "docs:dev": "vuepress-vite dev docs",
     "docs:update-package": "npx vp-update"
@@ -32,6 +33,7 @@
     "@vuepress/bundler-vite": "2.0.0-rc.18",
     "@vuepress/plugin-comment": "2.0.0-rc.60",
     "@vuepress/plugin-markdown-math": "2.0.0-rc.60",
+    "@vuepress/plugin-seo": "2.0.0-rc.60",
     "@vuepress/plugin-sitemap": "2.0.0-rc.60",
     "eslint": "^9.15.0",
     "http-server": "^14.1.1",

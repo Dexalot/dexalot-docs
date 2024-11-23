@@ -33,10 +33,10 @@ Bu benzersiz özellik, Dexalot alt ağındaki varlık bilgilerini, **Merkle Tree
 
 ## ABS’nizin sahibi olun:
 
-Kendi varlık bakiyelerinizi manuel olarak doğrulamakla ilgileniyorsanız, [Merkletreejs'i](https://www.npmjs.com/package/merkletreejs) (bir Javascript kütüphanesi) kullanabilirsiniz. Aşağıdaki [adımları](https://app.dexalot-test.com/balance_proof) basitleştirmek için bu kütüphaneyi kullanabilirsiniz::
+Kendi varlık bakiyelerinizi manuel olarak doğrulamakla ilgileniyorsanız, [Merkletreejs'i](https://www.npmjs.com/package/merkletreejs) (bir Javascript kütüphanesi) kullanabilirsiniz. Aşağıdaki [adımları](https://app.dexalot.com/asset_balance_snapshot) basitleştirmek için bu kütüphaneyi kullanabilirsiniz::
 
-- Bakiye merkle ağacının kökünü [IPFS'den](https://ipfs.io/ipfs/bafkreibus7wgzcnukfkc5klog4urln4w5qgxxdfo2nx6okwucggaph5qci) alın.
-- [S3'ten](https://dexalot-balance-merkle-test.s3.amazonaws.com/AVAX-1672244063.json) Bakiye Merkle ağacını alın..
+- Bakiye merkle ağacının kökünü [IPFS'den](https://ipfs.dexalot.com/ipfs/bafkreifjvfqxxar2upv5ab42ewy327g6hcdswq5imrhpa3wgdtoki47auq) alın.
+- [S3'ten](https://merkletree.dexalot.com/ALOT-1732324905.json) Bakiye Merkle ağacını alın..
 - Ağacı kullanarak kökü doğrulayın.
 - Ağacı kullanarak yaprak dizininizden, cüzdan adresinizden ve varlık bakiyenizden Solidity’nin keccak256 algoritmasını kullanarak yaprak hash’inizi doğrulayın.
 - Kök ve ağacı kullanarak yaprak hash’inizin kanıtlarını doğrulayın.

@@ -2,7 +2,7 @@
 title: 教程
 icon: mortar-board
 prev: /zh/
-next: /zh/tutorials/howtouse
+next: /zh/tutorials/howtouse/
 editLink: true
 ---
 

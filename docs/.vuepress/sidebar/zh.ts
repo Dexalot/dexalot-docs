@@ -6,48 +6,48 @@ export const zhSidebarConfig = sidebar({
       text: "文章",
       icon: "book-reader",
       collapsible: true,
-      link: "/zh/articles",
+      link: "/zh/articles/",
       prefix: "/zh/articles/",
       children: [
         {
           text: "Dexalot子网",
           icon: "book-open",
-          link: "subnet"
+          link: "subnet/"
         },
         {
           text: "Dexalot子网指南",
           icon: "book-open",
-          link: "guide"
+          link: "guide/"
         },
         {
           text: "Dexalot 奖励计划",
           icon: "book-open",
-          link: "dip"
+          link: "dip/"
         },
         {
           text: "Dexalot 激励承诺",
           icon: "book-open",
-          link: "incentives"
+          link: "incentives/"
         },
         {
           text: "Dexalot x LayerZero",
           icon: "book-open",
-          link: "layerzero"
+          link: "layerzero/"
         },
         {
           text: "Dexalot资产余额快照",
           icon: "book-open",
-          link: "abs"
+          link: "abs/"
         },
         {
           text: "Dexalot 的Sample Bot说明示例",
           icon: "book-open",
-          link: "samplebot"
+          link: "samplebot/"
         },
         {
           text: "Dexalot交易杯大赛",
           icon: "book-open",
-          link: "cup"
+          link: "cup/"
         }
       ]
     },
@@ -56,18 +56,18 @@ export const zhSidebarConfig = sidebar({
       text: "教程",
       icon: "mortar-board",
       collapsible: true,
-      link: "/zh/tutorials",
+      link: "/zh/tutorials/",
       prefix: "/zh/tutorials/",
       children: [
         {
           text: "Dexalot子网介绍",
           icon: "play",
-          link: "howtouse"
+          link: "howtouse/"
         },
         {
           text: "Dexalot子网测试",
           icon: "play",
-          link: "howtotest"
+          link: "howtotest/"
         },
       ]
     },
@@ -75,7 +75,7 @@ export const zhSidebarConfig = sidebar({
     {
       text: " 法律",
       icon: "gavel",
-      link: "/zh/legal",
+      link: "/zh/legal/",
       prefix: "/zhlegal/",
       collapsible: true,
     },

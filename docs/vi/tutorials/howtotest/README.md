@@ -16,13 +16,13 @@ Vì Subnet về cơ bản giống như Mainnet mà bạn đã quen thuộc, nên
 
 Vui lòng dùng thử bằng phần Giới thiệu này hoặc đọc phần bên dưới để tìm hiểu thêm nhằm trợ giúp và hướng dẫn bạn trong quá trình thử nghiệm.
 
-<YouTube id="vRvaswPuMNg" />
+<VidStack src="youtube/vRvaswPuMNg" />
 
 Đây là bản beta công khai và chúng tôi hy vọng cộng đồng có thể giúp chúng tôi kiểm tra hệ thống của mình một cách triệt để nhất. Nếu bạn muốn trợ giúp, nhưng không biết bắt đầu từ đâu, vui lòng sử dụng danh sách nhiệm vụ bên dưới.
 
 Các nhà phát triển Dexalot sẽ giải quyết càng nhiều lỗi và các vấn đề về khả năng sử dụng càng tốt. Vui lòng báo cáo lại bất kỳ quan sát và lo ngại nào mà bạn muốn nhóm kiểm tra. Vui lòng đính kèm ảnh chụp màn hình về các mối quan tâm của bạn và đủ thông tin bao gồm id giao dịch để hỗ trợ họ giải quyết các quan sát của bạn và họ sẽ thực hiện các thay đổi khi cần thiết.
 
-Bạn có thể gửi email cho nhóm báo cáo của mình tại [support@dexalot.com](support@dexalot.com). Người quản lý và người kiểm duyệt cộng đồng Dexalot sẵn sàng trợ giúp bạn và bạn có thể để lại nhận xét của mình trong chuỗi Kiểm tra mạng con trong kênh #Subnet. Hẹn gặp bạn ở đó!
+Bạn có thể gửi email cho nhóm báo cáo của mình tại [support@dexalot.com](mailto:support@dexalot.com). Người quản lý và người kiểm duyệt cộng đồng Dexalot sẵn sàng trợ giúp bạn và bạn có thể để lại nhận xét của mình trong chuỗi Kiểm tra mạng con trong kênh #Subnet. Hẹn gặp bạn ở đó!
 
 **Chúc bạn thử nghiệm vui vẻ !!**
 

@@ -2,7 +2,7 @@
 title: Hướng dẫn
 icon: mortar-board
 prev: /vi/
-next: /vi/tutorials/howtouse
+next: /vi/tutorials/howtouse/
 editLink: true
 ---
 

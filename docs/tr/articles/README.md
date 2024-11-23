@@ -2,7 +2,7 @@
 title: Makaleler
 icon: book-reader
 prev: /tr/
-next: /tr/articles/cup
+next: /tr/articles/cup/
 editLink: true
 ---
 

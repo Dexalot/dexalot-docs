@@ -1,11 +1,13 @@
 {
-  "name": "dexalot-docs",
-  "version": "2022.09.23",
-  "license": "SEE LICENSE IN LICENSE.txt",
+  "name": "dexalot-docs-v2",
+  "description": "Dexalot Documentation v2",
+  "version": "2024-11-16",
+  "license": "BUSL",
   "private": true,
   "engines": {
-    "node": "16.15.1"
+    "node": "22.11.0"
   },
+  "type": "module",
   "scripts": {
     "lint-ts-check": "./node_modules/.bin/eslint . --ext .ts",
     "lint-ts-fix": "./node_modules/.bin/eslint . --ext .ts --fix",
@@ -20,25 +22,30 @@
     "pretty-check": "./node_modules/.bin/prettier --check **/*.{ts,js,md}",
     "pretty-fix": "./node_modules/.bin/prettier --write **/*.{ts,js,md}",
     "clean": "rimraf docs/.vuepress/.cache docs/.vuepress/.temp docs/.vuepress/dist",
-    "serve": "vuepress dev docs",
-    "build": "vuepress build docs"
+    "docs:serve": "http-server -a localhost docs/.vuepress/dist -o",
+    "docs:build:dev": "export NODE_ENV=development; vuepress-vite build docs",
+    "docs:build:prod": "export NODE_ENV=production; vuepress-vite build docs",
+    "docs:clean-dev": "vuepress-vite dev docs --clean-cache",
+    "docs:dev": "vuepress-vite dev docs",
+    "docs:update-package": "npx vp-update"
   },
-  "dependencies": {},
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "5.42.1",
-    "@typescript-eslint/parser": "5.42.1",
-    "@vuepress/client": "2.0.0-beta.53",
-    "@vuepress/plugin-search": "2.0.0-beta.53",
-    "eslint": "8.27.0",
-    "katex": "0.16.11",
-    "prettier": "2.7.1",
-    "rimraf": "3.0.2",
-    "ts-node": "10.9.1",
-    "typechain": "8.1.1",
-    "typescript": "4.8.4",
-    "vue": "3.2.44",
-    "vuepress": "2.0.0-beta.53",
-    "vuepress-plugin-components": "2.0.0-beta.122",
-    "vuepress-theme-hope": "2.0.0-beta.122"
-  }
+    "@vuepress/bundler-vite": "2.0.0-rc.18",
+    "@vuepress/plugin-comment": "2.0.0-rc.60",
+    "@vuepress/plugin-markdown-math": "2.0.0-rc.60",
+    "@vuepress/plugin-seo": "2.0.0-rc.60",
+    "@vuepress/plugin-sitemap": "2.0.0-rc.60",
+    "eslint": "^9.15.0",
+    "http-server": "^14.1.1",
+    "prettier": "^3.3.3",
+    "rimraf": "^6.0.1",
+    "sass-embedded": "^1.79.5",
+    "slimsearch": "2.1.0",
+    "vidstack": "^1.12.12",
+    "vue": "^3.5.12",
+    "vuepress": "2.0.0-rc.18",
+    "vuepress-plugin-search-pro": "2.0.0-rc.59",
+    "vuepress-theme-hope": "2.0.0-rc.59"
+  },
+  "packageManager": "pnpm@9.13.2+sha512.88c9c3864450350e65a33587ab801acf946d7c814ed1134da4a924f6df5a2120fd36b46aab68f7cd1d413149112d53c7db3a4136624cfd00ff1846a0c6cef48a"
 }

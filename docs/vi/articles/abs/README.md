@@ -33,10 +33,10 @@ Tính năng độc đáo này giúp người dùng xác minh nhanh chóng và d�
 
 ## Sở hữu ABS của bạn:
 
-Nếu bạn quan tâm đến việc xác minh số dư tài sản của mình theo cách thủ công, bạn có thể sử dụng [Merkletreejs](https://www.npmjs.com/package/merkletreejs) (thư viện Javascript). Bạn có thể sử dụng thư viện này để đơn giản hóa các [bước sau](https://app.dexalot-test.com/balance_proof):
+Nếu bạn quan tâm đến việc xác minh số dư tài sản của mình theo cách thủ công, bạn có thể sử dụng [Merkletreejs](https://www.npmjs.com/package/merkletreejs) (thư viện Javascript). Bạn có thể sử dụng thư viện này để đơn giản hóa các [bước sau](https://app.dexalot.com/asset_balance_snapshot):
 
-- Lấy Root của số dư Merkle Tree từ [IPFS](https://ipfs.io/ipfs/bafkreibus7wgzcnukfkc5klog4urln4w5qgxxdfo2nx6okwucggaph5qci).
-- Lấy số dư Merkle Tree từ [S3](https://dexalot-balance-merkle-test.s3.amazonaws.com/AVAX-1672244063.json).
+- Lấy Root của số dư Merkle Tree từ [IPFS](https://ipfs.dexalot.com/ipfs/bafkreifjvfqxxar2upv5ab42ewy327g6hcdswq5imrhpa3wgdtoki47auq).
+- Lấy số dư Merkle Tree từ [S3](https://merkletree.dexalot.com/ALOT-1732324905.json).
 - Xác minh Root bằng cách sử dụng Tree.
 - Xác minh Leaf hash của bạn bằng thuật toán keccak256 của Solidity từ chỉ mục Leaf, địa chỉ ví và số dư tài sản của bạn bằng cách sử dụng Tree.
 - Xác minh bằng chứng cho hàm Leaf hash của bạn bằng cách sử dụng Root và Tree.

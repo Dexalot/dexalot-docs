@@ -16,7 +16,7 @@ editLink: true
 
 这是 Dexalot 新的子网 Beta（测试）版本的介绍。
 
-<YouTube id="vRvaswPuMNg" />
+<VidStack src="youtube/vRvaswPuMNg" />
 
 ## 仪表板（The Dashboard）
 

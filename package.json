@@ -23,8 +23,9 @@
     "pretty-fix": "./node_modules/.bin/prettier --write **/*.{ts,js,md}",
     "clean": "rimraf docs/.vuepress/.cache docs/.vuepress/.temp docs/.vuepress/dist",
     "docs:serve": "http-server -a localhost docs/.vuepress/dist -o",
-    "docs:build:dev": "export NODE_ENV=development; vuepress-vite build docs",
-    "docs:build:prod": "export NODE_ENV=production; vuepress-vite build docs",
+    "docs:build:local:dev": "export NODE_ENV='development'; vuepress-vite build docs",
+    "docs:build:local:prod": "export NODE_ENV='production'; vuepress-vite build docs",
+    "docs:build:amplify": "vuepress-vite build docs",
     "docs:clean-dev": "vuepress-vite dev docs --clean-cache",
     "docs:dev": "vuepress-vite dev docs",
     "docs:update-package": "npx vp-update"

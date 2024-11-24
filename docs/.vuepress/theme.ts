@@ -16,7 +16,7 @@ import {
   zhSidebarConfig,
 } from "./sidebar/index.js"
 
-import { sitemapOptions, seoOptions } from "./options.js"
+import { sitemapOptions, seoOptions, NODE_ENV  } from "./options.js"
 
 export default hopeTheme({
   logo: "/logos/dexalot_logo.png",
@@ -73,9 +73,9 @@ export default hopeTheme({
       suggestDelay: 400
     },
 
-    sitemap: process.env.NODE_ENV === 'development' ? false : sitemapOptions,
+    sitemap: NODE_ENV === 'development' ? false : sitemapOptions,
 
-    seo: process.env.NODE_ENV === 'development' ? false : seoOptions,
+    seo: NODE_ENV === 'development' ? false : seoOptions,
 
     comment: {
       provider: "Giscus",

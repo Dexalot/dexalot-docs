@@ -1,8 +1,6 @@
 ---
 title: Bài viết
 icon: book-reader
-prev: /vi/
-next: /vi/articles/cup/
 editLink: true
 ---
 

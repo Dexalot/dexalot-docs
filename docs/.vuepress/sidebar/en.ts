@@ -246,6 +246,7 @@ export const enSidebarConfig = sidebar({
     {
       text: "Legal",
       icon: "gavel",
+      link: "/en/legal/",
       prefix: "/en/legal/",
       collapsible: true,
       children: [

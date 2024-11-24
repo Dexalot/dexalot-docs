@@ -88,7 +88,7 @@ Transferler sekmesinde, eyleminizin nerede gerçekleştiği, kullandığınız k
 
 ![transferstab](/images/howtouse/transferstab.png)
 
-Dexalot, Dexalot-Subnet’inin kapsamlı bir şekilde testini tamamlamak istiyor ve önemli geri bildirimler sağladığı için herkese teşekkür ediyoruz. Siz de, yukarıda özetlenen adımları takip ederek ve herhangi bir yorum, gözlem veya karşılaşılan sorunları rapor ederek Subnet’i iyileştirmeye yardımcı olabilirsiniz. [Dexalot-Subnet’i test etmek için ayrıntılı bir kılavuzu buradan okuyabilirsiniz.](https://medium.com/dexalot/the-dexalot-subnet-public-testing-4bea8bc80521) Test sonuçlarınızı [support@dexalot.com](support@dexalot.com ) adresine gönderebilir veya Dexalot Discord üzerinden moderatörlerle sohbet edebilirsiniz.
+Dexalot, Dexalot-Subnet’inin kapsamlı bir şekilde testini tamamlamak istiyor ve önemli geri bildirimler sağladığı için herkese teşekkür ediyoruz. Siz de, yukarıda özetlenen adımları takip ederek ve herhangi bir yorum, gözlem veya karşılaşılan sorunları rapor ederek Subnet’i iyileştirmeye yardımcı olabilirsiniz. [Dexalot-Subnet’i test etmek için ayrıntılı bir kılavuzu buradan okuyabilirsiniz.](https://medium.com/dexalot/the-dexalot-subnet-public-testing-4bea8bc80521) Test sonuçlarınızı [support@dexalot.com](mailto:support@dexalot.com ) adresine gönderebilir veya Dexalot Discord üzerinden moderatörlerle sohbet edebilirsiniz.
 
 **Web 3.0, DeFi’nin bu heyecan verici gelişiminin ve Dexalot ile Avalanche ekosisteminin büyümesinin bir parçası olduğunuz için teşekkür ederiz. Gemiye Hoşgeldiniz.**
 

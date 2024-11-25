@@ -56,19 +56,18 @@ $$ balanceScore = {\sqrt{alotBalance * 0.014 * timeHeld / 3600}} $$
 
 | Pair       | ALOT % | sAVAX % | QI % |
 | ---------- | ------ | ------- | ---- |
-| ALOT/USDC  | 9.09   | 9.09    |      |
-| ARB/USDC   | 9.09   | 9.09    |      |
-| AVAX/USDC  | 9.09   | 9.09    |      |
-| AVAX/USDT  | 9.09   | 9.09    |      |
-| BTC/USDC   | 9.09   | 9.09    |      |
-| ETH/USDC   | 9.09   | 9.09    |      |
-| ETH/USDT   | 9.09   | 9.09    |      |
-| EURC/USDC  | 6.06   | 6.06    |      |
+| ALOT/USDC  | 9.99   | 9.99    |      |
+| ARB/USDC   | 9.99   | 9.99    |      |
+| AVAX/USDC  | 9.99   | 9.99    |      |
+| AVAX/USDT  | 9.99   | 9.99    |      |
+| BTC/USDC   | 9.99   | 9.99    |      |
+| ETH/USDC   | 9.99   | 9.99    |      |
+| ETH/USDT   | 9.99   | 9.99    |      |
+| EURC/USDC  | 6.66   | 6.66    |      |
 | QI/USDC    |        |         | 50   |
-| sAVAX/AVAX | 6.06   | 6.06    | 50   |
-| USDT/USDC  | 6.06   | 6.06    |      |
-| WBTC/ETH   | 9.09   | 9.09    |      |
-| WBTC/USDC  | 9.09   | 9.09    |      |
+| sAVAX/AVAX | 6.66   | 6.66    | 50   |
+| USDT/USDC  | 6.66   | 6.66    |      |
+| WBTC/USDC  | 9.99   | 9.99    |      |
 
 
 **DIP Distribution by Token**
@@ -76,7 +75,7 @@ $$ balanceScore = {\sqrt{alotBalance * 0.014 * timeHeld / 3600}} $$
 | Token  | Monthly Amount | End Date | E % | O % | A % |
 | ------ | -------------- | -------- | --- | --- | --- |
 | ALOT   | up to $200,000 (*) | 2025-07-31 | 5% | 75% | 20%  |
-| sAVAX  | 1,250          | 2024-12-31 (**)  | 20% | 30%  | 50% |
+| sAVAX  | 1,250          | 2025-12-31 (**)  | 20% | 30%  | 50% |
 | QI     | 1,200,000     | (***) | 20% | 30%  | 50% |
 
 

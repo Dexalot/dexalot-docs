@@ -20,22 +20,12 @@ export const viSidebarConfig = sidebar({
           link: "guide/"
         },
         {
-          text: "Chương trình khuyến khích Dexalot",
-          icon: "book-open",
-          link: "dip/"
-        },
-        {
-          text: "Cam kết khuyến khích của Dexalot",
-          icon: "book-open",
-          link: "incentives/"
-        },
-        {
           text: "Dexalot x LayerZero",
           icon: "book-open",
           link: "layerzero/"
         },
         {
-          text: "Ảnh chụp số dư tài sản của Dexalot",
+          text: "Ảnh chụp số dư tài sản của",
           icon: "book-open",
           link: "abs/"
         },

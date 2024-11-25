@@ -20,16 +20,6 @@ export const enSidebarConfig = sidebar({
           link: "guide/"
         },
         {
-          text: "Dexalot Incentive Program",
-          icon: "book-open",
-          link: "dip/"
-        },
-        {
-          text: "Dexalot Incentive Commitments",
-          icon: "book-open",
-          link: "incentives/"
-        },
-        {
           text: "Dexalot x LayerZero",
           icon: "book-open",
           link: "layerzero/"

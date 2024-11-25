@@ -14,7 +14,7 @@ Después de meses [de construcción y testeos](https://medium.com/dexalot/testin
 
 Aquí hay una introducción a la aplicación de la nueva Subnet Beta de Dexalot.
 
-<YouTube id="vRvaswPuMNg" />
+<VidStack src="youtube/vRvaswPuMNg" />
 
 ## El Panel de Control
 El panel de control del sitio web es similar al que ya conoces. Conecta tu wallet (Core, Metamask, y WalletConnect) tal como hiciste antes. Si necesitas un repaso, mira [éstos tutoriales](https://medium.com/dexalot/tagged/dexalot-tutorial) y [aprende lo básico](https://medium.com/dexalot/aprende-lo-b%C3%A1sico-749d29fad69f).
@@ -79,7 +79,7 @@ La pestaña “Transfers” ahora tiene mas información disponible para ti, inc
 
 ![transferstab](/images/howtouse/transferstab.png)
 
-Dexalot está en busca de completar pruebas exhaustivas de la Dexalot-Subnet y estamos agradecidos a todos quienes nos proporcionaron un feedback crucial. Tu también puedes ayudar a mejorar la Subnet, simplemente siguiendo los pasos descritos anteriormente y reportando cualquier comentario, observación o inconveniente encontrado. Puedes leer [aquí](https://medium.com/dexalot/testing-p%C3%BAblico-de-la-dexalot-subnet-37e7e9df487b) una guía detallada para probar la Dexalot-Subnet. Puedes enviar los resultados de tus pruebas a [support@dexalot.com](support@dexalot.com) o simplemente chatear con los moderadores en el Discord de Dexalot.
+Dexalot está en busca de completar pruebas exhaustivas de la Dexalot-Subnet y estamos agradecidos a todos quienes nos proporcionaron un feedback crucial. Tu también puedes ayudar a mejorar la Subnet, simplemente siguiendo los pasos descritos anteriormente y reportando cualquier comentario, observación o inconveniente encontrado. Puedes leer [aquí](https://medium.com/dexalot/testing-p%C3%BAblico-de-la-dexalot-subnet-37e7e9df487b) una guía detallada para probar la Dexalot-Subnet. Puedes enviar los resultados de tus pruebas a [support@dexalot.com](mailto:support@dexalot.com) o simplemente chatear con los moderadores en el Discord de Dexalot.
 
 **Gracias por ser parte de éste emocionante desarrollo de Web 3.0, DeFi y el crecimiento de ecosistema de Avalanche con Dexalot. Bienvenido a bordo.**
 

@@ -14,13 +14,13 @@ En tanto que la Subnet es esenciamente igual que la Mainnet con la que estás fa
 
 Sentite libre de probarla usando ésta Introduction o lee a continuación para aprender mas para ayudarte y guiarte en tu testeo.
 
-<YouTube id="vRvaswPuMNg" />
+<VidStack src="youtube/vRvaswPuMNg" />
 
 Ésta es una beta pública y esperamos que la comunidad pueda ayudarnos a realizar pruebas de stress de nuestros sistemas. Si quieres ayudar, pero no sabes por donde comenzar, siéntete libre de utilizar la lista de tareas que está mas abajo.
 
 Los desarrolladores de Dexalot abordarán la mayor cantidad de bugs y problemas de usabilidad como sea posible. Por favor, informanos cualquier observación o inquietud que desees que examine el equipo. Por favor, adjunte capturas de pantalla de tus inquietudes y la información suficiente, incluyendo IDs de las transacciones, para ayudarlos a abordar tus observaciones y ellos harán los cambios necesarios.
 
-Podes enviarle al equipo tu reporte por email a [support@dexalot.com](support@dexalot.com). Los community managers y moderadores de Dexalot están disponibles en Discord para ayudarte, podes dejarles tus comentarios en el hilo de los testeos de la Subnet en el canal #Subnet. ¡Nos vemos allí!
+Podes enviarle al equipo tu reporte por email a [support@dexalot.com](mailto:support@dexalot.com). Los community managers y moderadores de Dexalot están disponibles en Discord para ayudarte, podes dejarles tus comentarios en el hilo de los testeos de la Subnet en el canal #Subnet. ¡Nos vemos allí!
 
 **Feliz testeo!!**
 

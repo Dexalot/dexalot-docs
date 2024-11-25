@@ -6,63 +6,53 @@ export const enSidebarConfig = sidebar({
       text: "Articles",
       icon: "book-reader",
       collapsible: true,
-      link: "articles",
-      prefix: "articles/",
+      link: "/en/articles/",
+      prefix: "/en/articles",
       children: [
         {
           text: "Dexalot L1 Intro",
           icon: "book-open",
-          link: "subnet"
+          link: "subnet/"
         },
         {
           text: "Dexalot L1 Guide",
           icon: "book-open",
-          link: "guide"
-        },
-        {
-          text: "Dexalot Incentive Program",
-          icon: "book-open",
-          link: "dip"
-        },
-        {
-          text: "Dexalot Incentive Commitments",
-          icon: "book-open",
-          link: "incentives"
+          link: "guide/"
         },
         {
           text: "Dexalot x LayerZero",
           icon: "book-open",
-          link: "layerzero"
+          link: "layerzero/"
         },
                 {
           text: "Asset Balance Snapshot",
           icon: "book-open",
-          link: "abs"
+          link: "abs/"
         },
         {
           text: "Dexalot Discovery",
           icon: "book-open",
-          link: "discovery"
+          link: "discovery/"
         },
         {
           text: "Dexalot's Sample Bot",
           icon: "book-open",
-          link: "samplebot"
+          link: "samplebot/"
         },
         {
           text: "Dexalot Trading Cup",
           icon: "book-open",
-          link: "cup"
+          link: "cup/"
         },
         {
           text: "Litepaper",
           icon: "book-open",
-          link: "litepaper"
+          link: "litepaper/"
         },
         {
           text: "Token Conversion",
           icon: "book-open",
-          link: "tokenconversion"
+          link: "tokenconversion/"
         }
       ]
     },
@@ -71,33 +61,33 @@ export const enSidebarConfig = sidebar({
       text: "Tutorials",
       icon: "mortar-board",
       collapsible: true,
-      link: "tutorials",
-      prefix: "tutorials/",
+      link: "/en/tutorials/",
+      prefix: "/en/tutorials/",
       children: [
         {
           text: "Dexalot L1 Intro",
           icon: "play",
-          link: "howtouse"
+          link: "howtouse/"
         },
         {
           text: "Dexalot L1 Testing",
           icon: "play",
-          link: "howtotest"
+          link: "howtotest/"
         },
         {
           text: "Run a Dexalot L1 Node",
           icon: "book-open",
-          link: "runanode"
+          link: "runanode/"
         },
         {
           text: "Metamask Install",
           icon: "play",
-          link: "metamaskuse"
+          link: "metamaskuse/"
         },
         {
           text: "Pending Transaction Help",
           icon: "play",
-          link: "recovrmmtxn"
+          link: "recovrmmtxn/"
         }
       ]
     },
@@ -105,21 +95,21 @@ export const enSidebarConfig = sidebar({
     {
       text: "Incentives",
       icon: "trophy",
-      link: "DIP",
+      link: "/en/DIP",
     },
 
     {
       text: "Trading Fees & Discounts",
       icon: "dollar",
-      link: "TradingFeeDiscounts",
+      link: "/en/TradingFeeDiscounts",
     },
 
     {
       text: "Smart Contracts",
       icon: "code",
       collapsible: true,
-      link: "contracts",
-      prefix: "contracts/",
+      link: "/en/contracts/",
+      prefix: "/en/contracts/",
       children: [
         {
           text: "Main Contracts",
@@ -220,8 +210,8 @@ export const enSidebarConfig = sidebar({
     {
       text: "Trading API",
       icon: "link",
-      prefix: "apiv2/",
-      link: "apiv2",
+      prefix: "/en/apiv2/",
+      link: "/en/apiv2/",
       collapsible: true,
       children: [
         {
@@ -246,7 +236,8 @@ export const enSidebarConfig = sidebar({
     {
       text: "Legal",
       icon: "gavel",
-      prefix: "legal/",
+      link: "/en/legal/",
+      prefix: "/en/legal/",
       collapsible: true,
       children: [
         {
@@ -270,13 +261,13 @@ export const enSidebarConfig = sidebar({
     {
       text: "Contact",
       icon: "envelope",
-      link: "Contact"
+      link: "/en/Contact"
     },
 
     {
       text: "About",
       icon: "circle-info",
-      link: "About"
+      link: "/en/About"
     }
   ],
 });

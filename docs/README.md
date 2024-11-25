@@ -9,37 +9,37 @@ footer: true
 
 actions:
   - text: Get Started 💡
-    link: contracts
+    link: en/articles/
     type: primary
 
 features:
   - title: Articles
     icon: book-reader
     details: "Learn the concepts, background and vision"
-    link: articles
+    link: en/articles/
 
   - title: Tutorials
     icon: mortar-board
     details: "Read, watch and learn how to use Dexalot"
-    link: tutorials
+    link: en/tutorials/
 
   - title: Incentives
     icon: trophy
     details: "Learn more about Dexalot's incentive programs"
-    link: DIP
+    link: en/DIP
 
   - title: Trading Fees & Discounts
     icon: dollar
     details: "Current trading fee rates and rebate tiers"
-    link: TradingFeeDiscounts
+    link: en/TradingFeeDiscounts
 
   - title: Smart Contracts
     icon: code
     details: "Main and auxiliary contracts that make the dual-chain application"
-    link: contracts
+    link: en/contracts/
 
   - title: Trading API
     icon: link
     details: "Learn how to interact with Dexalot"
-    link: apiv2
+    link: en/apiv2/
 ---

@@ -8,7 +8,7 @@ editLink: true
 
 MetaMask là một ứng dụng cho phép bạn quản lý khóa tài khoản, gửi / nhận tiền điện tử dựa trên Ethereum từ điện thoại hoặc từ trình duyệt của bạn. Bạn sẽ cần một tài khoản MetaMask để bắt đầu giao dịch trên Dexalot.
 
-<YouTube id="8V7r3vIm_Pc" />
+<VidStack src="youtube/8V7r3vIm_Pc" />
 
 !. Tải xuống MetaMask tại [đây](https://metamask.io/) . Nó sẽ cài đặt như một tiện ích mở rộng trong trình duyệt web hiện tại của bạn.
 

@@ -1,17 +1,19 @@
 {
   "compilerOptions": {
-    "target": "es2018",
-    "module": "commonjs",
-    "strict": true,
-    "esModuleInterop": true,
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "target": "ES2022",
     "outDir": "dist",
     "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "strict": true
   },
-  "files": ["docs/.vuepress/config.ts"],
   "include": [
-    "docs/.vuepress"
+    "docs/.vuepress/**/*.ts",
+    "docs/.vuepress/**/*.vue"
   ],
   "exclude": [
+    "node_modules",
     "dist"
   ]
 }

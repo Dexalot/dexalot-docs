@@ -20,13 +20,13 @@ Aşağıdaki tanıtım videosu yardımıyla testi denemekten çekinmeyin veya te
 
 Feel free to try it out using this Introduction or read below to learn more to help and guide you in your testing.
 
-<YouTube id="vRvaswPuMNg" />
+<VidStack src="youtube/vRvaswPuMNg" />
 
 Bu herkese açık bir beta sürümüdür ve topluluğun sistemlerimizi stres testine tabi tutmamıza yardımcı olabileceğini umuyoruz. Yardım etmek istiyor ancak nereden başlayacağınızı bilmiyorsanız, aşağıdaki görev listesini kullanmaktan çekinmeyin.
 
 Dexalot geliştiricileri, mümkün olduğunca çok sayıda hata ve kullanım sorununu ele alacaktır. Lütfen ekibin incelemesini istediğiniz tüm gözlemlerinizi ve varsa sorunları geri bildirin. Lütfen karşılaştığınız hataların ekran görüntülerini ve gözlemlerinizi ele almalarına yardımcı olmak için transaction id’ leri de dahil olmak üzere yeterli bilgiyi ekleyin; ekibimiz gerekli değişiklikleri yapacaklardır.
 
-Ekibe raporunuzu, [support@dexalot.com](support@dexalot.com) adresinden e-posta ile gönderebilirsiniz. Dexalot topluluk yöneticileri ve moderatörleri size yardımcı olmak için Discord’da olacaklardır ve yorumlarınızı #Subnet kanalındaki Subnet Testing bölümüne bırakabilirsiniz. Orada görüşmek üzere!
+Ekibe raporunuzu, [support@dexalot.com](mailto:support@dexalot.com) adresinden e-posta ile gönderebilirsiniz. Dexalot topluluk yöneticileri ve moderatörleri size yardımcı olmak için Discord’da olacaklardır ve yorumlarınızı #Subnet kanalındaki Subnet Testing bölümüne bırakabilirsiniz. Orada görüşmek üzere!
 
 **Mutlu Testler!!**
 

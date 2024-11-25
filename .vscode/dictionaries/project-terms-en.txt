@@ -119,6 +119,7 @@ SAZ
 sdn
 SDN
 sdnlist
+seo
 SGN
 solhint
 struct
@@ -136,6 +137,9 @@ UID
 unban
 unstake
 USD
+vidstack
+VidStack
+vuepress
 wal
 walbal
 wdseq

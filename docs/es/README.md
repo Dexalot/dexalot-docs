@@ -9,17 +9,17 @@ footer: true
 
 actions:
   - text: Empezar 💡
-    link: articles
+    link: articles/
     type: primary
 
 features:
   - title: Artículos
     icon: book-reader
     details: "Aprende los conceptos, antecedentes y visión"
-    link: articles
+    link: articles/
 
   - title: Tutoriales
     icon: mortar-board
     details: "Lea, mire y aprenda a usar Dexalot"
-    link: tutorials
+    link: tutorials/
 ---

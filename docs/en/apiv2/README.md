@@ -1,7 +1,6 @@
 ---
 title: Dexalot Trading API (v2)
 icon: link
-next: RestApi
 editLink: true
 ---
 

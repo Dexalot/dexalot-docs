@@ -1,7 +1,5 @@
 ---
 icon: link
-prev: Contracts
-next: SimpleSwap
 editLink: true
 ---
 

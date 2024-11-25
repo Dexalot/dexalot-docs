@@ -1,7 +1,5 @@
 ---
 icon: link
-prev: RestApi
-next: Websocket
 editLink: true
 ---
 

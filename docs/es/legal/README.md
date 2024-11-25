@@ -1,7 +1,6 @@
 ---
 icon: gavel
 editLink: true
-next: /en/legal/License.md
 ---
 # Legal
 

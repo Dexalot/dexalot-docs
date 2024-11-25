@@ -1,8 +1,6 @@
 ---
 title: Articles
 icon: book-reader
-prev: /
-next: /en/articles/cup/
 editLink: true
 ---
 

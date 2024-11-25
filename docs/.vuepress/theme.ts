@@ -16,7 +16,7 @@ import {
   zhSidebarConfig,
 } from "./sidebar/index.js"
 
-import { sitemapOptions, seoOptions, NODE_ENV  } from "./options.js"
+import { sitemapOptions, NODE_ENV  } from "./options.js"
 
 export default hopeTheme({
   logo: "/logos/dexalot_logo.png",
@@ -68,27 +68,16 @@ export default hopeTheme({
 
     searchPro: {
       indexContent: true,
-      hotReload: true,
+      hotReload: false,
       autoSuggestions: true,
-      suggestDelay: 400
+      suggestDelay: 300,
     },
 
     sitemap: NODE_ENV === 'development' ? false : sitemapOptions,
 
-    seo: NODE_ENV === 'development' ? false : seoOptions,
+    seo: NODE_ENV === 'development' ? false : true,
 
-    comment: {
-      provider: "Giscus",
-      comment: true,
-      repo: "Dexalot/dexalot-docs",
-      repoId: "R_kgDOIDg0jA",
-      category: "General",
-      categoryId: "DIC_kwDOIDg0jM4CRxR9",
-      mapping: "url",
-      strict: true,
-      reactionsEnabled: true,
-      inputPosition: "bottom"
-    },
+    comment: false,
 
     markdownMath: true,
 

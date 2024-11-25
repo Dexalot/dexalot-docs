@@ -119,6 +119,7 @@ SAZ
 sdn
 SDN
 sdnlist
+seo
 SGN
 solhint
 struct

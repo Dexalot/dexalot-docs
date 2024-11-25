@@ -1,6 +1,5 @@
 ---
 icon: link
-prev: Websocket
 editLink: true
 ---
 

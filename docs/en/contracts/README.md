@@ -1,8 +1,6 @@
 ---
 title: Smart Contracts
 icon: code
-prev: /
-next: /en/contracts/Exchange
 editLink: true
 ---
 

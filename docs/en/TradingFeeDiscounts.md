@@ -1,5 +1,7 @@
 # Trading Fees & Discounts
 
+![Trading Fees & Discounts](/images/trading_fees_and_discounts.png)
+
 ## Trading Fees
 
 | Pair | Maker Fee (bps) | Taker Fee (bps) |

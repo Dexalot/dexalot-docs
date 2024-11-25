@@ -20,22 +20,12 @@ export const trSidebarConfig = sidebar({
           link: "guide/"
         },
         {
-          text: "Dexalot Teşvik Programı",
-          icon: "book-open",
-          link: "dip/"
-        },
-        {
-          text: "Dexalot Subnet Teşvik Lansmanı",
-          icon: "book-open",
-          link: "incentives/"
-        },
-        {
           text: "Dexalot x LayerZero",
           icon: "book-open",
           link: "layerzero/"
         },
         {
-          text: "Dexalot’un Asset Balance Snapshot’ı",
+          text: "Asset Balance Snapshot’ı",
           icon: "book-open",
           link: "abs/"
         },

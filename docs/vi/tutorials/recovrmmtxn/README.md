@@ -8,7 +8,7 @@ editLink: true
 ---
 Dexalot được xây dựng trên mạng Avalanche, mạng này rõ ràng đang phát triển rất nhanh chóng. Một hệ quả của việc sử dụng ngày càng tăng này: phí gas có thể cao theo định kỳ đối với một ứng dụng do hoạt động cao trên ứng dụng khác. Khi lưu lượng truy cập cao, các giao dịch có thể bị chờ xử lý lâu hơn bình thường.
 
-Dexalot được xây dựng trên mạng Avalanche, mạng này rõ ràng đang phát triển rất nhanh chóng. Một hệ quả của việc sử dụng ngày càng tăng này: phí gas có thể cao theo định kỳ đối với một ứng dụng do hoạt động cao trên ứng dụng khác. Khi lưu lượng truy cập cao, [các giao dịch có thể bị chờ xử lý](https://snowtrace.io/chart/pendingtx) lâu hơn bình thường.
+Dexalot được xây dựng trên mạng Avalanche, mạng này rõ ràng đang phát triển rất nhanh chóng. Một hệ quả của việc sử dụng ngày càng tăng này: phí gas có thể cao theo định kỳ đối với một ứng dụng do hoạt động cao trên ứng dụng khác. Khi lưu lượng truy cập cao, các giao dịch có thể bị chờ xử lý lâu hơn bình thường.
 
  ![pendingchart](/images/recovrmmtxn/pendngchrt.png)
 
@@ -34,7 +34,7 @@ Hãy xem công cụ theo gas của Snowtrace để có ước tính về phí c�
 
 Nếu bạn đã biết rằng mạng đang bận, bạn có thể chọn đặt mức phí ưu tiên tối đa cao trước khi bạn gửi giao dịch. Bằng cách đó, bạn có thể không cần tăng tốc sau này. Đây là một đoạn video ngắn giải thích quá trình này.
 
-<YouTube id="gsfJywNxpi4" />
+<VidStack src="youtube/gsfJywNxpi4" />
 
 ## Giải pháp 2 — Hủy giao dịch đang chờ xử lý của bạn bằng cách tạo một giao dịch khác với cùng một nonce, nhưng lượng gas cao hơn
 

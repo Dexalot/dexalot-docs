@@ -1,8 +1,6 @@
 ---
 title: 文章
 icon: book-reader
-prev: /zh/
-next: /zh/articles/cup
 editLink: true
 ---
 

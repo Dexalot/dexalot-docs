@@ -6,52 +6,43 @@ export const trSidebarConfig = sidebar({
       text: "Makaleler",
       icon: "book-reader",
       collapsible: true,
-      link: "/tr/articles",
+      link: "/tr/articles/",
       prefix: "/tr/articles/",
       children: [
         {
           text: "Dexalot L1",
           icon: "book-open",
-          link: "subnet"
+          link: "subnet/"
         },
         {
           text: "Dexalot L1 Rehberi",
           icon: "book-open",
-          link: "guide"
+          link: "guide/"
         },
         {
-          text: "Dexalot Teşvik Programı",
+          text: "Dexalot x LayerZero",
           icon: "book-open",
-          link: "dip"
+          link: "layerzero/"
         },
         {
-          text: "Dexalot Subnet Teşvik Lansmanı",
+          text: "Asset Balance Snapshot’ı",
           icon: "book-open",
-          link: "incentives"
-        },
-        {text: "Dexalot x LayerZero",
-        icon: "book-open",
-        link: "layerzero"
-        },
-        {
-        text: "Dexalot’un Asset Balance Snapshot’ı",
-        icon: "book-open",
-        link: "abs"
+          link: "abs/"
         },
         {
           text: "Dexalot Discovery",
           icon: "book-open",
-          link: "discovery"
+          link: "discovery/"
         },
         {
           text: "Dexalot’un Örnek Botu",
           icon: "book-open",
-          link: "samplebot"
+          link: "samplebot/"
         },
         {
           text: "Dexalot Ticaret Kupası",
           icon: "book-open",
-          link: "cup"
+          link: "cup/"
         }
       ]
     },
@@ -60,23 +51,23 @@ export const trSidebarConfig = sidebar({
       text: "Öğretici Içerikler",
       icon: "mortar-board",
       collapsible: true,
-      link: "/tr/tutorials",
+      link: "/tr/tutorials/",
       prefix: "/tr/tutorials/",
       children: [
         {
           text: "L1'e giriş",
           icon: "play",
-          link: "howtouse"
+          link: "howtouse/"
         },
         {
           text: "Dexalot L1 Testi",
           icon: "play",
-          link: "howtotest"
+          link: "howtotest/"
         },
         {
           text: "MetaMask nasıl kurulur",
           icon: "play",
-          link: "metamaskuse"
+          link: "metamaskuse/"
         },
       ]
     },
@@ -84,8 +75,8 @@ export const trSidebarConfig = sidebar({
     {
       text: "Yasal Bilgiler",
       icon: "gavel",
-      link: "/tr/legal",
-      prefix: "/trlegal/",
+      link: "/tr/legal/",
+      prefix: "/tr/legal/",
       collapsible: true,
     },
 

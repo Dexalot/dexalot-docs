@@ -9,17 +9,17 @@ footer: true
 
 actions:
   - text: Başlayın 💡
-    link: articles
+    link: articles/
     type: primary
 
 features:
   - title: Makaleler
     icon: book-reader
     details: "Konsept, arka plan ve vizyonumuz hakkında bilgi sahibi olun"
-    link: articles
+    link: articles/
 
   - title: Öğretici Içerikler
     icon: mortar-board
     details: "Dexalot'un nasıl kullanılacağını öğrenmek için, okuyun ve izleyin"
-    link: tutorials
+    link: tutorials/
 ---

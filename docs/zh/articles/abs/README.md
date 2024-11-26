@@ -33,10 +33,10 @@ editLink: true
 
 ## 获取你的ABS:
 
-如果你对手动验证自己的资产余额感兴趣，你可以使用 [Merkletreejs](https://www.npmjs.com/package/merkletreejs) (一个Javascript库)。你可以使用这个库来简化以下 [步骤](https://app.dexalot-test.com/balance_proof):
+如果你对手动验证自己的资产余额感兴趣，你可以使用 [Merkletreejs](https://www.npmjs.com/package/merkletreejs) (一个Javascript库)。你可以使用这个库来简化以下 [步骤](https://app.dexalot.com/asset_balance_snapshot):
 
-- 从[IPFS](https://ipfs.io/ipfs/bafkreibus7wgzcnukfkc5klog4urln4w5qgxxdfo2nx6okwucggaph5qci)获取余额Merkle tree的root。
-- 从[S3](https://dexalot-balance-merkle-test.s3.amazonaws.com/AVAX-1672244063.json)中获取余额Merkle tree。
+- 从[IPFS](https://ipfs.dexalot.com/ipfs/bafkreifjvfqxxar2upv5ab42ewy327g6hcdswq5imrhpa3wgdtoki47auq)获取余额Merkle tree的root。
+- 从[S3](https://merkletree.dexalot.com/ALOT-1732324905.json)中获取余额Merkle tree。
 - 使用该tree验证root。
 - 使用 Solidity 的 keccak256 算法从你的leaf index、你的钱包地址和你资产余额中使用tree来验证你的leaf哈希值。
 - 使用root和tree来验证你的leaf哈希值的证明。

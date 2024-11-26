@@ -16,13 +16,13 @@ editLink: true
 
 您可以通过阅读以下内容了解更多信息，从而帮助和指导您进行测试。
 
-<YouTube id="vRvaswPuMNg" />
+<VidStack src="youtube/vRvaswPuMNg" />
 
 这是一个公开测试版，我们希望社区可以帮助我们对系统进行压力测试。如果您想提供帮助，但不知道从哪里开始，请随时查看下面的任务列表。
 
 Dexalot 开发人员将尽可能多地修正错误和解决可用性问题，您可以随时给予任何反馈，团队会及时解答您的疑虑。请附上相关屏幕截图和足够的信息，包括交易 ID，从而帮助开发团队更好了解您的观察结果，他们将根据需要进行更改。
 
-您可以将您的报告通过电子邮件发送到[support@dexalot.com](support@dexalot.com)。Discord 中的 Dexalot 社区管理员和主理人(moderators)也可以为您提供帮助，您可以在#Subnet 频道的子网测试线程中留下您的评论。期待与您相遇！
+您可以将您的报告通过电子邮件发送到[support@dexalot.com](mailto:support@dexalot.com)。Discord 中的 Dexalot 社区管理员和主理人(moderators)也可以为您提供帮助，您可以在#Subnet 频道的子网测试线程中留下您的评论。期待与您相遇！
 
 祝测试愉快！！
 

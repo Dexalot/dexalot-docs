@@ -8,7 +8,7 @@ editLink: true
 
 MetaMask, telefonunuzdan veya tarayıcınızdan hesap anahtarlarını yönetmenize ve Ethereum tabanlı kripto para birimleri göndermenize/almanıza izin veren bir uygulamadır. Dexalot’ta işlem yapmaya başlamak için bir MetaMask hesabına ihtiyacınız olacak.
 
-<YouTube id="8V7r3vIm_Pc" />
+<VidStack src="youtube/8V7r3vIm_Pc" />
 
 1. MetaMask’i [buradan](https://metamask.io/) indirin. Mevcut web tarayıcınıza bir uzantı olarak yüklenecektir.
 

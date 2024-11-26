@@ -1,23 +1,27 @@
-import { hopeTheme } from "vuepress-theme-hope";
+import { hopeTheme } from "vuepress-theme-hope"
+
 import {
   enNavbarConfig,
   esNavbarConfig,
   viNavbarConfig,
   trNavbarConfig,
   zhNavbarConfig,
-} from "./navbar/index";
+} from "./navbar/index.js"
+
 import {
   enSidebarConfig,
   esSidebarConfig,
   viSidebarConfig,
   trSidebarConfig,
   zhSidebarConfig,
-} from "./sidebar/index";
+} from "./sidebar/index.js"
+
+import { sitemapOptions, NODE_ENV  } from "./options.js"
 
 export default hopeTheme({
   logo: "/logos/dexalot_logo.png",
-  footer: "Last updated 09/22/2022",
-  copyright: "BUSL 1.1 Licensed | Copyright © 2022 Dexalot",
+  footer: "Last updated 11/22/2024",
+  copyright: "BUSL 1.1 Licensed | Copyright © 2024 Dexalot",
   displayFooter: true,
   headerDepth: 4,
   repo: "https://github.com/Dexalot",
@@ -27,7 +31,6 @@ export default hopeTheme({
   editLink: false,
   iconAssets: "fontawesome",
   fullscreen: true,
-  backToTop: true,
   contributors: false,
   lastUpdated: true,
 
@@ -59,18 +62,26 @@ export default hopeTheme({
   },
 
   plugins: {
-    components: ["YouTube"],
-    mdEnhance: {
-      imageMark: true,
-      imageSize: true,
-      katex: true,
-    }
-  },
+    components: {
+      components: ['VidStack']
+    },
 
-  themeColor: {
-    blue: "#2196f3",
-    red: "#f26d6d",
-    green: "#3eaf7c",
-    orange: "#fb9b5f",
+    searchPro: {
+      indexContent: true,
+      hotReload: false,
+      autoSuggestions: true,
+      suggestDelay: 300,
+    },
+
+    sitemap: NODE_ENV === 'development' ? false : sitemapOptions,
+
+    seo: NODE_ENV === 'development' ? false : true,
+
+    comment: false,
+
+    markdownMath: true,
+
+    mdEnhance: {
+    },
   },
 });

@@ -19,6 +19,9 @@ Orderbook score determines the “quality” of a user's orders based on the siz
 | USDT/USDC | 4 | 8.5
 | sAVAX/AVAX | 4 | 8.5
 | EURC/USDC | 8 | 16
+| ALOT/USDC | 60 | 100
+| TRUMP/USDC | 80 | 100
+| ARENA/AVAX | 200 | 100
 | All Other Pairs | 30 | 100
 
 The formula for orderbook score calculations is as follows:
@@ -54,36 +57,42 @@ $$ balanceScore = {\sqrt{alotBalance * 0.014 * timeHeld / 3600}} $$
 
 **DIP Distribution by Pair**
 
-| Pair       | ALOT % | sAVAX % | QI % |
-| ---------- | ------ | ------- | ---- |
-| ALOT/USDC  | 9.99   | 9.99    |      |
-| ARB/USDC   | 9.99   | 9.99    |      |
-| AVAX/USDC  | 9.99   | 9.99    |      |
-| AVAX/USDT  | 9.99   | 9.99    |      |
-| BTC/USDC   | 9.99   | 9.99    |      |
-| ETH/USDC   | 9.99   | 9.99    |      |
-| ETH/USDT   | 9.99   | 9.99    |      |
-| EURC/USDC  | 6.66   | 6.66    |      |
-| QI/USDC    |        |         | 50   |
-| sAVAX/AVAX | 6.66   | 6.66    | 50   |
-| USDT/USDC  | 6.66   | 6.66    |      |
-| WBTC/USDC  | 9.99   | 9.99    |      |
+| Pair       | ALOT % | sAVAX % | QI % | ARENA % |
+| ---------- | ------ | ------- | ---- | ------- |
+| ALOT/USDC  | 9.38   | 9.68    |      |         |
+| ARB/USDC   | 9.38   | 9.68    |      |         |
+| ARENA/AVAX | 3.13   |         |      | 100     |
+| AVAX/USDC  | 9.38   | 9.68    |      |         |
+| AVAX/USDT  | 9.38   | 9.68    |      |         |
+| BTC/USDC   | 9.38   | 9.68    |      |         |
+| ETH/USDC   | 9.38   | 9.68    |      |         |
+| ETH/USDT   | 9.38   | 9.68    |      |         |
+| EURC/USDC  | 6.25   | 6.45    |      |         |
+| QI/USDC    |        |         | 50   |         |
+| sAVAX/AVAX | 6.25   | 6.45    | 50   |         |
+| TRUMP/USDC | 3.13   | 3.23    |      |         |
+| USDT/USDC  | 6.25   | 6.45    |      |         |
+| WBTC/USDC  | 9.38   | 9.68    |      |         |
 
 
 **DIP Distribution by Token**
 
 | Token  | Monthly Amount | End Date | E % | O % | A % |
 | ------ | -------------- | -------- | --- | --- | --- |
-| ALOT   | up to $200,000 (*) | 2025-07-31 | 5% | 75% | 20%  |
-| sAVAX  | 1,250          | 2025-12-31 (**)  | 20% | 30%  | 50% |
-| QI     | 1,200,000     | (***) | 20% | 30%  | 50% |
+| ALOT   | up to $200,000 (i) | 2025-07-31 | 5% | 75% | 20%  |
+| sAVAX  | 1,250         | 2025-12-31 (ii)  | 20% | 30%  | 50% |
+| QI     | 1,200,000     | (iii) | 20% | 30%  | 50% |
+| ARENA  | up to $4,500  | (iv) | 50% | 50%  | 0% |
 
 
-(*) - To calculate the absolute number of ALOT tokens the 7 day volume weighted average ALOT price is used (taken on the day prior to the start of a new month).
+(i) - To calculate the absolute number of ALOT tokens the 7 day volume weighted average ALOT price is used (taken on the day prior to the start of a new month).
 
-(**) - sAVAX rewards may be extended further, subject to Multiverse tiers.
+(ii) - sAVAX rewards may be extended further, subject to Multiverse tiers.
 
-(***) - QI end date is rolling and amount is subject to change as per partnership agreements with Benqi.
+(iii) - QI end date is rolling and amount is subject to change as per partnership agreements with Benqi.
+
+(iv) - ARENA end date is rolling and amount is subject to change as per partnership agreements with Arena.
+
 
 For ALOT rewards emphasis on executions is reduced as these users will now be rewarded via volume rebates.
 

@@ -151,7 +151,7 @@ Add new token to portfolio
 Exchange needs to be DEFAULT_ADMIN on the Portfolio
 
 ```solidity:no-line-numbers
-function addToken(bytes32 _symbol, address _tokenaddress, uint8 _decimals, uint256 _fee, uint256 _gasSwapRatio) external
+function addToken(bytes32 _symbol, address _tokenaddress, uint8 _decimals, uint8 _l1Decimals, uint256 _fee, uint256 _gasSwapRatio) external
 ```
 
 ##### Arguments
@@ -161,6 +161,7 @@ function addToken(bytes32 _symbol, address _tokenaddress, uint8 _decimals, uint2
 | _symbol | bytes32 | symbol of the token |
 | _tokenaddress | address | address of the token |
 | _decimals | uint8 | decimals of the token |
+| _l1Decimals | uint8 | decimals of the token on Dexalot L1 |
 | _fee | uint256 | Bridge Fee |
 | _gasSwapRatio | uint256 | Amount of token to swap per ALOT |
 

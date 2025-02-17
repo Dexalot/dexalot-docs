@@ -54,16 +54,17 @@ struct Order {
 
 ```solidity
 struct XChainSwap {
-  uint256 nonceAndMeta;
-  uint32 expiry;
-  address taker;
-  uint32 destChainId;
-  enum IPortfolioBridge.BridgeProvider bridgeProvider;
+  bytes32 from;
+  bytes32 to;
   bytes32 makerSymbol;
-  address makerAsset;
-  address takerAsset;
+  bytes32 makerAsset;
+  bytes32 takerAsset;
   uint256 makerAmount;
   uint256 takerAmount;
+  uint96 nonce;
+  uint32 expiry;
+  uint32 destChainId;
+  enum IPortfolioBridge.BridgeProvider bridgeProvider;
 }
 ```
 ### SwapData
@@ -72,10 +73,10 @@ struct XChainSwap {
 struct SwapData {
   uint256 nonceAndMeta;
   address taker;
-  address destTrader;
-  uint256 destChainId;
+  bytes32 destTrader;
+  uint32 destChainId;
   address srcAsset;
-  address destAsset;
+  bytes32 destAsset;
   uint256 srcAmount;
   uint256 destAmount;
 }
@@ -87,6 +88,14 @@ struct PendingSwap {
   address trader;
   uint256 quantity;
   bytes32 symbol;
+}
+```
+### WrappedInfo
+
+```solidity
+struct WrappedInfo {
+  contract IWrappedToken wrappedNative;
+  bool keepWrapped;
 }
 ```
 
@@ -108,12 +117,13 @@ struct PendingSwap {
 | slippageTolerance | uint256 |
 | swapQueue | mapping(uint256 &#x3D;&gt; struct MainnetRFQ.PendingSwap) |
 | volatilePairs | uint256 |
+| wrappedInfo | struct MainnetRFQ.WrappedInfo |
 
 ### Internal
 
 | Name | Type |
 | --- | --- |
-| __gap | uint256[43] |
+| __gap | uint256[42] |
 
 ### Private
 
@@ -150,7 +160,7 @@ event AddressSet(string name, string actionName, address newAddress)
 ### SwapExecuted
 
 ```solidity:no-line-numbers
-event SwapExecuted(uint256 nonceAndMeta, address taker, address destTrader, uint256 destChainId, address srcAsset, address destAsset, uint256 srcAmount, uint256 destAmount)
+event SwapExecuted(uint256 nonceAndMeta, address taker, bytes32 destTrader, uint32 destChainId, address srcAsset, bytes32 destAsset, uint256 srcAmount, uint256 destAmount)
 ```
 
 ### XChainFinalized
@@ -325,6 +335,24 @@ function processXFerPayload(struct IPortfolio.XFER _xfer) external
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _xfer | struct IPortfolio.XFER | XFER message |
+
+#### setWrapped
+
+Sets the wrapped info for the given chain
+
+**Dev notes:** \
+Only callable by admin
+
+```solidity:no-line-numbers
+function setWrapped(address _wrappedToken, bool _keepWrapped) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _wrappedToken | address | Address of the wrapped token |
+| _keepWrapped | bool | Boolean to keep wrapped token or false for native token |
 
 #### setPortfolioBridge
 
@@ -630,7 +658,7 @@ function isAdmin(address _address) external view returns (bool)
 Verifies that a XChainSwap order is valid and has not been executed already.
 
 ```solidity:no-line-numbers
-function _verifyXSwap(struct MainnetRFQ.XChainSwap _order, bytes _signature) private returns (address)
+function _verifyXSwap(struct MainnetRFQ.XChainSwap _order, bytes _signature) private returns (uint256 nonceAndMeta)
 ```
 
 ##### Arguments
@@ -644,7 +672,7 @@ function _verifyXSwap(struct MainnetRFQ.XChainSwap _order, bytes _signature) pri
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| [0] | address | address The address where the funds will be transferred. |
+| nonceAndMeta | uint256 | The nonce of the swap |
 
 #### _executeXSwap
 
@@ -653,7 +681,7 @@ if the assets are ERC-20's or native tokens. Transfer assets in on the source ch
 and sends a cross chain message to release assets on the destination chain
 
 ```solidity:no-line-numbers
-function _executeXSwap(struct MainnetRFQ.XChainSwap _order, address _destTrader) private
+function _executeXSwap(struct MainnetRFQ.XChainSwap _order, uint256 _nonceAndMeta) private
 ```
 
 ##### Arguments
@@ -661,7 +689,7 @@ function _executeXSwap(struct MainnetRFQ.XChainSwap _order, address _destTrader)
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _order | struct MainnetRFQ.XChainSwap | Trade parameters for cross chain swap generated from /api/rfq/firm |
-| _destTrader | address | The address to transfer funds to on destination chain |
+| _nonceAndMeta | uint256 | Nonce of swap |
 
 #### _verifyOrder
 
@@ -786,7 +814,7 @@ symbol and trader. Sends remaining native token as gas fee for cross chain messa
 gas fee is handled in PortfolioBridge.
 
 ```solidity:no-line-numbers
-function _sendCrossChainTrade(struct MainnetRFQ.XChainSwap _order, address _to) private
+function _sendCrossChainTrade(struct MainnetRFQ.XChainSwap _order) private
 ```
 
 ##### Arguments
@@ -794,7 +822,6 @@ function _sendCrossChainTrade(struct MainnetRFQ.XChainSwap _order, address _to) 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _order | struct MainnetRFQ.XChainSwap | Trade parameters for cross chain swap generated from /api/rfq/firm |
-| _to | address | Trader address to receive funds on destination chain |
 
 #### _addToSwapQueue
 

@@ -112,7 +112,7 @@ We don't allow tokens with the same symbols but different addresses.
 Native symbol is also added by default with 0 address.
 
 ```solidity:no-line-numbers
-function addToken(bytes32 _srcChainSymbol, address _tokenAddress, uint32 _srcChainId, uint8 _decimals, enum ITradePairs.AuctionMode _mode, uint256 _fee, uint256 _gasSwapRatio, bytes32 _subnetSymbol) external
+function addToken(bytes32 _srcChainSymbol, address _tokenAddress, uint32 _srcChainId, uint8 _decimals, uint8 _l1Decimals, enum ITradePairs.AuctionMode _mode, uint256 _fee, uint256 _gasSwapRatio, bytes32 _subnetSymbol) external
 ```
 
 ##### Arguments
@@ -123,6 +123,7 @@ function addToken(bytes32 _srcChainSymbol, address _tokenAddress, uint32 _srcCha
 | _tokenAddress | address | Address of the token |
 | _srcChainId | uint32 | Source Chain id |
 | _decimals | uint8 | Decimals of the token |
+| _l1Decimals | uint8 |  |
 | _mode | enum ITradePairs.AuctionMode | Starting auction mode of the token |
 | _fee | uint256 | Bridge Fee |
 | _gasSwapRatio | uint256 | Amount of token to swap per ALOT |
@@ -303,23 +304,6 @@ function withdrawNative(address payable _to, uint256 _quantity) external
 Withdraws token to the default destination chain. Keeping it for backward compatibility
 
 ```solidity:no-line-numbers
-function withdrawToken(address _to, bytes32 _symbol, uint256 _quantity, enum IPortfolioBridge.BridgeProvider _bridge) external
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _to | address | Address of the withdrawer |
-| _symbol | bytes32 | Symbol of the token |
-| _quantity | uint256 | Amount of the token |
-| _bridge | enum IPortfolioBridge.BridgeProvider | Enum bridge type |
-
-#### withdrawToken
-
-Withdraws token to a destination chain
-
-```solidity:no-line-numbers
 function withdrawToken(address _to, bytes32 _symbol, uint256 _quantity, enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstChainListOrgChainId) external
 ```
 
@@ -332,6 +316,26 @@ function withdrawToken(address _to, bytes32 _symbol, uint256 _quantity, enum IPo
 | _quantity | uint256 | Amount of the token |
 | _bridge | enum IPortfolioBridge.BridgeProvider | Enum bridge type |
 | _dstChainListOrgChainId | uint32 | Destination chain the token is being withdrawn |
+
+#### withdrawToken
+
+Withdraws token to a destination chain
+
+```solidity:no-line-numbers
+function withdrawToken(address _from, bytes32 _to, bytes32 _symbol, uint256 _quantity, enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstChainListOrgChainId, bytes1 _options) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _from | address | Source address of the withdrawer |
+| _to | bytes32 | Bytes32 destination address of the withdrawer |
+| _symbol | bytes32 | Symbol of the token |
+| _quantity | uint256 | Amount of the token |
+| _bridge | enum IPortfolioBridge.BridgeProvider | Enum bridge type |
+| _dstChainListOrgChainId | uint32 | Destination chain the token is being withdrawn |
+| _options | bytes1 | Options for the withdrawal transaction |
 
 #### adjustAvailable
 
@@ -514,32 +518,6 @@ function setPortfolioMinter(contract IPortfolioMinter _portfolioMinter) external
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _portfolioMinter | contract IPortfolioMinter | Portfolio minter contract to be set |
-
-#### getAllBridgeFees
-
-Returns the bridge fees for all the host chain tokens of a given Dexalot L1(subnet) token
-
-**Dev notes:** \
-Calls the PortfolioBridgeSub contract to get the bridge fees
-
-```solidity:no-line-numbers
-function getAllBridgeFees(enum IPortfolioBridge.BridgeProvider _bridge, bytes32 _symbol, uint256 _quantity) external view returns (uint256[] bridgeFees, uint32[] chainIds)
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _bridge | enum IPortfolioBridge.BridgeProvider | bridge provider |
-| _symbol | bytes32 | Dexalot L1(subnet) symbol of the token |
-| _quantity | uint256 | quantity of the token to withdraw |
-
-##### Return values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| bridgeFees | uint256[] | Array of bridge fees for each corresponding chainId |
-| chainIds | uint32[] | Array of chainIds for each corresponding bridgeFee |
 
 ### Internal
 

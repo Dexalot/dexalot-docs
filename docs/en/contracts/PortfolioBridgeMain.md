@@ -54,6 +54,7 @@ i.e USDt sent &amp; received in Avalanche Mainnet whereas USDT is sent &amp; rec
 | BRIDGE_ADMIN_ROLE | bytes32 |
 | BRIDGE_PROVIDER_ROLE | bytes32 |
 | enabledBridges | mapping(enum IPortfolioBridge.BridgeProvider &#x3D;&gt; contract IBridgeProvider) |
+| gasAirdrop | uint256 |
 | outNonce | uint64 |
 | userPaysFee | mapping(uint32 &#x3D;&gt; mapping(enum IPortfolioBridge.BridgeProvider &#x3D;&gt; bool)) |
 | xChainAllowedDestinations | mapping(bytes32 &#x3D;&gt; mapping(uint32 &#x3D;&gt; bool)) |
@@ -62,7 +63,7 @@ i.e USDt sent &amp; received in Avalanche Mainnet whereas USDT is sent &amp; rec
 
 | Name | Type |
 | --- | --- |
-| __gap | uint256[50] |
+| __gap | uint256[49] |
 | defaultBridgeProvider | enum IPortfolioBridge.BridgeProvider |
 | defaultChainId | uint32 |
 | mainnetRfq | contract IMainnetRFQ |
@@ -447,7 +448,7 @@ The fee is in terms of current chain's gas token.
 LZ charges based on the payload size and gas px at
 
 ```solidity:no-line-numbers
-function getBridgeFee(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstChainListOrgChainId, bytes32, uint256) external view virtual returns (uint256 bridgeFee)
+function getBridgeFee(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstChainListOrgChainId, bytes32, uint256, bytes1) external view virtual returns (uint256 bridgeFee)
 ```
 
 ##### Arguments
@@ -455,9 +456,10 @@ function getBridgeFee(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstC
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _bridge | enum IPortfolioBridge.BridgeProvider | Bridge |
-| _dstChainListOrgChainId | uint32 | destination chain id           _symbol  symbol of the token, not relevant in for this function           _quantity quantity of the token, not relevant in for this function |
+| _dstChainListOrgChainId | uint32 | destination chain id           _symbol  symbol of the token, not relevant in for this function           _quantity quantity of the token, not relevant in for this function           _options custom options for the transaction, not relevant in this function |
 |  | bytes32 |  |
 |  | uint256 |  |
+|  | bytes1 |  |
 
 ##### Return values
 
@@ -549,6 +551,23 @@ function processPayload(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _sr
 | _srcChainListOrgChainId | uint32 | Source chain ID |
 | _payload | bytes | Payload received |
 
+#### setGasAirdrop
+
+Sets the gas airdrop amount for withdrawals with GASAIRDROP option
+
+**Dev notes:** \
+Only admin can set the gas airdrop amount
+
+```solidity:no-line-numbers
+function setGasAirdrop(uint256 _gasAirdrop) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _gasAirdrop | uint256 | Amount of gas to airdrop |
+
 #### refundNative
 
 Refunds the native balance inside contract
@@ -613,6 +632,12 @@ function processPayloadShared(enum IPortfolioBridge.BridgeProvider _bridge, uint
 | _srcChainListOrgChainId | uint32 | Source chain ID |
 | _payload | bytes | Payload received |
 
+#### processGasAirdrop
+
+```solidity:no-line-numbers
+function processGasAirdrop(bytes1 options, bytes32 trader) internal
+```
+
 #### addNativeToken
 
 private function that handles the addition of native token
@@ -632,10 +657,10 @@ Maps symbol to symbolId and encodes XFER message
 
 **Dev notes:** \
 It is packed as follows:
-slot0: trader(20), nonce(8), transaction(2), XChainMsgType(2)
+slot0: customdata(18), timestamp(4), nonce(8), transaction(1), XChainMsgType(1)
+slot1: trader(32)
 slot1: symbol(32)
 slot2: quantity(32)
-slot3: customdata(28), timestamp(4)
 
 ```solidity:no-line-numbers
 function packXferMessage(struct IPortfolio.XFER _xfer) private pure returns (bytes message)

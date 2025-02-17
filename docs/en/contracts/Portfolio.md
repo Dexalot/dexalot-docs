@@ -304,7 +304,7 @@ Calls the portfolioBridge contract to get the bridge fee which
 in addition includes withdrawal fee for PortfolioSub but only bridge fee for PortfolioMain
 
 ```solidity:no-line-numbers
-function getBridgeFee(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstChainListOrgChainId, bytes32 _symbol, uint256 _quantity) external view returns (uint256 bridgeFee)
+function getBridgeFee(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstChainListOrgChainId, bytes32 _symbol, uint256 _quantity, bytes1 _options) external view returns (uint256 bridgeFee)
 ```
 
 ##### Arguments
@@ -315,12 +315,31 @@ function getBridgeFee(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstC
 | _dstChainListOrgChainId | uint32 | Chain id of the destination chain |
 | _symbol | bytes32 | Symbol of the token |
 | _quantity | uint256 | Quantity of the token |
+| _options | bytes1 |  |
 
 ##### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | bridgeFee | uint256 | Bridge fee |
+
+#### setL1Decimals
+
+Sets the dexalot L1 decimals for the given token
+
+**Dev notes:** \
+Only callable by admin, removable in future releases
+
+```solidity:no-line-numbers
+function setL1Decimals(bytes32 _symbol, uint8 _l1Decimals) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _symbol | bytes32 | Symbol of the token |
+| _l1Decimals | uint8 | Decimals of the token in the Dexalot L1 |
 
 #### fallback
 
@@ -410,4 +429,10 @@ function addTokenInternal(struct IPortfolio.TokenDetails _details, uint256, uint
 | _details | struct IPortfolio.TokenDetails | Token Details  _fee  Bridge Fee (child implementation)  _gasSwapRatio  Amount of token to swap per ALOT (child implementation) |
 |  | uint256 |  |
 |  | uint256 |  |
+
+#### handleReceive
+
+```solidity:no-line-numbers
+function handleReceive() internal virtual
+```
 

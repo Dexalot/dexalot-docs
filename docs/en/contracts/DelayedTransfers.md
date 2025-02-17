@@ -26,6 +26,13 @@ It implements delayedTransfers as well as volume caps per epoch per token
 | epochVolumeCaps | mapping(bytes32 &#x3D;&gt; uint256) |
 | lastOpTimestamps | mapping(bytes32 &#x3D;&gt; uint256) |
 
+### Private
+
+| Name | Type |
+| --- | --- |
+| CHAINID_MASK | bytes18 |
+| RESERVED_BITS | uint144 |
+
 ## Events
 
 ### DelayedTransfer

@@ -207,6 +207,30 @@ function stringToBytes32(string _string) internal pure returns (bytes32 result)
 | ---- | ---- | ----------- |
 | result | bytes32 | converted bytes32 representation |
 
+#### addressToBytes32
+
+```solidity:no-line-numbers
+function addressToBytes32(address _addr) internal pure returns (bytes32 result)
+```
+
+#### bytes32ToAddress
+
+```solidity:no-line-numbers
+function bytes32ToAddress(bytes32 _bytes32) internal pure returns (address addr)
+```
+
+#### isOptionSet
+
+```solidity:no-line-numbers
+function isOptionSet(bytes1 _options, uint8 _bit) internal pure returns (bool isSet)
+```
+
+#### truncateQuantity
+
+```solidity:no-line-numbers
+function truncateQuantity(uint256 _quantity, uint8 _fromDecimals, uint8 _toDecimals) internal pure returns (uint256)
+```
+
 #### getIdForToken
 
 Returns the symbolId that consists of symbol+chainid

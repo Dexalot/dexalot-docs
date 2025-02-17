@@ -24,6 +24,7 @@ struct Order {
   enum ITradePairs.Type2 type2;
   enum ITradePairs.Status status;
   uint32 updateBlock;
+  uint32 createBlock;
 }
 ```
 ### NewOrder

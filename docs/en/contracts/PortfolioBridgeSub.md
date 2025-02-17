@@ -39,6 +39,7 @@ remoteChainId on the way in and out.
 | TENK | uint256 |
 | delayedTransfers | contract IDelayedTransfers |
 | inventoryManager | contract IInventoryManager |
+| optionsGasCost | mapping(uint256 &#x3D;&gt; uint256) |
 
 ### Private
 
@@ -71,7 +72,7 @@ and the Token/ALOT parity at that point. The inventoryManager calculates the wit
 quantity of the token to be withdrawn, current inventory in the receiving chain and other chains.
 
 ```solidity:no-line-numbers
-function getBridgeFee(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstChainListOrgChainId, bytes32 _symbol, uint256 _quantity) public view returns (uint256 bridgeFee)
+function getBridgeFee(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstChainListOrgChainId, bytes32 _symbol, uint256 _quantity, bytes1 _options) public view returns (uint256 bridgeFee)
 ```
 
 ##### Arguments
@@ -82,6 +83,7 @@ function getBridgeFee(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstC
 | _dstChainListOrgChainId | uint32 | destination chain id |
 | _symbol | bytes32 | Dexalot L1(subnet) symbol of the token |
 | _quantity | uint256 | quantity of the token to withdraw |
+| _options | bytes1 | Custom options for the withdrawal transaction |
 
 ##### Return values
 
@@ -122,7 +124,7 @@ Similarly, ALOT from the Avalanche Mainnet can only be removed by PortfolioBridg
 if it was added by mistake. All other tokens should be removed with PortfolioSub.removeToken.
 
 ```solidity:no-line-numbers
-function addToken(bytes32 _srcChainSymbol, address _tokenAddress, uint32 _srcChainId, uint8 _decimals, enum ITradePairs.AuctionMode, bytes32 _subnetSymbol, uint256 _bridgeFee) external
+function addToken(bytes32 _srcChainSymbol, address _tokenAddress, uint32 _srcChainId, uint8 _decimals, uint8 _l1Decimals, enum ITradePairs.AuctionMode, bytes32 _subnetSymbol, uint256 _bridgeFee) external
 ```
 
 ##### Arguments
@@ -132,7 +134,8 @@ function addToken(bytes32 _srcChainSymbol, address _tokenAddress, uint32 _srcCha
 | _srcChainSymbol | bytes32 | Source Chain Symbol of the token |
 | _tokenAddress | address | Mainnet token address the symbol or zero address for AVAX |
 | _srcChainId | uint32 | Source Chain id |
-| _decimals | uint8 | Decimals of the token param   ITradePairs.AuctionMode  irrelevant for PBridge |
+| _decimals | uint8 | Decimals of the token |
+| _l1Decimals | uint8 | Decimals of the token in the Dexalot L1 param   ITradePairs.AuctionMode  irrelevant for PBridge |
 |  | enum ITradePairs.AuctionMode |  |
 | _subnetSymbol | bytes32 | Dexalot L1(subnet) Symbol of the token (Shared Symbol of the same token from different chains) |
 | _bridgeFee | uint256 | Bridge Fee |
@@ -156,12 +159,30 @@ function removeToken(bytes32 _srcChainSymbol, uint32 _srcChainId, bytes32 _subne
 | _srcChainId | uint32 | Source Chain id |
 | _subnetSymbol | bytes32 | symbol of the token |
 
+#### setL1Decimals
+
+Sets the dexalot L1 decimals for the given token
+
+**Dev notes:** \
+Only callable by admin, removable in future releases
+
+```solidity:no-line-numbers
+function setL1Decimals(bytes32 _symbolId, uint8 _l1Decimals) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _symbolId | bytes32 | Symbol id of the token |
+| _l1Decimals | uint8 | Decimals of the token in the Dexalot L1 |
+
 #### getAllBridgeFees
 
 Returns the valid bridge fees for all the host chain tokens of a given Dexalot L1(subnet) token
 
 ```solidity:no-line-numbers
-function getAllBridgeFees(enum IPortfolioBridge.BridgeProvider _bridge, bytes32 _symbol, uint256 _quantity) external view returns (uint256[] bridgeFees, uint32[] chainIds)
+function getAllBridgeFees(enum IPortfolioBridge.BridgeProvider _bridge, bytes32 _symbol, uint256 _quantity, bytes1 _options) external view returns (uint256[] bridgeFees, uint32[] chainIds)
 ```
 
 ##### Arguments
@@ -171,6 +192,7 @@ function getAllBridgeFees(enum IPortfolioBridge.BridgeProvider _bridge, bytes32 
 | _bridge | enum IPortfolioBridge.BridgeProvider | Bridge provider to use |
 | _symbol | bytes32 | Dexalot L1(subnet) symbol of the token |
 | _quantity | uint256 | quantity of the token to withdraw |
+| _options | bytes1 | Custom options for the withdrawal transaction |
 
 ##### Return values
 
@@ -256,6 +278,24 @@ function sendXChainMessage(uint32 _dstChainListOrgChainId, enum IPortfolioBridge
 | _bridge | enum IPortfolioBridge.BridgeProvider | Bridge type to send over |
 | _xfer | struct IPortfolio.XFER | XFER message to send |
 | _userFeePayer | address |  |
+
+#### setOptionGasCost
+
+Sets the gas cost multiplier for a given option
+
+**Dev notes:** \
+Only admin can call this function
+
+```solidity:no-line-numbers
+function setOptionGasCost(enum IPortfolio.Options _option, uint256 _gasMultiplier) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _option | enum IPortfolio.Options | Option to set the gas cost for |
+| _gasMultiplier | uint256 | Gas cost multiplier |
 
 #### processPayload
 
@@ -366,6 +406,29 @@ function setMaxBridgeFeeCaps(uint32 _dstChainListOrgChainId, bytes32[] _tokens, 
 | _tokens | bytes32[] | array of Dexalot L1(subnet) symbols |
 | _maxBridgeFeeCaps | uint16[] | array of max bridge fee caps to set |
 
+#### truncateQuantity
+
+Truncate the quantity to the token's mainnet decimals
+
+```solidity:no-line-numbers
+function truncateQuantity(uint32 _dstChainListOrgChainId, bytes32 _symbol, uint256 _quantity, uint256 _bridgeFee) external view returns (uint256)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _dstChainListOrgChainId | uint32 | destination chain id |
+| _symbol | bytes32 | Dexalot L1(subnet) symbol of the token |
+| _quantity | uint256 | quantity of the token to withdraw |
+| _bridgeFee | uint256 | bridge fee for the destination |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | uint256 | truncated quantity |
+
 ### Internal
 
 #### addNativeToken
@@ -401,7 +464,7 @@ function sendXChainMessageInternal(uint32 _dstChainListOrgChainId, enum IPortfol
 Calculate the bridge fee for a given bridge
 
 ```solidity:no-line-numbers
-function _calcBridgeFee(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstChainListOrgChainId, bytes32 _symbol, uint256 _quantity, uint256 _inventoryFee) internal view returns (uint256)
+function _calcBridgeFee(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstChainListOrgChainId, bytes32 _symbol, uint256 _quantity, uint256 _inventoryFee, bytes1 _options) internal view returns (uint256)
 ```
 
 ##### Arguments
@@ -413,6 +476,7 @@ function _calcBridgeFee(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _ds
 | _symbol | bytes32 | Dexalot L1(subnet) symbol of the token |
 | _quantity | uint256 |  |
 | _inventoryFee | uint256 |  |
+| _options | bytes1 |  |
 
 ##### Return values
 

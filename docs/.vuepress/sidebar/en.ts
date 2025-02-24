@@ -99,6 +99,12 @@ export const enSidebarConfig = sidebar({
     },
 
     {
+      text: "Annual Percentage Yield",
+      icon: "percentage",
+      link: "/en/APY",
+    },
+
+    {
       text: "Trading Fees & Discounts",
       icon: "dollar",
       link: "/en/TradingFeeDiscounts",

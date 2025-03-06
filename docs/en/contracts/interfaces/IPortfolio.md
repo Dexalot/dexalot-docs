@@ -23,11 +23,11 @@ struct BridgeParams {
 struct XFER {
   uint64 nonce;
   enum IPortfolio.Tx transaction;
-  address trader;
+  bytes32 trader;
   bytes32 symbol;
   uint256 quantity;
   uint256 timestamp;
-  bytes28 customdata;
+  bytes18 customdata;
 }
 ```
 ### TokenDetails
@@ -38,6 +38,7 @@ struct TokenDetails {
   address tokenAddress;
   enum ITradePairs.AuctionMode auctionMode;
   uint32 srcChainId;
+  uint8 l1Decimals;
   bytes32 symbol;
   bytes32 symbolId;
   bytes32 sourceChainSymbol;
@@ -65,6 +66,14 @@ enum Tx {
   CCTRADE,
   CONVERTFROM,
   CONVERTTO
+}
+```
+### Options
+
+```solidity
+enum Options {
+  GASAIRDROP,
+  UNWRAP
 }
 ```
 

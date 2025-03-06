@@ -32,6 +32,12 @@ event BridgeFeeUpdated(uint32 dstChainId, bytes32[] tokens, uint240[] bridgeFees
 event MaxBridgeFeeCapUpdated(uint32 dstChainId, bytes32[] tokens, uint16[] maxBridgeFeeCaps)
 ```
 
+### OptionsGasCostUpdated
+
+```solidity:no-line-numbers
+event OptionsGasCostUpdated(enum IPortfolio.Options option, uint256 gasMultiplier)
+```
+
 ## Methods
 
 ### External
@@ -39,7 +45,7 @@ event MaxBridgeFeeCapUpdated(uint32 dstChainId, bytes32[] tokens, uint16[] maxBr
 #### addToken
 
 ```solidity:no-line-numbers
-function addToken(bytes32 _srcChainSymbol, address _tokenAddress, uint32 _srcChainId, uint8 _decimals, enum ITradePairs.AuctionMode, bytes32 _subnetSymbol, uint256 _bridgeFee) external
+function addToken(bytes32 _srcChainSymbol, address _tokenAddress, uint32 _srcChainId, uint8 _decimals, uint8 _l1Decimals, enum ITradePairs.AuctionMode, bytes32 _subnetSymbol, uint256 _bridgeFee) external
 ```
 
 #### removeToken
@@ -63,12 +69,18 @@ function executeDelayedTransfer(bytes32 _id) external
 #### getAllBridgeFees
 
 ```solidity:no-line-numbers
-function getAllBridgeFees(enum IPortfolioBridge.BridgeProvider _bridge, bytes32 _symbol, uint256 _quantity) external view returns (uint256[] bridgeFees, uint32[] chainIds)
+function getAllBridgeFees(enum IPortfolioBridge.BridgeProvider _bridge, bytes32 _symbol, uint256 _quantity, bytes1 _options) external view returns (uint256[] bridgeFees, uint32[] chainIds)
 ```
 
 #### setBridgeFees
 
 ```solidity:no-line-numbers
 function setBridgeFees(uint32 _dstChainListOrgChainId, bytes32[] _tokens, uint240[] _bridgeFees) external
+```
+
+#### truncateQuantity
+
+```solidity:no-line-numbers
+function truncateQuantity(uint32 dstChainListOrgChainId, bytes32 symbol, uint256 quantity, uint256 bridgeFee) external view returns (uint256)
 ```
 

@@ -41,24 +41,80 @@ Similarly a Cross Chain Swaps Betwen Avalanche & Arb would work as follows, say 
 
 <table>
 <colgroup>
-<col style="width: 9%" />
-<col style="width: 17%" />
-<col style="width: 73%" />
+<col style="width: 20%" />
+<col style="width: 80%" />
 </colgroup>
 <tr>
-<th><strong>Version</strong></th>
 <th><strong>Date</strong></th>
 <th><strong>Description</strong></th>
 </tr>
 <tr>
-<td>v4.0</td>
-<td>2024-10-15</td>
-<td>Cross Chain Swaps & Avalanche ICM Bridge</td>
+<td valign="top">2025-02-12</td>
+<td><strong>Non-EVM support & other enhancements</strong>
+
+Struct Changes:<br/>
+- [IPortfolio.XFER](/en/contracts/interfaces/IPortfolio.html#xfer)
+  - trader modified from `address` to `bytes32`
+  - customdata modified from `bytes28` to `bytes18`
+- [IPortfolio.TokenDetails](/en/contracts/interfaces/IPortfolio.html#tokendetails)
+  - add new `l1Decimals` field to represent token decimals on Dexalot L1
+- [IPortfolio.Options](/en/contracts/interfaces/IPortfolio.html#options)
+  - enum to represent different custom options for withdrawals, e.g. `GASAIRDROP` which airdrops a small amount of native token to the user or `UNWRAP` which unwraps a wrapped token upon withdrawal
+- [ITradePairs.Order](/en/contracts/interfaces/ITradePairs.html#order)
+  - add `createBlock` to order struct
+
+TradePairs (v3.5.3):<br/>
+- add `createBlock` to order struct for the block an order was created
+- (breaking) OrderStatusChangedEvent as it contains the order struct, new field for `createBlock`
+
+Exchange:<br/>
+- add `l1Decimals` as a parameter for adding tokens
+
+DelayedTransfers (v3.0.2):<br/>
+- modify customdata handling to not overwrite withdraw options
+
+PortfolioBridgeMain (v4.1.3):<br/>
+- add `gasAirdrop` to fund user with small amount of native token if specified on withdrawal
+- modify Xfer packing + unpacking to support `bytes32` trader
+- (breaking) `getBridgeFee` takes an additional `bytes1` parameter for options
+- (breaking) `XCHAIN_XFER_MESSAGE_VERSION` incremented to 3
+- (breaking) XChainXFerMessage event as it contains the Xfer struct
+
+PortfolioBridgeSub (v4.1.3):<br/>
+- add `l1Decimals` as a parameter for adding tokens
+- add `truncateQuantity` to truncate withdrawals to the destination chain decimals
+- add `optionsGasCost` to set a bridge fee cost for `GASAIRDROP`  or `UNWRAP`
+- (breaking) `getAllBridgeFees` takes an additional `bytes1` parameter for options
+
+PortfolioMain (v2.6.0):<br/>
+- add `l1Decimals` as a parameter for adding tokens
+- add `wrappedNative` to wrap on deposit + unwrap on withdrawal (if `UNWRAP` option set)
+- add truncation on deposit so quantity is in terms of dexalot l1 decimals
+- scale deposit quantities into dexalot l1 decimals and scale withdrawal quantities into mainnet actual decimals
+
+PortfolioSub (v2.6.0):<br/>
+- add `l1Decimals` as a parameter for adding tokens, for PortfolioSub l1Decimals=decimals
+- (breaking) remove `getAllBridgeFees`, can be accessed via PortfolioBridgeSub
+- (breaking) remove deprecated `withdrawToken(address, bytes32, uint256, IPortfolioBridge.BridgeProvider)`
+- (new) add `withdrawToken(address, bytes32, bytes32, uint256, IPortfolioBridge.BridgeProvider, uint32, bytes1)`
+- add support for withdrawing to non evm chains with `bytes32` addresses
+- add support for withdrawing for  `GASAIRDROP`  or `UNWRAP` token
+
+MainnetRFQ (v1.1.6):<br/>
+- add wrappedInfo to unwrap/wrap tokens based on the chain to keep consistent inventory
+- (breaking) modify `XChainSwap` struct to add support for bytes32 addresses and tokens (for non-evm)
+- (breaking) SwapExecuted event, fields `destTrader` + `destAsset` from address to bytes32
+
+UtilsLibrary:<br/>
+- add helpers for converting to/from `address` to `bytes32`
+- add truncation support for differing decimals
+- add bitwise check for options
+</td>
 </tr>
 <tr>
-<td></td>
-<td></td>
-<td>
+<td valign="top">2024-10-15</td>
+<td><strong>Cross Chain Swaps & Avalanche ICM Bridge</strong>
+
 InventoryManager:<br/>
 
 - Remove setInventoryBySymbolId (required for initial deployment)<br/>
@@ -126,14 +182,9 @@ BridgeApps:<br/>
 </tr>
 
 <tr>
-<td>v3.0</td>
-<td>2024-03-29</td>
-<td>Omni-chain support upgrade</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>
+<td valign="top">2024-03-29</td>
+<td><strong>Omni-chain support upgrade</strong>
+
 TradePairs:<br/>
 
 - New cancelReplaceList function <br/>
@@ -202,20 +253,13 @@ MainnetRFQ:<br/>
 - Remove reliance on orderMakerAmountUpdated + trustedContracts<br/>
 - Add destChainId to SwapExecuted event<br/>
 - Add swapQueue for XChain Swaps that do not have enough inventory on the destination chain<br/>
-
 </td>
-
-</tr>
-
-<tr>
-<td>v2.1</td>
-<td>2023-02-23</td>
-<td>Maintenance Release</td>
 </tr>
 <tr>
-<td></td>
-<td></td>
-<td>TradePairs<br />
+<td valign="top">2023-02-23</td>
+<td><strong>Maintenance Release</strong>
+
+TradePairs<br />
 
 - Functionality for addLimitOrderList to emit OrderStatusChanged with status= REJECTED events instead of reverting the tx<br />
 - Removed the last function paramater "_revertOnPO" from addLimitOrderList<br />
@@ -248,9 +292,8 @@ BannedAccounts:<br />
 </td>
 </tr>
 <tr>
-<td>v2.0</td>
 <td>2023-01-18</td>
-<td>initial dual-chain contract deployment</td>
+<td><strong>Initial dual-chain contract deployment</strong></td>
 </tr>
 
 

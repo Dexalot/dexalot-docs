@@ -11,7 +11,7 @@ headerDepth: 4
 #### addToken
 
 ```solidity:no-line-numbers
-function addToken(bytes32 _symbol, address _tokenaddress, uint8 _decimals, uint256 _fee, uint256 _gasSwapRatio) external
+function addToken(bytes32 _symbol, address _tokenaddress, uint8 _decimals, uint8 _l1Decimals, uint256 _fee, uint256 _gasSwapRatio) external
 ```
 
 #### depositTokenFromContract

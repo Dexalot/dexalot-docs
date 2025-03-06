@@ -25,6 +25,7 @@ ExchangeMain needs to have DEFAULT_ADMIN_ROLE on PortfolioMain.
 | tokenMap | mapping(bytes32 &#x3D;&gt; contract IERC20Upgradeable) |
 | trustedContracts | mapping(address &#x3D;&gt; bool) |
 | trustedContractToIntegrator | mapping(address &#x3D;&gt; string) |
+| wrappedNative | bytes32 |
 
 ### Internal
 
@@ -83,7 +84,7 @@ We don't allow tokens with the same symbols but different addresses.
 Native symbol is also added by default with 0 address.
 
 ```solidity:no-line-numbers
-function addToken(bytes32 _symbol, address _tokenAddress, uint8 _decimals, uint256 _fee, uint256 _gasSwapRatio) external
+function addToken(bytes32 _symbol, address _tokenAddress, uint8 _decimals, uint8 _l1Decimals, uint256 _fee, uint256 _gasSwapRatio) external
 ```
 
 ##### Arguments
@@ -93,6 +94,7 @@ function addToken(bytes32 _symbol, address _tokenAddress, uint8 _decimals, uint2
 | _symbol | bytes32 | Symbol of the token |
 | _tokenAddress | address | Address of the token |
 | _decimals | uint8 | Decimals of the token |
+| _l1Decimals | uint8 |  |
 | _fee | uint256 | Bridge Fee |
 | _gasSwapRatio | uint256 | Amount of token to swap per ALOT |
 
@@ -352,7 +354,36 @@ Collect fees to pay for the bridge as native token
 function collectNativeBridgeFees() external
 ```
 
+#### setWrappedNative
+
+Set the wrapped native token address
+
+**Dev notes:** \
+Only callable by admin
+
+```solidity:no-line-numbers
+function setWrappedNative(bytes32 _wrappedNative) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _wrappedNative | bytes32 | Address of the wrapped native token |
+
 ### Internal
+
+#### handleReceive
+
+Receive function to receive native tokens
+
+**Dev notes:** \
+If sender is the wrappedNative token, do not process as a deposit
+         since it is a withdrawal from the wrappedNative token
+
+```solidity:no-line-numbers
+function handleReceive() internal
+```
 
 #### addTokenInternal
 
@@ -409,7 +440,13 @@ function setBridgeParamInternal(bytes32 _symbol, uint256 _fee, uint256 _gasSwapR
 #### deposit
 
 ```solidity:no-line-numbers
-function deposit(address _from, bytes32 _symbol, uint256 _quantity, enum IPortfolioBridge.BridgeProvider _bridge) private
+function deposit(address _from, bytes32 _symbol, uint256 _quantity, enum IPortfolioBridge.BridgeProvider _bridge, uint8 _fromDecimals, uint8 _toDecimals) private
+```
+
+#### processOptions
+
+```solidity:no-line-numbers
+function processOptions(struct IPortfolio.XFER _xfer) private returns (bool unwrapToken)
 ```
 
 #### emitPortfolioEvent
@@ -429,4 +466,10 @@ function emitPortfolioEvent(address _trader, bytes32 _symbol, uint256 _quantity,
 | _quantity | uint256 | Amount of token used in the transaction |
 | _feeCharged | uint256 | Fee charged for the transaction |
 | transaction | enum IPortfolio.Tx | Transaction type |
+
+#### scaleQuantity
+
+```solidity:no-line-numbers
+function scaleQuantity(uint256 _quantity, uint8 _fromDecimals, uint8 _toDecimals) private pure returns (uint256)
+```
 

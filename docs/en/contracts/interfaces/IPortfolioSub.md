@@ -61,7 +61,7 @@ function withdrawToken(address _to, bytes32 _symbol, uint256 _quantity, enum IPo
 #### withdrawToken
 
 ```solidity:no-line-numbers
-function withdrawToken(address _to, bytes32 _symbol, uint256 _quantity, enum IPortfolioBridge.BridgeProvider _bridge) external
+function withdrawToken(address _from, bytes32 _to, bytes32 _symbol, uint256 _quantity, enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstChainListOrgChainId, bytes1 _options) external
 ```
 
 #### setAuctionMode
@@ -79,7 +79,7 @@ function autoFill(address _trader, bytes32 _symbol) external
 #### addToken
 
 ```solidity:no-line-numbers
-function addToken(bytes32 _srcChainSymbol, address _tokenaddress, uint32 _srcChainId, uint8 _decimals, enum ITradePairs.AuctionMode _mode, uint256 _fee, uint256 _gasSwapRatio, bytes32 _subnetSymbol) external
+function addToken(bytes32 _srcChainSymbol, address _tokenaddress, uint32 _srcChainId, uint8 _decimals, uint8 _l1Decimals, enum ITradePairs.AuctionMode _mode, uint256 _fee, uint256 _gasSwapRatio, bytes32 _subnetSymbol) external
 ```
 
 #### removeToken

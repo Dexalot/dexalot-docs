@@ -182,6 +182,8 @@ P-NETD-01: not enough ERC20 token balance to deposit
 
 P-NFUN-01: unknown function call
 
+P-NQTR-01: native token quantity truncated but refund failed
+
 P-NTDP-01: deposits paused
 
 P-NZBL-01: cannot remove token if there is non-zero balance
@@ -207,6 +209,8 @@ P-OWTF-01: can only withdraw from treasury or feeAddress
 P-PTNS-01: main processXFerPayload transaction not supported
 
 P-PTNS-02: sub processXFerPayload transaction not supported
+
+P-SBPD-01: set bridge param incorrect decimals, must be truncated
 
 P-SCEM-01: source Chain Id should be the same as specified in Portfolio Main
 
@@ -271,6 +275,8 @@ PB-DTSL-01: delayed transfer still locked
 PB-ETNS-01: erc20 token is not supported
 
 PB-FRFD-01: failed to refund
+
+PB-GASF-01: gas airdrop send fails
 
 PB-INVT-01: target chain does not have enough inventory to cover this withdrawal
 
@@ -361,6 +367,8 @@ RF-PTNS-01: main processXFerPayload transaction not supported
 RF-QE-01: quote expired due to manual override
 
 RF-QE-02: quote expired due to block ts
+
+RF-RAOW-01: rebalancer admin or wrapped token only allowed to deposit native token
 
 RF-SAZ-01: set address to zero
 

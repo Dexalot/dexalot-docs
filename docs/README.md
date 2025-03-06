@@ -28,6 +28,11 @@ features:
     details: "Learn more about Dexalot's incentive programs"
     link: en/DIP
 
+  - title: Annual Percentage Yield
+    icon: percentage
+    details: "Learn how APY is calculated for providing liquidity and trading on our protocol"
+    link: en/APY
+
   - title: Trading Fees & Discounts
     icon: dollar
     details: "Current trading fee rates and rebate tiers"

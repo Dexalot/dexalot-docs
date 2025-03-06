@@ -7,9 +7,9 @@ editLink: true
 
 ## Server Urls
 
-Testnet: [wss://api.dexalot-test.com](wss://api.dexalot-test.com)
+Testnet: [wss://api.dexalot-test.com/api/ws](wss://api.dexalot-test.com/api/ws)
 
-Mainnet: [wss://api.dexalot.com](wss://api.dexalot.com)
+Mainnet: [wss://api.dexalot.com/api/ws](wss://api.dexalot.com/api/ws)
 
 You may create up to 10 simultaneous websocket connections from the same IP address anonymously. (You do not need to follow next steps)
 
@@ -23,7 +23,7 @@ In order to create a web socket connection with your api-key:
     60 seconds) . You can request the API key from Dexalot team.
 2.  Next step would be to initiate a web socket connection against
     Dexalot backend using this token. \
-    wss://api.dexalot-dev.com?wstoken=ff0d8450-3e86-49ff-91fb-37156615c6ee
+    wss://api.dexalot-dev.com/api/ws?wstoken=ff0d8450-3e86-49ff-91fb-37156615c6ee
 3.  If your token expires you can request a new one using Step 1.
 
 ## Web Socket subscribe/unsubscribe

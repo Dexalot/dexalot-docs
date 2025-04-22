@@ -81,8 +81,8 @@ $$ balanceScore = {\sqrt{alotBalance * 0.014 * timeHeld / 3600}} $$
 | ------ | -------------- | -------- | --- | --- | --- |
 | ALOT   | up to $200,000 (i) | 2025-07-31 | 5% | 75% | 20%  |
 | sAVAX  | 1,250         | 2025-12-31 (ii)  | 20% | 30%  | 50% |
-| QI     | 1,200,000     | (iii) | 20% | 30%  | 50% |
-| ARENA  | up to $4,500  | (iv) | 50% | 50%  | 0% |
+| QI     | 600,000     | (iii) | 20% | 30%  | 50% |
+| ARENA  | up to $4,500  | 2025-03-31 | 50% | 50%  | 0% |
 
 
 (i) - To calculate the absolute number of ALOT tokens the 7 day volume weighted average ALOT price is used (taken on the day prior to the start of a new month).
@@ -90,8 +90,6 @@ $$ balanceScore = {\sqrt{alotBalance * 0.014 * timeHeld / 3600}} $$
 (ii) - sAVAX rewards may be extended further, subject to Multiverse tiers.
 
 (iii) - QI end date is rolling and amount is subject to change as per partnership agreements with Benqi.
-
-(iv) - ARENA end date is rolling and amount is subject to change as per partnership agreements with Arena.
 
 
 For ALOT rewards emphasis on executions is reduced as these users will now be rewarded via volume rebates.

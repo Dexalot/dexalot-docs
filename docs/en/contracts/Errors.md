@@ -306,6 +306,8 @@ PB-SDMP-01: symbol doesn't match Portfolio's common symbol
 
 PB-SINA-01: source not allowed
 
+PB-STNS-01: solana token address not set
+
 PB-TAEX-01: token already exists
 
 PB-UFPE-01: user fee payer address does not exist
@@ -360,6 +362,8 @@ RF-INVT-01: target chain does not have enough inventory to remove the xChainSwap
 
 RF-IS-01: invalid order signature
 
+RF-NFUN-01: unknown function call
+
 RF-OCR-01: only callable by rebalancer
 
 RF-PTNS-01: main processXFerPayload transaction not supported
@@ -371,6 +375,10 @@ RF-QE-02: quote expired due to block ts
 RF-RAOW-01: rebalancer admin or wrapped token only allowed to deposit native token
 
 RF-SAZ-01: set address to zero
+
+RF-SPAM-01: slippage points array length mismatch
+
+RF-SPMB-01: slippage points less than max slip bps
 
 RF-STTA-01: slippage tolerance too aggressive
 

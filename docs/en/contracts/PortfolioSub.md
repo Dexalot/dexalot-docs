@@ -6,7 +6,7 @@ headerDepth: 4
 
 **Dexalot L1(previously subnet) Portfolio**
 
-Receives deposits messages from the mainnets and sends withdraw requests backk to any mainnet.
+Receives deposits messages from the mainnets and sends withdraw requests back to any mainnet.
 It also transfers tokens between traders as their orders gets matched.
 
 **Dev notes:** \
@@ -301,7 +301,7 @@ function withdrawNative(address payable _to, uint256 _quantity) external
 
 #### withdrawToken
 
-Withdraws token to the default destination chain. Keeping it for backward compatibility
+Withdraws token to an evm destination chain
 
 ```solidity:no-line-numbers
 function withdrawToken(address _to, bytes32 _symbol, uint256 _quantity, enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstChainListOrgChainId) external
@@ -319,7 +319,7 @@ function withdrawToken(address _to, bytes32 _symbol, uint256 _quantity, enum IPo
 
 #### withdrawToken
 
-Withdraws token to a destination chain
+Withdraws token to any destination chain including options
 
 ```solidity:no-line-numbers
 function withdrawToken(address _from, bytes32 _to, bytes32 _symbol, uint256 _quantity, enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstChainListOrgChainId, bytes1 _options) external

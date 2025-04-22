@@ -27,6 +27,7 @@ The inventory is stored by subnet symbol and symbolId. The inventory is
 | futureATime | uint256 |
 | portfolioBridgeSub | contract IPortfolioBridgeSub |
 | scalingFactor | mapping(bytes32 &#x3D;&gt; uint256) |
+| userProvidedLiquidity | mapping(bytes32 &#x3D;&gt; mapping(address &#x3D;&gt; uint256)) |
 
 ### Private
 
@@ -114,41 +115,37 @@ function getInventoryBySubnetSymbol(bytes32 _symbol) external view returns (byte
 
 #### increment
 
-Increments the inventory of a token
+Increments the inventory of a token and the liquidity provided by the users from each chain
 
 **Dev notes:** \
 Only called by the PortfolioBridgeSub contract for processing a deposit
 
 ```solidity:no-line-numbers
-function increment(bytes32 _symbol, bytes32 _symbolId, uint256 _quantity) external
+function increment(struct IPortfolioBridgeSub.XferShort _deposit) external
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _symbol | bytes32 | Subnet symbol of the token |
-| _symbolId | bytes32 | SymbolId of the token |
-| _quantity | uint256 | Quantity to increment |
+| _deposit | struct IPortfolioBridgeSub.XferShort | Deposit struct |
 
 #### decrement
 
-Decrements the inventory of a token
+Decrements the inventory of a token and the liquidity provided by the users from each chain
 
 **Dev notes:** \
-Only called by the PortfolioBridgeSub contract for processing a withdrawal
+Only called by the PortfolioBridgeSub contract for processing a withdrawal.
 
 ```solidity:no-line-numbers
-function decrement(bytes32 _symbol, bytes32 _symbolId, uint256 _quantity) external
+function decrement(struct IPortfolioBridgeSub.XferShort _withdrawal) external
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _symbol | bytes32 | Subnet symbol of the token |
-| _symbolId | bytes32 | SymbolId of the token |
-| _quantity | uint256 | Quantity to decrement |
+| _withdrawal | struct IPortfolioBridgeSub.XferShort | Withdrawal transaction |
 
 #### remove
 
@@ -262,18 +259,18 @@ Calculates the withdrawal fee for a token
 **Dev notes:** \
 Uses the InvariantMathLibrary to provide exponential fees if
 inventory is spread across multiple chains, unbalanced and quantity is large
+if the user provided liquidity from that chain already, he gets lower fees up to the
+inventory supplied
 
 ```solidity:no-line-numbers
-function calculateWithdrawalFee(bytes32 _symbol, bytes32 _symbolId, uint256 _quantity) external view returns (uint256 fee)
+function calculateWithdrawalFee(struct IPortfolioBridgeSub.XferShort _withdrawal) external view returns (uint256 fee)
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _symbol | bytes32 | Subnet symbol of the token |
-| _symbolId | bytes32 | SymbolId of the token |
-| _quantity | uint256 | Quantity to withdraw |
+| _withdrawal | struct IPortfolioBridgeSub.XferShort | withdrawal transaction |
 
 ##### Return values
 

@@ -116,6 +116,7 @@ struct WrappedInfo {
 | swapSigner | address |
 | slippageTolerance | uint256 |
 | swapQueue | mapping(uint256 &#x3D;&gt; struct MainnetRFQ.PendingSwap) |
+| slippagePoints | mapping(uint256 &#x3D;&gt; uint24) |
 | volatilePairs | uint256 |
 | wrappedInfo | struct MainnetRFQ.WrappedInfo |
 
@@ -123,14 +124,18 @@ struct WrappedInfo {
 
 | Name | Type |
 | --- | --- |
-| __gap | uint256[42] |
+| __gap | uint256[41] |
 
 ### Private
 
 | Name | Type |
 | --- | --- |
+| MAX_SLIP_BPS | uint24 |
 | NONCE_MASK | uint96 |
 | ORDER_TYPEHASH | bytes32 |
+| SLIP_PRECISION | uint256 |
+| SLIP_BPS_MASK | uint8 |
+| SLIP_BPS_SHIFT | uint8 |
 | XCHAIN_SWAP_TYPEHASH | bytes32 |
 | nonceUsed | mapping(uint256 &#x3D;&gt; bool) |
 | orderMakerAmountUpdated | mapping(uint256 &#x3D;&gt; uint256) |
@@ -185,18 +190,6 @@ event SwapExpired(uint256 nonceAndMeta, uint256 timestamp)
 
 ```solidity:no-line-numbers
 event SwapQueue(string action, uint256 nonceAndMeta, struct MainnetRFQ.PendingSwap pendingSwap)
-```
-
-### UpdatedSlippageTolerance
-
-```solidity:no-line-numbers
-event UpdatedSlippageTolerance(uint256 slippageTolerance)
-```
-
-### UpdatedVolatilePairs
-
-```solidity:no-line-numbers
-event UpdatedVolatilePairs(uint256 volatilePairs)
 ```
 
 ## Methods
@@ -492,40 +485,23 @@ function removeFromSwapQueue(uint256 _nonceAndMeta) external
 | ---- | ---- | ----------- |
 | _nonceAndMeta | uint256 | Nonce of order |
 
-#### setSlippageTolerance
+#### setSlippagePoints
 
-Sets slippage tolerance for the contract
+Sets the slippage points for a given key
 
 **Dev notes:** \
-Slippage tolerance is represented in BIPs. i.e. slippage must be less than 1%.
+Only callable by volatility admin
 
 ```solidity:no-line-numbers
-function setSlippageTolerance(uint256 _slippageTolerance) external
+function setSlippagePoints(uint256[] _slipBpsKeys, uint24[] _slipBpsPoints) external
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _slippageTolerance | uint256 | slippage tolerance in BIPs |
-
-#### setVolatilePairs
-
-Sets volatile pairs to slip for the contract
-
-**Dev notes:** \
-Volatile pairs is a bitmap. If a pair is set to slip, the contract will
-slip the quote for that pair during high volatility.
-
-```solidity:no-line-numbers
-function setVolatilePairs(uint256 _volatilePairs) external
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _volatilePairs | uint256 | volatile pairs to slip bitmap |
+| _slipBpsKeys | uint256[] | Array of keys for slippage points |
+| _slipBpsPoints | uint24[] | Array of slippage points |
 
 #### addRebalancer
 
@@ -650,6 +626,12 @@ function isAdmin(address _address) external view returns (bool)
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | bool | bool    true if address has Default Admin role |
+
+#### fallback
+
+```solidity:no-line-numbers
+fallback() external
+```
 
 ### Private
 
@@ -857,4 +839,26 @@ function _processXFerPayloadInternal(address _trader, bytes32 _symbol, uint256 _
 | _symbol | bytes32 | Symbol of the token |
 | _quantity | uint256 | Amount of token to be withdrawn |
 | _nonceAndMeta | uint256 | Nonce of the swap |
+
+#### _slipQuote
+
+Slips the quote based on the slippage points and expiry
+
+```solidity:no-line-numbers
+function _slipQuote(uint8 slipInfo, uint128 expiry, uint256 amount) private view returns (uint256)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| slipInfo | uint8 | Slip info bitmap |
+| expiry | uint128 | Expiry of the quote |
+| amount | uint256 | Original maker amount |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | uint256 | uint256   Slipped maker amount |
 

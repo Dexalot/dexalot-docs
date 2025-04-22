@@ -72,7 +72,7 @@ and the Token/ALOT parity at that point. The inventoryManager calculates the wit
 quantity of the token to be withdrawn, current inventory in the receiving chain and other chains.
 
 ```solidity:no-line-numbers
-function getBridgeFee(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstChainListOrgChainId, bytes32 _symbol, uint256 _quantity, bytes1 _options) public view returns (uint256 bridgeFee)
+function getBridgeFee(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstChainListOrgChainId, bytes32 _symbol, uint256 _quantity, address _sender, bytes1 _options) public view returns (uint256 bridgeFee)
 ```
 
 ##### Arguments
@@ -83,6 +83,7 @@ function getBridgeFee(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstC
 | _dstChainListOrgChainId | uint32 | destination chain id |
 | _symbol | bytes32 | Dexalot L1(subnet) symbol of the token |
 | _quantity | uint256 | quantity of the token to withdraw |
+| _sender | address | Address of the sender |
 | _options | bytes1 | Custom options for the withdrawal transaction |
 
 ##### Return values
@@ -182,7 +183,7 @@ function setL1Decimals(bytes32 _symbolId, uint8 _l1Decimals) external
 Returns the valid bridge fees for all the host chain tokens of a given Dexalot L1(subnet) token
 
 ```solidity:no-line-numbers
-function getAllBridgeFees(enum IPortfolioBridge.BridgeProvider _bridge, bytes32 _symbol, uint256 _quantity, bytes1 _options) external view returns (uint256[] bridgeFees, uint32[] chainIds)
+function getAllBridgeFees(enum IPortfolioBridge.BridgeProvider _bridge, bytes32 _symbol, uint256 _quantity, address _sender, bytes1 _options) external view returns (uint256[] bridgeFees, uint32[] chainIds)
 ```
 
 ##### Arguments
@@ -192,6 +193,7 @@ function getAllBridgeFees(enum IPortfolioBridge.BridgeProvider _bridge, bytes32 
 | _bridge | enum IPortfolioBridge.BridgeProvider | Bridge provider to use |
 | _symbol | bytes32 | Dexalot L1(subnet) symbol of the token |
 | _quantity | uint256 | quantity of the token to withdraw |
+| _sender | address | Address of the sender |
 | _options | bytes1 | Custom options for the withdrawal transaction |
 
 ##### Return values
@@ -371,13 +373,13 @@ function setInventoryManager(address _inventoryManager) external
 
 #### setBridgeFeeMultipler
 
-Set the bridge fee multipler for a given bridge
+Set the bridge fee multiplier for a given bridge
 
 **Dev notes:** \
-Only admin can set the bridge fee multipler
+Only admin can set the bridge fee multiplier
 
 ```solidity:no-line-numbers
-function setBridgeFeeMultipler(enum IPortfolioBridge.BridgeProvider _bridge, uint256 _multipler) external
+function setBridgeFeeMultipler(enum IPortfolioBridge.BridgeProvider _bridge, uint256 _multiplier) external
 ```
 
 ##### Arguments
@@ -385,7 +387,7 @@ function setBridgeFeeMultipler(enum IPortfolioBridge.BridgeProvider _bridge, uin
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _bridge | enum IPortfolioBridge.BridgeProvider | Bridge provider to use |
-| _multipler | uint256 | Multipler to set |
+| _multiplier | uint256 | multiplier to set |
 
 #### setMaxBridgeFeeCaps
 
@@ -464,17 +466,16 @@ function sendXChainMessageInternal(uint32 _dstChainListOrgChainId, enum IPortfol
 Calculate the bridge fee for a given bridge
 
 ```solidity:no-line-numbers
-function _calcBridgeFee(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstChainListOrgChainId, bytes32 _symbol, uint256 _quantity, uint256 _inventoryFee, bytes1 _options) internal view returns (uint256)
+function _calcBridgeFee(struct IPortfolioBridgeSub.XferShort _withdrawal, enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstChainListOrgChainId, uint256 _inventoryFee, bytes1 _options) internal view returns (uint256)
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
+| _withdrawal | struct IPortfolioBridgeSub.XferShort | withdrawal struct |
 | _bridge | enum IPortfolioBridge.BridgeProvider | Bridge provider to use |
 | _dstChainListOrgChainId | uint32 | destination chain id |
-| _symbol | bytes32 | Dexalot L1(subnet) symbol of the token |
-| _quantity | uint256 |  |
 | _inventoryFee | uint256 |  |
 | _options | bytes1 |  |
 
@@ -551,7 +552,7 @@ Update the inventory by each chain only in the Dexalot L1(subnet).
 Inventory available per host chain. i.e. USDC may exist in both Avalanche and Arbitrum
 
 ```solidity:no-line-numbers
-function updateInventoryBySource(bytes32 _subnetSymbol, struct IPortfolio.XFER _xfer) private
+function updateInventoryBySource(bytes32 _subnetSymbol, struct IPortfolio.XFER _xfer, address _from) private
 ```
 
 ##### Arguments
@@ -560,4 +561,5 @@ function updateInventoryBySource(bytes32 _subnetSymbol, struct IPortfolio.XFER _
 | ---- | ---- | ----------- |
 | _subnetSymbol | bytes32 | Dexalot L1(subnet) Symbol |
 | _xfer | struct IPortfolio.XFER | Transfer Message |
+| _from | address |  |
 

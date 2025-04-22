@@ -30,6 +30,19 @@ struct XFER {
   bytes18 customdata;
 }
 ```
+### XFERSolana
+
+```solidity
+struct XFERSolana {
+  uint64 nonce;
+  enum IPortfolio.Tx transaction;
+  bytes32 trader;
+  bytes32 tokenAddress;
+  uint64 quantity;
+  uint32 timestamp;
+  bytes18 customdata;
+}
+```
 ### TokenDetails
 
 ```solidity

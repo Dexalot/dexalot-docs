@@ -56,14 +56,15 @@ i.e USDt sent &amp; received in Avalanche Mainnet whereas USDT is sent &amp; rec
 | enabledBridges | mapping(enum IPortfolioBridge.BridgeProvider &#x3D;&gt; contract IBridgeProvider) |
 | gasAirdrop | uint256 |
 | outNonce | uint64 |
+| supportedChainNative | mapping(uint32 &#x3D;&gt; bytes32) |
 | userPaysFee | mapping(uint32 &#x3D;&gt; mapping(enum IPortfolioBridge.BridgeProvider &#x3D;&gt; bool)) |
-| xChainAllowedDestinations | mapping(bytes32 &#x3D;&gt; mapping(uint32 &#x3D;&gt; bool)) |
+| xChainAllowedDestinations | mapping(bytes32 &#x3D;&gt; mapping(uint32 &#x3D;&gt; bytes32)) |
 
 ### Internal
 
 | Name | Type |
 | --- | --- |
-| __gap | uint256[49] |
+| __gap | uint256[48] |
 | defaultBridgeProvider | enum IPortfolioBridge.BridgeProvider |
 | defaultChainId | uint32 |
 | mainnetRfq | contract IMainnetRFQ |
@@ -74,6 +75,7 @@ i.e USDt sent &amp; received in Avalanche Mainnet whereas USDT is sent &amp; rec
 
 | Name | Type |
 | --- | --- |
+| SOL_CHAIN_ID | uint32 |
 | XCHAIN_XFER_MESSAGE_VERSION | uint8 |
 
 ## Events
@@ -276,7 +278,7 @@ Enables/disables a symbol for a given destination for cross chain swaps
 Only admin can enable/disable
 
 ```solidity:no-line-numbers
-function enableXChainSwapDestination(bytes32 _symbol, uint32 _chainListOrgChainId, bool _enable) external
+function enableXChainSwapDestination(bytes32 _symbol, uint32 _chainListOrgChainId, bytes32 _tokenAddress) external
 ```
 
 ##### Arguments
@@ -285,7 +287,25 @@ function enableXChainSwapDestination(bytes32 _symbol, uint32 _chainListOrgChainI
 | ---- | ---- | ----------- |
 | _symbol | bytes32 | Symbol of the token |
 | _chainListOrgChainId | uint32 | Remote Chainlist.org chainid |
-| _enable | bool | True to enable, false to disable |
+| _tokenAddress | bytes32 | Token address on the destination chain, 0 address if not exists |
+
+#### enableSupportedNative
+
+Enables/disables a native token for a given destination for cross chain swaps
+
+**Dev notes:** \
+Only admin can enable/disable
+
+```solidity:no-line-numbers
+function enableSupportedNative(uint32 _chainListOrgChainId, bytes32 _symbol) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _chainListOrgChainId | uint32 | Remote Chainlist.org chainid |
+| _symbol | bytes32 | Native symbol of the token |
 
 #### setTrustedRemoteAddress
 
@@ -448,7 +468,7 @@ The fee is in terms of current chain's gas token.
 LZ charges based on the payload size and gas px at
 
 ```solidity:no-line-numbers
-function getBridgeFee(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstChainListOrgChainId, bytes32, uint256, bytes1) external view virtual returns (uint256 bridgeFee)
+function getBridgeFee(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstChainListOrgChainId, bytes32, uint256, address, bytes1) external view virtual returns (uint256 bridgeFee)
 ```
 
 ##### Arguments
@@ -459,6 +479,7 @@ function getBridgeFee(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _dstC
 | _dstChainListOrgChainId | uint32 | destination chain id           _symbol  symbol of the token, not relevant in for this function           _quantity quantity of the token, not relevant in for this function           _options custom options for the transaction, not relevant in this function |
 |  | bytes32 |  |
 |  | uint256 |  |
+|  | address |  |
 |  | bytes1 |  |
 
 ##### Return values
@@ -677,6 +698,33 @@ function packXferMessage(struct IPortfolio.XFER _xfer) private pure returns (byt
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | message | bytes | Encoded XFER message |
+
+#### packXferMessageSolana
+
+Maps symbol to symbolId and encodes XFERSolana message
+
+**Dev notes:** \
+It is packed as follows:
+slot0: customdata(18), timestamp(4), nonce(8), transaction(1), XChainMsgType(1)
+slot1: trader(32)
+slot1: tokenAddress(32)
+slot2: quantity(8)
+
+```solidity:no-line-numbers
+function packXferMessageSolana(struct IPortfolio.XFER _xfer) private view returns (bytes message)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _xfer | struct IPortfolio.XFER | XFER message to encode |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| message | bytes | Encoded XFERSolana message |
 
 #### getCrossChainMessageType
 

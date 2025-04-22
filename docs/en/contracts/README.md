@@ -49,7 +49,7 @@ Similarly a Cross Chain Swaps Betwen Avalanche & Arb would work as follows, say 
 <th><strong>Description</strong></th>
 </tr>
 <tr>
-<td valign="top">2025-02-12</td>
+<td valign="top">2025-04-29</td>
 <td><strong>Non-EVM support & other enhancements</strong>
 
 Struct Changes:<br/>
@@ -73,26 +73,26 @@ Exchange:<br/>
 DelayedTransfers (v3.0.2):<br/>
 - modify customdata handling to not overwrite withdraw options
 
-PortfolioBridgeMain (v4.1.3):<br/>
+PortfolioBridgeMain (v4.1.6):<br/>
 - add `gasAirdrop` to fund user with small amount of native token if specified on withdrawal
 - modify Xfer packing + unpacking to support `bytes32` trader
-- (breaking) `getBridgeFee` takes an additional `bytes1` parameter for options
+- (breaking) `getBridgeFee` takes an additional `bytes1` parameter for options + trader `address`
 - (breaking) `XCHAIN_XFER_MESSAGE_VERSION` incremented to 3
 - (breaking) XChainXFerMessage event as it contains the Xfer struct
 
-PortfolioBridgeSub (v4.1.3):<br/>
+PortfolioBridgeSub (v4.1.6):<br/>
 - add `l1Decimals` as a parameter for adding tokens
 - add `truncateQuantity` to truncate withdrawals to the destination chain decimals
 - add `optionsGasCost` to set a bridge fee cost for `GASAIRDROP`  or `UNWRAP`
-- (breaking) `getAllBridgeFees` takes an additional `bytes1` parameter for options
+- (breaking) `getAllBridgeFees` takes an additional `bytes1` parameter for options + trader `address`
 
-PortfolioMain (v2.6.0):<br/>
+PortfolioMain (v2.6.1):<br/>
 - add `l1Decimals` as a parameter for adding tokens
 - add `wrappedNative` to wrap on deposit + unwrap on withdrawal (if `UNWRAP` option set)
 - add truncation on deposit so quantity is in terms of dexalot l1 decimals
 - scale deposit quantities into dexalot l1 decimals and scale withdrawal quantities into mainnet actual decimals
 
-PortfolioSub (v2.6.0):<br/>
+PortfolioSub (v2.6.1):<br/>
 - add `l1Decimals` as a parameter for adding tokens, for PortfolioSub l1Decimals=decimals
 - (breaking) remove `getAllBridgeFees`, can be accessed via PortfolioBridgeSub
 - (breaking) remove deprecated `withdrawToken(address, bytes32, uint256, IPortfolioBridge.BridgeProvider)`
@@ -100,10 +100,14 @@ PortfolioSub (v2.6.0):<br/>
 - add support for withdrawing to non evm chains with `bytes32` addresses
 - add support for withdrawing for  `GASAIRDROP`  or `UNWRAP` token
 
-MainnetRFQ (v1.1.6):<br/>
+MainnetRFQ (v1.1.7):<br/>
 - add wrappedInfo to unwrap/wrap tokens based on the chain to keep consistent inventory
 - (breaking) modify `XChainSwap` struct to add support for bytes32 addresses and tokens (for non-evm)
 - (breaking) SwapExecuted event, fields `destTrader` + `destAsset` from address to bytes32
+- add support to slip swaps per quote based on execution time
+
+InventoryManager (v3.2.0):<br/>
+- add userProvidedLiquidity to offer 0 inventoryFee if withdrawing to same chain as deposit
 
 UtilsLibrary:<br/>
 - add helpers for converting to/from `address` to `bytes32`

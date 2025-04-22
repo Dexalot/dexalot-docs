@@ -17,13 +17,13 @@ function remove(bytes32 _symbol, bytes32 _symbolId) external returns (bool)
 #### increment
 
 ```solidity:no-line-numbers
-function increment(bytes32 _symbol, bytes32 _symbolId, uint256 _quantity) external
+function increment(struct IPortfolioBridgeSub.XferShort _xferShort) external
 ```
 
 #### decrement
 
 ```solidity:no-line-numbers
-function decrement(bytes32 _symbol, bytes32 _symbolId, uint256 _quantity) external
+function decrement(struct IPortfolioBridgeSub.XferShort _xferShort) external
 ```
 
 #### get
@@ -35,6 +35,6 @@ function get(bytes32 _symbol, bytes32 _symbolId) external view returns (uint256)
 #### calculateWithdrawalFee
 
 ```solidity:no-line-numbers
-function calculateWithdrawalFee(bytes32 _symbol, bytes32 _symbolId, uint256 _quantity) external view returns (uint256)
+function calculateWithdrawalFee(struct IPortfolioBridgeSub.XferShort _xferShort) external view returns (uint256)
 ```
 

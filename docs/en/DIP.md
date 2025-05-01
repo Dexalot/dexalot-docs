@@ -22,6 +22,8 @@ Orderbook score determines the “quality” of a user's orders based on the siz
 | ALOT/USDC | 60 | 100
 | TRUMP/USDC | 80 | 100
 | ARENA/AVAX | 200 | 100
+| COQ/AVAX | 200 | 100
+| PLSR/USDC | 200 | 100
 | All Other Pairs | 30 | 100
 
 The formula for orderbook score calculations is as follows:
@@ -57,31 +59,34 @@ $$ balanceScore = {\sqrt{alotBalance * 0.014 * timeHeld / 3600}} $$
 
 **DIP Distribution by Pair**
 
-| Pair       | ALOT % | sAVAX % | QI % | ARENA % |
-| ---------- | ------ | ------- | ---- | ------- |
-| ALOT/USDC  | 9.38   | 9.68    |      |         |
-| ARB/USDC   | 9.38   | 9.68    |      |         |
-| ARENA/AVAX | 3.13   |         |      | 100     |
-| AVAX/USDC  | 9.38   | 9.68    |      |         |
-| AVAX/USDT  | 9.38   | 9.68    |      |         |
-| BTC/USDC   | 9.38   | 9.68    |      |         |
-| ETH/USDC   | 9.38   | 9.68    |      |         |
-| ETH/USDT   | 9.38   | 9.68    |      |         |
-| EURC/USDC  | 6.25   | 6.45    |      |         |
-| QI/USDC    |        |         | 50   |         |
-| sAVAX/AVAX | 6.25   | 6.45    | 50   |         |
-| TRUMP/USDC | 3.13   | 3.23    |      |         |
-| USDT/USDC  | 6.25   | 6.45    |      |         |
-| WBTC/USDC  | 9.38   | 9.68    |      |         |
+| Pair       | ALOT % | sAVAX % | QI % |
+| ---------- | ------ | ------- | ---- |
+| ALOT/USDC  | 9.14   | 9.14    |      |
+| ARB/USDC   | 5.08   | 5.08    |      |
+| ARENA/AVAX | 0.51   | 0.51    |      |
+| AVAX/USDC  | 10.15  | 10.15   |      |
+| AVAX/USDT  | 10.15  | 10.15   |      |
+| BTC/USDC   | 10.15  | 10.15   |      |
+| COQ/AVAX   | 0.51   | 0.51    |      |
+| ETH/USDC   | 10.15  | 10.15   |      |
+| ETH/USDT   | 10.15  | 10.15   |      |
+| EURC/USDC  | 6.60   | 6.60    |      |
+| GUN/USDC   | 3.05   | 3.05    |      |
+| PLSR/USDC  | 0.51   | 0.51    |      |
+| QI/USDC    |        |         | 20   |
+| sAVAX/AVAX | 5.08   | 5.08    | 80   |
+| TRUMP/USDC | 2.03   | 2.03    |      |
+| USDT/USDC  | 6.60   | 6.60    |      |
+| WBTC/USDC  | 10.15  | 10.15   |      |
 
 
 **DIP Distribution by Token**
 
 | Token  | Monthly Amount | End Date | E % | O % | A % |
 | ------ | -------------- | -------- | --- | --- | --- |
-| ALOT   | up to $200,000 (i) | 2025-07-31 | 5% | 75% | 20%  |
-| sAVAX  | 1,250         | 2025-12-31 (ii)  | 20% | 30%  | 50% |
-| QI     | 600,000     | (iii) | 20% | 30%  | 50% |
+| ALOT   | up to $200,000 (i) | 2025-07-31 | 25% | 50% | 25% |
+| sAVAX  | 1,000         | 2025-12-31 (ii)  | 25% | 50% | 25% |
+| QI     | 600,000     | (iii) | 25% | 50% | 25% |
 | ARENA  | up to $4,500  | 2025-03-31 | 50% | 50%  | 0% |
 
 

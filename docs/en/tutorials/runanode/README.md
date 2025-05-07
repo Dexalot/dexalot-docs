@@ -137,7 +137,7 @@ mDVSxzeWHpEU3eSqMwwGQsD787xGp7hv9Qgoe3R9SdjPapte8
 
 Dexalot L1 is upgraded at various blocks over time like any other blockchain. The `upgrade.json` file tracks these hard forks and it needs to be placed to the right place to ensure the network can start and bootstrap correctly.
 
-Copy the latest `upgrade.json` file from [Dexalot Public Chain Assets](https://github.com/Dexalot/dexalot-public-chain-assets) and place it to the parametrized location `~/.avalanchego/configs/chains/${BLOCKCHAIN_ID}/config.json` with the correct blockchain ID from the table below.
+Copy the latest `upgrade.json` file from [Dexalot Public Chain Assets](https://github.com/Dexalot/dexalot-public-chain-assets) and place it to the parametrized location `~/.avalanchego/configs/chains/${BLOCKCHAIN_ID}/upgrade.json` with the correct blockchain ID from the table below.
 
 | Network | Blockchain ID                                      |
 |---------|----------------------------------------------------|

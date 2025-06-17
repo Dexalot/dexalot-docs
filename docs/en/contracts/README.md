@@ -49,6 +49,39 @@ Similarly a Cross Chain Swaps Betwen Avalanche & Arb would work as follows, say 
 <th><strong>Description</strong></th>
 </tr>
 <tr>
+<td valign="top">2025-06-25</td>
+<td><strong>Non-Reverting List Orders & CancelByClientOrderId Functions & MinPostAmount</strong>
+
+TradePairs (v3.6.1):<br/>
+
+- To avoid `REVERT` conditions in list orders,  the following changes have been made:
+  * `P-AFNE-01` : available funds not enough while entering order will not revert going forward. Instead it will be rejected at the time of order entry.
+  * Reversion with `P-AFNE-02` is not possible anymore as funds are checked at the time of order entry using the new `portfolioSub.checkAvailable` function.
+
+- Added `cancelOrderByClientId`, `cancelOrderListByClientIds`, `cancelAddListByClientIds` functions to enable cancelation of the live orders by clientOrderId instead of orderId
+- The `tradePair.minTradeAmount` will be used to control the minimum trade amount a trader can execute as a `taker` to enable traders to for example BUY $1 worth of ALOT to replenish their gas tank. We also added `tradePair.minPostAmount` that controls the minimum amount that can be posted to the orderbook. `minPostAmount` will be higher than or equal to `minTradeAmount`. At the time of the release, `minPostAmount` for all the pairs will be set to `minTradeAmount` for backword compatibility. We will decrease the `minTradeAmount` of certain pairs like `ALOT/USDC` at a later time.
+- cancelReplaceOrder: The new order will get status= `REJECTED` code = `P-AFNE-01` if there is not enough available funds in the contract instead of `REVERTING`. The cancel order is still processed even if the new order is `REJECTED`
+
+- The uniqueness the `clientOrderId` is only enforced against live orders that are already posted to the orderbook, and `clientOrderId` can be used to cancel them without waiting to receive the orderId back from the blockchain. Uniqueness of the `clientOrderId` is `NOT` checked against neither `MARKET` nor fully closed taker `LIMIT` orders as they are only relevant(their scope) in the block they are being processed and all their references are deleted before the next block.
+- Bug Fix: ClientOrderId for `MARKET` orders were inadvertently not removed from the blockchain state.
+- Decreased market orders specific paramater `tradePair.allowedSlippagePercent`'s default to `3%` from `20%`
+- New `UtilsLibrary.getOutgoingDetails` function to get the outgoing symbol and the quantity of an order
+
+PortfolioSub (v2.6.4):<br/>
+
+- New `checkAvailable` function to `reject` orders at the time of order entry instead of `reverting`
+- Optimized `calculateFee` function with the new `calculateFees` function
+- Used onlyRole(EXECUTOR_ROLE) instead of require for functions executable by TradePair only
+- Used `assert` instead of `require` for catastrophic contract level problems.
+
+
+OrderBooks (v2.2.2):<br/>
+
+ - Moved addToOrderbooks logic from the TradePairs to OrderBooks
+
+</td>
+</tr>
+<tr>
 <td valign="top">2025-04-29</td>
 <td><strong>Non-EVM support & other enhancements</strong>
 

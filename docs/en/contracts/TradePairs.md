@@ -679,7 +679,7 @@ with your `clientOrderId` when trying to enter a new order even if 'REJECTED'. \
 `clientOrderId` is user generated and must be unique per traderaddress. \
 Uniqueness of the `clientOrderId` is not checked for neither `MARKET` nor fully closed taker `LIMIT` orders
 as their scope is only in the block they are being processed and they are never stored in the blockchain.
-In other words, the uniqueness is only enforced for `LIMIT` orders that are posted to the orderbook,
+In other words, the uniqueness is only enforced against `LIMIT` orders that are already posted to the orderbook, 
 and `clientOrderId` can be used to cancel them without waiting to receive the orderId back from the blockchain. \
 For MARKET orders, values sent by the user in the `price` and `type2` fields will be ignored and
 defaulted to `0` and `Type2.GTC` respectively. \
@@ -789,10 +789,8 @@ Only the quantity and the price of the order can be changed. All the other order
 fields are copied from the to-be canceled order to the new order.
 The time priority of the original order is lost.
 Canceled order's locked quantity is made available for the new order within this tx.
-The new order will get status= `REJECTED` code = P-AFNE-01` if there is not enough available funds in the contract.
-However It will revert with `P-AFNE-02` if the new order matches with another order but there is not enough funds
-available when trying to transfer tokens between traders
-if it is `REJECTED` the cancel is processed. if `REVERTED` the cancel is also `REVERTED`.
+The new order will get status= `REJECTED` code = `P-AFNE-01` if there is not enough available fund in the contract.
+The cancel order is still processed even if the new order is `REJECTED`
 This function will technically accept the same clientOrderId as the previous because previous clientOrderId
 is made vailable when the previous order is cancelled as  it is removed from the mapping.
 !!Not recommended! \
@@ -1307,4 +1305,3 @@ function doOrderCancel(bytes32 _orderId, bool _fillGasTank, bytes32 _code) priva
 | _orderId | bytes32 | order id to cancel |
 | _fillGasTank | bool | fill GasTank if true and when the user's balance is below the treshold |
 | _code | bytes32 | additional explanation ( i.e unsolicited Cancel) |
-

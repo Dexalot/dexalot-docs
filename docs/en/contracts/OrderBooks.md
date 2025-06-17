@@ -96,15 +96,14 @@ function getTradePairs() external view returns (contract ITradePairs)
 Adds OrderBook with its side
 
 ```solidity:no-line-numbers
-function addToOrderbooks(bytes32 _orderBookID, enum ITradePairs.Side _side) external
+function addToOrderbooks(bytes32 _tradePairId) external returns (bytes32 buyBookId, bytes32 sellBookId)
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _orderBookID | bytes32 | Order Book ID assigned by the tradePairs based on the tradepair symbol |
-| _side | enum ITradePairs.Side | BuyBook or SellBook |
+| _tradePairId | bytes32 | Order Book ID assigned by the tradePairs based on the tradepair symbol |
 
 #### bestPrice
 

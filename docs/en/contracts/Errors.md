@@ -1,6 +1,6 @@
 # Mapping of Error Codes and Messages
 
-The error messages can be retrieved programmatically using [get-revert-reason](/en/apiv2/Contracts.html#get-revert-reason).
+The error messages can be retrieved programmatically using [get-revert-reason](/apiv2/Contracts.html#get-revert-reason).
 
 ## Airdrop
 
@@ -140,15 +140,13 @@ LZ-EONS-01: enforced options not set for msgType
 
 ## Portfolio
 
-P-AFNE-01: available funds not enough
+P-AFNE-01: available funds not enough while entering order
 
-P-AFNE-02: available funds not enough
+P-AFNE-02: available funds not enough while attempting to transfer tokens between accounts
 
 P-ALOA-01: at least one account needed in admin group
 
 P-ALOA-02: can not remove PortfolioBridge from PORTFOLIO_BRIDGE_ROLE, use setPortfolioBridge function instead
-
-P-AMVL-01: amount cannot be more than total value locked
 
 P-AUCT-01: can not withdraw/transfer auction token before auction is finalized
 
@@ -160,7 +158,7 @@ P-CNAT-01: cannot add 0 decimals token
 
 P-CNFF-01: collect native fee failed
 
-P-DOTS-01: origin and destination adressess should be different
+P-DOTS-01: origin and destination addresses should be different
 
 P-DUTH-01: deposit under threshold
 
@@ -217,8 +215,6 @@ P-SCEM-01: source Chain Id should be the same as specified in Portfolio Main
 P-TAEX-01: token already exists
 
 P-TDDM-01: Token decimals do not match
-
-P-TFNE-01: total funds not enough
 
 P-TNBC-01: token not been converted
 
@@ -290,7 +286,7 @@ PB-LENM-01: length mismatch in array type function parameters
 
 PB-MING-01: gas can not be less than 200000 minimum gas required
 
-PB-MPGT-01: bridge fee multipler is greater than 100%
+PB-MPGT-01: bridge fee multiplier is greater than 100%
 
 PB-NFUN-01: unknown function call
 
@@ -431,6 +427,8 @@ T-IVOT-01: invalid order type
 T-LONR-01: Limit order type cannot be removed
 
 T-LTMT-01: trade amount is less than minTradeAmount for the tradePair
+
+T-LTPA-01: trade amount is less than minPostAmount. It can not be posted in the orderbook
 
 T-MNOE-01: max number of fills has to be at least 10
 

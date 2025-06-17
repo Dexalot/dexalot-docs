@@ -56,6 +56,32 @@ function getRemainingQuantity(uint256 _quantity, uint256 _quantityFilled) intern
 | ---- | ---- | ----------- |
 | [0] | uint256 | uint256  remaining quantity |
 
+#### getOutgoingDetails
+
+Returns the outgoing token symbol & amount based on the side of the order
+
+```solidity:no-line-numbers
+function getOutgoingDetails(enum ITradePairs.Side _orderSide, bytes32 _quoteSymbol, bytes32 _baseSymbol, uint8 _baseDecimals, uint256 _price, uint256 _quantity) internal pure returns (bytes32 outSymbol, uint256 outAmount)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _orderSide | enum ITradePairs.Side | order Side |
+| _quoteSymbol | bytes32 | quote Symbol |
+| _baseSymbol | bytes32 | base Symbol |
+| _baseDecimals | uint8 | base Token decimals of the trading pair |
+| _price | uint256 | price |
+| _quantity | uint256 | quantity |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| outSymbol | bytes32 | outgoing token symbol |
+| outAmount | uint256 | outgoing Amount |
+
 #### matchingAllowed
 
 Checks if a tradePair is in auction and if matching is not allowed in the orderbook.
@@ -127,7 +153,8 @@ function canCancel(uint256 _quantity, uint256 _quantityFilled, enum ITradePairs.
 Round down a unit256 value.  Used for the fees to avoid dust.
 
 **Dev notes:** \
-example: a = 1245, m: 2 ==> 1200
+example: a = 1245, m: 2 ==> 1200. But always take a min fee
+a = 1, m : 2 ==> 100 instead of flooring to 0
 
 ```solidity:no-line-numbers
 function floor(uint256 _a, uint256 _m) internal pure returns (uint256)
@@ -166,6 +193,12 @@ function min(uint256 _a, uint256 _b) internal pure returns (uint256)
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | uint256 | uint256  Min of a and b |
+
+#### max
+
+```solidity:no-line-numbers
+function max(uint256 _a, uint256 _b) internal pure returns (uint256)
+```
 
 #### bytes32ToString
 
@@ -264,7 +297,7 @@ function getQuoteAmount(uint8 _baseDecimals, uint256 _price, uint256 _quantity) 
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _baseDecimals | uint8 | id of the trading pair |
+| _baseDecimals | uint8 | base Token decimals of the trading pair |
 | _price | uint256 | price |
 | _quantity | uint256 | quantity |
 

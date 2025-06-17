@@ -311,6 +311,25 @@ function tradePairExists(bytes32 _tradePairId) external view returns (bool)
 | ---- | ---- | ----------- |
 | [0] | bool | bool  true if it exists |
 
+#### setMinPostAmount
+
+Sets the minimum post amount allowed to the orderbook of the given Trade Pair
+
+**Dev notes:** \
+Can only be called by DEFAULT_ADMIN. The min trade amount needs to satisfy
+`getQuoteAmount(_price, _quantity, _tradePairId) >= _minTradeAmount`
+
+```solidity:no-line-numbers
+function setMinPostAmount(bytes32 _tradePairId, uint256 _minPostAmount) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _tradePairId | bytes32 | id of the trading pair |
+| _minPostAmount | uint256 | minimum trade amount in terms of quote asset that can be posted in the orderbook |
+
 #### setMinTradeAmount
 
 Sets the minimum trade amount allowed for a specific Trade Pair
@@ -328,7 +347,7 @@ function setMinTradeAmount(bytes32 _tradePairId, uint256 _minTradeAmount) extern
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _tradePairId | bytes32 | id of the trading pair |
-| _minTradeAmount | uint256 | minimum trade amount in terms of quote asset |
+| _minTradeAmount | uint256 | minimum trade amount in terms of quote asset that can be traded as taker |
 
 #### setMaxTradeAmount
 
@@ -626,8 +645,9 @@ on the additional orders submitted along with the rejected order. The remaining 
 without disruption. \
 
 `REVERT conditions:`
-
-- `P-AFNE-01` or `P-AFNE-02` available funds not enough
+- `P-AFNE-02` available funds not enough while attempting to transfer tokens between accounts.
+This revert condition is included for completeness sake, but an order should never revert with this
+code because the order should have been already rejected with `P-AFNE-01` at the time of order entry as below.
 - `T-OOCA-01` only msg.sender can add orders
 - `T-FOKF-01` if type2=FOK and the order can't be fully filled. (Use `type2=IOC` instead for smoother list orders)
 - `T-PPAU-01` tradePair.pairPaused (Exchange Level state set by the admins)
@@ -637,6 +657,7 @@ without disruption. \
 
 For all the order level check failures, the order will be `REJECTED` by emitting
 OrderStatusChanged event with `status = REJECTED` and `code = errorCode`.
+- `P-AFNE-01` : available funds not enough while entering order
 - `T-IVOT-01` : invalid order type / order type not enabled
 - `T-TMDQ-01` : too many decimals in the quantity
 - `T-TMDP-01` : too many decimals in the price
@@ -647,9 +668,19 @@ OrderStatusChanged event with `status = REJECTED` and `code = errorCode`.
 - `T-POOA-01` : Only PO(PostOnly) Orders allowed for this pair
 - `T-AUCT-04` : market orders not allowed in auction mode
 
+`KILLED (CANCELED) conditions:`
+
+if a taker order remaining quantity is less then minPostAmount, the remaining quantity of the order
+will be canceled by emitting OrderStatusChanged event with `status = CANCELED` and `code = T-LTPA-01`.
+- `T-LTPA-01` : trade amount is less than minPostAmount. It can not be posted in the orderbook"
+
 The `OrderStatusChanged` event always will return an `id` (orderId) assigned by the blockchain along
 with your `clientOrderId` when trying to enter a new order even if 'REJECTED'. \
 `clientOrderId` is user generated and must be unique per traderaddress. \
+Uniqueness of the `clientOrderId` is not checked for neither `MARKET` nor fully closed taker `LIMIT` orders
+as their scope is only in the block they are being processed and they are never stored in the blockchain.
+In other words, the uniqueness is only enforced for `LIMIT` orders that are posted to the orderbook,
+and `clientOrderId` can be used to cancel them without waiting to receive the orderId back from the blockchain. \
 For MARKET orders, values sent by the user in the `price` and `type2` fields will be ignored and
 defaulted to `0` and `Type2.GTC` respectively. \
 Similarly for auction orders, values sent by the user in the `stp` and `type2` fields will be ignored
@@ -757,7 +788,11 @@ Cancels an order and immediately enters a similar order in the same direction.
 Only the quantity and the price of the order can be changed. All the other order
 fields are copied from the to-be canceled order to the new order.
 The time priority of the original order is lost.
-Canceled order's locked quantity is made available for the new order within this tx
+Canceled order's locked quantity is made available for the new order within this tx.
+The new order will get status= `REJECTED` code = P-AFNE-01` if there is not enough available funds in the contract.
+However It will revert with `P-AFNE-02` if the new order matches with another order but there is not enough funds
+available when trying to transfer tokens between traders
+if it is `REJECTED` the cancel is processed. if `REVERTED` the cancel is also `REVERTED`.
 This function will technically accept the same clientOrderId as the previous because previous clientOrderId
 is made vailable when the previous order is cancelled as  it is removed from the mapping.
 !!Not recommended! \
@@ -798,6 +833,23 @@ function cancelOrder(bytes32 _orderId) external
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _orderId | bytes32 | order id to cancel |
+
+#### cancelOrderByClientId
+
+Cancels an order given the clientOrder id supplied
+
+**Dev notes:** \
+See cancelOrder
+
+```solidity:no-line-numbers
+function cancelOrderByClientId(bytes32 _clientOrderId) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _clientOrderId | bytes32 | clientOrderId to cancel |
 
 #### cancelAddList
 
@@ -859,6 +911,19 @@ function cancelAddList(bytes32[] _orderIdsToCancel, struct ITradePairs.NewOrder[
 | _orderIdsToCancel | bytes32[] | array of order ids to be canceled |
 | _orders | struct ITradePairs.NewOrder[] | array of newOrder struct to be sent out. See ITradePairs.NewOrder |
 
+#### cancelAddListByClientIds
+
+```solidity:no-line-numbers
+function cancelAddListByClientIds(bytes32[] _clientIdsToCancel, struct ITradePairs.NewOrder[] _orders) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _clientIdsToCancel | bytes32[] | Array of clientOrderIds to be canceled |
+| _orders | struct ITradePairs.NewOrder[] | array of newOrder struct to be sent out. See ITradePairs.NewOrder |
+
 #### cancelOrderList
 
 Cancels all the orders in the array of order ids supplied
@@ -882,7 +947,24 @@ function cancelOrderList(bytes32[] _orderIds) external
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _orderIds | bytes32[] | array of order ids |
+| _orderIds | bytes32[] | array of orderIds |
+
+#### cancelOrderListByClientIds
+
+Cancels all the orders in the array of _clientOrderIds supplied
+
+**Dev notes:** \
+See cancelOrderList
+
+```solidity:no-line-numbers
+function cancelOrderListByClientIds(bytes32[] _clientOrderIds) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _clientOrderIds | bytes32[] | array of clientOrderIds |
 
 #### fallback
 
@@ -1133,7 +1215,7 @@ memory taker order is cast to storage prospective maker order before being added
 to the orderbook  (Including Auction Orders)
 
 ```solidity:no-line-numbers
-function addTakerToOrderBook(bytes32 _tradePairId, uint256 _quantityRemaining, struct ITradePairs.Order _takerOrder) private
+function addTakerToOrderBook(bytes32 _tradePairId, struct ITradePairs.Order _takerOrder) private
 ```
 
 #### matchOrder
@@ -1198,16 +1280,17 @@ Cancels all the orders in the array of order ids supplied
 See #cancelOrderList
 
 ```solidity:no-line-numbers
-function cancelOrderListPrivate(address _msSender, bytes32[] _orderIds, bool _fillGasTank) private
+function cancelOrderListPrivate(address _msSender, bytes32[] _orderIds, bool _fillGasTank, bool _isClientOrderIdList) private
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _msSender | address | array of order ids to be canceled |
-| _orderIds | bytes32[] | array of order ids |
+| _msSender | address | message sender |
+| _orderIds | bytes32[] | array of orderIds OR clientOrderIDs to be canceled based on _isClientOrderIdList |
 | _fillGasTank | bool | fill GasTank if true and only when processing the last cancel in the cancel list |
+| _isClientOrderIdList | bool | true if the list is clientOrderIDs, false if the list is orderIds |
 
 #### doOrderCancel
 

@@ -28,6 +28,12 @@ enum AssetType {
 function adjustAvailable(enum IPortfolio.Tx _transaction, address _trader, bytes32 _symbol, uint256 _amount) external
 ```
 
+#### checkAvailable
+
+```solidity:no-line-numbers
+function checkAvailable(address _trader, bytes32 _symbol, uint256 _amount) external returns (bytes32 code)
+```
+
 #### addExecution
 
 ```solidity:no-line-numbers

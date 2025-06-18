@@ -202,7 +202,7 @@ i.e. (USDT 100 Total, 50 Available after we send a BUY order of 10 avax at 5$.
 Partial Exec 5 at $5. Total goes down to 75. Available stays at 50)
 
 ```solidity:no-line-numbers
-function addExecution(bytes32 _tradePairId, struct ITradePairs.TradePair _tradePair, enum ITradePairs.Side _makerSide, address _makerAddr, address _takerAddr, uint256 _baseAmount, uint256 _quoteAmount) external returns (uint256 makerfee, uint256 takerfee)
+function addExecution(bytes32 _tradePairId, struct ITradePairs.TradePair _tradePair, enum ITradePairs.Side _makerSide, address _makerAddr, address _takerAddr, uint256 _baseAmount, uint256 _quoteAmount) external returns (uint256 makerFee, uint256 takerFee)
 ```
 
 ##### Arguments
@@ -214,15 +214,15 @@ function addExecution(bytes32 _tradePairId, struct ITradePairs.TradePair _tradeP
 | _makerSide | enum ITradePairs.Side | Side of the maker |
 | _makerAddr | address | Address of the maker |
 | _takerAddr | address | Address of the taker |
-| _baseAmount | uint256 | Amount of the base token |
-| _quoteAmount | uint256 | Amount of the quote token |
+| _baseAmount | uint256 | execution base amount |
+| _quoteAmount | uint256 | execution quote amount |
 
 ##### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| makerfee | uint256 | Maker fee |
-| takerfee | uint256 | Taker fee |
+| makerFee | uint256 | Maker fee |
+| takerFee | uint256 | Taker fee |
 
 #### processXFerPayload
 
@@ -350,6 +350,22 @@ function adjustAvailable(enum IPortfolio.Tx _transaction, address _trader, bytes
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _transaction | enum IPortfolio.Tx | Transaction type |
+| _trader | address | Address of the trader |
+| _symbol | bytes32 | Symbol of the token |
+| _amount | uint256 | Amount of the token |
+
+#### checkAvailable
+
+Function to check the available funds when entering orders.
+
+```solidity:no-line-numbers
+function checkAvailable(address _trader, bytes32 _symbol, uint256 _amount) external view returns (bytes32 code)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
 | _trader | address | Address of the trader |
 | _symbol | bytes32 | Symbol of the token |
 | _amount | uint256 | Amount of the token |
@@ -584,26 +600,35 @@ function setBridgeParamInternal(bytes32 _symbol, uint256 _fee, uint256 _gasSwapR
 
 ### Private
 
-#### calculateFee
+#### calculateFees
 
-Calculates the commission
+Calculates the commission charged from the taker and the maker
 
 **Dev notes:** \
 Commissions are rounded down based on evm and display decimals to avoid DUST
 
 ```solidity:no-line-numbers
-function calculateFee(struct ITradePairs.TradePair _tradePair, enum ITradePairs.Side _side, uint256 _quantity, uint256 _quoteAmount, uint256 _rate) private pure returns (uint256 lastFeeRounded)
+function calculateFees(bytes32 _tradePairId, struct ITradePairs.TradePair _tradePair, enum ITradePairs.Side _makerSide, address _makerAddr, address _takerAddr, uint256 _baseAmount, uint256 _quoteAmount) private view returns (uint256 makerFee, uint256 takerFee)
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
+| _tradePairId | bytes32 |  |
 | _tradePair | struct ITradePairs.TradePair | TradePair struct |
-| _side | enum ITradePairs.Side | order side |
-| _quantity | uint256 | execution quantity |
-| _quoteAmount | uint256 | quote amount |
-| _rate | uint256 | taker or maker rate |
+| _makerSide | enum ITradePairs.Side | maker order side |
+| _makerAddr | address | Address of the maker |
+| _takerAddr | address | Address of the taker |
+| _baseAmount | uint256 | execution base amount |
+| _quoteAmount | uint256 | execution quote amount |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| makerFee | uint256 | maker fee |
+| takerFee | uint256 | taker fee |
 
 #### autoFillPrivate
 

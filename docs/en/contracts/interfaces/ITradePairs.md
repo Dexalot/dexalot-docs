@@ -64,6 +64,7 @@ struct TradePair {
   bool addOrderPaused;
   bool pairPaused;
   bool postOnly;
+  uint256 minPostAmount;
 }
 ```
 
@@ -267,6 +268,12 @@ function removeTradePair(bytes32 _tradePairId) external
 function getTradePairs() external view returns (bytes32[])
 ```
 
+#### setMinPostAmount
+
+```solidity:no-line-numbers
+function setMinPostAmount(bytes32 _tradePairId, uint256 _minPostAmount) external
+```
+
 #### setMinTradeAmount
 
 ```solidity:no-line-numbers
@@ -349,6 +356,24 @@ function addOrderList(struct ITradePairs.NewOrder[] _orders) external
 
 ```solidity:no-line-numbers
 function cancelAddList(bytes32[] _orderIdsToCancel, struct ITradePairs.NewOrder[] _orders) external
+```
+
+#### cancelAddListByClientIds
+
+```solidity:no-line-numbers
+function cancelAddListByClientIds(bytes32[] _clientIdsToCancel, struct ITradePairs.NewOrder[] _orders) external
+```
+
+#### cancelOrderByClientId
+
+```solidity:no-line-numbers
+function cancelOrderByClientId(bytes32 _clientOrderId) external
+```
+
+#### cancelOrderListByClientIds
+
+```solidity:no-line-numbers
+function cancelOrderListByClientIds(bytes32[] _clientOrderIds) external
 ```
 
 #### cancelOrder

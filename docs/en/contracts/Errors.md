@@ -1,6 +1,6 @@
 # Mapping of Error Codes and Messages
 
-The error messages can be retrieved programmatically using [get-revert-reason](/en/apiv2/Contracts.html#get-revert-reason).
+The error messages can be retrieved programmatically using [get-revert-reason](/apiv2/Contracts.html#get-revert-reason).
 
 ## Airdrop
 
@@ -223,6 +223,8 @@ P-TNEF-01: transaction amount not enough to cover fees
 P-TSDM-01: token symbols do not match
 
 P-TTNZ-01: tokanTotals needs to be 0
+
+P-VLBF-01: msg.value is less than the native bridge fee for deposit
 
 P-WNFA-01: withdrawNative failed
 

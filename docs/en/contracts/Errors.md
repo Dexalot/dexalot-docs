@@ -1,6 +1,6 @@
 # Mapping of Error Codes and Messages
 
-The error messages can be retrieved programmatically using [get-revert-reason](/apiv2/Contracts.html#get-revert-reason).
+The error messages can be retrieved programmatically using [get-revert-reason](/en/apiv2/Contracts.html#get-revert-reason).
 
 ## Airdrop
 

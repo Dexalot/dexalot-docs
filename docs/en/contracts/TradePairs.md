@@ -592,7 +592,7 @@ To send multiple Orders of any type in a single transaction designed for Market 
 
 **Dev notes:** \
 if a single order in the new list REVERTS, the entire transaction is reverted.
-No orders nor cancels will go through.
+No orders will go through.
 If any of the orders/cancels is rejected, it will continue to process the rest of the orders without any issues.
 See #addNewOrder for `REVERT` and `REJECT` conditions. \
 ```typescript:no-line-numbers
@@ -679,7 +679,7 @@ with your `clientOrderId` when trying to enter a new order even if 'REJECTED'. \
 `clientOrderId` is user generated and must be unique per traderaddress. \
 Uniqueness of the `clientOrderId` is not checked for neither `MARKET` nor fully closed taker `LIMIT` orders
 as their scope is only in the block they are being processed and they are never stored in the blockchain.
-In other words, the uniqueness is only enforced against `LIMIT` orders that are already posted to the orderbook, 
+In other words, the uniqueness is only enforced against `LIMIT` orders that are already posted to the orderbook,
 and `clientOrderId` can be used to cancel them without waiting to receive the orderId back from the blockchain. \
 For MARKET orders, values sent by the user in the `price` and `type2` fields will be ignored and
 defaulted to `0` and `Type2.GTC` respectively. \
@@ -789,8 +789,8 @@ Only the quantity and the price of the order can be changed. All the other order
 fields are copied from the to-be canceled order to the new order.
 The time priority of the original order is lost.
 Canceled order's locked quantity is made available for the new order within this tx.
-The new order will get status= `REJECTED` code = `P-AFNE-01` if there is not enough available fund in the contract.
-The cancel order is still processed even if the new order is `REJECTED`
+The new order will get status= `REJECTED` code = `P-AFNE-01` if there is not enough available funds
+in the contract. The cancel order is still processed even if the new order is `REJECTED`
 This function will technically accept the same clientOrderId as the previous because previous clientOrderId
 is made vailable when the previous order is cancelled as  it is removed from the mapping.
 !!Not recommended! \
@@ -1305,3 +1305,4 @@ function doOrderCancel(bytes32 _orderId, bool _fillGasTank, bytes32 _code) priva
 | _orderId | bytes32 | order id to cancel |
 | _fillGasTank | bool | fill GasTank if true and when the user's balance is below the treshold |
 | _code | bytes32 | additional explanation ( i.e unsolicited Cancel) |
+

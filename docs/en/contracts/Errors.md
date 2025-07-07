@@ -224,6 +224,8 @@ P-TSDM-01: token symbols do not match
 
 P-TTNZ-01: tokanTotals needs to be 0
 
+P-VLBF-01: msg.value is less than the native bridge fee for deposit
+
 P-WNFA-01: withdrawNative failed
 
 P-WUTH-01: withdraw under threshold

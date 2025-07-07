@@ -112,6 +112,12 @@ function getMainnetRfq() external view returns (contract IMainnetRFQ)
 function getTokenList() external view returns (bytes32[])
 ```
 
+#### userPaysFee
+
+```solidity:no-line-numbers
+function userPaysFee(uint32 _dstChainListOrgChainId, enum IPortfolioBridge.BridgeProvider _bridge) external view returns (bool)
+```
+
 #### VERSION
 
 ```solidity:no-line-numbers

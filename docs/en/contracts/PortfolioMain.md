@@ -72,6 +72,29 @@ function removeToken(bytes32 _symbol, uint32) public virtual
 | _symbol | bytes32 | Symbol of the token |
 |  | uint32 |  |
 
+#### getNativeBridgeFee
+
+Returns the native bridge fee for the given bridge and default destination chain (Dexalot L1)
+
+**Dev notes:** \
+If the user pays the fee, it returns the fee, otherwise returns 0
+
+```solidity:no-line-numbers
+function getNativeBridgeFee(enum IPortfolioBridge.BridgeProvider _bridge) public view returns (uint256)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _bridge | enum IPortfolioBridge.BridgeProvider | Enum for bridge type |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | uint256 | uint256  Bridge fee |
+
 ### External
 
 #### addToken
@@ -134,7 +157,7 @@ function depositNative(address payable _from, enum IPortfolioBridge.BridgeProvid
 #### depositToken
 
 ```solidity:no-line-numbers
-function depositToken(address _from, bytes32 _symbol, uint256 _quantity, enum IPortfolioBridge.BridgeProvider _bridge) external
+function depositToken(address _from, bytes32 _symbol, uint256 _quantity, enum IPortfolioBridge.BridgeProvider _bridge) external payable
 ```
 
 ##### Arguments
@@ -440,7 +463,7 @@ function setBridgeParamInternal(bytes32 _symbol, uint256 _fee, uint256 _gasSwapR
 #### deposit
 
 ```solidity:no-line-numbers
-function deposit(address _from, bytes32 _symbol, uint256 _quantity, enum IPortfolioBridge.BridgeProvider _bridge, uint8 _fromDecimals, uint8 _toDecimals) private
+function deposit(address _from, bytes32 _symbol, uint256 _quantity, enum IPortfolioBridge.BridgeProvider _bridge, uint8 _fromDecimals, uint8 _toDecimals, uint256 _nativeBridgeFee) private
 ```
 
 #### processOptions

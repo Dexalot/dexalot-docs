@@ -49,6 +49,27 @@ Similarly a Cross Chain Swaps Betwen Avalanche & Arb would work as follows, say 
 <th><strong>Description</strong></th>
 </tr>
 <tr>
+<td valign="top">2025-07-07</td>
+<td><strong>Native Fee on Deposits</strong>
+
+PortfolioMain (v2.6.2):<br/>
+
+- add `getNativeBridgeFee` function to get deposit fee from bridge provider in terms of native token
+- modify `depositToken` function to be payable
+- subtract native bridge fee from `depositNative` function
+- function changes can be found [here](/en/apiv2/Contracts#deposit-bridge-fee)
+
+PortfolioBridge (v4.1.7):<br/>
+
+- keep native funds in PortfolioBridge contract for ICM transfers
+
+ICMApp (v1.1.1):<br/>
+
+- add `nativeBridgeFees` mapping to set native bridge fee for ICM
+
+</td>
+</tr>
+<tr>
 <td valign="top">2025-06-25</td>
 <td><strong>Non-Reverting List Orders & CancelByClientOrderId Functions & MinPostAmount</strong>
 

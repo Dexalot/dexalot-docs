@@ -771,6 +771,26 @@ to your subnet wallet (Gas Tank). The ALOT amount deposited to your Gas
 Tank should be able to give you 3 to 5 transactions and you’ll need to
 buy more ALOT and fill up your Gas Tank to continue your trading.
 
+#### Deposit Bridge Fee
+
+```solidity
+function getNativeBridgeFee(
+    IPortfolio.BridgeProvider _bridge
+)
+```
+
+##### Description
+
+Use this function to get the native fee needed to pay the bridge provider when
+initating a deposit transaction.
+
+Inputs
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _bridge | enum IPortfolioBridge.BridgeProvider | Enum for bridge type |
+
+
 #### Deposit Native
 
 ```solidity
@@ -785,6 +805,7 @@ function depositNative(
 Use this function to deposit your native coins from one of your host-chain wallet.
 The amount will be locked in the PortfolioMain of the host-chain and then
 communicated to PortfolioSub via the selected bridge for trading purposes.
+`nativeBridgeFee` is retrieved by calling [getNativeBridgeFee](#deposit-bridge-fee).
 
 Inputs
 
@@ -796,7 +817,7 @@ Inputs
 ##### Example Code
 
 ```ts
-await portfolio.depositNative(owner.address, {value: Utils.toWei(deposit_amount)}, 0);
+await portfolio.depositNative(owner.address, {value: Utils.toWei(deposit_amount).add(nativeBridgeFee)}, 0);
 ```
 
 #### Deposit Token
@@ -815,6 +836,7 @@ function depositToken(
 Use this function to deposit your ERC20 from one of your host-chain wallet.
 The amount will be locked in the PortfolioMain of the host-chain and then
 communicated to PortfolioSub via the selected bridge for trading purposes.
+`nativeBridgeFee` is retrieved by calling [getNativeBridgeFee](#deposit-bridge-fee).
 
 ##### Inputs
 
@@ -828,7 +850,7 @@ communicated to PortfolioSub via the selected bridge for trading purposes.
 ##### Example Code
 
 ```ts
-await portfolioMain.depositToken(owner.address, USDT, Utils.toWei(deposit_amount), 0);
+await portfolioMain.depositToken(owner.address, USDT, Utils.toWei(deposit_amount), 0, {value: nativeBridgeFee});
 ```
 
 #### getTokenDetails

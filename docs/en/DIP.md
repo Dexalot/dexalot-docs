@@ -59,34 +59,33 @@ $$ balanceScore = {\sqrt{alotBalance * 0.014 * timeHeld / 3600}} $$
 
 **DIP Distribution by Pair**
 
-| Pair       | ALOT % | sAVAX % | QI % |
-| ---------- | ------ | ------- | ---- |
-| ALOT/USDC  | 9.14   | 9.14    |      |
-| ARB/USDC   | 5.08   | 5.08    |      |
-| ARENA/AVAX | 0.51   | 0.51    |      |
-| AVAX/USDC  | 10.15  | 10.15   |      |
-| AVAX/USDT  | 10.15  | 10.15   |      |
-| BTC/USDC   | 10.15  | 10.15   |      |
-| COQ/AVAX   | 0.51   | 0.51    |      |
-| ETH/USDC   | 10.15  | 10.15   |      |
-| ETH/USDT   | 10.15  | 10.15   |      |
-| EURC/USDC  | 6.60   | 6.60    |      |
-| GUN/USDC   | 3.05   | 3.05    |      |
-| PLSR/USDC  | 0.51   | 0.51    |      |
-| QI/USDC    |        |         | 20   |
-| sAVAX/AVAX | 5.08   | 5.08    | 80   |
-| TRUMP/USDC | 2.03   | 2.03    |      |
-| USDT/USDC  | 6.60   | 6.60    |      |
-| WBTC/USDC  | 10.15  | 10.15   |      |
+| Pair       | ALOT % | sAVAX % |
+| ---------- | ------ | ------- |
+| ALOT/USDC  | 9.14   | 9.14    |
+| ARB/USDC   | 5.08   | 5.08    |
+| ARENA/AVAX | 0.51   | 0.51    |
+| AVAX/USDC  | 10.15  | 10.15   |
+| AVAX/USDT  | 10.15  | 10.15   |
+| BTC/USDC   | 10.15  | 10.15   |
+| COQ/AVAX   | 0.51   | 0.51    |
+| ETH/USDC   | 10.15  | 10.15   |
+| ETH/USDT   | 10.15  | 10.15   |
+| EURC/USDC  | 6.60   | 6.60    |
+| GUN/USDC   | 3.05   | 3.05    |
+| PLSR/USDC  | 0.51   | 0.51    |
+| sAVAX/AVAX | 5.08   | 5.08    |
+| TRUMP/USDC | 2.03   | 2.03    |
+| USDT/USDC  | 6.60   | 6.60    |
+| WBTC/USDC  | 10.15  | 10.15   |
 
 
 **DIP Distribution by Token**
 
 | Token  | Monthly Amount | End Date | E % | O % | A % |
 | ------ | -------------- | -------- | --- | --- | --- |
-| ALOT   | up to $200,000 (i) | 2025-07-31 | 25% | 50% | 25% |
+| ALOT   | up to $200,000 (i) | 2025-23-31 (iii) | 25% | 50% | 25% |
 | sAVAX  | 1,000         | 2025-12-31 (ii)  | 25% | 50% | 25% |
-| QI     | 600,000     | (iii) | 25% | 50% | 25% |
+| QI     | 600,000     | 2025-06-30 | 25% | 50% | 25% |
 | ARENA  | up to $4,500  | 2025-03-31 | 50% | 50%  | 0% |
 
 
@@ -94,7 +93,7 @@ $$ balanceScore = {\sqrt{alotBalance * 0.014 * timeHeld / 3600}} $$
 
 (ii) - sAVAX rewards may be extended further, subject to Multiverse tiers.
 
-(iii) - QI end date is rolling and amount is subject to change as per partnership agreements with Benqi.
+(iii) - ALOT end date is rolling and may be extended further.
 
 
 For ALOT rewards emphasis on executions is reduced as these users will now be rewarded via volume rebates.

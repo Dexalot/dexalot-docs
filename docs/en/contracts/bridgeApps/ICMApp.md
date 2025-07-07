@@ -19,6 +19,7 @@ It is designed to be used in conjunction with the PortfolioBridge contract.
 | --- | --- |
 | allowedRelayers | mapping(bytes32 &#x3D;&gt; address[]) |
 | gasLimits | mapping(enum IBridgeProvider.CrossChainMessageType &#x3D;&gt; uint256) |
+| nativeBridgeFees | mapping(uint32 &#x3D;&gt; uint256) |
 
 ## Events
 
@@ -55,6 +56,27 @@ event SetGasLimit(enum IBridgeProvider.CrossChainMessageType msgType, uint256 ga
 ```solidity:no-line-numbers
 function VERSION() public pure virtual returns (bytes32)
 ```
+
+#### getBridgeFee
+
+Get the bridge fee for a given chain ID and message type in terms of the native token
+
+```solidity:no-line-numbers
+function getBridgeFee(uint32 _chainID, enum IBridgeProvider.CrossChainMessageType) public view returns (uint256)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _chainID | uint32 | The chainlist chain ID to get a bridge fee for |
+|  | enum IBridgeProvider.CrossChainMessageType |  |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | uint256 | The bridge fee in terms of the native token |
 
 #### getBridgeProvider
 
@@ -94,6 +116,29 @@ function setPortfolioBridge(address _portfolioBridgeAddr) external
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _portfolioBridgeAddr | address | The address of the PortfolioBridge contract |
+
+#### getBridgeFee
+
+Get the bridge fee for a given chain ID in terms of the native token
+
+**Dev notes:** \
+Defaults to the DEPOSIT message type
+
+```solidity:no-line-numbers
+function getBridgeFee(uint32 _chainID) external view returns (uint256)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _chainID | uint32 | The chainlist chain ID to get a bridge fee for |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | uint256 | The bridge fee in terms of the native token |
 
 #### setRelayers
 
@@ -153,6 +198,21 @@ function setGasLimit(enum IBridgeProvider.CrossChainMessageType _msgType, uint25
 | ---- | ---- | ----------- |
 | _msgType | enum IBridgeProvider.CrossChainMessageType | The cross chain message type |
 | _gasLimit | uint256 | The max gas limit |
+
+#### setNativeBridgeFee
+
+Set the native bridge fee for a given chain ID
+
+```solidity:no-line-numbers
+function setNativeBridgeFee(uint32 _chainID, uint256 _nativeBridgeFee) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _chainID | uint32 | The chainlist chain ID to set the fee for |
+| _nativeBridgeFee | uint256 | The native token fee in wei |
 
 ### Internal
 

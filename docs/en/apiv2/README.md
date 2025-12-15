@@ -52,6 +52,5 @@ Needless to say, Dexalot does not require nor take custody of your private keys.
 ## Docs
 
 * [Rest Api](/en/apiv2/RestApi.md)
-* [Contracts](/en/apiv2/Contracts.md)
 * [Websocket](/en/apiv2/Websocket.md)
 * [SimpleSwap](/en/apiv2/SimpleSwap.md)

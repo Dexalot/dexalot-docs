@@ -225,10 +225,6 @@ export const enSidebarConfig = sidebar({
           link: "RestApi"
         },
         {
-          text: "Contracts",
-          link: "Contracts"
-        },
-        {
           text: "Websocket",
           link: "Websocket"
         },

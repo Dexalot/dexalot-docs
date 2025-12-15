@@ -6,7 +6,7 @@ editLink: true
 # Rest API
 
 Dexalot REST Api serves:
-*  **Common Endpoints**: Provides data related to the exchange, such as environemnts, tokens, deployment details etc.
+*  **Common Endpoints**: Provides data related to the exchange, such as environments, tokens, deployment details etc.
 *  **Signed Endpoints**: Signed endpoints provides trader specific data such as orders, balances, transfers of a specific address. These endpoints will require you to prove that you are the owner of the queried address by sending a signature in your requests.
 *  **Authorized Endpoints**: Authorized endpoints require an api key to perform any queries. Currently only used for establishing websocket connections.
 

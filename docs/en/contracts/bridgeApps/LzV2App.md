@@ -24,6 +24,7 @@ It is designed to be used in conjunction with the PortfolioBridge contract.
 | Name | Type |
 | --- | --- |
 | DEFAULT_PAYLOAD | bytes |
+| DEFAULT_CCTRADE_PAYLOAD | bytes |
 
 ## Events
 

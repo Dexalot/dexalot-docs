@@ -11,9 +11,8 @@ Manages the inventory of tokens on the subnet and calculates withdrawal fees
 **Dev notes:** \
 The inventory is stored by subnet symbol and symbolId. The inventory is
          updated by the PortfolioBridgeSub contract. The withdrawal fee is calculated
-         using the InvariantMathLibrary which use the stableswap invariant to calculate
-         the fee. The fee is based on the quantity requested, the current inventory in
-         the requested chain and the total inventory across all chains.
+         using the InventoryFeeCalculatorLibrary which uses the quantity requested,
+         the current inventory in the requested chain and the total inventory across all chains.
 
 ## Variables
 
@@ -21,10 +20,10 @@ The inventory is stored by subnet symbol and symbolId. The inventory is
 
 | Name | Type |
 | --- | --- |
-| A | uint256 |
+| K | uint256 |
 | VERSION | bytes32 |
-| futureA | uint256 |
-| futureATime | uint256 |
+| futureK | uint256 |
+| futureKTime | uint256 |
 | portfolioBridgeSub | contract IPortfolioBridgeSub |
 | scalingFactor | mapping(bytes32 &#x3D;&gt; uint256) |
 | userProvidedLiquidity | mapping(bytes32 &#x3D;&gt; mapping(address &#x3D;&gt; uint256)) |
@@ -33,11 +32,11 @@ The inventory is stored by subnet symbol and symbolId. The inventory is
 
 | Name | Type |
 | --- | --- |
-| MIN_A | uint256 |
-| MAX_A | uint256 |
-| MIN_A_UPDATE_TIME | uint256 |
+| MIN_K | uint256 |
+| MAX_K | uint256 |
+| MIN_K_UPDATE_TIME | uint256 |
 | PORTFOLIO_BRIDGE_ROLE | bytes32 |
-| STARTING_A | uint256 |
+| STARTING_K | uint256 |
 | inventoryBySubnetSymbol | mapping(bytes32 &#x3D;&gt; struct EnumerableMap.Bytes32ToUintMap) |
 
 ## Events
@@ -45,19 +44,19 @@ The inventory is stored by subnet symbol and symbolId. The inventory is
 ### ScalingFactorUpdated
 
 ```solidity:no-line-numbers
-event ScalingFactorUpdated(bytes32 symbolId, uint8 scalingFactor, uint256 timestamp)
+event ScalingFactorUpdated(bytes32 symbolId, uint16 scalingFactor, uint256 timestamp)
 ```
 
-### FutureAUpdated
+### FutureKUpdated
 
 ```solidity:no-line-numbers
-event FutureAUpdated(uint256 futureA, uint256 futureATime, uint256 timestamp)
+event FutureKUpdated(uint256 futureK, uint256 futureKTime, uint256 timestamp)
 ```
 
-### AUpdated
+### KUpdated
 
 ```solidity:no-line-numbers
-event AUpdated(uint256 A, uint256 timestamp)
+event KUpdated(uint256 K, uint256 timestamp)
 ```
 
 ### PortfolioBridgeSubUpdated
@@ -171,6 +170,30 @@ function remove(bytes32 _symbol, bytes32 _symbolId) external returns (bool)
 | ---- | ---- | ----------- |
 | [0] | bool | bool  True if the token was removed and inventory 0, false if inventory remaining |
 
+#### calculateWithdrawalFee
+
+Calculates the withdrawal fee for a token
+
+**Dev notes:** \
+The fee is calculated using the InventoryFeeCalculatorLibrary which uses the quantity requested,
+         the current inventory in the requested chain and the total inventory across all chains.
+
+```solidity:no-line-numbers
+function calculateWithdrawalFee(struct IPortfolioBridgeSub.XferShort _withdrawal) external view returns (uint256 fee)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _withdrawal | struct IPortfolioBridgeSub.XferShort | Withdrawal transaction |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| fee | uint256 | Withdrawal fee, 0 if no fee |
+
 #### updatePortfolioBridgeSub
 
 Updates the PortfolioBridgeSub contract address
@@ -196,7 +219,7 @@ Updates the scaling factor for a number of tokens
 Only admin can call this function
 
 ```solidity:no-line-numbers
-function setScalingFactors(bytes32[] _symbolIds, uint8[] _scalingFactors) external
+function setScalingFactors(bytes32[] _symbolIds, uint16[] _scalingFactors) external
 ```
 
 ##### Arguments
@@ -204,7 +227,7 @@ function setScalingFactors(bytes32[] _symbolIds, uint8[] _scalingFactors) extern
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _symbolIds | bytes32[] | SymbolIds of the token |
-| _scalingFactors | uint8[] | New scaling factors to set |
+| _scalingFactors | uint16[] | New scaling factors to set |
 
 #### removeScalingFactors
 
@@ -223,82 +246,32 @@ function removeScalingFactors(bytes32[] _symbolIds) external
 | ---- | ---- | ----------- |
 | _symbolIds | bytes32[] | SymbolIds of the tokens to remove |
 
-#### updateFutureA
+#### updateFutureK
 
-Updates the Future A value for the invariant
+Updates the Future K value for the invariant
+
+**Dev notes:** \
+Only admin can call this function, K must be between 8 and 32 and a multiple of 4
+
+```solidity:no-line-numbers
+function updateFutureK(uint256 _K, uint256 _timePeriod) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _K | uint256 | New K value for the invariant |
+| _timePeriod | uint256 | Time period for the new K value to take effect |
+
+#### updateK
+
+Updates the K value for the invariant using futureK
 
 **Dev notes:** \
 Only admin can call this function
 
 ```solidity:no-line-numbers
-function updateFutureA(uint256 _A, uint256 _timePeriod) external
+function updateK() external
 ```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _A | uint256 | New A value for the invariant |
-| _timePeriod | uint256 | Time period for the new A value to take effect |
-
-#### updateA
-
-Updates the A value for the invariant using futureA
-
-**Dev notes:** \
-Only admin can call this function
-
-```solidity:no-line-numbers
-function updateA() external
-```
-
-#### calculateWithdrawalFee
-
-Calculates the withdrawal fee for a token
-
-**Dev notes:** \
-Uses the InvariantMathLibrary to provide exponential fees if
-inventory is spread across multiple chains, unbalanced and quantity is large
-if the user provided liquidity from that chain already, he gets lower fees up to the
-inventory supplied
-
-```solidity:no-line-numbers
-function calculateWithdrawalFee(struct IPortfolioBridgeSub.XferShort _withdrawal) external view returns (uint256 fee)
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _withdrawal | struct IPortfolioBridgeSub.XferShort | withdrawal transaction |
-
-##### Return values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| fee | uint256 | Withdrawal fee |
-
-### Private
-
-#### scaleInventory
-
-Scales the inventory of a token using its scaling factor
-
-```solidity:no-line-numbers
-function scaleInventory(bytes32 _symbolId, uint256 _inventory) private view returns (uint256, uint256)
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _symbolId | bytes32 | SymbolId of the token |
-| _inventory | uint256 | Inventory to scale |
-
-##### Return values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | uint256 | scaledInventory  Scaled inventory |
-| [1] | uint256 | sf  Scaling factor |
 

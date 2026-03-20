@@ -17,7 +17,7 @@ function addToken(bytes32 _symbol, address _tokenaddress, uint8 _decimals, uint8
 #### depositTokenFromContract
 
 ```solidity:no-line-numbers
-function depositTokenFromContract(address _from, bytes32 _symbol, uint256 _quantity) external
+function depositTokenFromContract(address _from, bytes32 _symbol, uint256 _quantity) external payable
 ```
 
 #### addTrustedContract
@@ -42,5 +42,11 @@ function removeTrustedContract(address _contract) external
 
 ```solidity:no-line-numbers
 function getToken(bytes32 _symbol) external view returns (contract IERC20Upgradeable)
+```
+
+#### depositToken
+
+```solidity:no-line-numbers
+function depositToken(address _from, bytes32 _symbol, uint256 _quantity, enum IPortfolioBridge.BridgeProvider _bridge) external payable
 ```
 

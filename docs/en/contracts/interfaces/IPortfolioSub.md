@@ -22,6 +22,12 @@ enum AssetType {
 
 ### External
 
+#### feeAddress
+
+```solidity:no-line-numbers
+function feeAddress() external view returns (address)
+```
+
 #### adjustAvailable
 
 ```solidity:no-line-numbers
@@ -37,13 +43,19 @@ function checkAvailable(address _trader, bytes32 _symbol, uint256 _amount) exter
 #### addExecution
 
 ```solidity:no-line-numbers
-function addExecution(bytes32 _tradePairId, struct ITradePairs.TradePair _tradePair, enum ITradePairs.Side _makerSide, address _makerAddr, address _takerAddr, uint256 _baseAmount, uint256 _quoteAmount) external returns (uint256 makerfee, uint256 takerfee)
+function addExecution(struct ITradePairs.Execution execution) external returns (uint256 makerfee, uint256 takerfee)
 ```
 
 #### transferToken
 
 ```solidity:no-line-numbers
 function transferToken(address _to, bytes32 _symbol, uint256 _quantity) external
+```
+
+#### bulkTransferTokens
+
+```solidity:no-line-numbers
+function bulkTransferTokens(address _from, address _to, bytes32[] _symbols, uint256[] _quantities) external
 ```
 
 #### getBalance
@@ -76,10 +88,10 @@ function withdrawToken(address _from, bytes32 _to, bytes32 _symbol, uint256 _qua
 function setAuctionMode(bytes32 _symbol, enum ITradePairs.AuctionMode _mode) external
 ```
 
-#### autoFill
+#### autoGas
 
 ```solidity:no-line-numbers
-function autoFill(address _trader, bytes32 _symbol) external
+function autoGas(address _trader, bytes32 _symbol) external
 ```
 
 #### addToken

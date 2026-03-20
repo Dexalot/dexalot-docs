@@ -23,12 +23,13 @@ multichain
 | organizations | mapping(address &#x3D;&gt; string) |
 | rateOverrides | mapping(address &#x3D;&gt; mapping(bytes32 &#x3D;&gt; struct IPortfolioSubHelper.Rates)) |
 | rebates | mapping(address &#x3D;&gt; struct IPortfolioSubHelper.Rebates) |
+| takerFeeCollectors | mapping(bytes32 &#x3D;&gt; address) |
 
 ### Internal
 
 | Name | Type |
 | --- | --- |
-| __gap | uint256[48] |
+| __gap | uint256[47] |
 
 ### Private
 
@@ -58,10 +59,10 @@ function initialize() external
 
 #### setMinTakerRate
 
-Sets the minimum Taker rate that is possible after the volume rebates
+Sets the minimum Taker rate allowed after the volume rebates
 
 **Dev notes:** \
-Only callable by admin.
+Only callable by admin. Set to 5 if you want 0.5 bps as the min taker rate
 
 ```solidity:no-line-numbers
 function setMinTakerRate(uint256 _rate) external
@@ -71,7 +72,7 @@ function setMinTakerRate(uint256 _rate) external
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _rate | uint256 | Minimum Taker rate after volume rebates |
+| _rate | uint256 | Minimum Taker rate in 1 in 100000 (1/10th of a bp) allowed after volume rebates are applied |
 
 #### addAdminAccountForRates
 
@@ -189,6 +190,25 @@ function removeTradePairsFromRateOverrides(address _account, bytes32[] _tradePai
 | _account | address | Address of the admin account |
 | _tradePairIds | bytes32[] | Array of TradePairIds to remove |
 
+#### setTakerFeeCollector
+
+Sets the taker fee collector for a tradepair
+
+**Dev notes:** \
+Only callable by admin. If address(0) is passed, it removes the taker fee collector
+for the tradepair
+
+```solidity:no-line-numbers
+function setTakerFeeCollector(bytes32 _tradePairId, address _takerFeeCollector) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _tradePairId | bytes32 | TradePair Id |
+| _takerFeeCollector | address | Address of the taker fee collector |
+
 #### getRates
 
 Gets the preferential rates of maker and the taker if any
@@ -199,10 +219,10 @@ Priority 1- check admin rates, 2- preferential rates, 3- Volume Rebates 4- Defau
 Default rates are multiplied by 10 for an additional precision when dealing with default rates
 of 1 or 2 bps. Without this, we can't have any rates in between 1 and 2 bps. But with it, we can
 have 10(1 bps)-11(1.1 bps)... 19-20(2 bps)
-Portfolio.TENK denominator has been multipled by 10 and was changed to 100000 to level the increase.
+UtilsLibrary.getFee divides by 100K instead of 10K to account for this increase
 
 ```solidity:no-line-numbers
-function getRates(address _makerAddr, address _takerAddr, bytes32 _tradePairId, uint256 _makerRate, uint256 _takerRate) external view returns (uint256 maker, uint256 taker)
+function getRates(address _makerAddr, address _takerAddr, bytes32 _tradePairId, uint256 _makerRate, uint256 _takerRate) external view returns (uint256 maker, uint256 taker, address takerFeeCollector)
 ```
 
 ##### Arguments
@@ -212,13 +232,41 @@ function getRates(address _makerAddr, address _takerAddr, bytes32 _tradePairId, 
 | _makerAddr | address | Maker address of the trade |
 | _takerAddr | address | Taker address of the trade |
 | _tradePairId | bytes32 | TradePair Id |
-| _makerRate | uint256 | tradepair's default maker rate uint8 and < 100 |
-| _takerRate | uint256 | tradepair's default taker rate uint8 and < 100 |
+| _makerRate | uint256 | tradepair's default maker rate stored as uint8 and < 100, cast to uint256 before |
+| _takerRate | uint256 | tradepair's default taker rate stored as uint8 and < 100, cast to uint256 before |
 
 ##### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| maker | uint256 | tradepair's default maker rate or discounted rate if any |
+| maker | uint256 | tradepair's default maker rate or discounted rate if any. 10 is 1bps , 25 is 2.5 bps |
 | taker | uint256 | tradepair's default taker rate or discounted rate if any |
+| takerFeeCollector | address |  |
+
+### Internal
+
+#### _updateTakerFeeCollector
+
+Updates the taker fee collector based on the tradepair and maker address
+
+**Dev notes:** \
+Returns the taker fee collector only when maker is the designated collector
+for this tradepair; otherwise returns address(0) for default treasury behavior.
+
+```solidity:no-line-numbers
+function _updateTakerFeeCollector(bytes32 _tradePairId, address _makerAddr) internal view returns (address takerFeeCollector)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _tradePairId | bytes32 | TradePair Id |
+| _makerAddr | address | Maker address of the trade |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| takerFeeCollector | address | address of the taker fee collector or address(0) for default behavior |
 

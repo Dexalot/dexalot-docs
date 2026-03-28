@@ -1,6 +1,6 @@
 export const sitemapOptions = {
-    hostname: "https://docs.dexalot.com/",
-    devHostname: "http://localhost:8080/",
+  hostname: "https://docs.dexalot.com",
+  devHostname: "http://localhost:8080",
     changefreq: "weekly"
   }
 

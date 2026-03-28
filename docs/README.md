@@ -38,6 +38,11 @@ features:
     details: "Current trading fee rates and rebate tiers"
     link: en/TradingFeeDiscounts
 
+  - title: OmniVaults
+    icon: book-reader
+    details: "Next-generation liquidity vault solution"
+    link: en/articles/omnivaults/
+
   - title: Smart Contracts
     icon: code
     details: "Main and auxiliary contracts that make the dual-chain application"

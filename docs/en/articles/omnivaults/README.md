@@ -172,7 +172,7 @@ New OmniVaults will be reviewed by the Dexalot team for accuracy and approval **
 
 **Step 3:**  Enter the number of tokens you wish to deposit into the OmniVault and click **ADD LIQUIDITY**.
 
-![](/images/omnivaults/image14.png)
+![](/images/omnivaults/image8.png)
 
 **Step 4:**  Monitor your deposits on the **MY VAULTS** tab.
 

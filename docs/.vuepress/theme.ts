@@ -20,8 +20,8 @@ import { sitemapOptions, NODE_ENV  } from "./options.js"
 
 export default hopeTheme({
   logo: "/logos/dexalot_logo.png",
-  footer: "Last updated 11/22/2024",
-  copyright: "BUSL 1.1 Licensed | Copyright © 2024 Dexalot",
+  footer: "Last updated 03/29/2026",
+  copyright: "BUSL 1.1 Licensed | Copyright © 2026 Dexalot",
   displayFooter: true,
   headerDepth: 4,
   repo: "https://github.com/Dexalot",

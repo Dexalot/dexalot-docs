@@ -1,6 +1,8 @@
 # DEXALOT OMNIVAULTS
 
-[*app.dexalot.com/vaults*](https://app.dexalot.com/vaults)
+<!--
+[app.dexalot.com/vaults](https://app.dexalot.com/vaults)
+-->
 
 April 2026
 
@@ -69,7 +71,7 @@ Each OmniVault is associated with a specific trading pair.  For example, an ETH/
 
 OmniVault uses a hub-and-spoke model, where the majority of liquidity resides in the order book on the Dexalot L1 (the “hub”), while smaller allocations are distributed across the target chains (e.g. Avalanche, Arbitrum, Base, BNB Chain, etc.) (the “spokes”) to support Dexalot’s SimpleSwap (Dexalot RFQ).
 
-![](/images/omnivaults/image5.png)
+![](/images/omnivaults/image5.webp)
 
 These spokes are also linked to DEX aggregators, enabling users to execute atomic swaps on their native chains while accessing pricing from the Dexalot L1 order book.  By centralizing liquidity on the Dexalot L1, OmniVaults create a deeper, more efficient order book, delivering better pricing with significantly less capital than traditional AMM pools, where liquidity is fragmented across protocols and chains.
 
@@ -113,76 +115,87 @@ At the same time, users can also provide liquidity into OmniVaults of their choo
 
 **Step 1:**  Deposit tokens into Dexalot
 
-![](/images/omnivaults/image2.png)
+![](/images/omnivaults/image2.webp)
 
 **Step 2:**  On the OmniVault main page, click “CREATE VAULT”.
 
-![](/images/omnivaults/image6.png)
+![](/images/omnivaults/image6.webp)
 
 **Step 3:**  Enter the “Base Token” (e.g., project token) information. Select the chain it is native on and enter its contract address.
 
-![](/images/omnivaults/image12.png)
+![](/images/omnivaults/image12.webp)
 
 **Step 4:**  The token name, symbol and logo should auto-populate.  Please check for accuracy.
 
 Optional - If your token is an OFT (LayerZero Omnichain Fungible Token) and available on multiple chains, enter those too if you wish to provide liquidity on multiple chains.
 
-![](/images/omnivaults/image9.png)
+![](/images/omnivaults/image9.webp)
 
 **Step 5:**  Next, select the counter token (“Quote Token”) you wish to list your token against:  USDC or USDT.
 
-![](/images/omnivaults/image10.png)
+![](/images/omnivaults/image10.webp)
 
 **Step 6:**  Enter the liquidity you wish to provide initially for both tokens.
 
 We highly recommend adding the same USD amount of the Base Token and the Quote Token for new OmniVaults to start with a balanced order book (i.e., bids vs offers).
 
-*New OmniVaults must start with AT LEAST $20,000 of the “Quote Token” (e.g., USDC or USDT) for a single chain provision.  Any additional chains will require at least $10,000 more of the Quote Token.  For example, if your OFT token is native on both Base and BNB Chain, you will need to add at least $30,000 total of the Quote Token.  Additional liquidity can be provided in the future naturally, but these are the minimum amounts that need to be provided to launch a new OmniVault.*
+::: important Note
 
-![](/images/omnivaults/image7.png)
+New OmniVaults must start with AT LEAST $20,000 of the “Quote Token” (e.g., USDC or USDT) for a single chain provision.  Any additional chains will require at least $10,000 more of the Quote Token.  For example, if your OFT token is native on both Base and BNB Chain, you will need to add at least $30,000 total of the Quote Token.  Additional liquidity can be provided in the future naturally, but these are the minimum amounts that need to be provided to launch a new OmniVault.
+
+:::
+
+![](/images/omnivaults/image7.webp)
 
 **Step 7:**  Continue to follow the screen to provide additional information.
 
-![](/images/omnivaults/image4.png)
+![](/images/omnivaults/image4.webp)
 
 **Step 8:**  **SUBMIT** and approve deposit on your wallet.
 
 New OmniVaults will be reviewed by the Dexalot team for accuracy and approval **within 2 business days.**  Each new OmniVault has a **small administrative fee of $100**.
 
-![](/images/omnivaults/image13.png)
+![](/images/omnivaults/image13.webp)
 
-**Note:**
+::: info Note
 
 * A Dexalot representative will contact the submitter if any questions arise.
 * If a submission is rejected for any reason, Dexalot will return all funds back to the submitting wallet.
+
+:::
 
 ### Provide Liquidity To An OmniVault
 
 **Step 1:**  **DEPOSIT** tokens into Dexalot.
 
-![](/images/omnivaults/image2.png)
+![](/images/omnivaults/image2.webp)
 
 **Step 2:**  Select a specific OmniVault to provide liquidity to from the main OmniVault page by clicking **ADD**.
 
-![](/images/omnivaults/image3.png)
+![](/images/omnivaults/image3.webp)
 
 ...which will bring you to the details page of the specific OmniVault.
 
-![](/images/omnivaults/image14.png)
+![](/images/omnivaults/image14.webp)
 
 **Step 3:**  Enter the number of tokens you wish to deposit into the OmniVault and click **ADD LIQUIDITY**.
 
-![](/images/omnivaults/image8.png)
+![](/images/omnivaults/image8.webp)
 
 **Step 4:**  Monitor your deposits on the **MY VAULTS** tab.
 
-![](/images/omnivaults/image11.png)
+![](/images/omnivaults/image11.webp)
 
 **Step 5:**  To withdraw your assets and rewards enter a USD amount or use the % slider to determine the approximate number of tokens you will be removing and click **REMOVE LIQUIDITY**.   The maximum liquidity that can be removed is shown in the “Total Liquidity” line.
 
-**Note:  Rewards can only be claimed at the same time that liquidity is removed.  You can not remove rewards independently.**
+::: info Note
 
-![](/images/omnivaults/image1.png)
+* Rewards can only be claimed at the same time that liquidity is removed.
+* You can not remove rewards independently.
+
+:::
+
+![](/images/omnivaults/image1.webp)
 
 ## Technical Details
 

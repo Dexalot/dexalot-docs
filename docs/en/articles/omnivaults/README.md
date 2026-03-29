@@ -127,7 +127,11 @@ At the same time, users can also provide liquidity into OmniVaults of their choo
 
 **Step 4:**  The token name, symbol and logo should auto-populate.  Please check for accuracy.
 
-Optional - If your token is an OFT (LayerZero Omnichain Fungible Token) and available on multiple chains, enter those too if you wish to provide liquidity on multiple chains.
+::: tip Tip
+
+* If your token is an OFT (LayerZero Omnichain Fungible Token) and available on multiple chains, enter those too if you wish to provide liquidity on multiple chains.
+
+:::
 
 ![](/images/omnivaults/image9.webp)
 

@@ -7,11 +7,11 @@ headerDepth: 4
 **Dexalot L1(previously subnet) Portfolio**
 
 Receives deposits messages from the mainnets and sends withdraw requests back to any mainnet.
-It also transfers tokens between traders as their orders gets matched.
+It also transfers tokens between traders as their orders get matched.
 
 **Dev notes:** \
 Allows only the native token to be withdrawn and deposited from/to the L1 wallet. Any other
-token deposit has to be done via PortfolioMain&#x27;s deposit functions that sends a message via the bridge.
+token deposit has to be done via PortfolioMain&#x27;s deposit functions that send a message via the bridge.
 When the bridge&#x27;s message receive event emitted PortfolioBridgeSub invokes processXFerPayload \
 All tokens including ALOT (native) can be withdrawn to mainnet using withdrawToken that will
 send the funds back to the user&#x27;s wallet in the mainnet. \
@@ -19,12 +19,12 @@ TradePairs needs to have EXECUTOR_ROLE on PortfolioSub contract. \
 *******Gas Abstraction*********
 If a trader deposits an XX token and has 0 ALOT in his Dexalot L1(subnet) wallet(Gas Tank), this contract
 will make a call to GasStation to deposit a small amount of ALOT to the user&#x27;s Gas Tank to be used for gas.
-In return, It will deduct a tiny amount of the XX token transferred. This feature is called AutoFill
+In return, It will deduct a tiny amount of the XX token transferred. This feature is called autoGas
 and it aims shield the clients from gas Token management in the Dexalot L1(subnet).
-It is suffice to set usedForGasSwap&#x3D;false for all tokens to disable autofill using tokens. ALOT can and
+It suffices to set usedForGasSwap&#x3D;false for any token to disable autofill for that token. ALOT can and
 will always be used for this purpose.
 Similarly autofill will kick-in if the user&#x27;s balance falls below the set threshold, during the normal
-trading activity and will continue to deposit small amounts to the user&#x27;s Gas Tank. See autoFillPrivate
+trading activity and will continue to deposit small amounts to the user&#x27;s Gas Tank. See autoGasPrivate
 
 ## Struct Types
 
@@ -44,6 +44,7 @@ struct AssetEntry {
 | Name | Type |
 | --- | --- |
 | EXECUTOR_ROLE | bytes32 |
+| TRUSTED_TRANSFER_ROLE | bytes32 |
 | VERSION | bytes32 |
 | assets | mapping(address &#x3D;&gt; mapping(bytes32 &#x3D;&gt; struct PortfolioSub.AssetEntry)) |
 | feeAddress | address |
@@ -202,20 +203,14 @@ i.e. (USDT 100 Total, 50 Available after we send a BUY order of 10 avax at 5$.
 Partial Exec 5 at $5. Total goes down to 75. Available stays at 50)
 
 ```solidity:no-line-numbers
-function addExecution(bytes32 _tradePairId, struct ITradePairs.TradePair _tradePair, enum ITradePairs.Side _makerSide, address _makerAddr, address _takerAddr, uint256 _baseAmount, uint256 _quoteAmount) external returns (uint256 makerFee, uint256 takerFee)
+function addExecution(struct ITradePairs.Execution _execution) external returns (uint256 makerFee, uint256 takerFee)
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _tradePairId | bytes32 |  |
-| _tradePair | struct ITradePairs.TradePair | TradePair struct |
-| _makerSide | enum ITradePairs.Side | Side of the maker |
-| _makerAddr | address | Address of the maker |
-| _takerAddr | address | Address of the taker |
-| _baseAmount | uint256 | execution base amount |
-| _quoteAmount | uint256 | execution quote amount |
+| _execution | struct ITradePairs.Execution | Execution struct |
 
 ##### Return values
 
@@ -244,7 +239,7 @@ function processXFerPayload(struct IPortfolio.XFER _xfer) external
 | ---- | ---- | ----------- |
 | _xfer | struct IPortfolio.XFER | Transfer message |
 
-#### autoFill
+#### autoGas
 
 Deposits small amount of gas Token (ALOT) to trader's wallet in exchange of the token
 held in the trader's portfolio. (It can by any token including ALOT)
@@ -254,7 +249,7 @@ Only called by addOrderPrivate, doCancelOrder from TradePairs.
 doCancelOrder is a good place to auto Fill Gas Tank with newly available funds.
 
 ```solidity:no-line-numbers
-function autoFill(address _trader, bytes32 _symbol) external
+function autoGas(address _trader, bytes32 _symbol) external
 ```
 
 ##### Arguments
@@ -388,6 +383,27 @@ function transferToken(address _to, bytes32 _symbol, uint256 _quantity) external
 | _to | address | Address of the receiver |
 | _symbol | bytes32 | Symbol of the token |
 | _quantity | uint256 | Amount of the token |
+
+#### bulkTransferTokens
+
+Bulk Transfers tokens from the `msg.sender`'s portfolio to `_to`'s portfolio
+
+**Dev notes:** \
+Balance transfer between 2 address within the portfolio. _from must be msg.sender or trusted
+transfer role
+
+```solidity:no-line-numbers
+function bulkTransferTokens(address _from, address _to, bytes32[] _symbols, uint256[] _quantities) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _from | address | Address of the sender |
+| _to | address | Address of the receiver |
+| _symbols | bytes32[] | Array of Symbols of the tokens |
+| _quantities | uint256[] | Array of Amounts of the tokens |
 
 #### getBalances
 
@@ -600,37 +616,13 @@ function setBridgeParamInternal(bytes32 _symbol, uint256 _fee, uint256 _gasSwapR
 
 ### Private
 
-#### calculateFees
-
-Calculates the commission charged from the taker and the maker
-
-**Dev notes:** \
-Commissions are rounded down based on evm and display decimals to avoid DUST
+#### calculateFeeAmounts
 
 ```solidity:no-line-numbers
-function calculateFees(bytes32 _tradePairId, struct ITradePairs.TradePair _tradePair, enum ITradePairs.Side _makerSide, address _makerAddr, address _takerAddr, uint256 _baseAmount, uint256 _quoteAmount) private view returns (uint256 makerFee, uint256 takerFee)
+function calculateFeeAmounts(struct ITradePairs.Execution _execution) private view returns (uint256 makerFee, uint256 takerFee, address takerFeeCollector)
 ```
 
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _tradePairId | bytes32 |  |
-| _tradePair | struct ITradePairs.TradePair | TradePair struct |
-| _makerSide | enum ITradePairs.Side | maker order side |
-| _makerAddr | address | Address of the maker |
-| _takerAddr | address | Address of the taker |
-| _baseAmount | uint256 | execution base amount |
-| _quoteAmount | uint256 | execution quote amount |
-
-##### Return values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| makerFee | uint256 | maker fee |
-| takerFee | uint256 | taker fee |
-
-#### autoFillPrivate
+#### autoGasPrivate
 
 Deposits small amount of gas Token (ALOT) to trader's wallet in exchange of the token
 held in the trader's portfolio. (It can be any token including ALOT)
@@ -643,13 +635,13 @@ Users will always have some ALOT deposited to their gasTank if they start from t
 Hence it is not possible to have a portfolioSub holding without gas in the GasTank
 In other words: if assets[_trader][_symbol].available > 0 then _trader.balance will be > 0 \
 Same in the scenario when person A sends tokens to person B who has no gas in his gasTank
-using transferToken in the Dexalot L1(subnet) because autoFillPrivate is also called
+using transferToken in the Dexalot L1(subnet) because autoGasPrivate is also called
 if the recipient has ALOT in his portfolio, his ALOT inventory is used to deposit to wallet even when a
 different token is sent, so swap doesn't happen in this case. \
 Swap happens using the token sent only when there is not enough ALOT in the recipient portfolio and wallet
 
 ```solidity:no-line-numbers
-function autoFillPrivate(address _trader, bytes32 _symbol, enum IPortfolio.Tx _transaction) private returns (bool tankFull)
+function autoGasPrivate(address _trader, bytes32 _symbol, enum IPortfolio.Tx _transaction) private returns (bool tankFull)
 ```
 
 ##### Arguments
@@ -691,7 +683,7 @@ Increases the balance of the user
 Adds to tokenTotals: cumulative deposits per symbol for sanity checks with the mainnet
 
 ```solidity:no-line-numbers
-function safeIncrease(address _trader, bytes32 _symbol, uint256 _amount, uint256 _feeCharged, enum IPortfolio.Tx _transaction, address _traderOther) private
+function safeIncrease(address _trader, bytes32 _symbol, uint256 _amount, uint256 _feeCharged, enum IPortfolio.Tx _transaction, address _traderOther, address _feeAddress) private
 ```
 
 ##### Arguments
@@ -703,7 +695,8 @@ function safeIncrease(address _trader, bytes32 _symbol, uint256 _amount, uint256
 | _amount | uint256 | Amount of the token |
 | _feeCharged | uint256 | Fee charged for the _transaction |
 | _transaction | enum IPortfolio.Tx | Transaction type |
-| _traderOther | address |  |
+| _traderOther | address | The other party involved in the tx, e.g. for executions, the counterparty of the trade |
+| _feeAddress | address | Address to receive the fee, if feeCharged > 0 |
 
 #### safeDecreaseTotal
 
@@ -751,7 +744,7 @@ function safeDecrease(address _trader, bytes32 _symbol, uint256 _amount, uint256
 #### transferToken
 
 ```solidity:no-line-numbers
-function transferToken(address _from, address _to, bytes32 _symbol, uint256 _quantity, uint256 _feeCharged, enum IPortfolio.Tx _transaction, bool _decreaseTotalOnly) private
+function transferToken(address _from, address _to, bytes32 _symbol, uint256 _quantity, uint256 _feeCharged, enum IPortfolio.Tx _transaction, bool _decreaseTotalOnly, address _feeAddress) private
 ```
 
 ##### Arguments
@@ -765,6 +758,7 @@ function transferToken(address _from, address _to, bytes32 _symbol, uint256 _qua
 | _feeCharged | uint256 | Fee charged for the transaction |
 | _transaction | enum IPortfolio.Tx | Transaction type |
 | _decreaseTotalOnly | bool | If true, only total balance is decreased |
+| _feeAddress | address | Address to receive the fee, if feeCharged > 0 |
 
 #### safeTransferFee
 

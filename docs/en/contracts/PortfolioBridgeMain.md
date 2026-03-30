@@ -383,24 +383,6 @@ function setPortfolio(address _portfolio) external
 | ---- | ---- | ----------- |
 | _portfolio | address | Portfolio address |
 
-#### setMainnetRFQ
-
-Set MainnetRFQ address and grant role
-
-**Dev notes:** \
-Only admin can set MainnetRFQ address.
-There is a one to one relationship between MainnetRFQ and PortfolioBridgeMain.
-
-```solidity:no-line-numbers
-function setMainnetRFQ(address payable _mainnetRfq) external
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _mainnetRfq | address payable | MainnetRFQ address |
-
 #### setBridgeParam
 
 Sets the bridge provider fee & gasSwapRatio per ALOT for the given token and usedForGasSwap flag
@@ -432,18 +414,6 @@ function getPortfolio() external view returns (contract IPortfolio)
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | contract IPortfolio | IPortfolio  Portfolio contract |
-
-#### getMainnetRfq
-
-```solidity:no-line-numbers
-function getMainnetRfq() external view returns (contract IMainnetRFQ)
-```
-
-##### Return values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | contract IMainnetRFQ | IMainnetRFQ  MainnetRFQ contract |
 
 #### getTokenList
 
@@ -516,7 +486,7 @@ Unpacks XChainMsgType & XFER message from the payload and returns the local symb
 Currently only XChainMsgType.XFER possible. For more details on payload packing see packXferMessage
 
 ```solidity:no-line-numbers
-function unpackXFerMessage(bytes _payload) external pure returns (struct IPortfolio.XFER xfer)
+function unpackXFerMessage(bytes _payload) external pure returns (struct IPortfolio.XFER xfer, address rfqAddress)
 ```
 
 ##### Arguments
@@ -530,6 +500,7 @@ function unpackXFerMessage(bytes _payload) external pure returns (struct IPortfo
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | xfer | struct IPortfolio.XFER | IPortfolio.XFER  Xfer Message |
+| rfqAddress | address | Address of the target rfq contract for CCTRADE transactions |
 
 #### sendXChainMessage
 
@@ -642,7 +613,7 @@ Processes message received from source chain via bridge
 Unpacks the message and updates the receival timestamp
 
 ```solidity:no-line-numbers
-function processPayloadShared(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _srcChainListOrgChainId, bytes _payload) internal returns (struct IPortfolio.XFER xfer)
+function processPayloadShared(enum IPortfolioBridge.BridgeProvider _bridge, uint32 _srcChainListOrgChainId, bytes _payload) internal returns (struct IPortfolio.XFER xfer, address rfqAddress)
 ```
 
 ##### Arguments
@@ -680,11 +651,12 @@ Maps symbol to symbolId and encodes XFER message
 It is packed as follows:
 slot0: customdata(18), timestamp(4), nonce(8), transaction(1), XChainMsgType(1)
 slot1: trader(32)
-slot1: symbol(32)
-slot2: quantity(32)
+slot2: symbol(32)
+slot3: quantity(32)
+slot4: rfqAddress(20) [only for CCTRADE]
 
 ```solidity:no-line-numbers
-function packXferMessage(struct IPortfolio.XFER _xfer) private pure returns (bytes message)
+function packXferMessage(struct IPortfolio.XFER _xfer, uint32 _dstChainId) private view returns (bytes message)
 ```
 
 ##### Arguments
@@ -692,6 +664,7 @@ function packXferMessage(struct IPortfolio.XFER _xfer) private pure returns (byt
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _xfer | struct IPortfolio.XFER | XFER message to encode |
+| _dstChainId | uint32 | Destination chain id to check if the message is for solana or not |
 
 ##### Return values
 

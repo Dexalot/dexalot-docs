@@ -67,6 +67,24 @@ struct TradePair {
   uint256 minPostAmount;
 }
 ```
+### Execution
+
+```solidity
+struct Execution {
+  bytes32 tradePairId;
+  uint256 baseAmount;
+  uint256 quoteAmount;
+  uint256 price;
+  bytes32 baseSymbol;
+  bytes32 quoteSymbol;
+  address makerAddr;
+  enum ITradePairs.Side makerSide;
+  enum ITradePairs.Side takerSide;
+  uint8 makerRate;
+  uint8 takerRate;
+  address takerAddr;
+}
+```
 
 ## Enum Types
 
@@ -400,10 +418,16 @@ function cancelReplaceOrder(bytes32 _orderId, bytes32 _clientOrderId, uint256 _p
 function setAuctionMode(bytes32 _tradePairId, enum ITradePairs.AuctionMode _mode) external
 ```
 
-#### setAuctionPrice
+#### setAuctionVaultAdress
 
 ```solidity:no-line-numbers
-function setAuctionPrice(bytes32 _tradePairId, uint256 _price) external
+function setAuctionVaultAdress(bytes32 _tradePairId, address _omniVaultAdress) external
+```
+
+#### getAuctionVaultAdress
+
+```solidity:no-line-numbers
+function getAuctionVaultAdress(bytes32 _tradePairId) external view returns (address)
 ```
 
 #### unsolicitedCancel
@@ -416,12 +440,6 @@ function unsolicitedCancel(bytes32 _tradePairId, bool _isBuyBook, uint256 _maxCo
 
 ```solidity:no-line-numbers
 function getBookId(bytes32 _tradePairId, enum ITradePairs.Side _side) external view returns (bytes32)
-```
-
-#### matchAuctionOrder
-
-```solidity:no-line-numbers
-function matchAuctionOrder(struct ITradePairs.Order _takerOrder, uint256 _maxNbrOfFills) external returns (uint256)
 ```
 
 #### getOrderRemainingQuantity

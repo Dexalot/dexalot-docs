@@ -1,6 +1,6 @@
 # Mapping of Error Codes and Messages
 
-The error messages can be retrieved programmatically using [get-revert-reason](/en/apiv2/Contracts.html#get-revert-reason).
+The error messages can be retrieved programmatically using [get-revert-reason](/apiv2/Contracts.html#get-revert-reason).
 
 ## Airdrop
 
@@ -37,6 +37,16 @@ DB-RCNM-01: remote contract for source does not match sender
 DB-RCNS-01: remote chain info for destination not set
 
 DB-RCNS-02: remote chain info for source not set
+
+## DexalotRouter
+
+DR-FSNW-01: function selector not whitelisted
+
+DR-IRMA-01: invalid RFQ Maker address
+
+DR-SAZ-01: set address to zero
+
+DR-TF-01: transfer failed
 
 ## Exchange
 
@@ -106,15 +116,17 @@ ID-ZADDR-02: cannot initialize portfolio with zero address(0)
 
 ## InventoryManager
 
-IM-ATNP-01: new time for future A is not permitted
-
-IM-AVNP-01: new value for A is not permitted
-
-IM-BTNE-01: block time not elapsed for future A time and A to be updated
+IM-BTNE-01: block time not elapsed for future K time and K to be updated
 
 IM-INVT-01: target chain does not have enough inventory to cover this withdrawal
 
 IM-INVT-02: target chain does not have enough inventory to cover this withdrawal
+
+IM-KMOD-01: K can only be updated to multiple of 4
+
+IM-KTNP-01: new time for future K is not permitted
+
+IM-KVNP-01: new value for K is not permitted
 
 IM-LENM-01: length mismatch in array type function parameters
 
@@ -362,6 +374,8 @@ RF-IS-01: invalid order signature
 
 RF-NFUN-01: unknown function call
 
+RF-NSNA-01: native send not allowed
+
 RF-OCR-01: only callable by rebalancer
 
 RF-PTNS-01: main processXFerPayload transaction not supported
@@ -410,15 +424,11 @@ S-SHBP-02: staking has been paused
 
 T-AOPA-01: addOrderPaused paused
 
-T-AUCT-01: auction mode should be set to MATCHING
+T-AUCT-01: omniVault address cannot be zero address(0)
 
-T-AUCT-02: too many decimals in the auction price
+T-AUCT-02: auction participants can only use LIMIT IOC orders
 
-T-AUCT-03: auction price should be > 0 before matchAuctionOrders
-
-T-AUCT-04: market orders not allowed in auction mode
-
-T-AUCT-05: setAuctionMode can not turn on live trading when orderbook is crossed
+T-AUCT-03: auction modes OFF, LIVETRADING, OPEN (0,1,2) supported only
 
 T-CLOI-01: client order id has to be unique per trader
 
@@ -432,9 +442,13 @@ T-LTMT-01: trade amount is less than minTradeAmount for the tradePair
 
 T-LTPA-01: trade amount is less than minPostAmount. It can not be posted in the orderbook
 
+T-LTPA-02: remaining amount on the resting order is less than minTradeAmount. Remaining is CANCELED
+
 T-MNOE-01: max number of fills has to be at least 10
 
 T-MPNA-01: mirror pair not allowed
+
+T-MTMP-01: minPostAmount must be >= minTradeAmount
 
 T-MTMT-01: trade amount is more than maxTradeAmount for the tradePair
 
@@ -585,3 +599,129 @@ TVC-TKNR-01: token not revoked
 ## TokenVestingCloneFactory
 
 TVCF-IOOB-01: index is out of bounds
+
+## OmniVaultCreator
+
+VC-BTNM-01: balance transfer does not match
+
+VC-FTNF-01: fee token transfers not finalized
+
+VC-IDHM-01: initial deposit hash mismatch
+
+VC-IRDL-01: insufficient reclaim delay length
+
+VC-IRDS-01: invalid risk disclosure signature
+
+VC-IVAL-01: invalid array length
+
+VC-IVCI-01: invalid chain id
+
+VC-IVRS-01: invalid vault request status
+
+VC-RDAA-01: risk disclosure already accepted
+
+VC-RDNS-01: risk disclosure not signed
+
+VC-SAZ-01: set address to zero
+
+VC-SNEP-01: sender not equal to proposer
+
+## OmniVaultExecutor
+
+VE-CDTS-01: calldata length too short
+
+VE-FMNS-01: fee manager not set
+
+VE-FNGT-01: failed native gas topup
+
+VE-FSNW-01: function selector not whitelisted
+
+VE-GTSN-01: gas topup must swap to native of set amount
+
+VE-IVAL-01: invalid array length
+
+VE-IVCA-01: invalid contract access level
+
+VE-IVTC-01: invalid trusted contract
+
+VE-SAZ-01: set address to zero
+
+VE-SAZ-02: set address to zero
+
+VE-SEAO-01: selector already occupied
+
+VE-SNVM-01: sender not vault manager
+
+VE-TETG-01: too early to topup gas
+
+VE-TSOT-01: taker swap must be omnitrader
+
+## OmniVaultManager
+
+VM-ADRP-01: active deposit request not present
+
+VM-AWRP-01: active withdrawal request not present
+
+VM-BSNF-01: batch status not finalized
+
+VM-BSNN-01: batch status not none
+
+VM-DHMR-01: deposit hash mismatch rolling
+
+VM-IVAL-01: invalid array length
+
+VM-IVSH-01: invalid state hash of prices and vault state
+
+VM-ODLR-01: outside of deposit limit range
+
+VM-PBFS-01: pending batch in finalized status
+
+VM-PBNS-01: previous batch not settled
+
+VM-PRCL-01: pending request count limit reached
+
+VM-PRNZ-01: pending vault request count non zero
+
+VM-RCNP-01: reclaim delay not passed
+
+VM-RNVI-01: register next vault id must match
+
+VM-SAZ-01: set address to zero
+
+VM-SLTM-01: initial shares less than minimum
+
+VM-TIIV-01: token id must exist in vault
+
+VM-TSIM-01: token symbol must exist in manager
+
+VM-TSIM-02: token symbol must exist in manager
+
+VM-TSIP-01: token symbol must exist in portfolio
+
+VM-TSNM-01: token symbol must not exist in manager
+
+VM-UPRL-01: user pending request limit reached
+
+VM-VINA-01: vault id is not active
+
+VM-VINP-01: vault id is not paused
+
+VM-VPRL-01: vault pending request limit reached
+
+VM-VSAC-01: vault status must be active
+
+VM-VSNN-01: vault must be not none
+
+VM-VSNP-01: vault status not paused
+
+VM-WHMR-01: withdrawal hash mismatch rolling
+
+VM-ZEVS-01: zero vault shares
+
+## OmniVaultShare
+
+VS-IVD-01: invalid vault id
+
+VS-OOV-01: only OmniVault can mint or burn shares
+
+VS-SAZ-01: set address to zero

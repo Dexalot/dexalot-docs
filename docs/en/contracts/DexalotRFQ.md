@@ -2,7 +2,7 @@
 headerDepth: 4
 ---
 
-# MainnetRFQ
+# DexalotRFQ
 
 **Request For Quote smart contract**
 
@@ -17,10 +17,7 @@ After getting a firm quote from our off chain RFQ API, call the simpleSwap() fun
 the quote. This will execute a swap, exchanging the taker asset (asset you provide) with
 the maker asset (asset we provide). In times of high volatility, the API may adjust the expiry of your quote.
 The Api may also add slippage to all orders for a particular tradepair during times of high volatility.
-Monitor the SwapExpired event to verify if a swap has been adjusted. Adjusting the quote is rare, and
-only resorted to in periods of high volatility for quotes that do not properly represent the liquidity
-of the Dexalot L1.
-IThis contract also supports a new cross chain swap flow(originally referred to as GUN Flow) where
+This contract also supports a new cross chain swap flow(originally referred to as GUN Flow) where
 any user can buy GUN token from any network with a single click. This is particularly
 beneficial for Avalanche L1s that have certain token restrictions. For example Gunzilla prohibits ERC20s just
 like Dexalat L1 and they don&#x27;t allow their gas token in any network but in Gunzilla.
@@ -33,73 +30,6 @@ MainnetRFQ(Gun) &#x3D;&gt; PortfolioBridgeMain(Gun) &#x3D;&gt; ICM &#x3D;&gt; Po
 Similarly a Cross Chain Swaps Betwen Avalanche &amp; Arb would work as follows exchanging AVAX &amp; ETH
 MainnetRFQ(Avax) &#x3D;&gt; PortfolioBridgeMain(Avax) &#x3D;&gt; LayerZero &#x3D;&gt; PortfolioBridgeMain(Arb) &#x3D;&gt; MainnetRFQ(Arb) \
 MainnetRFQ(Arb) &#x3D;&gt; PortfolioBridgeMain(Arb) &#x3D;&gt; LayerZero &#x3D;&gt; PortfolioBridgeMain(Avax) &#x3D;&gt; MainnetRFQ(Avax) \
-
-## Struct Types
-
-### Order
-
-```solidity
-struct Order {
-  uint256 nonceAndMeta;
-  uint128 expiry;
-  address makerAsset;
-  address takerAsset;
-  address maker;
-  address taker;
-  uint256 makerAmount;
-  uint256 takerAmount;
-}
-```
-### XChainSwap
-
-```solidity
-struct XChainSwap {
-  bytes32 from;
-  bytes32 to;
-  bytes32 makerSymbol;
-  bytes32 makerAsset;
-  bytes32 takerAsset;
-  uint256 makerAmount;
-  uint256 takerAmount;
-  uint96 nonce;
-  uint32 expiry;
-  uint32 destChainId;
-  enum IPortfolioBridge.BridgeProvider bridgeProvider;
-}
-```
-### SwapData
-
-```solidity
-struct SwapData {
-  uint256 nonceAndMeta;
-  address taker;
-  bytes32 destTrader;
-  uint32 destChainId;
-  address srcAsset;
-  bytes32 destAsset;
-  uint256 srcAmount;
-  uint256 destAmount;
-  address msgSender;
-  bool isDirect;
-}
-```
-### PendingSwap
-
-```solidity
-struct PendingSwap {
-  address trader;
-  uint256 quantity;
-  bytes32 symbol;
-}
-```
-### WrappedInfo
-
-```solidity
-struct WrappedInfo {
-  contract IWrappedToken wrappedNative;
-  bool keepWrapped;
-}
-```
 
 ## Variables
 
@@ -116,39 +46,24 @@ struct WrappedInfo {
 | portfolioBridge | contract IPortfolioBridge |
 | portfolioMain | address |
 | swapSigner | address |
-| slippageTolerance | uint256 |
-| swapQueue | mapping(uint256 &#x3D;&gt; struct MainnetRFQ.PendingSwap) |
+| swapQueue | mapping(uint256 &#x3D;&gt; struct IDexalotRFQ.PendingSwap) |
 | slippagePoints | mapping(uint256 &#x3D;&gt; uint24) |
 | trustedForwarder | address |
-| volatilePairs | uint256 |
-| wrappedInfo | struct MainnetRFQ.WrappedInfo |
-
-### Internal
-
-| Name | Type |
-| --- | --- |
-| __gap | uint256[40] |
 
 ### Private
 
 | Name | Type |
 | --- | --- |
 | ADDRESS_LENGTH | uint256 |
-| EIP712_NAME_HASH | bytes32 |
-| EIP712_VERSION_HASH | bytes32 |
 | MAX_SLIP_BPS | uint24 |
 | NONCE_MASK | uint96 |
 | ORDER_TYPEHASH | bytes32 |
-| ORDER_SIG_LENGTH | uint256 |
 | SLIP_PRECISION | uint256 |
 | SLIP_BPS_MASK | uint8 |
 | SLIP_BPS_SHIFT | uint8 |
 | XCHAIN_SWAP_TYPEHASH | bytes32 |
-| expiredSwaps | mapping(uint256 &#x3D;&gt; uint256) |
-| nonceUsed | mapping(uint256 &#x3D;&gt; bool) |
-| orderMakerAmountUpdated | mapping(uint256 &#x3D;&gt; uint256) |
-| orderExpiryUpdated | mapping(uint256 &#x3D;&gt; uint256) |
-| trustedContracts | mapping(address &#x3D;&gt; bool) |
+| keepWrapped | bool |
+| wrappedNative | address |
 
 ## Events
 
@@ -188,15 +103,45 @@ event XChainFinalized(uint256 nonceAndMeta, address trader, bytes32 symbol, uint
 event RebalancerWithdraw(address asset, uint256 amount)
 ```
 
+### SwapExpired
+
+```solidity:no-line-numbers
+event SwapExpired(uint256 nonceAndMeta, uint256 timestamp)
+```
+
 ### SwapQueue
 
 ```solidity:no-line-numbers
-event SwapQueue(string action, uint256 nonceAndMeta, struct MainnetRFQ.PendingSwap pendingSwap)
+event SwapQueue(string action, uint256 nonceAndMeta, struct IDexalotRFQ.PendingSwap pendingSwap)
+```
+
+### SlippagePointsUpdated
+
+```solidity:no-line-numbers
+event SlippagePointsUpdated(uint256[] slipBpsKey, uint24[] slipBps)
 ```
 
 ## Methods
 
 ### Public
+
+#### constructor
+
+initializer function for Upgradeable RFQ
+
+```solidity:no-line-numbers
+constructor(address _swapSigner, address _owner, address _wrappedNative, bool _keepWrapped, address _trustedForwarder) public
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _swapSigner | address | Address of swap signer, rebalancer is also defaulted to swap signer but it can be changed later |
+| _owner | address |  |
+| _wrappedNative | address |  |
+| _keepWrapped | bool |  |
+| _trustedForwarder | address |  |
 
 #### isValidSignature
 
@@ -221,25 +166,6 @@ function isValidSignature(bytes32 _hash, bytes _signature) public view returns (
 
 ### External
 
-#### initialize
-
-initializer function for Upgradeable RFQ
-
-**Dev notes:** \
-slippageTolerance is initially set to 9800. slippageTolerance is represented in BIPs,
-therefore slippageTolerance is effectively set to 98%. This means that the price of a firm quote
-can not drop more than 2% initially.
-
-```solidity:no-line-numbers
-function initialize(address _swapSigner) external
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _swapSigner | address | Address of swap signer, rebalancer is also defaulted to swap signer but it can be changed later |
-
 #### receive
 
 Used to rebalance native token on rfq contract
@@ -258,14 +184,14 @@ All parameters are generated from the RFQ API. Prices are determined based off o
 prices from the Dexalot L1.
 
 ```solidity:no-line-numbers
-function simpleSwap(struct MainnetRFQ.Order _order, bytes _signature) external payable
+function simpleSwap(struct IDexalotRFQ.Order _order, bytes _signature) external payable
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _order | struct MainnetRFQ.Order | Trade parameters for swap generated from /api/rfq/firm |
+| _order | struct IDexalotRFQ.Order | Trade parameters for swap generated from /api/rfq/firm |
 | _signature | bytes | Signature of trade parameters generated from /api/rfq/firm |
 
 #### partialSwap
@@ -279,14 +205,14 @@ prices from the Dexalot L1. This function is used for multi hop swaps and will p
 at the original quoted price.
 
 ```solidity:no-line-numbers
-function partialSwap(struct MainnetRFQ.Order _order, bytes _signature, uint256 _takerAmount) external payable
+function partialSwap(struct IDexalotRFQ.Order _order, bytes _signature, uint256 _takerAmount) external payable
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _order | struct MainnetRFQ.Order | Trade parameters for swap generated from /api/rfq/firm |
+| _order | struct IDexalotRFQ.Order | Trade parameters for swap generated from /api/rfq/firm |
 | _signature | bytes | Signature of trade parameters generated from /api/rfq/firm |
 | _takerAmount | uint256 | Actual amount of takerAsset utilized in swap |
 
@@ -301,14 +227,14 @@ prices from the Dexalot L1. This function is called on the source chain where is
 funds and sends a cross chain message to release funds on the destination chain.
 
 ```solidity:no-line-numbers
-function xChainSwap(struct MainnetRFQ.XChainSwap _order, bytes _signature) external payable
+function xChainSwap(struct IDexalotRFQ.XChainSwap _order, bytes _signature) external payable
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _order | struct MainnetRFQ.XChainSwap | Trade parameters for cross chain swap generated from /api/rfq/firm |
+| _order | struct IDexalotRFQ.XChainSwap | Trade parameters for cross chain swap generated from /api/rfq/firm |
 | _signature | bytes | Signature of trade parameters generated from /api/rfq/firm |
 
 #### processXFerPayload
@@ -330,24 +256,6 @@ function processXFerPayload(struct IPortfolio.XFER _xfer) external
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _xfer | struct IPortfolio.XFER | XFER message |
-
-#### setWrapped
-
-Sets the wrapped info for the given chain
-
-**Dev notes:** \
-Only callable by admin
-
-```solidity:no-line-numbers
-function setWrapped(address _wrappedToken, bool _keepWrapped) external
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _wrappedToken | address | Address of the wrapped token |
-| _keepWrapped | bool | Boolean to keep wrapped token or false for native token |
 
 #### setPortfolioBridge
 
@@ -377,61 +285,20 @@ Only callable by admin
 function setPortfolioMain() external
 ```
 
-#### setSwapSigner
+#### sendTokenBalance
 
-Updates the signer address.
-
-**Dev notes:** \
-Only DEFAULT_ADMIN can call this function.
+Allows rebalancer to send an asset to smart contract
 
 ```solidity:no-line-numbers
-function setSwapSigner(address _swapSigner) external
+function sendTokenBalance(address _asset, uint256 _amount) external
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _swapSigner | address | Address of new swap signer |
-
-#### setTrustedForwarder
-
-Sets the trusted forwarder address for routed txs
-
-**Dev notes:** \
-Only callable by admin
-
-```solidity:no-line-numbers
-function setTrustedForwarder(address _trustedForwarder) external
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _trustedForwarder | address | New trusted forwarder address |
-
-#### pause
-
-Pause contract
-
-**Dev notes:** \
-Only callable by admin
-
-```solidity:no-line-numbers
-function pause() external
-```
-
-#### unpause
-
-Unpause contract
-
-**Dev notes:** \
-Only callable by admin
-
-```solidity:no-line-numbers
-function unpause() external
-```
+| _asset | address | Address of the asset to be sent |
+| _amount | uint256 | Amount of asset to be sent |
 
 #### claimBalance
 
@@ -638,51 +505,9 @@ fallback() external
 
 #### _msgSender
 
-**Dev notes:** \
-Returns the sender of the message. If the message was sent through the trusted forwarder,
-returns the original sender.
-
 ```solidity:no-line-numbers
 function _msgSender() internal view virtual returns (address)
 ```
-
-##### Return values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | address | address The address of the sender |
-
-#### _EIP712NameHash
-
-**Dev notes:** \
-Returns the hash of the name parameter for the EIP712 domain.
-Overriding this function to return a constant value to save gas.
-
-```solidity:no-line-numbers
-function _EIP712NameHash() internal view virtual returns (bytes32)
-```
-
-##### Return values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bytes32 | bytes32 The hash of the name parameter |
-
-#### _EIP712VersionHash
-
-**Dev notes:** \
-Returns the hash of the version parameter for the EIP712 domain.
-Overriding this function to return a constant value to save gas.
-
-```solidity:no-line-numbers
-function _EIP712VersionHash() internal view virtual returns (bytes32)
-```
-
-##### Return values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bytes32 | bytes32 The hash of the version parameter |
 
 ### Private
 
@@ -691,14 +516,14 @@ function _EIP712VersionHash() internal view virtual returns (bytes32)
 Verifies that a XChainSwap order is valid and has not been executed already.
 
 ```solidity:no-line-numbers
-function _verifyXSwap(struct MainnetRFQ.XChainSwap _order, bytes _signature) private returns (uint256 nonceAndMeta)
+function _verifyXSwap(struct IDexalotRFQ.XChainSwap _order, bytes _signature) private returns (uint256 nonceAndMeta)
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _order | struct MainnetRFQ.XChainSwap | Trade parameters for cross chain swap generated from /api/rfq/firm |
+| _order | struct IDexalotRFQ.XChainSwap | Trade parameters for cross chain swap generated from /api/rfq/firm |
 | _signature | bytes | Signature of trade parameters generated from /api/rfq/firm |
 
 ##### Return values
@@ -714,14 +539,14 @@ if the assets are ERC-20's or native tokens. Transfer assets in on the source ch
 and sends a cross chain message to release assets on the destination chain
 
 ```solidity:no-line-numbers
-function _executeXSwap(struct MainnetRFQ.XChainSwap _order, uint256 _nonceAndMeta) private
+function _executeXSwap(struct IDexalotRFQ.XChainSwap _order, uint256 _nonceAndMeta) private
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _order | struct MainnetRFQ.XChainSwap | Trade parameters for cross chain swap generated from /api/rfq/firm |
+| _order | struct IDexalotRFQ.XChainSwap | Trade parameters for cross chain swap generated from /api/rfq/firm |
 | _nonceAndMeta | uint256 | Nonce of swap |
 
 #### _verifyOrder
@@ -729,14 +554,14 @@ function _executeXSwap(struct MainnetRFQ.XChainSwap _order, uint256 _nonceAndMet
 Verifies that an order is valid and has not been executed already.
 
 ```solidity:no-line-numbers
-function _verifyOrder(struct MainnetRFQ.Order _order, bytes _signature, address _sender) private returns (address)
+function _verifyOrder(struct IDexalotRFQ.Order _order, bytes _signature, address _sender) private returns (address)
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _order | struct MainnetRFQ.Order | Trade parameters for swap generated from /api/rfq/firm |
+| _order | struct IDexalotRFQ.Order | Trade parameters for swap generated from /api/rfq/firm |
 | _signature | bytes | Signature of trade parameters generated from /api/rfq/firm |
 | _sender | address |  |
 
@@ -752,14 +577,14 @@ Handles the exchange of assets based on swap type and
 if the assets are ERC-20's or native tokens.
 
 ```solidity:no-line-numbers
-function _executeOrder(struct MainnetRFQ.Order _order, uint256 _makerAmount, uint256 _takerAmount, address _destTrader, address _sender) private
+function _executeOrder(struct IDexalotRFQ.Order _order, uint256 _makerAmount, uint256 _takerAmount, address _destTrader, address _sender) private
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _order | struct MainnetRFQ.Order | Trade parameters for swap generated from /api/rfq/firm |
+| _order | struct IDexalotRFQ.Order | Trade parameters for swap generated from /api/rfq/firm |
 | _makerAmount | uint256 | The proper makerAmount for the trade |
 | _takerAmount | uint256 | The proper takerAmount for the trade |
 | _destTrader | address | The address to transfer funds to |
@@ -790,44 +615,42 @@ function _verifySwapInternal(uint256 _nonceAndMeta, uint256 _expiry, address _ta
 Pulls funds for a swap from the msg.sender
 
 ```solidity:no-line-numbers
-function _takeFunds(struct MainnetRFQ.SwapData _swapData, struct MainnetRFQ.WrappedInfo _wrappedInfo) private
+function _takeFunds(struct IDexalotRFQ.SwapData _swapData) private
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _swapData | struct MainnetRFQ.SwapData | Struct containing all information for executing a swap |
-| _wrappedInfo | struct MainnetRFQ.WrappedInfo | Struct containing wrapped token info |
+| _swapData | struct IDexalotRFQ.SwapData | Struct containing all information for executing a swap |
 
 #### _releaseFunds
 
 Release funds for a swap to the destTrader
 
 ```solidity:no-line-numbers
-function _releaseFunds(struct MainnetRFQ.SwapData _swapData, struct MainnetRFQ.WrappedInfo _wrappedInfo) private
+function _releaseFunds(struct IDexalotRFQ.SwapData _swapData) private
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _swapData | struct MainnetRFQ.SwapData | Struct containing all information for executing a swap |
-| _wrappedInfo | struct MainnetRFQ.WrappedInfo | Struct containing wrapped token info |
+| _swapData | struct IDexalotRFQ.SwapData | Struct containing all information for executing a swap |
 
 #### _refundNative
 
 Refunds remaining native token to the msg.sender
 
 ```solidity:no-line-numbers
-function _refundNative(struct MainnetRFQ.SwapData _swapData) private
+function _refundNative(struct IDexalotRFQ.SwapData _swapData) private
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _swapData | struct MainnetRFQ.SwapData | Struct containing all information for executing a swap |
+| _swapData | struct IDexalotRFQ.SwapData | Struct containing all information for executing a swap |
 
 #### _executeSwapInternal
 
@@ -835,15 +658,15 @@ Executes a swap by taking funds from the msg.sender and if the swap is not cross
 funds are released to the destTrader. Emits SwapExecuted event upon completion.
 
 ```solidity:no-line-numbers
-function _executeSwapInternal(struct MainnetRFQ.SwapData _swapData, bool isNotXChain) private
+function _executeSwapInternal(struct IDexalotRFQ.SwapData _swapData, bool isNotXChain) private
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _swapData | struct MainnetRFQ.SwapData | Struct containing all information for executing a swap |
-| isNotXChain | bool | True if the swap is not cross chain |
+| _swapData | struct IDexalotRFQ.SwapData | Struct containing all information for executing a swap |
+| isNotXChain | bool |  |
 
 #### _sendCrossChainTrade
 
@@ -852,14 +675,14 @@ symbol and trader. Sends remaining native token as gas fee for cross chain messa
 gas fee is handled in PortfolioBridge.
 
 ```solidity:no-line-numbers
-function _sendCrossChainTrade(struct MainnetRFQ.XChainSwap _order) private
+function _sendCrossChainTrade(struct IDexalotRFQ.XChainSwap _order) private
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _order | struct MainnetRFQ.XChainSwap | Trade parameters for cross chain swap generated from /api/rfq/firm |
+| _order | struct IDexalotRFQ.XChainSwap | Trade parameters for cross chain swap generated from /api/rfq/firm |
 
 #### _addToSwapQueue
 

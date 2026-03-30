@@ -33,7 +33,7 @@ struct Rebates {
 #### getRates
 
 ```solidity:no-line-numbers
-function getRates(address _makerAddr, address _takerAddr, bytes32 _tradePairId, uint256 _makerRate, uint256 _takerRate) external view returns (uint256 maker, uint256 taker)
+function getRates(address _makerAddr, address _takerAddr, bytes32 _tradePairId, uint256 _makerRate, uint256 _takerRate) external view returns (uint256 maker, uint256 taker, address takerFeeCollector)
 ```
 
 #### isAdminAccountForRates

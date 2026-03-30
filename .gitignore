@@ -13,3 +13,6 @@
 .cache
 .temp
 dist
+
+# attic to store reference files, original images etc.
+attic/

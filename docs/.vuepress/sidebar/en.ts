@@ -10,6 +10,11 @@ export const enSidebarConfig = sidebar({
       prefix: "/en/articles",
       children: [
         {
+          text: "OmniVaults",
+          icon: "book-open",
+          link: "omnivaults/"
+        },
+        {
           text: "Dexalot L1 Intro",
           icon: "book-open",
           link: "subnet/"

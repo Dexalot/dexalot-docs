@@ -8,13 +8,13 @@ April 2026
 
 ## Introduction
 
-Dexalot OmniVaults is a next-generation liquidity vault solution that combines the simplicity of automated market maker (AMM) pools with the precision and capital efficiency of order books (CLOBs) - powered by Dexalot’s omni-chain architecture.
+Dexalot OmniVault is a next-generation liquidity vault that combines the simplicity of automated market maker (AMM) pools with the precision and capital efficiency of order books (CLOBs) - powered by Dexalot’s omni-chain architecture.
 
 It enables:
 
-* Projects to easily deploy liquidity across multiple chains from a single source with minimal capital and zero operational overhead
+* **Projects** to easily deploy liquidity on one or across multiple chains from a single liquidity source with minimal capital and zero operational overhead.
 
-* Users to earn yield through automated, actively managed liquidity strategies
+* **Users** can earn yield through free reimbursements, incentives and automated, actively managed liquidity strategies.
 
 By unifying liquidity into a single on-chain order book while maintaining multi-chain accessibility, OmniVaults delivers deeper markets, better pricing, and a dramatically improved liquidity experience.
 
@@ -85,7 +85,7 @@ At the same time, users can also provide liquidity into OmniVaults of their choo
 
 #### For Projects & Token Issuers
 
-* *Capital Efficiency:*  CLOBs are significantly more capital-efficient than Automated Market Makers (AMMs), requiring ~80% less liquidity [Dexalot internal analysis, 2026] to achieve comparable price spreads.
+* *Capital Efficiency:*  CLOBs are significantly more capital-efficient than Automated Market Makers (AMMs), requiring ~90% less liquidity [Dexalot internal analysis, 2026] to achieve comparable trading volumes.
 * *Hands-Free Liquidity Management:*  OmniVaults abstracts all operational friction by automating order placement, cross-chain rebalancing, and gas management achieving *immediate global reach* and atomic execution *without needing a market-maker.*
 * *Omni-Chain Token Listing:*  Any token from any chain can be listed as the protocol supports universal token listing on Dexalot L1 without requiring cross chain token standards like OFT.  Instead, when depositing to Dexalot, assets are secured on their native chain(s), while a LayerZero message credits the user's trading balance on Dexalot L1.
 * *Unified Liquidity Management with One-Click:*  Projects can deploy liquidity across multiple chains (Avalanche, Arbitrum, Base, and BSC with more to come) simultaneously from a single liquidity source without managing multiple liquidity sources individually.

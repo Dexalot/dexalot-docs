@@ -30,7 +30,7 @@ features:
 
   - title: Annual Percentage Yield
     icon: percentage
-    details: "Learn how APY is calculated for providing liquidity and trading on our protocol"
+    details: "Learn how APY is calculated for providing liquidity"
     link: en/APY
 
   - title: Trading Fees & Discounts
@@ -39,13 +39,18 @@ features:
     link: en/TradingFeeDiscounts
 
   - title: OmniVaults
-    icon: book-reader
+    icon: wallet
     details: "Next-generation liquidity vault solution"
     link: en/articles/omnivaults/
 
+  - title: Liquid Staking
+    icon: wallet
+    details: "Earn with your $ALOTs"
+    link: en/articles/lst/
+
   - title: Smart Contracts
     icon: code
-    details: "Main and auxiliary contracts that make the dual-chain application"
+    details: "Main and auxiliary contracts for the omni-chain app"
     link: en/contracts/
 
   - title: Trading API

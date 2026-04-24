@@ -20,7 +20,7 @@ Dexalot has partnered with **Suzaku** to build a Liquid Staking capability. Unli
 
 - **Earn rewards**: Receive **\$ALOT** rewards from network fees and incentives.
 - **Stay liquid**: Your staked position is represented by $wsALOT, a transferable token.
-- **No minimums**: Stake any amount of **\$ALOT** you choose.
+- **Low minimum**: Minimum staking amount is 1 **\$ALOT**.
 - **No lockup penalty**: Unstake at any time, subject to the epoch cooldown period.
 
 :::

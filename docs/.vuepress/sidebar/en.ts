@@ -11,8 +11,13 @@ export const enSidebarConfig = sidebar({
       children: [
         {
           text: "OmniVaults",
-          icon: "book-open",
+          icon: "wallet",
           link: "omnivaults/"
+        },
+        {
+          text: "Liquid Staking",
+          icon: "wallet",
+          link: "lst/"
         },
         {
           text: "Dexalot L1 Intro",

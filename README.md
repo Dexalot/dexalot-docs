@@ -1,132 +1,129 @@
 # Dexalot Technical Documents
 
-## Project setup
+Source for the Dexalot Knowledge Hub published at [docs.dexalot.com](https://docs.dexalot.com).
+
+The site is a [VuePress 2](https://vuepress.vuejs.org/) application (Vite bundler, `vuepress-theme-hope`) containing articles, tutorials, smart-contract references, trading API docs, incentive program details, and legal documents. Content is authored in Markdown under `docs/` and localized to English, Spanish, Turkish, Vietnamese, and Chinese.
+
+## Requirements
+
+- Node.js **22.11.0** (pinned via `engines`; use `nvm use` or an equivalent)
+- [pnpm](https://pnpm.io/) **9.13.2+** (declared in `packageManager`)
+
+## Install
 
 ```sh
-yarn install
+pnpm install
 ```
 
-### Compiles and hot-reloads for development
+## Develop
+
+Run a hot-reloading dev server on `http://localhost:8080`:
 
 ```sh
-yarn serve
+pnpm docs:dev
 ```
 
-### Compiles and minifies for production
+If the cache gets into a bad state:
 
 ```sh
-yarn build
+pnpm docs:clean-dev   # dev server with a cold cache
+pnpm clean            # remove .cache, .temp, and dist
 ```
 
-## Setup and Configure prettier and eslint
+## Build
 
-* Make sure you run
+```sh
+pnpm docs:build:local:dev    # NODE_ENV=development (no SEO / sitemap)
+pnpm docs:build:local:prod   # NODE_ENV=production
+pnpm docs:build:amplify      # build target used by AWS Amplify CI
+```
 
-   git config --global core.autocrlf true
+Output is written to `docs/.vuepress/dist`. Serve the built site locally:
 
-* Install the VS Code plugin for Markdownlint from the URL below.
+```sh
+pnpm docs:serve
+```
 
-  [VS Marketplace link](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint)
+## Project layout
 
-  ```sh
-  Name: markdownlint
-  Id: davidanson.vscode-markdownlint
-  Publisher: David Anson
-  https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode
-  ```
+```
+docs/
+  README.md              Home page (VuePress frontmatter landing layout)
+  .vuepress/
+    config.ts            Site-level config + locales
+    theme.ts             vuepress-theme-hope configuration
+    options.ts           Sitemap + NODE_ENV helpers
+    navbar/              Per-locale navbar (en, es, tr, vi, zh + common)
+    sidebar/             Per-locale sidebar definitions
+    public/              Static assets (images, logos, favicon)
+    styles/              SCSS overrides
+  en/ es/ tr/ vi/ zh/    Localized Markdown trees
+    articles/            Conceptual / background content
+    tutorials/           Step-by-step guides
+    contracts/           Smart-contract reference (en only)
+    apiv2/               Trading API reference (en only)
+    legal/               License, Privacy, T&C (en only)
+```
 
-* Install the VS Code plugin for Prettier from the URL below.
+Only English has the full set of sections. When adding a new page, mirror the file in every locale you intend to ship; VuePress walks every Markdown file that matches `pagePatterns` in `config.ts`.
 
-  [VS Marketplace link](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+## Linting and formatting
 
-  ```sh
-  Name: Prettier - Code formatter
-  Id: esbenp.prettier-vscode
-  Publisher: Prettier
-  https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode
-  ```
+Configuration files:
 
-* Install the VS Code plugin for Code Spell Checker from the URL below
+- `.prettierrc` — prettier rules (`printWidth: 120`, CRLF line endings)
+- `.prettierignore`
+- `.markdownlint.json` — markdownlint rules
+- `.vscode/cspell.json` + `.vscode/dictionaries/project-terms-en.txt` — spell-check dictionary
 
-  [VS Marketplace link](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker)
+### Recommended VS Code extensions
 
-  ```sh
-  Name: Code Spell Checker
-  Id: streetsidesoftware.code-spell-checker
-  Publisher: Street Side Software
-  https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker
-  ```
+- `DavidAnson.vscode-markdownlint`
+- `esbenp.prettier-vscode`
+- `streetsidesoftware.code-spell-checker`
 
-* VS Code settings are placed in .vscode/settings.json file and will be pulled from the git repository. It contains project specific settings such as:
+Project-wide VS Code settings live in `.vscode/settings.json` (trim trailing whitespace, no format-on-save for TS/JS, format-on-save for Solidity).
 
-  ```sh
-  Files: Trim Final Newlines
-  Files: Insert Final Newline
-  Files: Trim Trailing Whitespace
-  Editor: Trim Auto Whitespace
-  ```
+### Useful scripts
 
-* Install the node.js packages: eslint, prettier and cspell.
+```sh
+pnpm pretty-md-check   # prettier --check **/*.md
+pnpm pretty-md-fix     # prettier --write **/*.md
+pnpm pretty-check      # check ts, js, md
+pnpm pretty-fix        # write ts, js, md
+pnpm lint-ts-check     # eslint .ts
+pnpm lint-ts-fix
+pnpm lint-js-check     # eslint .js
+pnpm lint-js-fix
+```
 
-  The individual packages are `prettier`, `@typescript-eslint/eslint-plugin`, `@typescript-eslint/parser`, `eslint` and `cspell`.
+Check/fix a single file:
 
-  These tools are already in `package.json` and they will all be installed with `yarn install`.
+```sh
+./node_modules/.bin/prettier --check docs/en/articles/abs/README.md
+./node_modules/.bin/prettier --write docs/en/articles/abs/README.md
+```
 
-* Prettier settings can be reviewed in `.prettierrc` and `.prettierignore`
+Always run `--check` and review diffs before `--write`.
 
-* Eslint settings can be reviewed in `.eslintrc` and `.eslintignore`
+### Spell check
 
-* You can check or fix files in place for style with prettier. Initially run checks and AVOID automatic fixes without reviewing the check results first.
+cspell is not installed as a dependency — run it via the VS Code Code Spell Checker extension, or invoke it with `npx`:
 
-  check an individual markdown file
+```sh
+npx cspell lint --show-suggestions --config .vscode/cspell.json "docs/**/*.md"
+```
 
-  ```sh
-  ./node_modules/.bin/prettier --check docs/articles/abs/README.md
-  ```
+Add project-specific terms to `.vscode/dictionaries/project-terms-en.txt`.
 
-  fix an individual markdown file
+## Git hygiene
 
-  ```sh
-  ./node_modules/.bin/prettier --write docs/articles/abs/README.md
-  ```
+```sh
+git config --global core.autocrlf true
+```
 
-  check all files with the .md extension
+`.gitignore` excludes `node_modules`, `.env*` (except `.env.example`), VuePress build artifacts (`.cache`, `.temp`, `dist`), and a local `attic/` scratch directory for drafts and original-resolution images.
 
-  ```sh
-  ./node_modules/.bin/prettier --check **/*.md
-  ```
+## License
 
-  fix all files with a specific extension
-
-  ```sh
-  ./node_modules/.bin/prettier --write **/*.md
-  ```
-
-* Cspell can check spelling errors.
-
-  check all markdown files
-
-  ```sh
-  ./node_modules/.bin/cspell lint --show-suggestions **/*.md
-  ```
-
-* Below scripts are added to package.json for convenience.
-
-  ```sh
-      lint-ts-check
-      lint-js-check
-      lint-ts-fix
-      lint-js-fix
-      pretty-md-check
-      pretty-md-fix
-      pretty-ts-check
-      pretty-ts-fix
-      pretty-js-check
-      pretty-js-fix
-  ```
-
-* These scripts can be run with
-
-  ```sh
-      yarn <script_name>
-  ```
+BUSL-1.1 — see [LICENSE.txt](LICENSE.txt).

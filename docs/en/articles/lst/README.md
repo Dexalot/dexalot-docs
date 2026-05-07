@@ -27,11 +27,11 @@ Dexalot has partnered with **Suzaku** to build a Liquid Staking capability. Unli
 
 ## How to Stake **\$ALOT**
 
-Staking **\$ALOT** is a straightforward process completed directly in the Dexalot interface.
+Staking **\$ALOT** is a straightforward process completed directly in the Dexalot interface through the Avalanche C-Chain.
 
 ### Step-by-Step: Staking
 
-• **Step 1 — Connect your wallet:** Ensure your Dexalot-compatible wallet (e.g., Core, MetaMask, Rabby) is connected to the Dexalot platform.
+• **Step 1 — Connect your wallet on the Avalanche C-Chain:** Ensure your Dexalot-compatible wallet (e.g., Core, MetaMask, Rabby) is connected to the Dexalot platform.
 
 • **Step 2 — Navigate to the Staking section:** Find the “STAKE” page on the Dexalot interface.
 
@@ -67,7 +67,7 @@ Unstaking converts your **\$wsALOT** back into **\$ALOT**. Due to the staking ep
 
 • **Step 4 — Wait for the epoch cooldown:** A full staking epoch (7 days) must pass after your request before your **\$ALOT** becomes withdrawable. See Section 4 for details on epoch timing.
 
-• **Step 5 — Withdraw your $ALOT:** Once the epoch has passed, return to the Staking section, monitor your unstake status, and complete the withdrawal.
+• **Step 5 — Withdraw your $ALOT:** Once the epoch has passed, return to the Staking section, monitor your unstake status, and complete the withdrawal.  $ALOT will be withdrawan to your Avalanche C-Chain wallet.
 
 ### Unstake Waiting Period
 
@@ -211,3 +211,7 @@ Dexalot's Liquid Staking is built on audited smart contracts in partnership with
 ### How do I earn Suzaku Points?
 
 Suzaku Points are earned automatically by engaging with the Suzaku protocol during its launch phase — which includes staking **\$ALOT** through Dexalot's Liquid Staking interface. Visit [docs.suzaku.network](https://docs.suzaku.network/suzaku-protocol/for-stakers/suzaku-points) for full details.
+
+### Which chain is staking available on?
+
+**\$ALOT** staking is available on the Avalanche C-Chain.  If you hold **\$ALOT** on any other chains, including the Dexalot L1, please transfer them to the Avalanche C-Chain to stake them.

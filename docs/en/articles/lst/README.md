@@ -130,7 +130,7 @@ Reward rates are variable and depend on total network activity, the total amount
 
 Staking **\$ALOT** on Dexalot is designed to be low-cost and accessible.
 
-• **Staking Fee:** 5% protocol fee.
+• **Staking Fee:** 10% &mdash; a 5% operator fee for validator infrastructure and a 5% protocol fee for Suzaku's liquid staking protocol.
 
 • **Gas Fee:** A small AVAX gas fee is required to process transactions on the Avalanche network. This is a standard network cost unrelated to Dexalot and is typically negligible.
 

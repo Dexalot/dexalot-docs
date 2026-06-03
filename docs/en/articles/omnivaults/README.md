@@ -113,19 +113,15 @@ At the same time, users can also provide liquidity into OmniVaults of their choo
 
 ### Create A New OmniVault
 
-**Step 1:**  Deposit tokens into Dexalot
-
-![](/images/omnivaults/image2.webp)
-
-**Step 2:**  On the OmniVault main page, click “CREATE VAULT”.
+**Step 1:**  On the OmniVault main page, click “CREATE VAULT”. Please make sure your wallet is set to any of the following networks:  Avalanche, Arbitrum, Base, or BNB Chain
 
 ![](/images/omnivaults/image6.webp)
 
-**Step 3:**  Enter the “Base Token” (e.g., project token) information. Select the chain it is native on and enter its contract address.
+**Step 2:**  Enter the “Base Token” (e.g., project token) information. Select the chain it is native on and enter its contract address.
 
 ![](/images/omnivaults/image12.webp)
 
-**Step 4:**  The token name, symbol and logo should auto-populate.  Please check for accuracy.
+**Step 3:**  The token name, symbol and logo should auto-populate.  Please check for accuracy.
 
 ::: tip Tip
 
@@ -135,27 +131,21 @@ At the same time, users can also provide liquidity into OmniVaults of their choo
 
 ![](/images/omnivaults/image9.webp)
 
-**Step 5:**  Next, select the counter token (“Quote Token”) you wish to list your token against:  USDC or USDT.
+**Step 4:**  Next, select the counter token (“Quote Token”) you wish to list your token against:  USDC or USDT.
 
 ![](/images/omnivaults/image10.webp)
 
-**Step 6:**  Enter the liquidity you wish to provide initially for both tokens.
+**Step 5:**  Enter the liquidity you wish to provide initially for both tokens.
 
 We highly recommend adding the same USD amount of the Base Token and the Quote Token for new OmniVaults to start with a balanced order book (i.e., bids vs offers).
 
-::: important Note
-
-New OmniVaults must start with AT LEAST $20,000 of the “Quote Token” (e.g., USDC or USDT) for a single chain provision.  Any additional chains will require at least $10,000 more of the Quote Token.  For example, if your OFT token is native on both Base and BNB Chain, you will need to add at least $30,000 total of the Quote Token.  Additional liquidity can be provided in the future naturally, but these are the minimum amounts that need to be provided to launch a new OmniVault.
-
-:::
-
 ![](/images/omnivaults/image7.webp)
 
-**Step 7:**  Continue to follow the screen to provide additional information.
+**Step 6:**  Continue to follow the screen to provide additional information.
 
 ![](/images/omnivaults/image4.webp)
 
-**Step 8:**  **SUBMIT** and approve deposit on your wallet.
+**Step 7:**  **SUBMIT** and approve deposit on your wallet.
 
 New OmniVaults will be reviewed by the Dexalot team for accuracy and approval **within 2 business days.**  Each new OmniVault has a **small administrative fee of $100**.
 

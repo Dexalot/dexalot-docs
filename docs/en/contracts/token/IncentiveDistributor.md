@@ -19,25 +19,24 @@ their earned Dexalot Incentive Program (DIP) rewards to the PortfolioSubnet cont
 
 | Name | Type |
 | --- | --- |
-| CLAIM_TYPEHASH | bytes32 |
 | VERSION | bytes32 |
 | allTokens | uint32 |
-| portfolio | contract IPortfolioSub |
-| rewardSigner | address |
+| claimedRewards | mapping(address &#x3D;&gt; mapping(uint32 &#x3D;&gt; uint128)) |
 | tokens | mapping(uint32 &#x3D;&gt; bytes32) |
 
 ### Private
 
 | Name | Type |
 | --- | --- |
-| _claimedWeeks | mapping(address &#x3D;&gt; mapping(uint32 &#x3D;&gt; struct BitMapsUpgradeable.BitMap)) |
+| _portfolio | contract IPortfolioSub |
+| _signer | address |
 
 ## Events
 
 ### Claimed
 
 ```solidity:no-line-numbers
-event Claimed(address claimer, uint32 tokenIds, uint32 expiry, uint16[] weekIds, uint128[] amounts, uint256 timestamp)
+event Claimed(address claimer, uint32 tokenIds, uint128[] amounts, uint256 timestamp)
 ```
 
 ### AddRewardToken
@@ -58,69 +57,50 @@ event DepositGas(address from, uint256 quantity, uint256 timestamp)
 event WithdrawGas(address to, uint256 quantity, uint256 timestamp)
 ```
 
-### UpdateSigner
-
-```solidity:no-line-numbers
-event UpdateSigner(address oldSigner, address newSigner)
-```
-
-### RetrieveRewardToken
-
-```solidity:no-line-numbers
-event RetrieveRewardToken(address retriever, uint32 tokenId, uint256 quantity)
-```
-
 ## Methods
 
 ### Public
 
 #### initialize
 
-```solidity:no-line-numbers
-function initialize(bytes32 _alotSymbol, address __signer, address __portfolio) public
-```
-
-### External
-
-#### receive
-
-Receive native ALOT, ensures auto gas tank fill logic holds
-
-```solidity:no-line-numbers
-receive() external payable
-```
-
-#### claim
-
-Claim DIP token rewards for specific weeks
+Initializer of the IncentiveDistributor
 
 **Dev notes:** \
-To handle rolling expiry, we claim specific Week IDs.
-The _amounts array should correspond to the total expected for the provided weeks.
-Example: If claiming Week 10, 11 + 12 for Token A and Token B.
-_weekIds: [10, 11, 12] (The weeks being claimed)
-_amounts: [TotalForTokenA, TotalForTokenB] (The sum of those specific weeks)
+Adds ALOT token as the first reward token and defines the signer of claim messages.
 
 ```solidity:no-line-numbers
-function claim(uint32 _tokenIds, uint32 _expiry, uint16[] _weekIds, uint128[] _amounts, bytes _signature) external
+function initialize(bytes32 _alotSymbol, address __signer, address __portfolio) public
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _tokenIds | uint32 | Bitmap of token IDs being claimed |
-| _expiry | uint32 | Expiry timestamp of the signature |
-| _weekIds | uint16[] | Array of week IDs being claimed |
-| _amounts | uint128[] | Array of amounts corresponding to each token ID being claimed |
-| _signature | bytes | EIP-712 signature from the authorized signer |
+| _alotSymbol | bytes32 | The symbol of the ALOT token |
+| __signer | address | The public address of the signer of claim messages |
+| __portfolio | address | The address of the portfolio sub contract |
+
+### External
+
+#### claim
+
+Claim DIP token rewards for a given trader in their portfolio
+
+```solidity:no-line-numbers
+function claim(uint128[] _amounts, uint32 _tokenIds, bytes _signature) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _amounts | uint128[] | An array of total earned amount for each reward token |
+| _tokenIds | uint32 | A bitmap representing which tokens to claim |
+| _signature | bytes | A signed claim message to be verified |
 
 #### addRewardToken
 
-Adds a new reward token to the distributor
-
-**Dev notes:** \
-Can only be called by the owner when the contract is paused
+Add new claimable reward token
 
 ```solidity:no-line-numbers
 function addRewardToken(bytes32 _symbol) external
@@ -130,14 +110,11 @@ function addRewardToken(bytes32 _symbol) external
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _symbol | bytes32 | Symbol of the new reward token |
+| _symbol | bytes32 | The symbol of the new reward token |
 
 #### retrieveRewardToken
 
-Retrieve unclaimed reward tokens to owner
-
-**Dev notes:** \
-Can only be called by the owner when the contract is paused
+Retrieve reward token when DIP ends
 
 ```solidity:no-line-numbers
 function retrieveRewardToken(uint32 _tokenId) external
@@ -147,7 +124,23 @@ function retrieveRewardToken(uint32 _tokenId) external
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _tokenId | uint32 | Token ID to retrieve |
+| _tokenId | uint32 | The id of the reward token to retrieve |
+
+#### retrieveAllRewardTokens
+
+Retrieve all reward tokens when DIP ends
+
+```solidity:no-line-numbers
+function retrieveAllRewardTokens() external
+```
+
+#### receive
+
+Receive native ALOT, ensures auto gas tank fill logic holds
+
+```solidity:no-line-numbers
+receive() external payable
+```
 
 #### withdrawGas
 
@@ -179,69 +172,21 @@ Unpause to allow claiming to resume
 function unpause() external
 ```
 
-#### updateSigner
-
-Update the authorized signer address
-
-**Dev notes:** \
-Can only be called by the owner when the contract is paused
-
-```solidity:no-line-numbers
-function updateSigner(address _newSigner) external
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _newSigner | address | Address of the new signer |
-
-#### isWeekClaimed
-
-Check if a specific week has been claimed for a user and token
-
-```solidity:no-line-numbers
-function isWeekClaimed(address _user, uint32 _tokenId, uint16 _weekId) external view returns (bool)
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _user | address | Address of the user |
-| _tokenId | uint32 | Token ID to check |
-| _weekId | uint16 | Week ID to check |
-
-##### Return values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bool | bool indicating if the week has been claimed |
-
 ### Internal
 
 #### _checkClaim
 
-Internal function to verify claim signature
+Verifies claim message (_user, _tokenIds, _amount) has been signed by signer
 
 ```solidity:no-line-numbers
-function _checkClaim(address _user, uint32 _tokenIds, uint32 _expiry, uint16[] _weekIds, uint128[] _amounts, bytes _signature) internal view returns (bool)
+function _checkClaim(address _user, uint32 _tokenIds, uint128[] _amounts, bytes _signature) internal view returns (bool)
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _user | address | Address of the user making the claim |
-| _tokenIds | uint32 | Bitmap of token IDs being claimed |
-| _expiry | uint32 | Expiry timestamp of the signature |
-| _weekIds | uint16[] | Array of week IDs being claimed |
-| _amounts | uint128[] | Array of amounts corresponding to each token ID being claimed |
-| _signature | bytes | EIP-712 signature from the authorized signer |
-
-##### Return values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bool | bool indicating if the signature is valid |
-
+| _user | address | The trader making a claim |
+| _tokenIds | uint32 | A bitmap representing which tokens to claim |
+| _amounts | uint128[] | An array of total earned amount for each reward token |
+| _signature | bytes | A signed claim message to be verified |

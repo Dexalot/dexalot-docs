@@ -67,7 +67,7 @@ function sendXChainMessage(uint32 _dstChainListOrgChainId, enum IPortfolioBridge
 #### unpackXFerMessage
 
 ```solidity:no-line-numbers
-function unpackXFerMessage(bytes _data) external view returns (struct IPortfolio.XFER xfer)
+function unpackXFerMessage(bytes _data) external view returns (struct IPortfolio.XFER xfer, address rfqAddress)
 ```
 
 #### enableBridgeProvider
@@ -98,12 +98,6 @@ function getDefaultDestinationChain() external view returns (uint32)
 
 ```solidity:no-line-numbers
 function getPortfolio() external view returns (contract IPortfolio)
-```
-
-#### getMainnetRfq
-
-```solidity:no-line-numbers
-function getMainnetRfq() external view returns (contract IMainnetRFQ)
 ```
 
 #### getTokenList

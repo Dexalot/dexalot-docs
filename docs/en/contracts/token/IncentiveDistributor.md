@@ -190,4 +190,3 @@ function _checkClaim(address _user, uint32 _tokenIds, uint128[] _amounts, bytes 
 | _tokenIds | uint32 | A bitmap representing which tokens to claim |
 | _amounts | uint128[] | An array of total earned amount for each reward token |
 | _signature | bytes | A signed claim message to be verified |
-

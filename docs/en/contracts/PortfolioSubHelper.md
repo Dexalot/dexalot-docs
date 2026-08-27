@@ -23,25 +23,35 @@ multichain
 | organizations | mapping(address &#x3D;&gt; string) |
 | rateOverrides | mapping(address &#x3D;&gt; mapping(bytes32 &#x3D;&gt; struct IPortfolioSubHelper.Rates)) |
 | rebates | mapping(address &#x3D;&gt; struct IPortfolioSubHelper.Rebates) |
+| takerFeeCollectors | mapping(bytes32 &#x3D;&gt; address) |
+| takerFeeCapBps | mapping(bytes32 &#x3D;&gt; mapping(address &#x3D;&gt; uint32)) |
 
 ### Internal
 
 | Name | Type |
 | --- | --- |
-| __gap | uint256[48] |
+| __gap | uint256[46] |
 
 ### Private
 
 | Name | Type |
 | --- | --- |
+| TENK | uint32 |
 | convertableTokens | mapping(bytes32 &#x3D;&gt; bytes32) |
 
 ## Events
 
 ### RateChanged
 
+Emitted for every rate, rebate and taker fee cap change
+
+**Dev notes:** \
+maker/taker are uint32 rather than uint8 so this can also carry a rate cap up to TENK.
+For "TAKER_FEE_COLLECTOR", addressAdded is the collector, customData the tradePairId and taker
+the cap.
+
 ```solidity:no-line-numbers
-event RateChanged(string name, string actionName, address addressAdded, bytes32 customData, uint8 maker, uint8 taker)
+event RateChanged(string name, string actionName, address addressAdded, bytes32 customData, uint32 maker, uint32 taker)
 ```
 
 ## Methods
@@ -58,10 +68,10 @@ function initialize() external
 
 #### setMinTakerRate
 
-Sets the minimum Taker rate that is possible after the volume rebates
+Sets the minimum Taker rate allowed after the volume rebates
 
 **Dev notes:** \
-Only callable by admin.
+Only callable by admin. Set to 5 if you want 0.5 bps as the min taker rate
 
 ```solidity:no-line-numbers
 function setMinTakerRate(uint256 _rate) external
@@ -71,7 +81,7 @@ function setMinTakerRate(uint256 _rate) external
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _rate | uint256 | Minimum Taker rate after volume rebates |
+| _rate | uint256 | Minimum Taker rate in 1 in 100000 (1/10th of a bp) allowed after volume rebates are applied |
 
 #### addAdminAccountForRates
 
@@ -189,6 +199,27 @@ function removeTradePairsFromRateOverrides(address _account, bytes32[] _tradePai
 | _account | address | Address of the admin account |
 | _tradePairIds | bytes32[] | Array of TradePairIds to remove |
 
+#### setTakerFeeCap
+
+Caps the rate a maker earns out of the taker fee on a given tradepair
+
+**Dev notes:** \
+Only callable by admin. Applies only when `_collector` is the maker, and the remainder
+of the taker fee goes to PortfolioSub.feeAddress. More than one collector can be registered per
+tradepair since each execution has exactly one maker.
+
+```solidity:no-line-numbers
+function setTakerFeeCap(bytes32 _tradePairId, address _collector, uint32 _bps) external
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _tradePairId | bytes32 | TradePair Id |
+| _collector | address | Maker address earning the capped rate |
+| _bps | uint32 | Cap in the rate scale, 10 is 1 bp and 100000 is 100%. 0 removes the collector. |
+
 #### getRates
 
 Gets the preferential rates of maker and the taker if any
@@ -199,10 +230,10 @@ Priority 1- check admin rates, 2- preferential rates, 3- Volume Rebates 4- Defau
 Default rates are multiplied by 10 for an additional precision when dealing with default rates
 of 1 or 2 bps. Without this, we can't have any rates in between 1 and 2 bps. But with it, we can
 have 10(1 bps)-11(1.1 bps)... 19-20(2 bps)
-Portfolio.TENK denominator has been multipled by 10 and was changed to 100000 to level the increase.
+UtilsLibrary.getFee divides by 100K instead of 10K to account for this increase
 
 ```solidity:no-line-numbers
-function getRates(address _makerAddr, address _takerAddr, bytes32 _tradePairId, uint256 _makerRate, uint256 _takerRate) external view returns (uint256 maker, uint256 taker)
+function getRates(address _makerAddr, address _takerAddr, bytes32 _tradePairId, uint256 _makerRate, uint256 _takerRate) external view returns (uint256 maker, uint256 taker, address takerFeeCollector, uint32 collectorRate)
 ```
 
 ##### Arguments
@@ -212,13 +243,45 @@ function getRates(address _makerAddr, address _takerAddr, bytes32 _tradePairId, 
 | _makerAddr | address | Maker address of the trade |
 | _takerAddr | address | Taker address of the trade |
 | _tradePairId | bytes32 | TradePair Id |
-| _makerRate | uint256 | tradepair's default maker rate uint8 and < 100 |
-| _takerRate | uint256 | tradepair's default taker rate uint8 and < 100 |
+| _makerRate | uint256 | tradepair's default maker rate stored as uint8 and < 100, cast to uint256 before |
+| _takerRate | uint256 | tradepair's default taker rate stored as uint8 and < 100, cast to uint256 before |
 
 ##### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| maker | uint256 | tradepair's default maker rate or discounted rate if any |
+| maker | uint256 | tradepair's default maker rate or discounted rate if any. 10 is 1bps , 25 is 2.5 bps |
 | taker | uint256 | tradepair's default taker rate or discounted rate if any |
+| takerFeeCollector | address | maker address that keeps a share of the taker fee, or address(0) |
+| collectorRate | uint32 | rate takerFeeCollector earns out of the taker fee, capped at taker. 0 is default |
+
+### Internal
+
+#### _updateTakerFeeCollector
+
+Returns the rate this maker earns out of the taker fee, if any
+
+**Dev notes:** \
+Capped at _takerRate so the collector's cut can never exceed the fee it comes out of.
+A zero cap returns (address(0), 0) and the entire taker fee goes to feeAddress.
+
+```solidity:no-line-numbers
+function _updateTakerFeeCollector(bytes32 _tradePairId, address _makerAddr, address _takerAddr, uint256 _takerRate) internal view returns (address takerFeeCollector, uint32 collectorRate)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _tradePairId | bytes32 | TradePair Id |
+| _makerAddr | address | Maker address of the trade |
+| _takerAddr | address | Taker address of the trade |
+| _takerRate | uint256 | Resolved taker rate, after overrides and rebates |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| takerFeeCollector | address | address of the taker fee collector or address(0) for default behavior |
+| collectorRate | uint32 | rate the collector earns, min(cap, _takerRate). 0 is default behavior |
 

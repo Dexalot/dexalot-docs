@@ -413,7 +413,7 @@ function setMaxBridgeFeeCaps(uint32 _dstChainListOrgChainId, bytes32[] _tokens, 
 Truncate the quantity to the token's mainnet decimals
 
 ```solidity:no-line-numbers
-function truncateQuantity(uint32 _dstChainListOrgChainId, bytes32 _symbol, uint256 _quantity, uint256 _bridgeFee) external view returns (uint256)
+function truncateQuantity(uint32 _dstChainListOrgChainId, bytes32 _subnetSymbol, uint256 _quantity, uint256 _bridgeFee) external view returns (uint256)
 ```
 
 ##### Arguments
@@ -421,7 +421,7 @@ function truncateQuantity(uint32 _dstChainListOrgChainId, bytes32 _symbol, uint2
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _dstChainListOrgChainId | uint32 | destination chain id |
-| _symbol | bytes32 | Dexalot L1(subnet) symbol of the token |
+| _subnetSymbol | bytes32 | Dexalot L1(subnet) symbol of the token |
 | _quantity | uint256 | quantity of the token to withdraw |
 | _bridgeFee | uint256 | bridge fee for the destination |
 

@@ -283,21 +283,22 @@ function removeTrustedContract(address _contract) external
 
 #### depositTokenFromContract
 
-Allows deposits from trusted contracts
+Allows deposits from trusted contracts on behalf of a given _from address
 
 **Dev notes:** \
-Used by Avalaunch for DD deposits and Vesting Contracts.
+Used by Avalaunch for DD deposits and Dexalot Vesting Contracts.
 Keeping for backward compatibility instead of using ON_BEHALF_ROLE.
+Forwards the call to depositToken with native bridge fee and default bridge provider.
 
 ```solidity:no-line-numbers
-function depositTokenFromContract(address _from, bytes32 _symbol, uint256 _quantity) external
+function depositTokenFromContract(address _from, bytes32 _symbol, uint256 _quantity) external payable
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _from | address | Address of the depositor |
+| _from | address | Address to be credited with the deposit amount |
 | _symbol | bytes32 | Symbol of the token |
 | _quantity | uint256 | Amount of token to deposit |
 
@@ -469,7 +470,7 @@ function deposit(address _from, bytes32 _symbol, uint256 _quantity, enum IPortfo
 #### processOptions
 
 ```solidity:no-line-numbers
-function processOptions(struct IPortfolio.XFER _xfer) private returns (bool unwrapToken)
+function processOptions(struct IPortfolio.XFER _xfer, uint256 quantity) private returns (bool unwrapToken)
 ```
 
 #### emitPortfolioEvent

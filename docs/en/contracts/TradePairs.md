@@ -271,17 +271,16 @@ function setMaxNbrOfFills(uint256 _maxNbrOfFills) external
 | ---- | ---- | ----------- |
 | _maxNbrOfFills | uint256 | Max number of executions an order can have in a single block |
 
-#### setAuctionPrice
+#### setAuctionVaultAdress
 
-Sets the auction price
+Sets the OmniVault address that will run the auction
 
 **Dev notes:** \
-Price is calculated by the backend (off chain) after the auction has closed.
-Auction price can be changed anytime. It is imperative that is not changed after the
-first order is matched until the last order to be matched.
+tradePair.auctionPrice has been obsolete since 2023.It has been repurposed as of March 15, 2026
+to hold the Acution OmniVault address instead of adding a new field to the tradePair struct
 
 ```solidity:no-line-numbers
-function setAuctionPrice(bytes32 _tradePairId, uint256 _price) external
+function setAuctionVaultAdress(bytes32 _tradePairId, address _omniVaultAdress) external
 ```
 
 ##### Arguments
@@ -289,7 +288,31 @@ function setAuctionPrice(bytes32 _tradePairId, uint256 _price) external
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _tradePairId | bytes32 | id of the trading pair |
-| _price | uint256 | price of the auction |
+| _omniVaultAdress | address | omniVault address |
+
+#### getAuctionVaultAdress
+
+Returns the OmniVault address that is running the auction
+
+**Dev notes:** \
+tradePair.auctionPrice that has been obsolete since 2023, has been repurposed as of March 15, 2026
+to hold the Omni Vault address instead of adding a new field
+
+```solidity:no-line-numbers
+function getAuctionVaultAdress(bytes32 _tradePairId) external view returns (address)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _tradePairId | bytes32 | id of the trading pair |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | address | address  address of the OmniVault |
 
 #### tradePairExists
 
@@ -317,7 +340,7 @@ Sets the minimum post amount allowed to the orderbook of the given Trade Pair
 
 **Dev notes:** \
 Can only be called by DEFAULT_ADMIN. The min trade amount needs to satisfy
-`getQuoteAmount(_price, _quantity, _tradePairId) >= _minTradeAmount`
+`getQuoteAmount(_price, _quantity, _tradePairId) >= setMinPostAmount`
 
 ```solidity:no-line-numbers
 function setMinPostAmount(bytes32 _tradePairId, uint256 _minPostAmount) external
@@ -485,7 +508,7 @@ function setAllowedSlippagePercent(bytes32 _tradePairId, uint8 _allowedSlippageP
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _tradePairId | bytes32 | id of the trading pair |
-| _allowedSlippagePercent | uint8 | allowed slippage percent=20 (Default = 20 : 20% = 20/100) |
+| _allowedSlippagePercent | uint8 | allowed slippage percent=3 (Default = 3 : 3% = 3/100) |
 
 #### getNBook
 
@@ -666,7 +689,7 @@ OrderStatusChanged event with `status = REJECTED` and `code = errorCode`.
 - `T-MTMT-01` : trade amount is more than maxTradeAmount for the tradePair
 - `T-T2PO-01` : Post Only order is not allowed to be a taker
 - `T-POOA-01` : Only PO(PostOnly) Orders allowed for this pair
-- `T-AUCT-04` : market orders not allowed in auction mode
+- `T-AUCT-02` : Only LIMIT-IOC orders allowed when auctionMode = 2 (OPEN)
 
 `KILLED (CANCELED) conditions:`
 
@@ -683,8 +706,6 @@ In other words, the uniqueness is only enforced against `LIMIT` orders that are 
 and `clientOrderId` can be used to cancel them without waiting to receive the orderId back from the blockchain. \
 For MARKET orders, values sent by the user in the `price` and `type2` fields will be ignored and
 defaulted to `0` and `Type2.GTC` respectively. \
-Similarly for auction orders, values sent by the user in the `stp` and `type2` fields will be ignored
-and defaulted to `STP.NONE` and `Type2.GTC` respectively. \
 Valid quantity precision (baseDisplayDecimals) and base token evm decimals can be obtained by calling
 `getTradePair(..)` and accessing baseDisplayDecimals and baseDecimals respectively.
 Valid price precision and quote token evm decimals can also be obtained from the same function above and
@@ -730,31 +751,6 @@ function addNewOrder(struct ITradePairs.NewOrder _order) external
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _order | struct ITradePairs.NewOrder | newOrder struct to be sent out. See ITradePairs.NewOrder |
-
-#### matchAuctionOrder
-
-Function to match Auction orders
-
-**Dev notes:** \
-Requires `DEFAULT_ADMIN_ROLE`, also called by `ExchangeSub.matchAuctionOrders` that
-requires `AUCTION_ADMIN_ROLE`.
-
-```solidity:no-line-numbers
-function matchAuctionOrder(struct ITradePairs.Order _takerOrder, uint256 _maxNbrOfFills) external returns (uint256 quantityRemaining)
-```
-
-##### Arguments
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _takerOrder | struct ITradePairs.Order | Taker Order |
-| _maxNbrOfFills | uint256 | controls max number of fills an order can get at a time to avoid running out of gas |
-
-##### Return values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| quantityRemaining | uint256 | Remaining quantity of the taker order |
 
 #### unsolicitedCancel
 
@@ -974,7 +970,7 @@ fallback() external
 
 #### setAuctionModePrivate
 
-Sets the auction mode of a specific Trade Pair
+Sets the auction mode of a specific Trade Pair and the base Token in Portfolio
 
 **Dev notes:** \
 Need to be able to call it internally from the constructor
@@ -1076,7 +1072,7 @@ Emits Executed event showing the execution details. Note that an order's price
 can be different than the execution price, but it should be identical to maker order's price.
 
 ```solidity:no-line-numbers
-function addExecution(bytes32 _makerOrderId, struct ITradePairs.Order _takerOrder, uint256 _price, uint256 _quantity) private returns (struct ITradePairs.Order)
+function addExecution(bytes32 _makerOrderId, struct ITradePairs.Order _takerOrder, uint256 _price, uint256 _quantity) private
 ```
 
 ##### Arguments
@@ -1109,17 +1105,16 @@ the taker in Base currency \
 `addressTaker`  taker traderaddress \
 
 ```solidity:no-line-numbers
-function emitExecuted(uint256 _price, uint256 _quantity, bytes32 _makerOrderId, struct ITradePairs.Order _takerOrder, uint256 _mlastFee, uint256 _tlastFee) private
+function emitExecuted(struct ITradePairs.Execution _execution, bytes32 _makerOrderId, bytes32 _takerOrderId, uint256 _mlastFee, uint256 _tlastFee) private
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _price | uint256 | executed price |
-| _quantity | uint256 | executed quantity |
+| _execution | struct ITradePairs.Execution | execution struct |
 | _makerOrderId | bytes32 | Maker Order id |
-| _takerOrder | struct ITradePairs.Order | Taker Order |
+| _takerOrderId | bytes32 | Taker Order id |
 | _mlastFee | uint256 | fee paid by maker |
 | _tlastFee | uint256 | fee paid by taker |
 
@@ -1151,7 +1146,7 @@ if decimals, order types and clientOrderId are supplied properly \
 reference. It must be unique per traderaddress.
 
 ```solidity:no-line-numbers
-function addOrderChecks(address _msSender, struct ITradePairs.NewOrder _order) private view returns (uint256, bytes32)
+function addOrderChecks(address _msSender, struct ITradePairs.NewOrder _order) private view returns (bytes32)
 ```
 
 ##### Arguments
@@ -1210,45 +1205,42 @@ Adds the remaining quantity of an unfilled taker order to the orderbook
 
 **Dev notes:** \
 memory taker order is cast to storage prospective maker order before being added
-to the orderbook  (Including Auction Orders)
+to the orderbook
 
 ```solidity:no-line-numbers
-function addTakerToOrderBook(bytes32 _tradePairId, struct ITradePairs.Order _takerOrder) private
+function addTakerToOrderBook(bytes32 _bookIdSameSide, bytes32 _tradePairId, struct ITradePairs.Order _takerOrder) private
 ```
 
 #### matchOrder
 
 Matches a taker order with maker orders in the opposite Orderbook before
 it is entered in its own orderbook.
-Also handles matching auction orders.
 
 **Dev notes:** \
 IF `BUY` order, it will try to match with an order in the `SELL OrderBook` and vice versa
 A taker order that is entered can match with multiple maker orders that are waiting in the orderbook.
 This function may run out of gas not because of the single taker order but because of the number of
-maker orders that are matching with it. This variable is ESSENTIAL for tradepairs in `AUCTION_MODE== MATCHING`
-because we are guaranteed to run into such situations where a single large `SELL` order (quantity 1000)
-is potentially matched with multiple small BUY orders (1000 orders with quantity 1) , creating 1000 matches
-which will run out of gas.
+maker orders that are matching with it. This variable is ESSENTIAL for cases where a single large
+`SELL` order (quantity 1000) is potentially matched with multiple small BUY orders
+(1000 orders with quantity 1), creating 1000 matches which will run out of gas.
 Self Trade Prevention is also checked here before allowing any matches.
 
 ```solidity:no-line-numbers
-function matchOrder(struct ITradePairs.Order _takerOrder, uint256 _maxNbrOfFills, enum ITradePairs.STP _stp) private returns (struct ITradePairs.Order, bytes32 code)
+function matchOrder(bytes32 _bookId, struct ITradePairs.Order _takerOrder, enum ITradePairs.STP _stp) private returns (bytes32 code)
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
+| _bookId | bytes32 | BookId to match on |
 | _takerOrder | struct ITradePairs.Order | Taker Order |
-| _maxNbrOfFills | uint256 | Max number of fills an order can get at a time to avoid running out of gas (Default: 100) |
 | _stp | enum ITradePairs.STP | Self Trade Prevention mode |
 
 ##### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| [0] | struct ITradePairs.Order | updated taker order (status,quantityFilled, totalAmount etc..) |
 | code | bytes32 | reason for the cancel in the `code` field. Currently only due to STP |
 
 #### cancelOrderPrivate

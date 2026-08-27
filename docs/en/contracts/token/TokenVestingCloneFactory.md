@@ -65,7 +65,7 @@ function createTokenVesting(address __beneficiary, uint256 __start, uint256 __cl
 | __firstReleasePercentage | uint256 | percentage to be released initially |
 | __period | uint256 | length of claim period that allows one to withdraw in discrete periods. i.e. (60 x 60 x 24) x 30 will allow the beneficiary to claim every 30 days, 0 for no restrictions |
 | __portfolio | address | address of portfolio |
-| __owner | address |  |
+| __owner | address | address that will become the vesting contract owner with onlyOwner rights |
 
 #### getClone
 

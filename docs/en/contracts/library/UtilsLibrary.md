@@ -82,45 +82,45 @@ function getOutgoingDetails(enum ITradePairs.Side _orderSide, bytes32 _quoteSymb
 | outSymbol | bytes32 | outgoing token symbol |
 | outAmount | uint256 | outgoing Amount |
 
-#### matchingAllowed
+#### uint256ToAddress
 
-Checks if a tradePair is in auction and if matching is not allowed in the orderbook.
+Converts a uint256 value to an address
 
 ```solidity:no-line-numbers
-function matchingAllowed(enum ITradePairs.AuctionMode _mode) internal pure returns (bool)
+function uint256ToAddress(uint256 _addressAs256) internal pure returns (address)
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _mode | enum ITradePairs.AuctionMode | Auction Mode |
+| _addressAs256 | uint256 | uint256 data to be converted |
 
 ##### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| [0] | bool | bool  true/false |
+| [0] | address | address  converted address representation |
 
-#### isAuctionRestricted
+#### addressToUint256
 
-Checks if the auction is in a restricted state.
+Converts an address to uint256 value
 
 ```solidity:no-line-numbers
-function isAuctionRestricted(enum ITradePairs.AuctionMode _mode) internal pure returns (bool)
+function addressToUint256(address _address) internal pure returns (uint256)
 ```
 
 ##### Arguments
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _mode | enum ITradePairs.AuctionMode | Auction Mode |
+| _address | address | address data to be converted |
 
 ##### Return values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| [0] | bool | bool  true if Auction is in restricted mode |
+| [0] | uint256 | uint256  converted address representation |
 
 #### canCancel
 
@@ -152,10 +152,6 @@ function canCancel(uint256 _quantity, uint256 _quantityFilled, enum ITradePairs.
 
 Round down a unit256 value.  Used for the fees to avoid dust.
 
-**Dev notes:** \
-example: a = 1245, m: 2 ==> 1200. But always take a min fee
-a = 1, m : 2 ==> 100 instead of flooring to 0
-
 ```solidity:no-line-numbers
 function floor(uint256 _a, uint256 _m) internal pure returns (uint256)
 ```
@@ -171,7 +167,28 @@ function floor(uint256 _a, uint256 _m) internal pure returns (uint256)
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| [0] | uint256 | uint256  . |
+| [0] | uint256 | uint256  rounded down value |
+
+#### getFee
+
+Returns the commission to be paid.
+
+```solidity:no-line-numbers
+function getFee(uint256 _amount, uint256 _rate) internal pure returns (uint256)
+```
+
+##### Arguments
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _amount | uint256 | token quantity being swapped |
+| _rate | uint256 | maker or taker rate to be applied to the _amount. It is expected NOT in bps (1/10000) BUT in  1/1000. PortfolioSubHelper.getRates mutliplies the rates by 10 before calling this function. certain admin or contracted market makers have 0 rates.(no minimum applies) |
+
+##### Return values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | uint256 | uint256  fee to be paid, at least 1 automic unit for regular users |
 
 #### min
 
